@@ -35,13 +35,11 @@ const routes = [
     path: '/news',
     name: 'News',
     component: News,
-    children: [
-      {
-        path: '/news/:id',
-        name: 'Article',
-        component: Article,
-      }
-    ]
+  },
+  {
+    path: '/news/:id',
+    name: 'Article',
+    component: Article,
   },
   {
     path: '/gallery',

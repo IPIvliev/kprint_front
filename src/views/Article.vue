@@ -2,7 +2,6 @@
   <div class="page">
     <header-block />
     <ArticlePage />
-    <router-view/>
     <footer-block />
   </div>
 </template>

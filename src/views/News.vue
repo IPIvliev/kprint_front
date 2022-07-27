@@ -1,9 +1,9 @@
 <template>
-<div class="page">
-  <header-block />
-  <NewsPage />
-  <footer-block />
-</div>
+  <div class="page">
+    <header-block />
+    <NewsPage />
+    <footer-block />
+  </div>
 </template>
 
 <script>
@@ -18,13 +18,6 @@ export default {
     NewsPage,
     FooterBlock,
     HeaderBlock
-  },
-  computed: {
-    NewList() {
-      let rout = this.$route.params;
-      console.log(rout)
-      return rout
-    }
   }
 }
 </script>
