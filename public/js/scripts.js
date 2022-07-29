@@ -469,20 +469,20 @@ jQuery(document).ready(function ($) {
 	}
 	inputmask();
 
-	// Открыть скрытые символы в input passwod
-	function passwordVisible() {
-		$('.input--password .input__icon').on('click', function () {
-			var input = $(this).siblings('input');
-			if (input.attr('type') == 'password') {
-				input.attr('type', 'text');
-				$(this).addClass('active');
-			}else {
-				input.attr('type', 'password');
-				$(this).removeClass('active');
-			}
-		})
-	}
-	passwordVisible();
+	// // Открыть скрытые символы в input passwod
+	// function passwordVisible() {
+	// 	$('.input--password .input__icon').on('click', function () {
+	// 		var input = $(this).siblings('input');
+	// 		if (input.attr('type') == 'password') {
+	// 			input.attr('type', 'text');
+	// 			$(this).addClass('active');
+	// 		}else {
+	// 			input.attr('type', 'password');
+	// 			$(this).removeClass('active');
+	// 		}
+	// 	})
+	// }
+	// passwordVisible();
 
 	if ($('[data-fancybox]').length) {
 		Fancybox.bind("[data-fancybox]", {

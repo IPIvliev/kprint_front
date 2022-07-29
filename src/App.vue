@@ -10,5 +10,5 @@ export default {
 </script>
 
 <style>
-  @import 'assets/css/libs/swiper-bundle.min.css';
+  /* @import 'assets/css/libs/swiper-bundle.min.css'; */
 </style>

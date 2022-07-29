@@ -9373,6 +9373,7 @@ body.lock {
 
 .slider .swiper-slide {
   height: auto;
+  margin: 0px 0px 0px 5px;
 }
 
 .article {

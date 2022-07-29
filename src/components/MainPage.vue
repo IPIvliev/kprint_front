@@ -274,15 +274,96 @@
           </div>
           <router-link to="/news"><div class="btn btn--black">Все новости</div></router-link>
         </div>
-        <div class="slider__slider">
-          <div id="sliderArticles">
-            <div class="swiper-wrapper">
-              <article-card v-for="article in 6" :key="article" :class="'swiper-slide'">
-              </article-card>
-            </div>
-            <div class="swiper-pagination slider__pagination"></div>
-          </div>
-        </div>
+        <!-- <div class="slider__slider"> -->
+          <!-- <div id="sliderArticles">
+            <div class="swiper-wrapper"> -->
+              <swiper :modules="modules" :pagination="{ clickable: true, dynamicBullets: true }" :slides-per-view="4">
+                <!-- <article-card v-for="article in 6" :key="article">
+                </article-card> -->
+                <swiper-slide>
+                      <div>
+                        <!-- article-->
+                        <router-link class="article" to="/news/1">
+                          <div class="article__img"> <img src="@/assets/img/article_2.webp" alt=""></div>
+                          <div class="article__content"> 
+                            <h3 class="article__title">Как используются 3D технологии в обучении</h3>
+                            <p class="article__text">3D-принтеры перестают быть уделом только профессионало или любителей, но и активно проникают в образоват...</p>
+                          </div>
+                          <ul class="article__list">
+                            <li>12 сентября, 2021</li>
+                            <li>Статьи</li>
+                          </ul></router-link>
+                        <!--	/article-->
+                      </div>
+                </swiper-slide>
+                <swiper-slide>
+                      <div>
+                        <!-- article-->
+                        <router-link class="article" to="/news/1">
+                          <div class="article__img"> <img src="@/assets/img/article_2.webp" alt=""></div>
+                          <div class="article__content"> 
+                            <h3 class="article__title">Как используются 3D технологии в обучении</h3>
+                            <p class="article__text">3D-принтеры перестают быть уделом только профессионало или любителей, но и активно проникают в образоват...</p>
+                          </div>
+                          <ul class="article__list">
+                            <li>12 сентября, 2021</li>
+                            <li>Статьи</li>
+                          </ul></router-link>
+                        <!--	/article-->
+                      </div>
+                </swiper-slide>
+                <swiper-slide>
+                      <div>
+                        <!-- article-->
+                        <router-link class="article" to="/news/1">
+                          <div class="article__img"> <img src="@/assets/img/article_2.webp" alt=""></div>
+                          <div class="article__content"> 
+                            <h3 class="article__title">Как используются 3D технологии в обучении</h3>
+                            <p class="article__text">3D-принтеры перестают быть уделом только профессионало или любителей, но и активно проникают в образоват...</p>
+                          </div>
+                          <ul class="article__list">
+                            <li>12 сентября, 2021</li>
+                            <li>Статьи</li>
+                          </ul></router-link>
+                        <!--	/article-->
+                      </div>
+                </swiper-slide>
+                <swiper-slide>
+                      <div>
+                        <!-- article-->
+                        <router-link class="article" to="/news/1">
+                          <div class="article__img"> <img src="@/assets/img/article_2.webp" alt=""></div>
+                          <div class="article__content"> 
+                            <h3 class="article__title">Как используются 3D технологии в обучении</h3>
+                            <p class="article__text">3D-принтеры перестают быть уделом только профессионало или любителей, но и активно проникают в образоват...</p>
+                          </div>
+                          <ul class="article__list">
+                            <li>12 сентября, 2021</li>
+                            <li>Статьи</li>
+                          </ul></router-link>
+                        <!--	/article-->
+                      </div>
+                </swiper-slide>
+                <swiper-slide>
+                      <div>
+                        <!-- article-->
+                        <router-link class="article" to="/news/1">
+                          <div class="article__img"> <img src="@/assets/img/article_2.webp" alt=""></div>
+                          <div class="article__content"> 
+                            <h3 class="article__title">Как используются 3D технологии в обучении</h3>
+                            <p class="article__text">3D-принтеры перестают быть уделом только профессионало или любителей, но и активно проникают в образоват...</p>
+                          </div>
+                          <ul class="article__list">
+                            <li>12 сентября, 2021</li>
+                            <li>Статьи</li>
+                          </ul></router-link>
+                        <!--	/article-->
+                      </div>
+                </swiper-slide>
+              </swiper>
+            <!-- </div>
+          </div> -->
+        <!-- </div> -->
       </div>
     </div>
     <!--	/slider-->
@@ -312,17 +393,23 @@
 import ArticleCard from "./elements/ArticleCard.vue"
 import AdvantagesBlock from "./AdvantagesBlock.vue"
 import CallbackWindow from "./elements/CallbackWindow.vue"
+import SwiperClass, { Pagination } from 'swiper'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+
+import 'swiper/css'
+import 'swiper/css/pagination'
 
 export default {
   name: 'MainPage',
-  components: {ArticleCard, AdvantagesBlock, CallbackWindow},
+  components: {ArticleCard, AdvantagesBlock, CallbackWindow, Swiper, SwiperSlide },
   props: {
     msg: String
+  },
+  setup() {
+    return {
+      modules: [Pagination]
+    }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-  @import '../assets/css/libs/swiper-bundle.min.css';
-</style>
