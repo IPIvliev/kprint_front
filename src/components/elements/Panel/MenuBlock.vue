@@ -4,7 +4,7 @@
 									<div class="panel__head"><router-link class="panel__profile" to="/panel/edit">
 											<div class="panel__profile-img"> <img src="@/assets/img/user.webp" alt=""></div>
 											<div class="panel__profile-content">
-												<div class="panel__profile-title">Николаев Олег</div>
+												<div class="panel__profile-title">{{ currentUser.username }}</div>
 												<div class="panel__profile-text">Редактировать профиль</div>
 												<div class="panel__profile-icon"> 
 													<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -77,3 +77,14 @@
 								</div>
 							</div>
 </template>
+
+<script>
+
+export default {
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
+  },
+}
+</script>

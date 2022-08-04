@@ -12,13 +12,22 @@
         </div>
         <div class="login__title">Войти в профиль</div>
         <div class="login__text">Пожалуйста, введите свой e-mail и пароль для входа в личный кабинет пользователя.</div>
-        <form class="login__form" action="#">
+        <form class="login__form" @submit="handleLogin" @submit.prevent="" :validation-schema="schema">
+        <!-- <form class="login__form" @submit.prevent=""> -->
+          <div class="form-group">
+            <div v-if="message" class="alert alert-danger" role="alert">
+              {{ message }}
+            </div>
+          </div>
           <div class="input input--label"> 
-            <input type="text">
+            <Field name="username" type="text" />
             <div class="input__label">Ваш e-mail адрес</div>
+            <ErrorMessage name="username" class="error-feedback" />
           </div>
           <div class="input input--password">
-            <input type="password" placeholder="Пароль">
+            <!-- <input type="password" placeholder="Пароль"> -->
+            <Field name="password" type="password" class="form-control" />
+            <ErrorMessage name="password" class="error-feedback" />
             <div class="input__icon"> 
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g>
@@ -41,7 +50,9 @@
               <label for="checkRemember">Запомнить меня</label>
             </div><a class="login__link" href="#">Забыли пароль?</a>
           </div>
-          <button class="btn btn--red btn--big" type="submit">Зарегистрироваться</button>
+          <button class="btn btn--red btn--big" :disabled="loading">
+            <span v-show="loading" class="spinner-border spinner-border-sm"></span>Войти
+          </button>
         </form>
       </div>
     </div>
@@ -60,3 +71,62 @@
 </footer>
 <!-- /footer-->
 </template>
+
+<script>
+import { Form, Field, ErrorMessage } from "vee-validate";
+import * as yup from "yup";
+export default {
+  name: "Login",
+  components: {
+    Form,
+    Field,
+    ErrorMessage,
+  },
+  data() {
+    const schema = yup.object().shape({
+      username: yup.string().required("Username is required!"),
+      password: yup.string().required("Password is required!"),
+    });
+    return {
+      schema,
+      loading: false,
+      message: "",
+    };
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+  },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push("/panel");
+    }
+  },
+  methods: {
+    getLogin(e) {
+      console.log(this.username)
+      console.log(this.password)
+      e.preventDefault()
+    },
+    handleLogin(user) {
+      
+      this.loading = true;
+      this.$store.dispatch("auth/login", user).then(
+        () => {
+          this.$router.push("/panel");
+        },
+        (error) => {
+          this.loading = false;
+          this.message =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+              error.message ||
+              error.toString();
+        }
+      );
+    },
+  },
+};
+</script>

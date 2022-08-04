@@ -3,7 +3,7 @@
 <div class="content">
   <!-- teaser-->
   <div class="teaser">
-    <div class="teaser__img"><img src="../assets/img/teaser.webp" alt=""></div>
+    <div class="teaser__img"><img :src="image" alt=""></div>
   </div>
   <!--	/teaser-->
   <!-- post-->
@@ -25,7 +25,7 @@
             <div class="post__dateblock"> 
               <div class="post__daterow">
                 <div class="post__datetitle">Дата публикации:</div>
-                <div class="post__datetext">28 ноября, 2021</div>
+                <div class="post__datetext">{{ article.publish }}</div>
               </div>
               <div class="post__daterow">
                 <div class="post__datetitle">Тип публикации:</div>
@@ -57,7 +57,7 @@
           </div>
         </div>
         <div class="col-lg-9">
-          <h1 class="post__title">Технологии печати SLA и DLP: чем отличаются, достоинства и недостатки</h1>
+          <h1 class="post__title">{{ article.title }}</h1>
           <div class="post__dateblock nout-visible">
             <div class="post__daterow">
               <div class="post__datetitle">Дата публикации:</div>
@@ -260,3 +260,30 @@
 </div>
 <!-- /modal bootstrap-->
 </template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  name: 'ArticlePage',
+  data() {
+    return {
+      id: this.$route.params.id,
+      article: [],
+      title: "",
+      // image: this.article.article_image,
+      body: "" 
+    }
+  },
+  mounted() {
+    axios
+      .get("http://localhost:8000/api/articles/" + this.id + "/")
+      .then(response => (this.article = response.data))
+  },
+  computed: {
+      image () {
+          return this.article.article_image;
+      }
+  }
+}
+</script>

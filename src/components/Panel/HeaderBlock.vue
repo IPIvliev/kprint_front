@@ -4,7 +4,8 @@
 				<div class="header__container">
 					<div class="container d-flex">
 						<div class="header__col">
-							<div class="header__btn js-menu-btn d-xl-none d-block" data-drop="menuDrop"></div><a class="header__logo d-xl-block d-none" href="#">
+							<div class="header__btn js-menu-btn d-xl-none d-block" data-drop="menuDrop"></div>
+              <router-link class="header__logo d-xl-block d-none" to="/">
 								<svg width="156" height="50" viewBox="0 0 156 50" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<path class="logo-red" d="M35.6261 45.4328L28.9917 38.8264H24.4082L35.6261 50.0001L46.8394 38.8264H42.256L35.6261 45.4328Z"></path>
 									<path class="logo-red" d="M35.6261 4.56726L42.256 11.1736H46.8394L35.6261 0L24.4082 11.1736H28.9917L35.6261 4.56726Z"></path>
@@ -28,7 +29,8 @@
 											<rect width="156" height="50" fill="white"></rect>
 										</clipPath>
 									</defs>
-								</svg></a>
+								</svg>
+              </router-link>
 							<div class="header__slogan">Личный кабинет пользователя</div>
 							<div class="header__checktheme d-xl-inline-flex d-none">
 								<div class="header__checktheme-icon header__checktheme-icon--light active">
@@ -127,10 +129,10 @@
 										<path fill-rule="evenodd" clip-rule="evenodd" d="M9.19141 2.5361C8.88741 1.2881 7.11141 1.2881 6.80741 2.5361C6.76202 2.72363 6.673 2.8978 6.54759 3.04443C6.42217 3.19106 6.26391 3.306 6.08569 3.37991C5.90746 3.45382 5.71429 3.48461 5.52192 3.46977C5.32954 3.45493 5.14339 3.39487 4.97861 3.2945C3.88101 2.6257 2.62501 3.8817 3.29381 4.9793C3.72581 5.6881 3.34261 6.6129 2.53621 6.8089C1.28741 7.1121 1.28741 8.8889 2.53621 9.1913C2.72379 9.23674 2.89799 9.32585 3.04462 9.45135C3.19125 9.57686 3.30616 9.73523 3.38 9.91355C3.45384 10.0919 3.48452 10.2851 3.46954 10.4775C3.45457 10.67 3.39435 10.8561 3.29381 11.0209C2.62501 12.1185 3.88101 13.3745 4.97861 12.7057C5.14336 12.6052 5.32953 12.5449 5.52196 12.53C5.71438 12.515 5.90763 12.5457 6.08595 12.6195C6.26428 12.6933 6.42264 12.8083 6.54815 12.9549C6.67366 13.1015 6.76277 13.2757 6.80821 13.4633C7.11141 14.7121 8.88821 14.7121 9.19061 13.4633C9.23621 13.2758 9.3254 13.1017 9.45093 12.9552C9.57647 12.8087 9.73481 12.6938 9.91308 12.62C10.0913 12.5462 10.2845 12.5155 10.4769 12.5304C10.6693 12.5453 10.8554 12.6053 11.0202 12.7057C12.1178 13.3745 13.3738 12.1185 12.705 11.0209C12.6046 10.8561 12.5446 10.67 12.5297 10.4776C12.5148 10.2852 12.5455 10.092 12.6193 9.91377C12.6932 9.7355 12.808 9.57716 12.9545 9.45162C13.101 9.32609 13.2751 9.2369 13.4626 9.1913C14.7114 8.8881 14.7114 7.1113 13.4626 6.8089C13.275 6.76345 13.1008 6.67435 12.9542 6.54884C12.8076 6.42333 12.6927 6.26497 12.6188 6.08664C12.545 5.90832 12.5143 5.71507 12.5293 5.52265C12.5443 5.33022 12.6045 5.14405 12.705 4.9793C13.3738 3.8817 12.1178 2.6257 11.0202 3.2945C10.8555 3.39504 10.6693 3.45526 10.4769 3.47023C10.2844 3.48521 10.0912 3.45453 9.91287 3.38069C9.73454 3.30685 9.57618 3.19193 9.45067 3.04531C9.32516 2.89868 9.23605 2.72448 9.19061 2.5369L9.19141 2.5361ZM7.99941 10.4001C8.63593 10.4001 9.24638 10.1472 9.69647 9.69715C10.1466 9.24707 10.3994 8.63662 10.3994 8.0001C10.3994 7.36358 10.1466 6.75313 9.69647 6.30304C9.24638 5.85295 8.63593 5.6001 7.99941 5.6001C7.36289 5.6001 6.75244 5.85295 6.30235 6.30304C5.85227 6.75313 5.59941 7.36358 5.59941 8.0001C5.59941 8.63662 5.85227 9.24707 6.30235 9.69715C6.75244 10.1472 7.36289 10.4001 7.99941 10.4001Z"></path>
 									</svg>Настройки профиля
                 </router-link>
-                <a class="btn btn--black" href="#">
+                <a class="btn btn--black" @click.prevent="logOut">
                   Выход
                 </a>
-								<div class="header__regicon">
+								<div class="header__regicon" @click.prevent="logOut">
 									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M15 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
 										<path d="M10 17L15 12L10 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -148,7 +150,7 @@
 						<div class="container">
 							<div class="menu__profileblock">
 								<div class="menu__profilehead"><a class="panel__profile" href="#">
-										<div class="panel__profile-img"> <img src="img/user.jpg" alt=""></div>
+										<div class="panel__profile-img"> <img src="@/assets/img/user.jpg" alt=""></div>
 										<div class="panel__profile-content">
 											<div class="panel__profile-title">Николаев Олег</div>
 											<div class="panel__profile-text">Редактировать профиль</div>
@@ -213,6 +215,20 @@ export default {
     openLanguageMenu() {
       this.languageMenuIsOpen =! this.languageMenuIsOpen
     },
+    logOut() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
+    }
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
+  },
+  mounted() {
+    if (!this.currentUser) {
+      this.$router.push('/login');
+    }
   }
 }
 </script>

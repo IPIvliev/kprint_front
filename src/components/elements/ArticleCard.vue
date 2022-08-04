@@ -1,12 +1,12 @@
 <template>
-  <swiper-slide>
     <div>
           <!-- article-->
-          <router-link class="article" to="/news/1">
-            <div class="article__img"> <img src="@/assets/img/article_2.webp" alt=""></div>
+          <router-link class="article" :to = "linkOpen">
+            <div class="article__img"> <img :src="image" alt="{{ article.title }}"></div>
+            <!-- <div class="article__img"> <img src="@/assets/img/article_2.webp" alt="{{ article.title }}"></div> -->
             <div class="article__content"> 
-              <h3 class="article__title">Как используются 3D технологии в обучении</h3>
-              <p class="article__text">3D-принтеры перестают быть уделом только профессионало или любителей, но и активно проникают в образоват...</p>
+              <h3 class="article__title">{{ article.title }}</h3>
+              <p class="article__text">{{ article.body.replace(/<\/?[^>]+(>|$)/g, "") }}...</p>
             </div>
             <ul class="article__list">
               <li>12 сентября, 2021</li>
@@ -14,9 +14,20 @@
             </ul></router-link>
           <!--	/article-->
     </div>
-  </swiper-slide>
 </template>
 
 <script>
-
+export default {
+  props: ['article'],
+  data() {
+    return {
+      image: this.article.article_image,
+    }
+  },
+  computed: {
+      linkOpen () {
+          return `/news/${this.article.id}`;
+      }
+  }
+}
 </script>

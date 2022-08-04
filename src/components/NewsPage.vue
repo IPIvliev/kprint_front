@@ -22,7 +22,7 @@
           </div>
         </div> -->
         <div class="row gy-1">
-          <article-card v-for="article in 16" :key="article" :class="'col-xxl-3 col-lg-4 col-md-6'">
+          <article-card v-for="article in articles" :key="article.id" v-bind:article="article" :class="'col-xxl-3 col-lg-4 col-md-6'">
           </article-card>
         </div>
         <div class="news__pagination"> 
@@ -57,10 +57,21 @@
 <script>
 import CallbackWindow from "./elements/CallbackWindow.vue"
 import ArticleCard from "./elements/ArticleCard.vue"
+import axios from 'axios'
 
 export default {
   name: 'NewsPage',
-  components: {CallbackWindow, ArticleCard}
+  data() {
+    return {
+      articles: []
+    }
+  },
+  components: {CallbackWindow, ArticleCard},
+  mounted() {
+  axios
+    .get('http://localhost:8000/api/articles/')
+    .then(response => (this.articles = response.data))
+  }
 }
 </script>
 

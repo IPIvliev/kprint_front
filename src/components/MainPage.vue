@@ -277,7 +277,7 @@
         <!-- <div class="slider__slider"> -->
           <!-- <div id="sliderArticles">
             <div class="swiper-wrapper"> -->
-              <swiper :modules="modules" :pagination="{ clickable: true, dynamicBullets: true }" :slides-per-view="4">
+              <swiper :modules="modules" :slides-per-view="4">
                 <!-- <article-card v-for="article in 6" :key="article">
                 </article-card> -->
                 <swiper-slide>
