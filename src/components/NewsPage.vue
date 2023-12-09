@@ -56,7 +56,7 @@
 
 <script>
 import CallbackWindow from "./elements/CallbackWindow.vue"
-import ArticleCard from "./elements/ArticleCard.vue"
+import ArticleCard from "./News/ArticleCard.vue"
 import axios from 'axios'
 
 export default {
@@ -69,7 +69,7 @@ export default {
   components: {CallbackWindow, ArticleCard},
   mounted() {
   axios
-    .get('http://localhost:8000/api/articles/')
+    .get('http://localhost:8081/api/articles/')
     .then(response => (this.articles = response.data))
   }
 }

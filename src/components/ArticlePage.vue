@@ -277,7 +277,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:8000/api/articles/" + this.id + "/")
+      .get("http://localhost:8081/api/articles/" + this.id + "/")
       .then(response => (this.article = response.data))
   },
   computed: {

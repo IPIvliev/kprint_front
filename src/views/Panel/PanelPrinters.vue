@@ -8,9 +8,9 @@
 
 <script>
 // @ is an alias to /src
-import HeaderPanelBlock from '../components/Panel/HeaderBlock.vue'
-import PrintersPanelPage from '../components/Panel/PanelPrinters.vue'
-import FooterPanelBlock from '../components/Panel/FooterBlock.vue'
+import HeaderPanelBlock from '../../components/Panel/HeaderBlock.vue'
+import PrintersPanelPage from '../../components/Panel/PanelPrinters.vue'
+import FooterPanelBlock from '../../components/Panel/FooterBlock.vue'
 
 export default {
   name: 'News',

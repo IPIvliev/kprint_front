@@ -12,7 +12,7 @@
         </div>
         <div class="login__title">Войти в профиль</div>
         <div class="login__text">Пожалуйста, введите свой e-mail и пароль для входа в личный кабинет пользователя.</div>
-        <form class="login__form" @submit="handleLogin" @submit.prevent="" :validation-schema="schema">
+        <Form class="login__form" @submit="handleLogin" :validation-schema="schema">
         <!-- <form class="login__form" @submit.prevent=""> -->
           <div class="form-group">
             <div v-if="message" class="alert alert-danger" role="alert">
@@ -104,13 +104,7 @@ export default {
     }
   },
   methods: {
-    getLogin(e) {
-      console.log(this.username)
-      console.log(this.password)
-      e.preventDefault()
-    },
     handleLogin(user) {
-      
       this.loading = true;
       this.$store.dispatch("auth/login", user).then(
         () => {

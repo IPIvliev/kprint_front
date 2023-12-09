@@ -9,11 +9,6 @@ import Article from '../views/Article.vue'
 import Gallery from '../views/Gallery.vue'
 import Contact from '../views/Contact.vue'
 import NotFound from '../views/404.vue'
-import PanelMain from '../views/Panel.vue'
-import PanelEdit from '../views/PanelEdit.vue'
-import PanelPrinters from '../views/PanelPrinters.vue'
-import PanelModels from '../views/PanelModels.vue'
-import PanelStorage from '../views/PanelStorage.vue'
 
 const routes = [
   {
@@ -42,6 +37,16 @@ const routes = [
     component: News,
   },
   {
+    path: '/shop',
+    name: 'MainShop',
+    component: () => import('../views/Shop/MainShop.vue'),
+  },
+  {
+    path: '/study',
+    name: 'MainStudy',
+    component: () => import('../views/Study/MainStudy.vue'),
+  },
+  {
     path: '/news/:id',
     name: 'Article',
     component: Article,
@@ -50,6 +55,11 @@ const routes = [
     path: '/gallery',
     name: 'Gallery',
     component: Gallery
+  },
+  {
+    path: '/dealers',
+    name: 'Dealers',
+    component: () => import('../views/Dealers.vue'),
   },
   {
     path: '/contact',
@@ -68,28 +78,38 @@ const routes = [
   },
   {
     path: '/panel',
-    name: 'PanelMain',
-    component: PanelMain
-  },
-  {
-    path: '/panel/edit',
-    name: 'PanelEdit',
-    component: PanelEdit
-  },
-  {
-    path: '/panel/printers',
-    name: 'PanelPrinters',
-    component: PanelPrinters
-  },
-  {
-    path: '/panel/models',
-    name: 'PanelModels',
-    component: PanelModels
-  },
-  {
-    path: '/panel/storage',
-    name: 'PanelStorage',
-    component: PanelStorage
+    children: [
+      {
+        path: '',
+        name: 'Panel',
+        component: () => import('../views/Panel/Panel.vue'),
+      },
+      {
+        path: 'edit',
+        name: 'PanelEdit',
+        component: () => import('../views/Panel/PanelEdit.vue'),
+      },
+      {
+        path: 'shop',
+        name: 'PanelShop',
+        component: () => import('../views/Panel/PanelPrinters.vue'),
+      },
+      {
+        path: 'models',
+        name: 'PanelModels',
+        component: () => import('../views/Panel/PanelModels.vue'),
+      },      
+      {
+        path: 'study',
+        name: 'PanelStudy',
+        component: () => import('../views/Panel/PanelStorage.vue'),
+      },
+      {
+        path: 'ears',
+        name: 'PanelEars',
+        component: () => import('../views/Panel/PanelStorage.vue'),
+      },
+    ]
   },
 ]
 

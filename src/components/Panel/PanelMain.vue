@@ -12,15 +12,35 @@
 									</div>
 									<div class="panel__body">
 										<div class="row gy-1"> 
-											<div class="col-lg-6"> <a class="panel__item" href="#">
+											<div class="col-lg-6">
+												<a class="panel__item" href="#">
 													<div class="panel__item-img"> <img src="@/assets/img/panel_1.webp" alt=""></div>
-													<div class="panel__item-num"><span>46</span>моделей</div>
-													<div class="panel__item-plus"> </div></a></div>
-											<div class="col-lg-6"> <a class="panel__item" href="#">
-													<div class="panel__item-img"> <img src="@/assets/img/panel_2.webp" alt=""></div>
-													<div class="panel__item-num"><span>2</span>принтера</div>
-													<div class="panel__item-plus"> </div></a></div>
-											<div class="col-lg-3 col-md-6">
+													<div class="panel__item-num"><span>46</span>заказов<br>на печать</div>
+													<div class="panel__item-plus"> </div>
+												</a>
+											</div>
+											<div class="col-lg-6">
+												<a class="panel__item" href="#">
+													<div class="panel__item-img"><img src="@/assets/img/panel_2.webp" alt=""></div>
+													<div class="panel__item-num"><span>2</span>заказов<br> в магазине</div>
+													<div class="panel__item-plus"> </div>
+												</a>
+											</div>
+											<div class="col-lg-6">
+												<a class="panel__item" href="#">
+													<div class="panel__item-img"><img src="@/assets/img/study_courses.png" alt=""></div>
+													<div class="panel__item-num"><span>2</span>курсов<br>обучения</div>
+													<div class="panel__item-plus"> </div>
+												</a>
+											</div>
+											<div class="col-lg-6">
+												<a class="panel__item" href="#">
+													<div class="panel__item-img"><img src="@/assets/img/ears.svg" alt=""></div>
+													<div class="panel__item-num"><span>2</span>заказа<br> на ИУВ</div>
+													<div class="panel__item-plus"> </div>
+												</a>
+											</div>
+											<!-- <div class="col-lg-3 col-md-6">
 												<div class="panel__quantity"><span>58</span>Количество запусков</div>
 											</div>
 											<div class="col-lg-3 col-md-6">
@@ -31,7 +51,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6">
 												<div class="panel__quantity"><span>2</span>Ошибок печати</div>
-											</div>
+											</div> -->
 										</div>
 									</div>
 								</div>
