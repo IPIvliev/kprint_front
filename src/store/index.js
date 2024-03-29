@@ -6,8 +6,8 @@ const store = createStore({
   state: {
     products: [],
 
-    domain: 'http://localhost:8081',
-    // domain: 'https://krint.tech'
+    // domain: 'http://localhost:8081',
+    domain: 'https://krint.tech'
   },
   modules: {
     auth,

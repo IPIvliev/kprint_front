@@ -162,7 +162,7 @@
           </div>
         </div>
       </div>
-      <div class="header__line"></div>
+      <!-- <div class="header__line"></div> -->
     </div>
   </div>
   <!-- menu-->
@@ -176,6 +176,7 @@
               <li><router-link to="/about">О проекте</router-link></li>
               <li><router-link to="/shop">Магазин</router-link></li>
               <li><router-link to="/study">Корпоративный университет</router-link></li>
+              <li><router-link to="/print">3D печать на заказ</router-link></li>
               <li><router-link to="/innovations">ИТ услуги</router-link></li>
               <li><router-link to="/gallery">Галерея</router-link></li>
               <li><router-link to="/news">Новости</router-link></li>

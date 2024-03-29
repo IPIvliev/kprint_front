@@ -29,9 +29,240 @@
   --bs-danger: #dc3545;
   --bs-light: #f8f9fa;
   --bs-dark: #212529;
+  --bs-footer: #1E1F20;
   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+
+
+  --textprimary: rgba(34, 37, 45, 1);
+  --textsecondary: rgba(34, 37, 45, 0.7);
+  --texttretiary: rgba(34, 37, 45, 0.4);
+  --text-ivertedprimary: rgba(255, 255, 255, 1);
+  --text-ivertedsecondary: rgba(255, 255, 255, 0.7);
+  --fillsprimary: rgba(240, 241, 242, 1);
+  --fillssecondary: rgba(248, 248, 248, 1);
+  --fillstertiary: rgba(253, 253, 253, 1);
+  --fills-blueprimary: rgba(237, 242, 246, 1);
+  --fills-bluesecondary: rgba(242, 248, 252, 1);
+  --fills-bluetertiary: rgba(248, 250, 251, 1);
+  --colorsred: rgba(248, 59, 73, 1);
+  --colorsdark-red: rgba(216, 58, 86, 1);
+  --colorsblue: rgba(45, 133, 233, 1);
+  --colorsorange: rgba(240, 145, 77, 1);
+  --componentspurple: rgba(151, 71, 255, 1);
+  --grayswhite: rgba(255, 255, 255, 1);
+  --graysgray-5: rgba(34, 37, 45, 0.05);
+  --graysgray-10: rgba(34, 37, 45, 0.1);
+  --graysgray-20: rgba(34, 37, 45, 0.2);
+  --graysgray-30: rgba(34, 37, 45, 0.3);
+  --graysgray-40: rgba(34, 37, 45, 0.4);
+  --graysgray-50: rgba(34, 37, 45, 0.5);
+  --graysgray-60: rgba(34, 37, 45, 0.6);
+  --graysgray-90: rgba(34, 37, 45, 0.9);
+  --graysblack: rgba(34, 37, 45, 1);
+  --bgprimary: rgba(233, 235, 236, 1);
+  --borderprimary: rgba(236, 243, 250, 1);
+  --large-title-regular-font-family: "Inter", Helvetica;
+  --large-title-regular-font-weight: 400;
+  --large-title-regular-font-size: 52px;
+  --large-title-regular-letter-spacing: -1.04px;
+  --large-title-regular-line-height: 62px;
+  --large-title-regular-font-style: normal;
+  --large-title-semibold-font-family: "RF Dewi", Helvetica;
+  --large-title-semibold-font-weight: 400;
+  --large-title-semibold-font-size: 52px;
+  --large-title-semibold-letter-spacing: -1.04px;
+  --large-title-semibold-line-height: 62px;
+  --large-title-semibold-font-style: normal;
+  --large-title-bold-font-family: "RF Dewi", Helvetica;
+  --large-title-bold-font-weight: 700;
+  --large-title-bold-font-size: 52px;
+  --large-title-bold-letter-spacing: -1.04px;
+  --large-title-bold-line-height: 62px;
+  --large-title-bold-font-style: normal;
+  --title-1-regular-font-family: "RF Dewi", Helvetica;
+  --title-1-regular-font-weight: 400;
+  --title-1-regular-font-size: 42px;
+  --title-1-regular-letter-spacing: -0.84px;
+  --title-1-regular-line-height: 50px;
+  --title-1-regular-font-style: normal;
+  --title-1-semibold-font-family: "RF Dewi", Helvetica;
+  --title-1-semibold-font-weight: 400;
+  --title-1-semibold-font-size: 42px;
+  --title-1-semibold-letter-spacing: -0.84px;
+  --title-1-semibold-line-height: 50px;
+  --title-1-semibold-font-style: normal;
+  --title-1-bold-font-family: "RF Dewi", Helvetica;
+  --title-1-bold-font-weight: 700;
+  --title-1-bold-font-size: 42px;
+  --title-1-bold-letter-spacing: -0.84px;
+  --title-1-bold-line-height: 50px;
+  --title-1-bold-font-style: normal;
+  --title-2-regular-font-family: "RF Dewi", Helvetica;
+  --title-2-regular-font-weight: 400;
+  --title-2-regular-font-size: 32px;
+  --title-2-regular-letter-spacing: -0.64px;
+  --title-2-regular-line-height: 40px;
+  --title-2-regular-font-style: normal;
+  --title-2-semibold-font-family: "RF Dewi", Helvetica;
+  --title-2-semibold-font-weight: 400;
+  --title-2-semibold-font-size: 32px;
+  --title-2-semibold-letter-spacing: -0.64px;
+  --title-2-semibold-line-height: 40px;
+  --title-2-semibold-font-style: normal;
+  --title-2-bold-font-family: "RF Dewi", Helvetica;
+  --title-2-bold-font-weight: 700;
+  --title-2-bold-font-size: 32px;
+  --title-2-bold-letter-spacing: -0.64px;
+  --title-2-bold-line-height: 40px;
+  --title-2-bold-font-style: normal;
+  --title-3-regular-font-family: "RF Dewi", Helvetica;
+  --title-3-regular-font-weight: 400;
+  --title-3-regular-font-size: 28px;
+  --title-3-regular-letter-spacing: -0.56px;
+  --title-3-regular-line-height: 34px;
+  --title-3-regular-font-style: normal;
+  --title-3-semibold-font-family: "RF Dewi", Helvetica;
+  --title-3-semibold-font-weight: 400;
+  --title-3-semibold-font-size: 28px;
+  --title-3-semibold-letter-spacing: -0.56px;
+  --title-3-semibold-line-height: 34px;
+  --title-3-semibold-font-style: normal;
+  --title-3-bold-font-family: "RF Dewi", Helvetica;
+  --title-3-bold-font-weight: 700;
+  --title-3-bold-font-size: 28px;
+  --title-3-bold-letter-spacing: -0.56px;
+  --title-3-bold-line-height: 34px;
+  --title-3-bold-font-style: normal;
+  --subhead-1-regular-font-family: "RF Dewi", Helvetica;
+  --subhead-1-regular-font-weight: 400;
+  --subhead-1-regular-font-size: 22px;
+  --subhead-1-regular-letter-spacing: 0px;
+  --subhead-1-regular-line-height: 28px;
+  --subhead-1-regular-font-style: normal;
+  --subhead-1-semibold-font-family: "RF Dewi", Helvetica;
+  --subhead-1-semibold-font-weight: 400;
+  --subhead-1-semibold-font-size: 22px;
+  --subhead-1-semibold-letter-spacing: -0.44px;
+  --subhead-1-semibold-line-height: 28px;
+  --subhead-1-semibold-font-style: normal;
+  --subhead-1-bold-font-family: "RF Dewi", Helvetica;
+  --subhead-1-bold-font-weight: 700;
+  --subhead-1-bold-font-size: 22px;
+  --subhead-1-bold-letter-spacing: 0px;
+  --subhead-1-bold-line-height: 28px;
+  --subhead-1-bold-font-style: normal;
+  --subhead-2-regular-font-family: "RF Dewi", Helvetica;
+  --subhead-2-regular-font-weight: 400;
+  --subhead-2-regular-font-size: 20px;
+  --subhead-2-regular-letter-spacing: -0.4px;
+  --subhead-2-regular-line-height: 26px;
+  --subhead-2-regular-font-style: normal;
+  --subhead-2-semibold-font-family: "RF Dewi", Helvetica;
+  --subhead-2-semibold-font-weight: 400;
+  --subhead-2-semibold-font-size: 20px;
+  --subhead-2-semibold-letter-spacing: -0.4px;
+  --subhead-2-semibold-line-height: 26px;
+  --subhead-2-semibold-font-style: normal;
+  --subhead-2-bold-font-family: "RF Dewi", Helvetica;
+  --subhead-2-bold-font-weight: 700;
+  --subhead-2-bold-font-size: 20px;
+  --subhead-2-bold-letter-spacing: -0.4px;
+  --subhead-2-bold-line-height: 26px;
+  --subhead-2-bold-font-style: normal;
+  --body-regular-font-family: "RF Dewi", Helvetica;
+  --body-regular-font-weight: 400;
+  --body-regular-font-size: 17px;
+  --body-regular-letter-spacing: -0.17px;
+  --body-regular-line-height: 26px;
+  --body-regular-font-style: normal;
+  --body-semibold-font-family: "RF Dewi", Helvetica;
+  --body-semibold-font-weight: 400;
+  --body-semibold-font-size: 17px;
+  --body-semibold-letter-spacing: -0.17px;
+  --body-semibold-line-height: 26px;
+  --body-semibold-font-style: normal;
+  --body-bold-font-family: "RF Dewi", Helvetica;
+  --body-bold-font-weight: 700;
+  --body-bold-font-size: 17px;
+  --body-bold-letter-spacing: -0.17px;
+  --body-bold-line-height: 26px;
+  --body-bold-font-style: normal;
+  --caption-1-regular-font-family: "RF Dewi", Helvetica;
+  --caption-1-regular-font-weight: 400;
+  --caption-1-regular-font-size: 15px;
+  --caption-1-regular-letter-spacing: -0.3px;
+  --caption-1-regular-line-height: 20px;
+  --caption-1-regular-font-style: normal;
+  --caption-1-semibold-font-family: "RF Dewi", Helvetica;
+  --caption-1-semibold-font-weight: 400;
+  --caption-1-semibold-font-size: 15px;
+  --caption-1-semibold-letter-spacing: -0.3px;
+  --caption-1-semibold-line-height: 20px;
+  --caption-1-semibold-font-style: normal;
+  --caption-1-bold-font-family: "RF Dewi", Helvetica;
+  --caption-1-bold-font-weight: 700;
+  --caption-1-bold-font-size: 15px;
+  --caption-1-bold-letter-spacing: -0.3px;
+  --caption-1-bold-line-height: 20px;
+  --caption-1-bold-font-style: normal;
+  --caption-2-regular-font-family: "RF Dewi", Helvetica;
+  --caption-2-regular-font-weight: 400;
+  --caption-2-regular-font-size: 13px;
+  --caption-2-regular-letter-spacing: -0.26px;
+  --caption-2-regular-line-height: 18px;
+  --caption-2-regular-font-style: normal;
+  --caption-2-semibold-font-family: "RF Dewi", Helvetica;
+  --caption-2-semibold-font-weight: 400;
+  --caption-2-semibold-font-size: 13px;
+  --caption-2-semibold-letter-spacing: -0.26px;
+  --caption-2-semibold-line-height: 18px;
+  --caption-2-semibold-font-style: normal;
+  --caption-2-bold-font-family: "RF Dewi", Helvetica;
+  --caption-2-bold-font-weight: 700;
+  --caption-2-bold-font-size: 13px;
+  --caption-2-bold-letter-spacing: 0px;
+  --caption-2-bold-line-height: 18px;
+  --caption-2-bold-font-style: normal;
+  --caption-3-regular-font-family: "RF Dewi", Helvetica;
+  --caption-3-regular-font-weight: 400;
+  --caption-3-regular-font-size: 11px;
+  --caption-3-regular-letter-spacing: -0.22px;
+  --caption-3-regular-line-height: 16px;
+  --caption-3-regular-font-style: normal;
+  --caption-3-semibold-font-family: "RF Dewi", Helvetica;
+  --caption-3-semibold-font-weight: 400;
+  --caption-3-semibold-font-size: 11px;
+  --caption-3-semibold-letter-spacing: -0.22px;
+  --caption-3-semibold-line-height: 16px;
+  --caption-3-semibold-font-style: normal;
+  --caption-3-bold-font-family: "RF Dewi", Helvetica;
+  --caption-3-bold-font-weight: 700;
+  --caption-3-bold-font-size: 11px;
+  --caption-3-bold-letter-spacing: -0.22px;
+  --caption-3-bold-line-height: 16px;
+  --caption-3-bold-font-style: normal;
+  --tertiary: 0px 8px 12px 0px rgba(221, 227, 230, 0.2), -10px 34px 54px 0px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0px 8px 12px 0px rgba(221, 227, 230, 0.2);
+  --shadow-secondary: 0px 3.4259259700775146px 6.689815044403076px 0px rgba(0, 0, 0, 0.01),
+    0px 15.074073791503906px 13.851851463317871px 0px rgba(0, 0, 0, 0.02), 0px 37px 27.625px 0px rgba(0, 0, 0, 0.02),
+    0px 71.25926208496094px 54.14814758300781px 0px rgba(0, 0, 0, 0.02),
+    0px 119.90740966796875px 99.56018829345703px 0px rgba(0, 0, 0, 0.03), 0px 185px 170px 0px rgba(0, 0, 0, 0.04);
+  --tokens-4xs: 0px;
+  --tokens-3xs: 2px;
+  --tokens-2xs: 4px;
+  --tokens-xs: 6px;
+  --tokens-s: 8px;
+  --tokens-m: 12px;
+  --tokens-l: 16px;
+  --tokens-xl: 20px;
+  --tokens-2xl: 24px;
+  --tokens-3xl: 32px;
+  --tokens-4xl: 40px;
+  --tokens-5xl: 60px;
+  --tokens-6xl: 80px;
+
 }
 
 *,
@@ -7137,7 +7368,8 @@ textarea {
 body {
   height: 100%;
   min-width: 319px;
-  background-color: #E5E5E5;
+  /* background-color: #E5E5E5; */
+  background-color: var(--fillsprimary);
   font-family: "RFDewi", sans-serif;
   font-size: 18px;
   line-height: 1.5;
@@ -7217,7 +7449,7 @@ body.lock {
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
-  padding-bottom: 120px;
+  /* padding-bottom: 120px; */
 }
 
 .content--pbn {
@@ -7726,7 +7958,8 @@ body.lock {
 
 .header__container {
   padding: 54px 0;
-  background-color: #E5E5E5;
+  /* background-color: #E5E5E5; */
+  background-color: rgba(240, 241, 242, 1);
   position: relative;
   z-index: 10;
   -webkit-transition: 0.2s;
@@ -8619,7 +8852,8 @@ body.lock {
 .menu__btn {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
-  display: inline-flex;
+  /* display: inline-flex; */
+  display: flex;
   padding: 20px 32px;
   background: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -8762,9 +8996,9 @@ body.lock {
 
 .welcome {
   position: relative;
-  background-image: url(../img/grid.png);
-  background-position: bottom -300px right;
-  background-size: 100% auto;
+  background-image: url(../img/red_black_1.png);
+  /* background-position: bottom -300px right; */
+  background-size: 100% 700px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
@@ -8806,14 +9040,16 @@ body.lock {
 }
 
 .video {
-  position: relative;
+  background-color: #fff;
+  padding: 100px 0;
 }
 
 .video:after {
   content: "";
   display: block;
   height: 30%;
-  background-color: #fff;
+
+
   position: absolute;
   left: 0;
   right: 0;
@@ -8821,7 +9057,8 @@ body.lock {
 }
 
 .video__block {
-  background-color: #262B2D;
+  background-color: var(--fillssecondary);
+
   border-radius: 18px;
   overflow: hidden;
   position: relative;
@@ -9230,7 +9467,7 @@ body.lock {
 
 .usage {
   padding: 120px 0;
-  background-color: #fff;
+  background-color: var(--fillsprimary);
   overflow: hidden;
 }
 

@@ -41,6 +41,7 @@
             <!-- callback-->
             <callback-window />
             <!--	/callback-->
+            <WhiteWelcome/>
         </div>
 
         <footer-block />
@@ -49,6 +50,7 @@
 <script>
 
 import HeaderBlock from '../../components/HeaderBlock.vue'
+import WhiteWelcome from "../../components/elements/WhiteWelcome.vue"
 import FooterBlock from '../../components/FooterBlock.vue'
 import CallbackWindow from "../../components/elements/CallbackWindow.vue"
 import ProductCard from "../../components/Shop/ProductCard.vue"
@@ -64,7 +66,8 @@ export default {
         FooterBlock,
         HeaderBlock,
         ProductCard,
-        CallbackWindow
+        CallbackWindow,
+        WhiteWelcome
     },
     created() {
         this.$store.dispatch("fetchProducts");

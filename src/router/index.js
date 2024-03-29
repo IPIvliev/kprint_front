@@ -47,6 +47,11 @@ const routes = [
     component: () => import('../views/Study/MainStudy.vue'),
   },
   {
+    path: '/print',
+    name: 'MainPrint',
+    component: () => import('../views/Print/MainPrint.vue'),
+  },
+  {
     path: '/news/:id',
     name: 'Article',
     component: Article,

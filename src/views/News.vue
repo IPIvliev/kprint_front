@@ -2,6 +2,7 @@
   <div class="page">
     <header-block />
     <NewsPage />
+    <WhiteWelcome/>
     <footer-block />
   </div>
 </template>
@@ -9,6 +10,7 @@
 <script>
 // @ is an alias to /src
 import HeaderBlock from '../components/HeaderBlock.vue'
+import WhiteWelcome from "../components/elements/WhiteWelcome.vue"
 import NewsPage from '../components/NewsPage.vue'
 import FooterBlock from '../components/FooterBlock.vue'
 
@@ -17,7 +19,8 @@ export default {
   components: {
     NewsPage,
     FooterBlock,
-    HeaderBlock
+    HeaderBlock,
+    WhiteWelcome
   }
 }
 </script>

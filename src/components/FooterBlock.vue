@@ -6,7 +6,7 @@
       <div class="col-xxl-6 col-lg-8">
         <div class="row">
           <div class="col-12 col-md">
-            <div class="footer__logo"> <router-link to="/"><img src="../assets/img/logo_footer.svg" alt=""></router-link></div>
+            <div class="footer__logo"> <router-link to="/"><img src="../assets/img/logo_gray.png" alt=""></router-link></div>
             <div id="socialFrom">
               <div class="footer__social" id="socialReplace">
                 <div class="footer__title">Подпишитесь на нас:</div>
@@ -72,7 +72,7 @@
     </div>
     <div class="footer__line"></div>
     <div class="footer__bottom"> 
-      <p>&#169; 2021, Kulibin Print. Все права защищены.</p>
+      <p>&#169; 2023, ООО "НПП "3Д Аддитивные технологии". Все права защищены.</p>
       <div class="footer__dgdgf d-flex flex-wrap"><a href="#">Политика конфиденциальности</a><a href="#">Условия обслуживания</a></div>
     </div>
   </div>

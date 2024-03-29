@@ -52,6 +52,7 @@
     <!-- callback-->
     <callback-window />
     <!--	/callback-->
+    <WhiteWelcome/>
   </div>
   <footer-block/>
 </div>
@@ -60,9 +61,13 @@
 <script>
 // @ is an alias to /src
 import HeaderBlock from '../../components/HeaderBlock.vue'
+
+import WhiteWelcome from "../../components/elements/WhiteWelcome.vue"
+
 import FooterBlock from '../../components/FooterBlock.vue'
 import CallbackWindow from "../../components/elements/CallbackWindow.vue"
 import AdvantagesBlock from "../../components/AdvantagesBlock.vue"
+
 
 export default {
   name: 'Курсы обучения',
@@ -70,7 +75,8 @@ export default {
     FooterBlock,
     HeaderBlock,
     CallbackWindow,
-    AdvantagesBlock
+    AdvantagesBlock,
+
   }
 }
 </script>
