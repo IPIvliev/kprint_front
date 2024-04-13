@@ -1,5 +1,5 @@
 <template>
-    <div class="shop">
+    <div class="shop" :class="background">
       <div class="text-header-shop">
         <p class="header-shop">Купить фотополимерные материалы <br />и оборудование для 3Д-печати</p>
       </div>
@@ -57,6 +57,11 @@
       <div class="button-l-shop"><div class="lable-shop">Посмотреть весь каталог</div></div>
     </div>
 </template>
+<script>
+export default {
+  props: ['background'],
+}
+</script>
 <style>
 .shop {
   display: flex;

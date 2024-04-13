@@ -4,7 +4,7 @@
 
     <div class="content">
       <WhiteWelcome/>
-      <MainPageShop/>
+      <MainPageShop :background="'light_gray_background'"/>
       <MainPageVideo/>
       <UsageBlock/>
       <MainPageNews/>
@@ -54,6 +54,7 @@ export default {
   },
   created() {
         this.$store.dispatch("fetchProducts");
+        this.$store.dispatch("fetchCourses");
     },
     computed: {
         ProductsList () {

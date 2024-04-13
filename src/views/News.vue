@@ -1,8 +1,9 @@
 <template>
   <div class="page">
     <header-block />
-    <NewsPage />
-    <WhiteWelcome/>
+    <WhiteWelcome />
+    <NewsPage/>
+    
     <footer-block />
   </div>
 </template>
@@ -15,6 +16,7 @@ import NewsPage from '../components/NewsPage.vue'
 import FooterBlock from '../components/FooterBlock.vue'
 
 export default {
+
   name: 'News',
   components: {
     NewsPage,

@@ -43,8 +43,20 @@ const routes = [
   },
   {
     path: '/study',
-    name: 'MainStudy',
-    component: () => import('../views/Study/MainStudy.vue'),
+    children: [
+      {
+        path: '',
+        name: 'MainStudy',
+        component: () => import('../views/Study/MainStudy.vue'),
+      },
+      {
+        path: 'course/:id',
+        name: 'CoursePage',
+        component: () => import('@/views/Study/CoursePage.vue'),
+      },
+    ]
+    
+    
   },
   {
     path: '/print',
