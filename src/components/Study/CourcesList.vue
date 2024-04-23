@@ -8,7 +8,7 @@
             <router-link :to="{path: '/study/course/' + course.id }">
               <div class="row">
                 <div class="col-lg-3">
-                  <img src="@/assets/img/cource_img.png">
+                  <img class="course_photo" :src="course.photo" width="340" height="200">
                 </div>
                 <div class="col-lg-9">
                   <div class="row">
@@ -24,9 +24,9 @@
                     
                     <div class="col-lg-9">
                       <p>
-                        12 уроков 
+                        {{ course.lessons_number }} уроков 
                         <img class="icon-ellipse" src="@/assets/img/Ellipse.svg" /> 
-                        3 преподавателя 
+                        {{ course.teachers_number }} преподавателя 
                         <img class="icon-ellipse" src="@/assets/img/Ellipse.svg" />
                         20 часов</p>
                     </div>
@@ -69,6 +69,12 @@ a {
   box-shadow: 0px 8px 12px #dde2e533, -10px 34px 34px #0000000f;
   backdrop-filter: blur(8px) brightness(100%);
   -webkit-backdrop-filter: blur(8px) brightness(100%); 
+}
+
+.course_photo {
+  border-radius: 40px;
+  object-fit: cover;
+  object-position: 50% 50%;
 }
 
 .period {

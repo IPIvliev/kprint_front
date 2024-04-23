@@ -47,6 +47,7 @@
   --fills-bluesecondary: rgba(242, 248, 252, 1);
   --fills-bluetertiary: rgba(248, 250, 251, 1);
   --colorsred: rgba(248, 59, 73, 1);
+  --colorslight-red: rgba(224, 141, 158, 0.589);
   --colorsdark-red: rgba(216, 58, 86, 1);
   --colorsblue: rgba(45, 133, 233, 1);
   --colorsorange: rgba(240, 145, 77, 1);
@@ -7557,6 +7558,13 @@ body.lock {
 .btn--big {
   padding: 21px 85px 23px;
   font-size: 17px;
+  line-height: 20px;
+}
+
+.btn--small {
+  font-weight:400;
+  padding: 10px 10px 10px;
+  font-size: 15px;
   line-height: 20px;
 }
 

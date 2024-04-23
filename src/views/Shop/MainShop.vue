@@ -4,16 +4,21 @@
 
         <div class="content">
             <!-- news-->
-            <div class="news">
+            <div class="white_block light_gray_background">
             <div class="container">
                 <h1 class="title">Каталог продукции</h1>
                 <p class="news__text">В данном разделе мы делимся актуальными новостями об аддитивных технологиях, советами и знаниями.</p>
 
                 <div class="row gy-1">
-                    <ProductCard v-for="product in ProductsList" :key="product.id" 
-                        :product="product"
-                        />
-                
+                    <div class="col-3">
+                        <ShopFilter :filters="Category.filter_attrs" @selectFilter="ChangeFilter" @rangeFilter="ChangeRangeFilter" @priceFilter="ChangePriceFilter"/>
+                    </div>
+                    <div class="col-9">
+                        <FilterElement :filters="filters" @selectFilter="ChangeFilter"/>
+                        <div class="row">
+                            <ProductCard :products="ProductsList" columns="col-xl-4 col-lg-6 col-md-6 col-sm-12" />
+                        </div>
+                    </div>                
                 </div>
                 <div class="news__pagination"> 
                 <ul class="news__list"> 
@@ -39,8 +44,7 @@
             </div>
             <!--	/news-->
             <!-- callback-->
-            <callback-window />
-            <!--	/callback-->
+             <!--	/callback-->
             <WhiteWelcome/>
         </div>
 
@@ -52,33 +56,114 @@
 import HeaderBlock from '../../components/HeaderBlock.vue'
 import WhiteWelcome from "../../components/elements/WhiteWelcome.vue"
 import FooterBlock from '../../components/FooterBlock.vue'
-import CallbackWindow from "../../components/elements/CallbackWindow.vue"
-import ProductCard from "../../components/Shop/ProductCard.vue"
+import ShopFilter from "@/components/Shop/ShopFilter.vue"
+import ProductCard from "@/components/elements/Shop/Showcase/ProductCard.vue"
+import FilterElement from "@/components/elements/Shop/Showcase/FilterElement.vue"
+
 
 export default {
     
     data() {
         return {
-
+            filters: []
         }
     },
     components: {
         FooterBlock,
         HeaderBlock,
+        ShopFilter,
+        FilterElement,
         ProductCard,
-        CallbackWindow,
         WhiteWelcome
     },
     created() {
         this.$store.dispatch("fetchProducts");
+        this.$store.dispatch("fetchCategories");
     },
     computed: {
+
         ProductsList () {
+            if (this.filters != '') {
+
+                let filtered = this.$store.state.products
+                
+
+                this.filters.forEach (filter => {
+                    filtered = filtered.filter((product) => {
+                        return product.product_attrs_values.some(
+                            ({ value }) => value === filter.attr); 
+                     })
+                
+                })
+
+                return filtered
+            } else {
+                return this.$store.state.products
+            }
+        }, 
+
+        ProductsListOld () {
+            if (this.filters != '') {
+                return this.$store.state.products.filter((product) => {
+                    let result = product.product_attrs_values.some(
+                        // ({ value }) => value === 'Полупрозрачная'); 
+                        ({ value }) => { 
+                            const attrs = this.filters.map(filter => filter.attr)
+                            return attrs.includes(value) 
+                            // attrs.every(function(attr) { return attr === value })
+                        })
+                    return result; 
+                })
+            } else {
+                return this.$store.state.products
+            }
+        }, 
+        Category () {
             // const bodyParameters = {
             //     key: "value"
             // }
-            return this.$store.state.products
+            return this.$store.state.categories.filter(category => category.id === parseInt(this.$route.params.id))[0]
         },  
-    }  
+    },
+    methods: {
+        // Для чеклиста
+        // ChangeFilter(name, attr) {
+        //     if (this.filters.some(filter => filter.attr === attr)) {
+        //         this.filters = this.filters.filter(item => item.attr !== attr)
+        //     } else {
+        //         this.filters.push({name, attr, checked: true})
+        //     }
+
+        // Для радиокнопки
+        ChangeFilter(name, attr) {
+            if (this.filters.some(filter => filter.name === name)) {
+                if (attr === 'all') {
+                    this.filters = this.filters.filter(item => item.name !== name)
+                } else {
+
+                    this.filters = this.filters.filter(item => item.name !== name)
+                    this.filters.push({name, attr, checked: true})
+                }
+
+            } else {
+                if (attr != 'all') {
+                    this.filters.push({name, attr, checked: true})
+                }
+            }
+        },
+        ChangeRangeFilter(th) {
+            console.log("Range Filter")
+        },
+        ChangePriceFilter(position, value) {
+            console.log("Price Filter", position, value)
+            if (position === 'from') {
+                console.log('df')
+                this.ProductsList.filter(product => product.price >= value)
+            }
+        }
+    }
 }
 </script>
+<style scoped>
+
+</style>

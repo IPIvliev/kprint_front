@@ -38,8 +38,24 @@ const routes = [
   },
   {
     path: '/shop',
-    name: 'MainShop',
-    component: () => import('../views/Shop/MainShop.vue'),
+    children: [
+      {
+        path: '',
+        name: 'MainShop',
+        component: () => import('@/views/Shop/ShopCategories.vue'),
+      },
+      {
+        path: 'categories/:id',
+        name: 'Categories',
+        component: () => import('@/views/Shop/ShopCategories.vue'),
+      },
+      {
+        path: 'categories/:id/showcase',
+        name: 'Showcase',
+        component: () => import('@/views/Shop/MainShop.vue'),
+      },
+
+    ]
   },
   {
     path: '/study',
