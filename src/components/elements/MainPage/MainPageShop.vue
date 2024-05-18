@@ -5,8 +5,9 @@
       
 
         <div class="row gy-1 shop">
-
-            <ProductCard :products="ProductsList" columns="col-xl-3 col-lg-4 col-md-6" />
+          <div class="col-xl-3 col-lg-4 col-md-6" v-for="product in ProductsList" :key="product.id" >
+            <ProductCard :product="product" />
+          </div>
 
 
         </div>

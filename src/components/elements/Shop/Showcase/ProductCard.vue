@@ -1,55 +1,59 @@
 <template>
-  <div :class="columns" v-for="product in products" :key="product.id" >
-    <div class="item-card-shop">
-      <div class="div-shop-item">
-        <div class="img-shop-item"><img class="img-2-shop-item" :src="product.photo" height="262"/></div>
+  
+    <router-link :to="{path: '/shop/categories/' + product.category + '/' + product.id }">
+      <div class="item-card-shop">
         <div class="div-shop-item">
-          <div class="rating-stock-m-shop-item">
-            <div class="rating-shop-item">
-              <img class="icons-small-shop-item" src="@/assets/img/icon_Star.svg" />
-              <img class="icons-small-shop-item" src="@/assets/img/icon_Star.svg" />
-              <img class="icons-small-shop-item" src="@/assets/img/icon_Star.svg" />
-              <img class="icons-small-shop-item" src="@/assets/img/icon_Star.svg" />
-              <img class="icons-small-shop-item" src="@/assets/img/icon_Star.svg" />
+          <div class="img-shop-item"><img class="img-2-shop-item" :src="product.photo" height="262"/></div>
+          <div class="div-shop-item">
+            <div class="rating-stock-m-shop-item">
+              <div class="rating-shop-item">
+                <img class="icons-small-shop-item" src="@/assets/img/icon_Star.svg" />
+                <img class="icons-small-shop-item" src="@/assets/img/icon_Star.svg" />
+                <img class="icons-small-shop-item" src="@/assets/img/icon_Star.svg" />
+                <img class="icons-small-shop-item" src="@/assets/img/icon_Star.svg" />
+                <img class="icons-small-shop-item" src="@/assets/img/icon_Star.svg" />
+              </div>
+              <div class="stock-shop-item">
+                <ProductStock :stock="product.stock" />
+              </div>
             </div>
-            <div class="stock-shop-item">
-              <img class="icons-small-shop-item" src="@/assets/img/icon_V.svg" />
-              <div class="name-shop-item">42 шт. в наличии</div>
+            <div class="item-shop-item">
+              <div class="description-shop-item">Специальные смолы</div>
+              <p class="text-wrapper-shop-item">
+                {{ product.name }}
+              </p>
             </div>
           </div>
-          <div class="item-shop-item">
-            <div class="description-shop-item">Специальные смолы</div>
-            <p class="text-wrapper-shop-item">
-              {{ product.name }}
-            </p>
+        </div>
+        <div class="footer-shop-item">
+          <div class="price-shop-item">
+            <!-- <div class="before-shop-item">
+              <div class="overlap-group-shop-item">
+                <div class="before-2-shop-item">3 000 ₽</div>
+                <div class="rectangle-shop-item"></div>
+              </div>
+            </div> -->
+            <div class="now-shop-item">{{ getPrice(product.price) }} ₽</div>
+          </div>
+          <div class="buttons-shop-item">
+            <div class="item-card-button-m-shop-item"><img class="icons-medium-shop-item" src="@/assets/img/medium.svg" /></div>
+            <div class="item-card-button-m-2-shop-item">
+              <img class="icons-small-2-shop-item" src="@/assets/img/small-5.svg" />
+              <div class="text-wrapper-2-shop-item">В корзину</div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="footer-shop-item">
-        <div class="price-shop-item">
-          <!-- <div class="before-shop-item">
-            <div class="overlap-group-shop-item">
-              <div class="before-2-shop-item">3 000 ₽</div>
-              <div class="rectangle-shop-item"></div>
-            </div>
-          </div> -->
-          <div class="now-shop-item">8 000 ₽</div>
-        </div>
-        <div class="buttons-shop-item">
-          <div class="item-card-button-m-shop-item"><img class="icons-medium-shop-item" src="@/assets/img/medium.svg" /></div>
-          <div class="item-card-button-m-2-shop-item">
-            <img class="icons-small-2-shop-item" src="@/assets/img/small-5.svg" />
-            <div class="text-wrapper-2-shop-item">В корзину</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    </router-link>
+
 </template>
 
 <script>
+import ProductStock from "@/components/elements/Shop/ProductStock.vue"
+
 export default {
-  props: ['products', 'columns'],
+  props: ['product', ],
+  components: { ProductStock },
   data() {
     return {
 
@@ -57,6 +61,13 @@ export default {
   },
   computed: {
 
+  },
+  methods: {
+    getPrice(price) {
+      price = String(price).split('.')
+      price = price[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      return price
+    }
   }
 }
 </script>
@@ -145,18 +156,6 @@ export default {
   gap: var(--tokens-xs);
   position: relative;
   flex: 0 0 auto;
-}
-
-.name-shop-item {
-  width: fit-content;
-  font-family: "RF Dewi-Regular", Helvetica;
-  color: var(--textsecondary);
-  font-size: 13px;
-  letter-spacing: -0.26px;
-  line-height: 18px;
-  white-space: nowrap;
-  position: relative;
-  font-weight: 400;
 }
 
 .item-shop-item {

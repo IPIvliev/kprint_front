@@ -18,7 +18,7 @@
         <!-- halfitems-->
         <!--	/halfitems-->
         <!-- callback-->
-        <GalleryBlock/>
+        <GalleryBlock />
         <AlreadyStudy />
         <!--	/callback-->
        
@@ -67,18 +67,18 @@
     
       },
       data() {
-      return {
-        id: this.$route.params.id,
-      }
-    },
-    created() {
-      this.$store.dispatch("fetchCourse", this.id);
-    },
-    computed: {
-      GetCourse() {
-        return this.$store.state.course
+        return {
+          id: this.$route.params.id,
+        }
       },
-    }
+      created() {
+        this.$store.dispatch("fetchCourse", this.id);
+      },
+      computed: {
+        GetCourse() {
+          return this.$store.state.course
+        },
+      }
     }
 </script>
 <style scoped>

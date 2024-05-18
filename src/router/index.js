@@ -50,11 +50,20 @@ const routes = [
         component: () => import('@/views/Shop/ShopCategories.vue'),
       },
       {
+        path: 'categories/:id/:productid',
+        name: 'Product',
+        component: () => import('@/views/Shop/ProductPage.vue'),
+      },
+      {
         path: 'categories/:id/showcase',
         name: 'Showcase',
         component: () => import('@/views/Shop/MainShop.vue'),
       },
-
+      {
+        path: 'cart',
+        name: 'Cart',
+        component: () => import('@/views/Shop/Cart.vue'),
+      },
     ]
   },
   {

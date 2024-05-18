@@ -1,14 +1,12 @@
 <template>
   <router-view/>
+  <CartSticky />
 </template>
 
 <script>
+import CartSticky from './components/elements/Shop/CartSticky.vue';
 
 export default {
-
+  components: { CartSticky }
 }
 </script>
-
-<style>
-  /* @import 'assets/css/libs/swiper-bundle.min.css'; */
-</style>

@@ -6,6 +6,7 @@ const store = createStore({
   state: {
     categories: [],
     products: [],
+    product: [],
     courses: [],
     course: [],
 
@@ -23,13 +24,18 @@ const store = createStore({
       state.products = productsData.map(product => {
         return {
           id: product.id,
+          category: product.category,
           name: product.name,
           description: product.description,
           price: product.price,
+          stock: product.stock,
           photo: product.photo,
           product_attrs_values: product.product_attrs_values
         };
       });
+    },
+    setProductData(state, productData) {
+      state.product = productData
     },
     setCoursesData(state, coursesData) {
       state.courses = coursesData.map(course => {
@@ -92,6 +98,29 @@ const store = createStore({
         .catch(e => {
           console.log(e); 
         });
+    },
+    fetchCategoryProducts({ commit, state }, id) {
+      axios
+      .get('http://localhost:8081/api/shop/categories/' + Number(id), {
+      })
+      .then(response => {
+        console.log(response.data.products)
+        commit("setProductsData", response.data.products);
+      })
+      .catch(e => {
+        console.log(e); 
+      });
+    },
+    fetchProduct({ commit, state }, id) {
+      axios
+      .get('http://localhost:8081/api/shop/products/' + Number(id), {
+      })
+      .then(response => {
+        commit("setProductData", response.data);
+      })
+      .catch(e => {
+        console.log(e); 
+      });
     },
     fetchCourses({ commit, state }) {
       axios

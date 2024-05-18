@@ -7,15 +7,39 @@
                 <div class="filter_body">
                     <ul class="filter_list" v-for="attr in filter.filter_attrs_list_values" v-if="filter.type=='C'">
                         <li class="filter_element">
-                            <input class="filter-check-input" type="radio" :value="attr.value" :checked="filter.name" :id="attr.id" @click="$emit('selectFilter', filter.title, attr.value)">
+                            <input class="filter-check-input" 
+                                type="radio" 
+                                :value="attr.value" 
+                                v-model="filter.name"
+                                :checked="attr.name"
+                                :id="attr.id" 
+                                @click="$emit('selectFilter', filter.title, attr.value)"
+                            >
+
                             <!-- <input class="filter-check-input" type="checkbox" :id="attr.id" @click="$emit('selectFilter', filter.title, attr.value)"> -->
                             <label :for="attr.id">
                                 {{ attr.value }}<span class="filter_element_color" v-if="attr.color" :style="{'background-color': attr.color}"></span>
                             </label>
                             
                         </li>
+                        
                     </ul>
-                    <span class="filter_clear" v-if="filter.type=='C'" @click="$emit('selectFilter', filter.title, 'all'); RemoveFilter(filter.name)">Сбросить фильтр "{{ filter.title }}"</span>
+                    <ul v-if="filter.type=='C'">
+                        <li>
+                            <input class="filter-check-input" 
+                                type="radio" 
+                                value="all" 
+                                v-model="filter.name"
+                                :id="filter.name" 
+                                checked="true"
+                                @click="$emit('selectFilter', filter.title, 'all')"
+                            >
+                            <label :for="filter.name">
+                                Все варианты
+                            </label>
+                        </li>
+                    </ul>
+                    <!-- <span class="filter_clear" v-if="filter.type=='C'" @click="$emit('selectFilter', filter.title, 'all'); RemoveFilter(filter.name)">Сбросить фильтр "{{ filter.title }}"</span> -->
                     <div v-for="attr in filter.filter_attrs_list_values" v-if="filter.type=='R'">
                         <div class="row">
                             <div class="col-6">
@@ -52,13 +76,23 @@
 export default {
     props: ['filters','selectedFilters'],
     emits: ['selectFilter', 'rangeFilter', 'priceFilter'],
+    data() {
+        return {
+            filter_name: '',
+        }
+    },
     created() {
 
     },
     methods: {
         RemoveFilter(filter_name) {
+
             console.log("hi!")
-            filter_name = false
+            /* For Radio */
+            // filter_name = false
+
+            /* For Checkbox */
+            filter_name = 'all'
         }
     }
 }

@@ -3,20 +3,28 @@
         <header-block />
 
         <div class="content">
-            <!-- news-->
             <div class="white_block light_gray_background">
             <div class="container">
+                <div class="bread">
+                    <router-link to="/">Главная</router-link>
+                    <span class="arrow">></span>
+                    <router-link to="/shop">Магазин</router-link>
+                    <span class="arrow">></span>
+                    <router-link :to="{path: '/shop/categories/' + Category.id + '/showcase'}">{{ Category.title }}</router-link>
+                  </div>
                 <h1 class="title">Каталог продукции</h1>
-                <p class="news__text">В данном разделе мы делимся актуальными новостями об аддитивных технологиях, советами и знаниями.</p>
+                <p class="news__text">Покупайте 3Д принтеры, расходные материалы для 3D печати и прочее оборудование в области аддитивных технологий.</p>
 
                 <div class="row gy-1">
-                    <div class="col-3">
+                    <div class="col-md-3 col-sm-12">
                         <ShopFilter :filters="Category.filter_attrs" @selectFilter="ChangeFilter" @rangeFilter="ChangeRangeFilter" @priceFilter="ChangePriceFilter"/>
                     </div>
-                    <div class="col-9">
+                    <div class="col-md-9 col-sm-12">
                         <FilterElement :filters="filters" @selectFilter="ChangeFilter"/>
                         <div class="row">
-                            <ProductCard :products="ProductsList" columns="col-xl-4 col-lg-6 col-md-6 col-sm-12" />
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12" v-for="product in ProductsList" :key="product.id" >
+                                <ProductCard :product="product" />
+                            </div>
                         </div>
                     </div>                
                 </div>
@@ -65,7 +73,13 @@ export default {
     
     data() {
         return {
-            filters: []
+            filters: [],
+            priceFilter: {
+                from: '',
+                to: ''
+            },
+            products: [],
+            id: this.$route.params.id,
         }
     },
     components: {
@@ -77,7 +91,7 @@ export default {
         WhiteWelcome
     },
     created() {
-        this.$store.dispatch("fetchProducts");
+        this.$store.dispatch("fetchCategoryProducts", this.id);
         this.$store.dispatch("fetchCategories");
     },
     computed: {
@@ -95,29 +109,31 @@ export default {
                      })
                 
                 })
+                
+                this.products = filtered
 
-                return filtered
+                if (this.priceFilter.from) {
+                    this.products = this.products.filter(product => product.price >= Number(this.priceFilter.from))
+                }
+                if (this.priceFilter.to) {
+                    this.products = this.products.filter(product => product.price < Number(this.priceFilter.to))
+                }
+
+                return this.products
             } else {
-                return this.$store.state.products
+                this.products = this.$store.state.products
+
+                if (this.priceFilter.from) {
+                    this.products = this.products.filter(product => product.price >= Number(this.priceFilter.from))
+                }
+                if (this.priceFilter.to) {
+                    this.products = this.products.filter(product => product.price < Number(this.priceFilter.to))
+                }
+
+                return this.products
             }
         }, 
 
-        ProductsListOld () {
-            if (this.filters != '') {
-                return this.$store.state.products.filter((product) => {
-                    let result = product.product_attrs_values.some(
-                        // ({ value }) => value === 'Полупрозрачная'); 
-                        ({ value }) => { 
-                            const attrs = this.filters.map(filter => filter.attr)
-                            return attrs.includes(value) 
-                            // attrs.every(function(attr) { return attr === value })
-                        })
-                    return result; 
-                })
-            } else {
-                return this.$store.state.products
-            }
-        }, 
         Category () {
             // const bodyParameters = {
             //     key: "value"
@@ -155,15 +171,32 @@ export default {
             console.log("Range Filter")
         },
         ChangePriceFilter(position, value) {
-            console.log("Price Filter", position, value)
-            if (position === 'from') {
-                console.log('df')
-                this.ProductsList.filter(product => product.price >= value)
+            if (position == 'from') {
+                this.priceFilter.from = value
+            } else {
+                this.priceFilter.to = value
             }
-        }
+        },
     }
 }
 </script>
 <style scoped>
+.arrow {
+  margin: 0 10px;
+}
 
+.bread {
+  color: var(--bs-gray)
+}
+
+.bread a:active,
+.bread a {
+  text-decoration: none;
+  color: var(--bs-gray)
+}
+
+.bread a:hover {
+  text-decoration: none;
+  color: #D83A56;
+}
 </style>
