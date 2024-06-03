@@ -9,6 +9,7 @@ const store = createStore({
     product: [],
     courses: [],
     course: [],
+    pochta_offices: [],
 
     domain: 'http://localhost:8081',
     // domain: 'https://krint.tech'
@@ -58,6 +59,9 @@ const store = createStore({
     setCourseData(state, courseData) {
       state.course = courseData
     },
+    setPochtaOffices(state, pochtaOffices) {
+      state.pochta_offices = pochtaOffices
+    },
   },
   actions: {
 
@@ -94,6 +98,21 @@ const store = createStore({
         })
         .then(response => {
           commit("setProductsData", response.data);
+        })
+        .catch(e => {
+          console.log(e); 
+        });
+    },
+    fetchPochtaOffices({ commit, state }, location) {
+      axios
+        .get('http://localhost:8081/api/shop/pochta_rossii/offices', {
+          params: {
+             lat: location.lat, 
+             lon: location.lon
+          }
+        })
+        .then(response => {
+          commit("setPochtaOffices", response.data);
         })
         .catch(e => {
           console.log(e); 

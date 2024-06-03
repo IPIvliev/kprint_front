@@ -1,5 +1,5 @@
 <template>
-    <div class="cart" v-if="this.$route.name != 'Cart'">
+    <div class="cart" v-show="this.$route.name != ('Cart' || 'ShopOrder')">
         <router-link to="/shop/cart">
             <img :src="'../../../images/icons/cart.svg'" width="50" height="50"/>
         </router-link>

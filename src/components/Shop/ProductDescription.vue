@@ -39,10 +39,13 @@
                     <div class="row">
                         <div class="col-xl-6 col-sm-12">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-4">
                                     <div class="product_price">{{ getPrice(product.price) }} ₽</div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-4 middle-element">
+                                    <ProductAmount/>
+                                </div>
+                                <div class="col-4">
                                     <div class="btn btn--red">
                                         <img class="basket_product" src="@/assets/img/small-5.svg" />
                                         <div class="text_btn_product">В корзину</div>
@@ -85,10 +88,11 @@
 </template>
 <script>
 import ProductStock from "@/components/elements/Shop/ProductStock.vue"
+import ProductAmount from '@/components/elements/Shop/ProductAmount.vue'
 
     export default {
         props: ['background', 'product'],
-        components: { ProductStock },
+        components: { ProductStock, ProductAmount },
         data() {
             return {
                 current_image: ''
@@ -115,6 +119,12 @@ import ProductStock from "@/components/elements/Shop/ProductStock.vue"
     }
 </script>
 <style scoped>
+.middle-element {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .white_block {
     padding-top: 10px;
 }
