@@ -8,7 +8,7 @@
 							<div class="col-xxl-9 col-xl-8">
 								<div class="panel__block">
 									<div class="panel__head">
-										<div class="panel__title">Панель управления</div>
+										<div class="panel__title">Покупатель</div>
 									</div>
 									<div class="panel__body">
 										<div class="row gy-1"> 
@@ -33,13 +33,13 @@
 													<div class="panel__item-plus"> </div>
 												</a>
 											</div>
-											<div class="col-lg-6">
+											<!-- <div class="col-lg-6">
 												<a class="panel__item" href="#">
 													<div class="panel__item-img"><img src="@/assets/img/ears.svg" alt=""></div>
 													<div class="panel__item-num"><span>2</span>заказа<br> на ИУВ</div>
 													<div class="panel__item-plus"> </div>
 												</a>
-											</div>
+											</div> -->
 											<!-- <div class="col-lg-3 col-md-6">
 												<div class="panel__quantity"><span>58</span>Количество запусков</div>
 											</div>

@@ -151,11 +151,11 @@ const routes = [
         name: 'PanelStudy',
         component: () => import('../views/Panel/PanelStorage.vue'),
       },
-      {
-        path: 'ears',
-        name: 'PanelEars',
-        component: () => import('../views/Panel/PanelStorage.vue'),
-      },
+      // {
+      //   path: 'ears',
+      //   name: 'PanelEars',
+      //   component: () => import('../views/Panel/PanelStorage.vue'),
+      // },
     ]
   },
 ]

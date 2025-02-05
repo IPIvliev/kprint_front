@@ -43,13 +43,13 @@
                                     <div class="product_price">{{ getPrice(product.price) }} ₽</div>
                                 </div>
                                 <div class="col-4 middle-element">
-                                    <ProductAmount/>
+                                    <ProductAmount :product="product"/>
                                 </div>
                                 <div class="col-4">
-                                    <div class="btn btn--red">
+                                    <button class="btn btn--red" :disabled="!productIsInStock(product)" @click="addProductToCart">
                                         <img class="basket_product" src="@/assets/img/small-5.svg" />
                                         <div class="text_btn_product">В корзину</div>
-                                    </div>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -98,6 +98,9 @@ import ProductAmount from '@/components/elements/Shop/ProductAmount.vue'
                 current_image: ''
             }
         },
+        beforeCreate() {
+            this.$store.commit('shop/initialiseCart');
+        },
         computed: {
             GetPhotos() {
                 let photos = []
@@ -107,13 +110,24 @@ import ProductAmount from '@/components/elements/Shop/ProductAmount.vue'
                 })
                 this.current_image = this.product.photo
                 return photos
-            }
+            },
+            getCart() {
+                console.log("localStorage ", localStorage.getItem('cart'))
+                // return localStorage.getItem('cart')
+                return this.$store.state.shop.cart
+            },
+            productIsInStock() {
+                return this.$store.getters['shop/productIsInStock']
+            },
         },
         methods: {
             getPrice(price) {
-            price = String(price).split('.')
-            price = price[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                price = String(price).split('.')
+                price = price[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
             return price
+            },
+            addProductToCart() {
+                this.$store.dispatch("shop/AddProductToCart", this.product)
             }
         }
     }

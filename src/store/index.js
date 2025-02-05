@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import { auth } from "./auth.module";
+import { shop } from "./shop/index.js";
 import axios from 'axios'
 
 const store = createStore({
@@ -10,12 +11,19 @@ const store = createStore({
     courses: [],
     course: [],
     pochta_offices: [],
+    sdek_offices: [],
+    user_location: [],
+    delivery_price: [],
 
     domain: 'http://localhost:8081',
     // domain: 'https://krint.tech'
   },
+  getters: {
+
+  },
   modules: {
     auth,
+    shop,
   },
   mutations: {
     setCategoriesData(state, categoriesData) {
@@ -29,6 +37,7 @@ const store = createStore({
           name: product.name,
           description: product.description,
           price: product.price,
+          mass: product.mass,
           stock: product.stock,
           photo: product.photo,
           product_attrs_values: product.product_attrs_values
@@ -61,6 +70,15 @@ const store = createStore({
     },
     setPochtaOffices(state, pochtaOffices) {
       state.pochta_offices = pochtaOffices
+    },
+    setSdekOffices(state, pochtaOffices) {
+      state.sdek_offices = pochtaOffices
+    },
+    setPrice(state, DeliveryPrice) {
+      state.delivery_price = DeliveryPrice
+    },
+    setUserLocation(state, userLocation) {
+      state.user_location = userLocation
     },
   },
   actions: {
@@ -103,12 +121,32 @@ const store = createStore({
           console.log(e); 
         });
     },
+    fetchUserLocation({ commit, state }) {
+      axios
+        .get('https://ipgeolocation.abstractapi.com/v1/?api_key=28400f98798f43aa9c5bd5fa15be0ce0', {
+          headers: {
+            // 'Authorization': `Bearer ${token}`,
+            // 'Basic': 'YWRtaW5AaW5mbzgwOTc6QXZpYXRvcnNrYXlhMTY=',
+            // 'Content-Type': 'application/json',
+            // "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+            // "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
+            // 'Access-Control-Allow-Origin': '*',
+          },
+        })
+        .then(response => {
+          commit("setUserLocation", response.data);
+        })
+        .catch(e => {
+          console.log(e); 
+        });
+    },
     fetchPochtaOffices({ commit, state }, location) {
       axios
         .get('http://localhost:8081/api/shop/pochta_rossii/offices', {
+          
           params: {
              lat: location.lat, 
-             lon: location.lon
+             lon: location.lon,
           }
         })
         .then(response => {
@@ -118,12 +156,57 @@ const store = createStore({
           console.log(e); 
         });
     },
+    fetchSdekOffices({ commit, state }, postal_code) {
+      console.log('Postal Sdek code: ', postal_code)
+      axios
+        .get('http://localhost:8081/api/shop/sdek/offices', {
+          
+          params: {
+            postal_code: postal_code,
+          }
+        })
+        .then(response => {
+          commit("setSdekOffices", response.data);
+        })
+        .catch(e => {
+          console.log(e); 
+        });
+    },
+    fetchPochtaPrice({ commit, state }, data) {
+      axios
+        .get('http://localhost:8081/api/shop/pochta_rossii/price', {
+          params: {
+             destination: data.destination,
+             products_mass: data.products_mass
+          }
+        })
+        .then(response => {
+          commit("setPrice", response.data);
+        })
+        .catch(e => {
+          console.log(e); 
+        });
+    },
+    fetchSdekPrice({ commit, state }, data) {
+      axios
+        .get('http://localhost:8081/api/shop/sdek/price', {
+          params: {
+             destination: data.destination,
+             products_mass: data.products_mass
+          }
+        })
+        .then(response => {
+          commit("setPrice", response.data);
+        })
+        .catch(e => {
+          console.log(e)
+        });
+    },
     fetchCategoryProducts({ commit, state }, id) {
       axios
       .get('http://localhost:8081/api/shop/categories/' + Number(id), {
       })
       .then(response => {
-        console.log(response.data.products)
         commit("setProductsData", response.data.products);
       })
       .catch(e => {
@@ -171,7 +254,6 @@ const store = createStore({
           console.log(e); 
         });
     },
-    
   }
 })
 

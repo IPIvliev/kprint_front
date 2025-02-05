@@ -18,7 +18,7 @@
                         <router-link to="/panel" class="panel__menu-link"><span class="panel__menu-icon">
 														<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 															<path d="M6.75 15.7501H11.25M6.75 15.7501H5.25C3.59314 15.7501 2.25 14.4069 2.25 12.7501V8.0308C2.25 6.98175 2.79796 6.00891 3.69509 5.46519L7.44509 3.19246C8.40083 2.61325 9.59918 2.61325 10.5549 3.19246L14.3049 5.46519C15.2021 6.00891 15.75 6.98175 15.75 8.0308V12.7501C15.75 14.4069 14.4068 15.7501 12.75 15.7501H11.25H6.75ZM6.75 15.7501V12.7501C6.75 11.5074 7.75732 10.5001 9 10.5001C10.2427 10.5001 11.25 11.5074 11.25 12.7501V15.7501H6.75Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-														</svg></span>Панель управления</router-link></li>
+														</svg></span>Покупатель</router-link></li>
 											<li>
                         <router-link class="panel__menu-link" to="/panel/shop">
                           <span class="panel__menu-icon">
@@ -43,16 +43,60 @@
                           	Обучение<span class="panel__menu-num">46</span>
                         </router-link>
                     </li>
-					<li>
+					<!-- <li>
                         <router-link class="panel__menu-link" to="/panel/ears">
                           	<span class="panel__menu-icon">
 								<img src="@/assets/img/Headset.svg" alt="">
                           	</span>
                           	Сурдология<span class="panel__menu-num">46</span>
                         </router-link>
-                    </li>
+                    </li> -->
 										</ul>
 									</div>
+
+									<div class="panel__body">
+										<ul class="panel__menu">
+											<li>
+                        <router-link to="/panel" class="panel__menu-link"><span class="panel__menu-icon">
+														<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+															<path d="M6.75 15.7501H11.25M6.75 15.7501H5.25C3.59314 15.7501 2.25 14.4069 2.25 12.7501V8.0308C2.25 6.98175 2.79796 6.00891 3.69509 5.46519L7.44509 3.19246C8.40083 2.61325 9.59918 2.61325 10.5549 3.19246L14.3049 5.46519C15.2021 6.00891 15.75 6.98175 15.75 8.0308V12.7501C15.75 14.4069 14.4068 15.7501 12.75 15.7501H11.25H6.75ZM6.75 15.7501V12.7501C6.75 11.5074 7.75732 10.5001 9 10.5001C10.2427 10.5001 11.25 11.5074 11.25 12.7501V15.7501H6.75Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+														</svg></span>Владелец принтера</router-link></li>
+											<li>
+                        <router-link class="panel__menu-link" to="/panel/shop">
+                          <span class="panel__menu-icon">
+							  <img src="@/assets/img/ShoppingCart.svg" alt="">
+                            </span>
+                            Заказы в магазине<span class="panel__menu-num">2</span>
+                        </router-link>
+                      </li>
+											<li>
+                        <router-link class="panel__menu-link" to="/panel/models">
+                          <span class="panel__menu-icon">
+							<img src="@/assets/img/PuzzlePiece.svg" alt="">
+                          </span>
+                          Заказы на 3Д печать<span class="panel__menu-num">46</span>
+                        </router-link>
+                      </li>
+					<li>
+                        <router-link class="panel__menu-link" to="/panel/study">
+                          	<span class="panel__menu-icon">
+								<img src="@/assets/img/GraduationCap.svg" alt="">
+                          	</span>
+                          	Обучение<span class="panel__menu-num">46</span>
+                        </router-link>
+                    </li>
+					<!-- <li>
+                        <router-link class="panel__menu-link" to="/panel/ears">
+                          	<span class="panel__menu-icon">
+								<img src="@/assets/img/Headset.svg" alt="">
+                          	</span>
+                          	Сурдология<span class="panel__menu-num">46</span>
+                        </router-link>
+                    </li> -->
+										</ul>
+									</div>
+
+
 									<div class="panel__footer"> <a class="panel__back" href="#">
 											<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<g clip-path="url(#clip0_78_6362)">
