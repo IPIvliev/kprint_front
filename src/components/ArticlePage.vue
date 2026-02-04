@@ -61,7 +61,7 @@
           <div class="post__dateblock nout-visible">
             <div class="post__daterow">
               <div class="post__datetitle">Дата публикации:</div>
-              <div class="post__datetext">28 ноября, 2021</div>
+              <div class="post__datetext">База знаний</div>
             </div>
             <div class="post__daterow">
               <div class="post__datetitle">Тип публикации:</div>
