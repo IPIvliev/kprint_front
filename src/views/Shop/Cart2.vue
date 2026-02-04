@@ -297,10 +297,7 @@ import HeaderBlock from '@/components/HeaderBlock.vue'
 import WhiteWelcome from "@/components/elements/WhiteWelcome.vue"
 import ProductAmount from '@/components/elements/Shop/ProductAmount.vue'
 import FooterBlock from '@/components/FooterBlock.vue'
-import axios from 'axios'
-
-const ABSTRACT_API_URL = process.env.VUE_APP_ABSTRACT_API_URL
-const ABSTRACT_API_KEY = process.env.VUE_APP_ABSTRACT_API_KEY
+import { fetchLocationByAbstract } from '@/services/external.service'
 export default {
     components: { HeaderBlock, ProductAmount, WhiteWelcome, FooterBlock },
     data() {
@@ -324,7 +321,7 @@ export default {
         this.gettingLocation = true;
 
         // Запрос координат по api. Платно, но точно
-        axios.get(`${ABSTRACT_API_URL}?api_key=${ABSTRACT_API_KEY}`).then(response => {
+        fetchLocationByAbstract().then(response => {
             this.gettingLocation = false;
             this.location = response.data;
             this.$store.dispatch("delivery/fetchPochtaOffices", {lat: response.data.latitude, lon: response.data.longitude});

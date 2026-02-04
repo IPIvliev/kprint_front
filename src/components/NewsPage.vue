@@ -57,9 +57,7 @@
 <script>
 import CallbackWindow from "./elements/CallbackWindow.vue"
 import ArticleCard from "./News/ArticleCard.vue"
-import axios from 'axios'
-
-const API_BASE = process.env.VUE_APP_API_BASE
+import { api } from '@/services/http'
 export default {
   name: 'NewsPage',
   data() {
@@ -69,8 +67,8 @@ export default {
   },
   components: {CallbackWindow, ArticleCard},
   mounted() {
-  axios
-    .get(`${API_BASE}/api/articles/`)
+  api
+    .get('/api/articles/')
     .then(response => (this.articles = response.data))
   }
 }

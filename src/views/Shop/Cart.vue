@@ -137,10 +137,7 @@ import DeliveryDescription from '@/components/Shop/DeliveryDescription.vue'
 import DeliveryPrice from '@/components/elements/Shop/DeliveryPrice.vue'
 import OrderForm from '@/components/elements/Shop/OrderForm.vue'
 import FooterBlock from '@/components/FooterBlock.vue'
-import axios from 'axios'
-
-const DADATA_URL = process.env.VUE_APP_DADATA_URL
-const DADATA_TOKEN = process.env.VUE_APP_DADATA_TOKEN
+import { fetchIp, fetchLocationByDadata } from '@/services/external.service'
 export default {
     components: { HeaderBlock, CartProducts, YandexMap, DeliveryDescription, DeliveryPrice, OrderForm, WhiteWelcome, FooterBlock },
     data() {
@@ -177,7 +174,7 @@ export default {
         this.gettingLocation = true;
 
         // Запрос ip
-        axios.get('https://api.ipify.org?format=json').then(response => {
+        fetchIp().then(response => {
             this.ip = response.data.ip;
         })
         .catch(error => {
@@ -195,15 +192,7 @@ export default {
         // });
        
         // Запрос координат по api. Почти бесплатно и почти точно...
-        await axios.get(`${DADATA_URL}`, 
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization": `Token ${DADATA_TOKEN}`
-          },
-        }
-        ).then(response => {
+        await fetchLocationByDadata().then(response => {
 
             this.gettingLocation = false;
             this.location = response.data['location'].data;

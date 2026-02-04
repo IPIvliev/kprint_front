@@ -262,9 +262,7 @@
 </template>
 
 <script>
-import axios from 'axios'
-
-const API_BASE = process.env.VUE_APP_API_BASE
+import { api } from '@/services/http'
 export default {
   name: 'ArticlePage',
   data() {
@@ -277,8 +275,8 @@ export default {
     }
   },
   mounted() {
-    axios
-      .get(`${API_BASE}/api/articles/` + this.id + "/")
+    api
+      .get('/api/articles/' + this.id + "/")
       .then(response => (this.article = response.data))
   },
   computed: {
