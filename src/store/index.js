@@ -3,6 +3,9 @@ import { auth } from "./auth.module";
 import { shop } from "./shop/index.js";
 import axios from 'axios'
 
+const API_BASE = process.env.VUE_APP_API_BASE
+const ABSTRACT_API_URL = process.env.VUE_APP_ABSTRACT_API_URL
+const ABSTRACT_API_KEY = process.env.VUE_APP_ABSTRACT_API_KEY
 const store = createStore({
   state: {
     categories: [],
@@ -15,7 +18,7 @@ const store = createStore({
     user_location: [],
     delivery_price: [],
 
-    domain: 'http://localhost:8081',
+    domain: process.env.VUE_APP_API_BASE,
     // domain: 'https://krint.tech'
   },
   getters: {
@@ -85,7 +88,7 @@ const store = createStore({
 
     fetchCategories({ commit, state }) {
       axios
-        .get('http://localhost:8081/api/shop/categories', {
+        .get(`${API_BASE}/api/shop/categories`, {
           headers: {
             // 'Authorization': `Bearer ${token}`,
             // 'Basic': 'YWRtaW5AaW5mbzgwOTc6QXZpYXRvcnNrYXlhMTY=',
@@ -104,7 +107,7 @@ const store = createStore({
     },
     fetchProducts({ commit, state }) {
       axios
-        .get('http://localhost:8081/api/shop/products', {
+        .get(`${API_BASE}/api/shop/products`, {
           headers: {
             // 'Authorization': `Bearer ${token}`,
             // 'Basic': 'YWRtaW5AaW5mbzgwOTc6QXZpYXRvcnNrYXlhMTY=',
@@ -123,7 +126,7 @@ const store = createStore({
     },
     fetchUserLocation({ commit, state }) {
       axios
-        .get('https://ipgeolocation.abstractapi.com/v1/?api_key=28400f98798f43aa9c5bd5fa15be0ce0', {
+        .get(`${ABSTRACT_API_URL}?api_key=${ABSTRACT_API_KEY}`, {
           headers: {
             // 'Authorization': `Bearer ${token}`,
             // 'Basic': 'YWRtaW5AaW5mbzgwOTc6QXZpYXRvcnNrYXlhMTY=',
@@ -142,7 +145,7 @@ const store = createStore({
     },
     fetchPochtaOffices({ commit, state }, location) {
       axios
-        .get('http://localhost:8081/api/shop/pochta_rossii/offices', {
+        .get(`${API_BASE}/api/shop/pochta_rossii/offices`, {
           
           params: {
              lat: location.lat, 
@@ -159,7 +162,7 @@ const store = createStore({
     fetchSdekOffices({ commit, state }, postal_code) {
       console.log('Postal Sdek code: ', postal_code)
       axios
-        .get('http://localhost:8081/api/shop/sdek/offices', {
+        .get(`${API_BASE}/api/shop/sdek/offices`, {
           
           params: {
             postal_code: postal_code,
@@ -174,7 +177,7 @@ const store = createStore({
     },
     fetchPochtaPrice({ commit, state }, data) {
       axios
-        .get('http://localhost:8081/api/shop/pochta_rossii/price', {
+        .get(`${API_BASE}/api/shop/pochta_rossii/price`, {
           params: {
              destination: data.destination,
              products_mass: data.products_mass
@@ -189,7 +192,7 @@ const store = createStore({
     },
     fetchSdekPrice({ commit, state }, data) {
       axios
-        .get('http://localhost:8081/api/shop/sdek/price', {
+        .get(`${API_BASE}/api/shop/sdek/price`, {
           params: {
              destination: data.destination,
              products_mass: data.products_mass
@@ -204,7 +207,7 @@ const store = createStore({
     },
     fetchCategoryProducts({ commit, state }, id) {
       axios
-      .get('http://localhost:8081/api/shop/categories/' + Number(id), {
+      .get(`${API_BASE}/api/shop/categories/` + Number(id), {
       })
       .then(response => {
         commit("setProductsData", response.data.products);
@@ -215,7 +218,7 @@ const store = createStore({
     },
     fetchProduct({ commit, state }, id) {
       axios
-      .get('http://localhost:8081/api/shop/products/' + Number(id), {
+      .get(`${API_BASE}/api/shop/products/` + Number(id), {
       })
       .then(response => {
         commit("setProductData", response.data);
@@ -226,7 +229,7 @@ const store = createStore({
     },
     fetchCourses({ commit, state }) {
       axios
-        .get('http://localhost:8081/api/study/courses', {
+        .get(`${API_BASE}/api/study/courses`, {
           headers: {
             // 'Authorization': `Bearer ${token}`,
             // 'Basic': 'YWRtaW5AaW5mbzgwOTc6QXZpYXRvcnNrYXlhMTY=',
@@ -245,7 +248,7 @@ const store = createStore({
     },
     fetchCourse({ commit, state }, id) {
         axios
-        .get('http://localhost:8081/api/study/course/' + Number(id), {
+        .get(`${API_BASE}/api/study/course/` + Number(id), {
         })
         .then(response => {
           commit("setCourseData", response.data);

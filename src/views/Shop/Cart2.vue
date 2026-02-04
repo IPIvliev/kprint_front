@@ -22,7 +22,7 @@
                                 <tbody>
                                     <tr class="gray_background align-middle">
                                         <td class="">
-                                            <img class="table_img" src="http://localhost:8081/product_photos/sj2mq5dkn6ilb0n2d3rq557adnrqg19w.jpg" width="80" height="80">
+                                            <img class="table_img" :src="`${apiBase}/product_photos/sj2mq5dkn6ilb0n2d3rq557adnrqg19w.jpg`" width="80" height="80">
                                             <p class="product_name">
                                                 Castable LCD 1 фотополимерная смола df df s fsfsd sdfd fdfdfdfdfd  df Gorky Liquid, 1 кг
                                             </p>
@@ -299,10 +299,13 @@ import ProductAmount from '@/components/elements/Shop/ProductAmount.vue'
 import FooterBlock from '@/components/FooterBlock.vue'
 import axios from 'axios'
 
+const ABSTRACT_API_URL = process.env.VUE_APP_ABSTRACT_API_URL
+const ABSTRACT_API_KEY = process.env.VUE_APP_ABSTRACT_API_KEY
 export default {
     components: { HeaderBlock, ProductAmount, WhiteWelcome, FooterBlock },
     data() {
         return {
+            apiBase: process.env.VUE_APP_API_BASE,
             location: null,
             gettingLocation: null,
             selectedMarker: 0,
@@ -321,7 +324,7 @@ export default {
         this.gettingLocation = true;
 
         // Запрос координат по api. Платно, но точно
-        axios.get('https://ipgeolocation.abstractapi.com/v1/?api_key=28400f98798f43aa9c5bd5fa15be0ce0').then(response => {
+        axios.get(`${ABSTRACT_API_URL}?api_key=${ABSTRACT_API_KEY}`).then(response => {
             this.gettingLocation = false;
             this.location = response.data;
             this.$store.dispatch("fetchPochtaOffices", {lat: response.data.latitude, lon: response.data.longitude});

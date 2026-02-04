@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+const API_BASE = process.env.VUE_APP_API_BASE
 export default {
     // actions = methods
     AddProductToCart({ commit, state, getters, rootState, rootGetters }, product) {
@@ -34,7 +35,7 @@ export default {
     fetchDiscountAmount({ commit, state }, promocode) {
         console.log(promocode)
         axios
-            .get('http://localhost:8081/api/shop/discounts', {
+            .get(`${API_BASE}/api/shop/discounts`, {
                 params: {
                     promocode: promocode
                 }
@@ -49,7 +50,7 @@ export default {
     fetchCreateOrder({ commit, state }, order) {
         console.log(order)
         axios
-            .post('http://localhost:8081/api/shop/order/create', {
+            .post(`${API_BASE}/api/shop/order/create`, {
                 params: {
                     total_price: order.total_price
                 }

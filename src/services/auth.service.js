@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // const API_URL = 'https://kprint.tech/api/';
-const API_URL = 'http://localhost:8081/api/';
+const API_URL = `${process.env.VUE_APP_API_BASE}/api/`;
 
 class AuthService {
   login(user) {

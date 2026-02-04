@@ -139,6 +139,8 @@ import OrderForm from '@/components/elements/Shop/OrderForm.vue'
 import FooterBlock from '@/components/FooterBlock.vue'
 import axios from 'axios'
 
+const DADATA_URL = process.env.VUE_APP_DADATA_URL
+const DADATA_TOKEN = process.env.VUE_APP_DADATA_TOKEN
 export default {
     components: { HeaderBlock, CartProducts, YandexMap, DeliveryDescription, DeliveryPrice, OrderForm, WhiteWelcome, FooterBlock },
     data() {
@@ -193,12 +195,12 @@ export default {
         // });
        
         // Запрос координат по api. Почти бесплатно и почти точно...
-        await axios.get('http://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address', 
+        await axios.get(`${DADATA_URL}`, 
         {
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "Authorization": "Token fe7706b0f0248e5b95e44a8d0e133ac189ab5c8e"
+            "Authorization": `Token ${DADATA_TOKEN}`
           },
         }
         ).then(response => {
