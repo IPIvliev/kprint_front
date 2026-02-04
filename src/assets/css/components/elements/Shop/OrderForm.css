@@ -1,0 +1,19 @@
+.cmp-components-elements-shop-orderform .input_field, .cmp-components-elements-shop-orderform.input_field{
+    border-radius: 20px;
+    height: 64px;
+}
+
+.cmp-components-elements-shop-orderform .input_field_sale, .cmp-components-elements-shop-orderform.input_field_sale{
+    border-radius: 20px;
+    height: 32px;
+}
+
+.cmp-components-elements-shop-orderform .input_field_sale:focus, .cmp-components-elements-shop-orderform.input_field_sale:focus{
+    border-color: var(--colorsdark-red);
+    box-shadow: 0 0 0 0.2rem var(--colorslight-red);
+} 
+
+.cmp-components-elements-shop-orderform .input_field:focus, .cmp-components-elements-shop-orderform.input_field:focus{
+    border-color: var(--colorsdark-red);
+    box-shadow: 0 0 0 0.2rem var(--colorslight-red);
+}

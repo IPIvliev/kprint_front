@@ -1,0 +1,59 @@
+  .cmp-components-study-coursewelcome .main-welcome, .cmp-components-study-coursewelcome.main-welcome{
+    /* text-align: center; */
+    background-color: var(--fillsprimary);
+    background-image: url("../../../img/pattern.svg");
+    border-radius: 0px 0px 80px 80px;
+    padding: 40px 0;
+    
+  }
+
+.cmp-components-study-coursewelcome a:active, .cmp-components-study-coursewelcomea:active, .cmp-components-study-coursewelcome /* активная/посещенная ссылка */
+a:hover, .cmp-components-study-coursewelcome/* активная/посещенная ссылка */
+a:hover, .cmp-components-study-coursewelcome /* при наведении */
+a, .cmp-components-study-coursewelcome/* при наведении */
+a{
+  text-decoration: none;
+  color: #000;
+}
+
+.cmp-components-study-coursewelcome .cource, .cmp-components-study-coursewelcome.cource{
+  padding: 20px;
+  /* height: 100px; */
+  margin: 50px 0px;
+
+  background-color: #fff;
+  border-radius: 40px;
+  border: 1px solid;
+  border-color: #ffffff;
+  box-shadow: 0px 8px 12px #dde2e533, -10px 34px 34px #0000000f;
+  backdrop-filter: blur(8px) brightness(100%);
+  -webkit-backdrop-filter: blur(8px) brightness(100%); 
+}
+
+.cmp-components-study-coursewelcome .course_photo, .cmp-components-study-coursewelcome.course_photo{
+  border-radius: 40px;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.cmp-components-study-coursewelcome .period, .cmp-components-study-coursewelcome.period{
+  color: #1D6E2F;
+  font-weight: 800;
+  padding: 10px;
+  background-color: #EFF8F0;
+  border-radius: 20px;
+  /* border: 1px solid; */
+  /* border-color: #ffffff; */
+  /* box-shadow: 0px 8px 12px #dde2e533, -10px 34px 34px #0000000f; */
+  /* backdrop-filter: blur(8px) brightness(100%); */
+  /* -webkit-backdrop-filter: blur(8px) brightness(100%);  */
+}
+
+.cmp-components-study-coursewelcome .icon-ellipse, .cmp-components-study-coursewelcome.icon-ellipse{
+  width: 10px;
+  margin: 0 10px;
+}
+
+.cmp-components-study-coursewelcome .cource_footer, .cmp-components-study-coursewelcome.cource_footer{
+  margin-top: 30px;
+}

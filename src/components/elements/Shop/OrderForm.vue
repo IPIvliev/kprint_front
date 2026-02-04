@@ -1,5 +1,5 @@
 <template>
-    <form @submit="onSubmit">
+  <form @submit="onSubmit" class="cmp-components-elements-shop-orderform">
         <div class="mb-1">
             <label for="fio" class="form-label">ФИО получателя</label>
             <input type="text" name="fio" class="form-control input_field" id="fio" v-model="fio" v-bind="fioAttrs" placeholder="Ваше имя" />
@@ -118,24 +118,3 @@ export default {
 }
 </script>
 
-<style>
-.input_field {
-    border-radius: 20px;
-    height: 64px;
-}
-
-.input_field_sale {
-    border-radius: 20px;
-    height: 32px;
-}
-
-.input_field_sale:focus {
-    border-color: var(--colorsdark-red);
-    box-shadow: 0 0 0 0.2rem var(--colorslight-red);
-} 
-
-.input_field:focus {
-    border-color: var(--colorsdark-red);
-    box-shadow: 0 0 0 0.2rem var(--colorslight-red);
-}
-</style>

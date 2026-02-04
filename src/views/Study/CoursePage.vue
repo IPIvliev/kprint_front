@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+  <div class="page cmp-views-study-coursepage">
       <header-block/>
       <div class="content">
         <WhiteWelcome />
@@ -81,7 +81,5 @@
       }
     }
 </script>
-<style scoped>
-  
-</style>
+
     

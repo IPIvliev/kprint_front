@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+  <div class="page cmp-views-shop-productpage">
         <header-block />
         <div class="content">
             <div class="white_block gray_background" style="padding-bottom: 10px; padding-top: 10px;">
@@ -65,27 +65,3 @@ export default {
 
 </script>
 
-<style scoped>
-.title {
-    font-size: 1.8em;
-}
-
-.arrow {
-  margin: 0 10px;
-}
-
-.bread {
-  color: var(--bs-gray)
-}
-
-.bread a:active,
-.bread a {
-  text-decoration: none;
-  color: var(--bs-gray)
-}
-
-.bread a:hover {
-  text-decoration: none;
-  color: #D83A56;
-}
-</style>

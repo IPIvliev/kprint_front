@@ -1,0 +1,5 @@
+  .cmp-components-elements-shop-cartsticky .cart, .cmp-components-elements-shop-cartsticky.cart{
+    position: fixed;
+    bottom: 50%;
+    right: 50px;
+  }

@@ -1,5 +1,5 @@
 <template>
-    <div class="white_block" :class="background">
+  <div class="white_block cmp-components-study-courseteachers" :class="background">
       <div class="container"> 
         <div class="row gy-1">
           <div class="col-lg-12">
@@ -27,37 +27,3 @@ export default {
   props: ['background', 'teachers'],
 }
 </script>
-<style scoped>
-
-.course_teachers {
-  width: 100%;
-  margin: 50px 0px;
-  
-  text-align: center;
-}
-
-.course_teacher {
-  display: inline-block;
-  vertical-align: top;
-  width: 300px;
-  height: 400px;
-  background-color: var(--fillsprimary);
-  border-radius: 24px;
-  margin: 30px 20px 10px 20px;
-
-}
-
-.course_teacher_photo {
-  border-radius: 24px 24px 0 0;
-  object-fit: cover;
-  object-position: 50% 50%;
-}
-
-.course_teacher_name {
-  margin: 10px 0;
-}
-
-.course_teacher_description {
-  margin: 10px 0;
-}
-</style>

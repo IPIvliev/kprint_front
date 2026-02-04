@@ -1,5 +1,5 @@
 <template>
-    <div class="white_block" :class="background">
+  <div class="white_block cmp-components-shop-productdescription" :class="background">
         <div class="container"> 
             <div class="row gy-1">
 
@@ -132,87 +132,3 @@ import ProductAmount from '@/components/elements/Shop/ProductAmount.vue'
         }
     }
 </script>
-<style scoped>
-.middle-element {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.white_block {
-    padding-top: 10px;
-}
-
-.product_pictures {
-    border-radius: 8px;
-    object-fit: cover;
-    object-position: 50% 50%;  
-}
-
-.product_photo {
-    border-radius: 20px;
-    object-fit: cover;
-    object-position: 50% 50%;
-}
-
-.rating-stock-m-shop-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  padding: 0px var(--tokens-2xs) 0px var(--tokens-2xs);
-  position: relative;
-  align-self: stretch;
-  width: 100%;
-  flex: 0 0 auto;
-}
-
-.rating-shop-item {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--tokens-2xs);
-  position: relative;
-  flex: 0 0 auto;
-}
-
-.stock-shop-item {
-    margin-left: 20px;
-    display: inline-flex;
-    align-items: center;
-    gap: var(--tokens-xs);
-}
-
-.product_characteristics {
-    margin: 20px 0;
-}
-
-.product_characteristic_name {
-    color: var(--bs-gray)
-}
-
-.product_characteristic_value {
-    float: right;
-    font-size: 1.1em;
-}
-
-.product_about {
-    margin: 50px 0;
-    padding: 40px;
-    border-radius: 24px;
-    background-color: var(--fillssecondary);
-}
-
-.product_about_title {
-    font-weight: 800;
-    margin-bottom: 10px;
-}
-
-.product_price {
-    font-weight: 800;
-    font-size: 2em;
-}
-
-.basket_product {
-    margin: 0 10px;
-}
-
-</style>

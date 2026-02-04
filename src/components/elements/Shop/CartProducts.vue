@@ -1,5 +1,5 @@
 <template>
-    <table class="table">
+  <table class="table cmp-components-elements-shop-cartproducts">
         <thead>
             <tr class="text-center text_gray">
                 <th scope="col">Наименование товара</th>
@@ -66,59 +66,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-.table {
-    border-collapse: separate;
-    border-spacing:0 20px;
-}
-
-.text_gray {
-    color: var(--bs-gray);
-}
-table tr {
-    /* line-height:100px */
-}
-
-table tr td:first-child {
-    border-radius: 24px 0 0 24px;
-}
-
-table tr td:last-child {
-    border-radius: 0 24px 24px 0;
-}
-
-.table tbody tr td {
-     vertical-align: middle;
-     
-}
-
-.table_img {
-    border-radius: 16px;
-    /* vertical-align: middle; */
-    margin-left: 5px;
-    float:left;
-    margin-right:10px;
-}
-
-.product_name {
-    display: inline;
-    /* margin: 20px; */
-}
-.table_price {
-    font-weight: 800;
-}
-
-.table_trash {
-  display: flex;
-  width: 44px;
-  height: 44px;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  /* padding: 10px var(--tokens-4xl) 10px var(--tokens-4xl); */
-  position: relative;
-  border-radius: var(--tokens-m);
-  background-color: #fff;
-  cursor: pointer;
-}
-</style>

@@ -1,5 +1,5 @@
 <template>
-    <yandex-map class="map" v-if="location"
+  <yandex-map class="map cmp-components-shop-yandexmap" v-if="location"
         :settings="{
             location: {
                 // center: [location.coords.longitude, location.coords.latitude],
@@ -103,26 +103,3 @@ import {
     }
 </script>
 
-<style scoped>
-.circle {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  /* background-color: var(--bs-primary); */
-  background-color: var(--color);
-  border: solid 1px #000;
-  /* background-color: #D83A56; */
-  color: var(--color);
-}
-
-.circle_element {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: inline-block;
-  width: 50%;
-  height: 50%;
-  border-radius: 50%;
-  transform: translate3d(-50%, -50%, 0);
-}
-</style>

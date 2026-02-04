@@ -41,26 +41,3 @@ export default {
   props: ['background'],
 }
 </script>
-<style scoped>
-.whywe_card {
-  height: 200px;
-  background: url("@/assets/img/whywe-card.png") center / 90% 100% no-repeat;
-  display:inline-block;
-  
-}
-
-.whywe_card_title {
-  font-weight: 800;
-  /* position: absolute; */
-  margin-top: 10%;
-  margin-left: 10%;
-}
-
-.whywe_card_text {
-  color: rgba(34, 37, 45, 0.7);
-  font-weight: 400;
-  /* position: absolute; */
-  margin-top: 5%;
-  margin-left: 10%;
-}
-</style>

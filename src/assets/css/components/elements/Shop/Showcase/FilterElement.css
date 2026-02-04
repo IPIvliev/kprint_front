@@ -1,0 +1,21 @@
+.cmp-components-elements-shop-showcase-filterelement .filter_item, .cmp-components-elements-shop-showcase-filterelement.filter_item{
+    padding: 0 20px;
+    margin: 0 0 10px 20px;
+    background-color: var(--textprimary);
+    border-radius: 60px;
+    width: max-content;
+    height: 50px;
+
+    display: flex;
+    align-items: center
+}
+
+.cmp-components-elements-shop-showcase-filterelement .filter_item p, .cmp-components-elements-shop-showcase-filterelement.filter_item p{
+  margin: 0;
+  color: white;
+}
+
+.cmp-components-elements-shop-showcase-filterelement .close, .cmp-components-elements-shop-showcase-filterelement.close{
+    margin: 0 0 0 10px;
+    cursor: pointer;
+}

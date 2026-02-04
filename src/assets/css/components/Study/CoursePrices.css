@@ -1,0 +1,67 @@
+.cmp-components-study-courseprices .price_cards, .cmp-components-study-courseprices.price_cards{
+  width: 100%;
+  margin-top: 50px;
+  
+  text-align: center;
+}
+
+.cmp-components-study-courseprices .price_card, .cmp-components-study-courseprices.price_card{
+  display: inline-block;
+  vertical-align: top;
+  width: 300px;
+  height: 400px;
+  background-color: var(--fillsprimary);
+  border-radius: 24px;
+  margin: 30px 20px 10px 20px;
+  position: relative;
+  padding: 0 20px;
+}
+
+.cmp-components-study-courseprices .price_card_name, .cmp-components-study-courseprices.price_card_name{
+  margin: 10px 0;
+}
+
+.cmp-components-study-courseprices .price_card_short_description, .cmp-components-study-courseprices.price_card_short_description{
+  color: #717272;
+  margin: 10px 0;
+  font-size: 0.8em;
+}
+
+.cmp-components-study-courseprices .price_card_hr, .cmp-components-study-courseprices.price_card_hr{
+  color:var(--bs-gray-dark);
+  width: 80%;
+  margin: auto;
+}
+
+.cmp-components-study-courseprices .price_card_description, .cmp-components-study-courseprices.price_card_description{
+  margin: 10px 0;
+  font-size: 0.9em;
+  text-align:left;
+}
+
+.cmp-components-study-courseprices ul, .cmp-components-study-coursepricesul{
+  list-style: square url('@/assets/img/red_li.svg') inside;
+  /* list-style-type: hiragana-iroha; */
+}
+
+
+.cmp-components-study-courseprices .price_card_footer, .cmp-components-study-courseprices.price_card_footer{
+  margin: 20px 0;
+  width:100%;
+  position: absolute;
+  bottom: 0px;
+}
+
+.cmp-components-study-courseprices .price_card_footer_price, .cmp-components-study-courseprices.price_card_footer_price{
+  font-size: 1.5em;
+  font-weight: 800;
+  position: absolute;
+  left: 20px;
+  bottom: 3px;
+}
+
+.cmp-components-study-courseprices .price_card_footer_button, .cmp-components-study-courseprices.price_card_footer_button{
+  position: absolute;
+  right: 20px;
+  bottom: 0px;
+}

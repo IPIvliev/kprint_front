@@ -1,5 +1,5 @@
 <template>
-    <div class="row gy-1 delivery_description">
+  <div class="row gy-1 delivery_description cmp-components-shop-deliverydescription">
         <div class="col-12" v-if="office['address-source']">
 
             <h4>{{ office['address-source'] }}</h4>
@@ -78,9 +78,3 @@ import DeliveryPeriod from '@/components/elements/Shop/DeliveryPeriod.vue'
         }
     }
 </script>
-<style scoped>
-.title {
-    font-size: 1.2em;
-    font-weight: 600;
-}
-</style>

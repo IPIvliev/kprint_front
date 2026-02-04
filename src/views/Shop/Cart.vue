@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+  <div class="page cmp-views-shop-cart">
         <header-block />
         <div class="content">
             <div class="white_block gray_background">
@@ -286,73 +286,4 @@ export default {
 
 </script>
 
-<style scoped>
-.map {
-    border-radius: 24px;
-}
 
-.cart_block {
-    margin: 50px 0;
-    padding: 40px;
-    border-radius: 24px;
-    background-color: var(--fillssecondary);
-}
-
-.strong {
-    font-weight: 800;
-}
-
-.cart_footer {
-    display: inline-block;
-    float: right;
-}
-
-.cart_footer_text {
-    font-weight: 600;
-    font-size: 1.2em;
-    display: inline-block;
-    margin-right: 20px;
-}
-
-.btn:hover {
-    border: 1px solid #D83A56;
-    background-color: rgba(248, 59, 73, 0.02);
-}
-
-.active {
-    border: 1px solid #D83A56;
-    background-color: rgba(248, 59, 73, 0.02);
-}
-
-.delivery_description {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 16px;
-}
-
-.input_field {
-    border-radius: 20px;
-    height: 64px;
-}
-
-.input_field_sale {
-    border-radius: 20px;
-    height: 32px;
-}
-
-.input_field_sale:focus {
-    border-color: var(--colorsdark-red);
-    box-shadow: 0 0 0 0.2rem var(--colorslight-red);
-} 
-
-.input_field:focus {
-    border-color: var(--colorsdark-red);
-    box-shadow: 0 0 0 0.2rem var(--colorslight-red);
-}
-
-.right {
-    display: inline;
-    float: right;
-}
-
-</style>

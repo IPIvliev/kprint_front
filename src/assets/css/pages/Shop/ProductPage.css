@@ -1,0 +1,21 @@
+.cmp-views-shop-productpage .title, .cmp-views-shop-productpage.title{
+    font-size: 1.8em;
+}
+
+.cmp-views-shop-productpage .arrow, .cmp-views-shop-productpage.arrow{
+  margin: 0 10px;
+}
+
+.cmp-views-shop-productpage .bread, .cmp-views-shop-productpage.bread{
+  color: var(--bs-gray)
+}
+
+.cmp-views-shop-productpage .bread a:active, .cmp-views-shop-productpage.bread a:active, .cmp-views-shop-productpage .bread a, .cmp-views-shop-productpage.bread a{
+  text-decoration: none;
+  color: var(--bs-gray)
+}
+
+.cmp-views-shop-productpage .bread a:hover, .cmp-views-shop-productpage.bread a:hover{
+  text-decoration: none;
+  color: #D83A56;
+}

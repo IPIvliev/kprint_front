@@ -1,0 +1,5 @@
+.cmp-components-study-aboutcourse .about_photo, .cmp-components-study-aboutcourse.about_photo{
+  border-radius: 40px;
+  object-fit: cover;
+  object-position: 50% 50%;
+}

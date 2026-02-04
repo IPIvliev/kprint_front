@@ -1,0 +1,21 @@
+.cmp-components-shop-yandexmap .circle, .cmp-components-shop-yandexmap.circle{
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  /* background-color: var(--bs-primary); */
+  background-color: var(--color);
+  border: solid 1px #000;
+  /* background-color: #D83A56; */
+  color: var(--color);
+}
+
+.cmp-components-shop-yandexmap .circle_element, .cmp-components-shop-yandexmap.circle_element{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: inline-block;
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}

@@ -1,5 +1,5 @@
 <template>
-<div class="content">
+  <div class="content cmp-components-gallerypage">
   <!-- gallery-->
   <div class="gallery">
     <div class="container"> 
@@ -111,6 +111,3 @@
 </div>
 </template>
 
-<style>
-  @import '../assets/css/libs/fancybox.css'
-</style>

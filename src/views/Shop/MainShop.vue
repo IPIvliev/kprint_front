@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+  <div class="page cmp-views-shop-mainshop">
         <header-block />
 
         <div class="content">
@@ -180,23 +180,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-.arrow {
-  margin: 0 10px;
-}
-
-.bread {
-  color: var(--bs-gray)
-}
-
-.bread a:active,
-.bread a {
-  text-decoration: none;
-  color: var(--bs-gray)
-}
-
-.bread a:hover {
-  text-decoration: none;
-  color: #D83A56;
-}
-</style>

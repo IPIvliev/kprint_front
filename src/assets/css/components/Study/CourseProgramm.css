@@ -1,0 +1,20 @@
+.cmp-components-study-courseprogramm hr, .cmp-components-study-courseprogrammhr{
+  color:var(--bs-gray-dark);
+}
+
+.cmp-components-study-courseprogramm .course_programm, .cmp-components-study-courseprogramm.course_programm{
+  background-color: var(--fillsprimary);
+  width: 100%;
+  padding: 20px;
+  margin: 50px 0px;
+  border-radius: 24px;
+}
+
+.cmp-components-study-courseprogramm .course_lesson, .cmp-components-study-courseprogramm.course_lesson{
+  margin: 30px 0 10px 0;
+  padding: 0 10px;
+}
+
+.cmp-components-study-courseprogramm .course_lesson_description, .cmp-components-study-courseprogramm.course_lesson_description{
+  margin: 10px 0;
+}

@@ -1,0 +1,65 @@
+.cmp-components-elements-shop-productamount .qty, .cmp-components-elements-shop-productamount.qty{
+    display: block;
+    position: relative;
+}
+
+.cmp-components-elements-shop-productamount .qty .count, .cmp-components-elements-shop-productamount.qty .count{
+    color: #000;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 30px;
+    padding: 0 2px;
+    min-width: 60px;
+    text-align: center;
+}
+.cmp-components-elements-shop-productamount .qty .plus, .cmp-components-elements-shop-productamount.qty .plus{
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    width: 30px;
+    height: 30px;
+    font: 30px/1 Arial,sans-serif;
+    text-align: center;
+    border-radius: 50%;
+    }
+.cmp-components-elements-shop-productamount .qty .minus, .cmp-components-elements-shop-productamount.qty .minus{
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    width: 30px;
+    height: 30px;
+    font: 30px/1 Arial,sans-serif;
+    text-align: center;
+    border-radius: 50%;
+    background-clip: padding-box;
+}
+.cmp-components-elements-shop-productamount .qty_text, .cmp-components-elements-shop-productamount.qty_text{
+    text-align: center;
+}
+.cmp-components-elements-shop-productamount .minus:hover, .cmp-components-elements-shop-productamount.minus:hover{
+    background-color: #D83A56 !important;
+}
+.cmp-components-elements-shop-productamount .plus:hover, .cmp-components-elements-shop-productamount.plus:hover{
+    background-color: #D83A56 !important;
+}
+/*Prevent text selection*/
+.cmp-components-elements-shop-productamount span, .cmp-components-elements-shop-productamountspan{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+.cmp-components-elements-shop-productamount .count, .cmp-components-elements-shop-productamount.count{  
+    border: 0;
+    width: 2%;
+}
+.cmp-components-elements-shop-productamount .count::-webkit-outer-spin-button, .cmp-components-elements-shop-productamount.count::-webkit-outer-spin-button, .cmp-components-elements-shop-productamount .count::-webkit-inner-spin-button, .cmp-components-elements-shop-productamount.count::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+.cmp-components-elements-shop-productamount .count:disabled, .cmp-components-elements-shop-productamount.count:disabled{
+    background-color:var(--fillssecondary);
+}

@@ -1,0 +1,39 @@
+.cmp-components-elements-main-page-mainpageshop .shop, .cmp-components-elements-main-page-mainpageshop.shop{
+margin-top: 40px;
+}
+
+.cmp-components-elements-main-page-mainpageshop .button-center, .cmp-components-elements-main-page-mainpageshop.button-center{
+  align-items: center;
+  text-align: center;
+}
+
+.cmp-components-elements-main-page-mainpageshop .button-l-shop, .cmp-components-elements-main-page-mainpageshop.button-l-shop{
+  display: flex;
+  margin-top: 40px;
+  text-align: center;
+  width: 280px;
+  height: 62px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px var(--tokens-4xl) 10px var(--tokens-4xl);
+
+  background-color: var(--graysblack);
+  border-radius: var(--tokens-l);
+}
+
+.cmp-components-elements-main-page-mainpageshop .lable-shop, .cmp-components-elements-main-page-mainpageshop.lable-shop{
+  display: inline-block;
+  position: relative;
+  width: fit-content;
+  margin-left: -3.5px;
+  margin-right: -3.5px;
+  font-family: var(--body-semibold-font-family);
+  font-weight: var(--body-semibold-font-weight);
+  color: var(--borderprimary);
+  font-size: var(--body-semibold-font-size);
+  letter-spacing: var(--body-semibold-letter-spacing);
+  line-height: var(--body-semibold-line-height);
+  white-space: nowrap;
+  font-style: var(--body-semibold-font-style);
+}

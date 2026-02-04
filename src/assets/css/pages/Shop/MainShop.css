@@ -1,0 +1,17 @@
+.cmp-views-shop-mainshop .arrow, .cmp-views-shop-mainshop.arrow{
+  margin: 0 10px;
+}
+
+.cmp-views-shop-mainshop .bread, .cmp-views-shop-mainshop.bread{
+  color: var(--bs-gray)
+}
+
+.cmp-views-shop-mainshop .bread a:active, .cmp-views-shop-mainshop.bread a:active, .cmp-views-shop-mainshop .bread a, .cmp-views-shop-mainshop.bread a{
+  text-decoration: none;
+  color: var(--bs-gray)
+}
+
+.cmp-views-shop-mainshop .bread a:hover, .cmp-views-shop-mainshop.bread a:hover{
+  text-decoration: none;
+  color: #D83A56;
+}

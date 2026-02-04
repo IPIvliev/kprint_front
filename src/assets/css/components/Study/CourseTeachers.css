@@ -1,0 +1,31 @@
+.cmp-components-study-courseteachers .course_teachers, .cmp-components-study-courseteachers.course_teachers{
+  width: 100%;
+  margin: 50px 0px;
+  
+  text-align: center;
+}
+
+.cmp-components-study-courseteachers .course_teacher, .cmp-components-study-courseteachers.course_teacher{
+  display: inline-block;
+  vertical-align: top;
+  width: 300px;
+  height: 400px;
+  background-color: var(--fillsprimary);
+  border-radius: 24px;
+  margin: 30px 20px 10px 20px;
+
+}
+
+.cmp-components-study-courseteachers .course_teacher_photo, .cmp-components-study-courseteachers.course_teacher_photo{
+  border-radius: 24px 24px 0 0;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.cmp-components-study-courseteachers .course_teacher_name, .cmp-components-study-courseteachers.course_teacher_name{
+  margin: 10px 0;
+}
+
+.cmp-components-study-courseteachers .course_teacher_description, .cmp-components-study-courseteachers.course_teacher_description{
+  margin: 10px 0;
+}

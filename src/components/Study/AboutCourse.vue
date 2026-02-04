@@ -1,6 +1,6 @@
 <template>
     <!-- video-->
-    <div class="white_block" :class="background">
+    <div class="white_block cmp-components-study-aboutcourse" :class="background">
       <div class="container"> 
         <div class="row gy-1">
           <div class="col-lg-8">
@@ -22,10 +22,3 @@ export default {
   props: ['background', 'course'],
 }
 </script>
-<style scoped>
-.about_photo {
-  border-radius: 40px;
-  object-fit: cover;
-  object-position: 50% 50%;
-}
-</style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+  <div class="row cmp-components-elements-shop-showcase-filterelement">
         <div class="filter_item" v-for="filter in filters">
             <p>
                 {{ filter.name }}: {{ filter.attr }}
@@ -14,27 +14,3 @@ export default {
     emits: ['selectFilter']
 }
 </script>
-<style scoped>
-.filter_item {
-    padding: 0 20px;
-    margin: 0 0 10px 20px;
-    background-color: var(--textprimary);
-    border-radius: 60px;
-    width: max-content;
-    height: 50px;
-
-    display: flex;
-    align-items: center
-}
-
-.filter_item p {
-  margin: 0;
-  color: white;
-}
-
-.close {
-    margin: 0 0 0 10px;
-    cursor: pointer;
-}
-
-</style>

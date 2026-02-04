@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content cmp-components-newspage">
     <!-- news-->
     <div class="news">
       <div class="container">
@@ -74,6 +74,4 @@ export default {
 }
 </script>
 
-<style scoped>
-  @import '../assets/css/libs/jquery.jscrollpane.css';
-</style>
+
