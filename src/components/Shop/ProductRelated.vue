@@ -39,11 +39,11 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("fetchCategoryProducts", this.id);
+    this.$store.dispatch("catalog/fetchCategoryProducts", this.id);
   },
   computed: {
     GetCategoryProducts() {
-      return this.$store.state.products.filter((product) => product.id != this.$route.params.productid);
+      return this.$store.state.catalog.products.filter((product) => product.id != this.$route.params.productid);
     },
   }
 }

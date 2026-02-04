@@ -1,18 +1,18 @@
-import axios from 'axios';
+import { userApi } from './http';
 import authHeader from './auth-header';
-const API_URL = `${process.env.VUE_APP_USER_API_BASE}/api/test/`;
+const API_URL = '/api/test/';
 class UserService {
   getPublicContent() {
-    return axios.get(API_URL + 'all');
+    return userApi.get(API_URL + 'all');
   }
   getUserBoard() {
-    return axios.get(API_URL + 'user', { headers: authHeader() });
+    return userApi.get(API_URL + 'user', { headers: authHeader() });
   }
   getModeratorBoard() {
-    return axios.get(API_URL + 'mod', { headers: authHeader() });
+    return userApi.get(API_URL + 'mod', { headers: authHeader() });
   }
   getAdminBoard() {
-    return axios.get(API_URL + 'admin', { headers: authHeader() });
+    return userApi.get(API_URL + 'admin', { headers: authHeader() });
   }
 }
 export default new UserService();

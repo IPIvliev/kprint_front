@@ -12,13 +12,13 @@
         props: ['office'],
         computed: {
             GetPeriod() {
-                if (this.$store.state.delivery_price['delivery_time']) {
-                    if (this.$store.state.delivery_price['delivery_time'] == 1) {
-                        return (this.$store.state.delivery_price['delivery_time'] + ' день')
-                    } else if (this.$store.state.delivery_price['delivery_time'] > 1 && this.$store.state.delivery_price['delivery_time'] < 5) {
-                        return (this.$store.state.delivery_price['delivery_time'] + ' дня')
+                if (this.$store.state.delivery.delivery_price['delivery_time']) {
+                    if (this.$store.state.delivery.delivery_price['delivery_time'] == 1) {
+                        return (this.$store.state.delivery.delivery_price['delivery_time'] + ' день')
+                    } else if (this.$store.state.delivery.delivery_price['delivery_time'] > 1 && this.$store.state.delivery.delivery_price['delivery_time'] < 5) {
+                        return (this.$store.state.delivery.delivery_price['delivery_time'] + ' дня')
                     } else {
-                        return (this.$store.state.delivery_price['delivery_time'] + ' дней')
+                        return (this.$store.state.delivery.delivery_price['delivery_time'] + ' дней')
                     }
                     
                 } else {

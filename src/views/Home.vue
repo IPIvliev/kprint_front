@@ -53,15 +53,15 @@ export default {
     msg: String
   },
   created() {
-        this.$store.dispatch("fetchProducts");
-        this.$store.dispatch("fetchCourses");
+        this.$store.dispatch("catalog/fetchProducts");
+        this.$store.dispatch("study/fetchCourses");
     },
     computed: {
         ProductsList () {
             // const bodyParameters = {
             //     key: "value"
             // }
-            return this.$store.state.products
+            return this.$store.state.catalog.products
         },  
     }  
 }

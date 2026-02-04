@@ -53,7 +53,7 @@ export default {
 
   },
   created() {
-        this.$store.dispatch("fetchCourses");
+        this.$store.dispatch("study/fetchCourses");
   },
 }
 </script>

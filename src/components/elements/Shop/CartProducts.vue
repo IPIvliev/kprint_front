@@ -48,7 +48,7 @@ export default {
 	},
     created() {
         
-        // this.$store.dispatch("fetchProducts")
+        // this.$store.dispatch("catalog/fetchProducts")
     },
     mounted() {
         this.$store.commit('shop/initialiseCart')

@@ -26,11 +26,11 @@ export default {
   props: ['background'],
   components: {ProductCard},
   created() {
-        this.$store.dispatch("fetchProducts");
+        this.$store.dispatch("catalog/fetchProducts");
     },
   computed: {
     ProductsList () {
-      return this.$store.state.products
+      return this.$store.state.catalog.products
     },  
   }  
 }

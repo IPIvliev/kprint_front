@@ -72,11 +72,11 @@
         }
       },
       created() {
-        this.$store.dispatch("fetchCourse", this.id);
+        this.$store.dispatch("study/fetchCourse", this.id);
       },
       computed: {
         GetCourse() {
-          return this.$store.state.course
+          return this.$store.state.study.course
         },
       }
     }

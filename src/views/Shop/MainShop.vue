@@ -91,15 +91,15 @@ export default {
         WhiteWelcome
     },
     created() {
-        this.$store.dispatch("fetchCategoryProducts", this.id);
-        this.$store.dispatch("fetchCategories");
+        this.$store.dispatch("catalog/fetchCategoryProducts", this.id);
+        this.$store.dispatch("catalog/fetchCategories");
     },
     computed: {
 
         ProductsList () {
             if (this.filters != '') {
 
-                let filtered = this.$store.state.products
+                let filtered = this.$store.state.catalog.products
                 
 
                 this.filters.forEach (filter => {
@@ -121,7 +121,7 @@ export default {
 
                 return this.products
             } else {
-                this.products = this.$store.state.products
+                this.products = this.$store.state.catalog.products
 
                 if (this.priceFilter.from) {
                     this.products = this.products.filter(product => product.price >= Number(this.priceFilter.from))
@@ -138,7 +138,7 @@ export default {
             // const bodyParameters = {
             //     key: "value"
             // }
-            return this.$store.state.categories.filter(category => category.id === parseInt(this.$route.params.id))[0]
+            return this.$store.state.catalog.categories.filter(category => category.id === parseInt(this.$route.params.id))[0]
         },  
     },
     methods: {

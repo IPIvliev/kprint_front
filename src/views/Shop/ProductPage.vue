@@ -45,18 +45,18 @@ export default {
         }
       },
       created() {
-        this.$store.dispatch("fetchProduct", this.id);
+        this.$store.dispatch("catalog/fetchProduct", this.id);
       },
       computed: {
         GetProduct() {
-          return this.$store.state.product
+          return this.$store.state.catalog.product
         },
       },
       watch: {
         '$route.params.productid': {
           immediate: true,
           handler(id) {
-            this.$store.dispatch("fetchProduct", id);
+            this.$store.dispatch("catalog/fetchProduct", id);
           },
         },
       },

@@ -169,7 +169,7 @@ export default {
         
     },
     async created() {
-        await this.$store.dispatch("fetchProducts").then(() => {
+        await this.$store.dispatch("catalog/fetchProducts").then(() => {
             this.productsGot = true
         })
         
@@ -188,7 +188,7 @@ export default {
         // axios.get('https://ipgeolocation.abstractapi.com/v1/?api_key=28400f98798f43aa9c5bd5fa15be0ce0').then(response => {
         //     this.gettingLocation = false;
         //     this.location = response.data;
-        //     this.$store.dispatch("fetchPochtaOffices", {lat: response.data.latitude, lon: response.data.longitude});
+        //     this.$store.dispatch("delivery/fetchPochtaOffices", {lat: response.data.latitude, lon: response.data.longitude});
         // })
         // .catch(e => {
         //     console.log(e); 
@@ -207,8 +207,8 @@ export default {
 
             this.gettingLocation = false;
             this.location = response.data['location'].data;
-            this.$store.dispatch("fetchPochtaOffices", {lat: response.data['location'].data.geo_lat, lon: response.data['location'].data.geo_lon});
-            this.$store.dispatch("fetchSdekOffices", response.data['location'].data.postal_code);
+            this.$store.dispatch("delivery/fetchPochtaOffices", {lat: response.data['location'].data.geo_lat, lon: response.data['location'].data.geo_lon});
+            this.$store.dispatch("delivery/fetchSdekOffices", response.data['location'].data.postal_code);
         })
         .catch(e => {
             console.log(e); 
@@ -219,7 +219,7 @@ export default {
         //     this.gettingLocation = false;
         //     this.location = pos;
         //     console.log('Запрос на получние списка офисов')
-        //     this.$store.dispatch("fetchPochtaOffices", {lat: this.location.coords.latitude, lon: this.location.coords.longitude});
+        //     this.$store.dispatch("delivery/fetchPochtaOffices", {lat: this.location.coords.latitude, lon: this.location.coords.longitude});
             
         // }, err => {
         //     this.gettingLocation = false;
@@ -233,7 +233,7 @@ export default {
         GetPochtaOffices() {
             try {
                 // console.log('Запрос на вывод списка офисов')
-                return this.$store.state.pochta_offices.filter((office) => office["type-code"] === this.pochtaFilter)
+                return this.$store.state.delivery.pochta_offices.filter((office) => office["type-code"] === this.pochtaFilter)
                 
             } catch(error) {
                 return []
@@ -242,7 +242,7 @@ export default {
         GetSdekOffices() {
             try {
                 // console.log('Запрос на вывод списка офисов')
-                return this.$store.state.sdek_offices.filter((office) => office["type"] === 'PVZ')
+                return this.$store.state.delivery.sdek_offices.filter((office) => office["type"] === 'PVZ')
                 
             } catch(error) {
                 return []
@@ -271,11 +271,11 @@ export default {
 
             if (this.activeLink == 'pochta') {
                 this.office = this.GetPochtaOffices[index]
-                this.$store.dispatch("fetchPochtaPrice", { destination: this.office['postal-code'], products_mass: this.getTotalWeight*1000 });
+                this.$store.dispatch("delivery/fetchPochtaPrice", { destination: this.office['postal-code'], products_mass: this.getTotalWeight*1000 });
                 
             } else {
                 this.office = this.GetSdekOffices[index]
-                this.$store.dispatch("fetchSdekPrice", { destination: this.office['location']['postal_code'], products_mass: this.getTotalWeight*1000 });
+                this.$store.dispatch("delivery/fetchSdekPrice", { destination: this.office['location']['postal_code'], products_mass: this.getTotalWeight*1000 });
             }
             
         },

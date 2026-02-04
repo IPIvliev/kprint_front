@@ -320,14 +320,14 @@ export default {
     },
     async created() {
 
-        // await this.$store.dispatch("fetchUserLocation")
+        // await this.$store.dispatch("delivery/fetchUserLocation")
         this.gettingLocation = true;
 
         // Запрос координат по api. Платно, но точно
         axios.get(`${ABSTRACT_API_URL}?api_key=${ABSTRACT_API_KEY}`).then(response => {
             this.gettingLocation = false;
             this.location = response.data;
-            this.$store.dispatch("fetchPochtaOffices", {lat: response.data.latitude, lon: response.data.longitude});
+            this.$store.dispatch("delivery/fetchPochtaOffices", {lat: response.data.latitude, lon: response.data.longitude});
         })
         .catch(e => {
             console.log(e); 
@@ -339,7 +339,7 @@ export default {
         //     this.gettingLocation = false;
         //     this.location = pos;
         //     console.log('Запрос на получние списка офисов')
-        //     this.$store.dispatch("fetchPochtaOffices", {lat: this.location.coords.latitude, lon: this.location.coords.longitude});
+        //     this.$store.dispatch("delivery/fetchPochtaOffices", {lat: this.location.coords.latitude, lon: this.location.coords.longitude});
             
         // }, err => {
         //     this.gettingLocation = false;
@@ -353,7 +353,7 @@ export default {
         GetPochtaOffices() {
             try {
                 // console.log('Запрос на вывод списка офисов')
-                return this.$store.state.pochta_offices.filter((office) => office["type-code"] === this.pochtaFilter)
+                return this.$store.state.delivery.pochta_offices.filter((office) => office["type-code"] === this.pochtaFilter)
                 
             } catch(error) {
                 return []
@@ -362,7 +362,7 @@ export default {
         GetPochtaPrice() {
             if (this.GetPochtaOffices.length > 0) {
                 // console.log('Запрос на вывод цены доставки')
-                return (this.$store.state.pochta_price['total-rate']/100 + ' руб.')
+                return (this.$store.state.delivery.delivery_price['total-rate']/100 + ' руб.')
             } else {
                 return 'Доставка не доступна'
             }
@@ -370,7 +370,7 @@ export default {
         // GetUserLocation() {
         //     try {
         //         console.log('Запрос на вывод координат пользователя через api')
-        //         return this.$store.state.user_location
+        //         return this.$store.state.delivery.user_location
                 
         //     } catch(error) {
         //         return []
@@ -402,7 +402,7 @@ export default {
         selectMarker(index, postal_code) {
             this.selectedMarker = index
             // console.log('Запрос на получение цены доставки')
-            this.$store.dispatch("fetchPochtaPrice", postal_code);
+            this.$store.dispatch("delivery/fetchPochtaPrice", { destination: postal_code, products_mass: 0 });
         },
         activate(parent, position, type="ГОПС") {
             if (parent == 'main') {

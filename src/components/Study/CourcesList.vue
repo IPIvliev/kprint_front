@@ -45,7 +45,7 @@
   export default {
     computed: {
         CoursesList () {
-            return this.$store.state.courses
+            return this.$store.state.study.courses
         },  
     }  
   }

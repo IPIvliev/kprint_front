@@ -1,14 +1,11 @@
-import axios from 'axios';
-
-// const API_URL = 'https://kprint.tech/api/';
-const API_URL = `${process.env.VUE_APP_API_BASE}/api/`;
+import { api } from './http';
 
 class AuthService {
   login(user) {
     // axios.defaults.xsrfCookieName = 'csrftoken'
     // axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-    return axios
-      .post(API_URL + 'token/', {
+    return api
+      .post('/api/token/', {
         username: user.username,
         password: user.password
       })
@@ -24,7 +21,7 @@ class AuthService {
     localStorage.removeItem('user');
   }
   register(user) {
-    return axios.post(API_URL + 'signup', {
+    return api.post('/api/signup', {
       username: user.username,
       email: user.email,
       password: user.password

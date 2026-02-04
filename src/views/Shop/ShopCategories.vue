@@ -46,16 +46,16 @@ export default {
         FilterCategories() {
             if (this.$route.params.id) {
                 console.log("router id present")
-                return this.$store.state.categories.filter(category => category.parent === parseInt(this.$route.params.id))
+                return this.$store.state.catalog.categories.filter(category => category.parent === parseInt(this.$route.params.id))
             } else {
                 console.log("No router id")
-                return this.$store.state.categories.filter(category => category.level === 0)
+                return this.$store.state.catalog.categories.filter(category => category.level === 0)
             }
         }
         
     },
     created() {
-        this.$store.dispatch("fetchCategories");
+        this.$store.dispatch("catalog/fetchCategories");
        
     },
     mounted() {

@@ -12,7 +12,7 @@ export const shop = {
     getters: {
         cartProducts(state, getters, rootState, rootGetters) {
             return state.cart.map(cartItem => {
-                const product = rootState.products.find(product => product.id === cartItem.id)
+                const product = rootState.catalog.products.find(product => product.id === cartItem.id)
                 return {
                     id: product.id,
                     category: product.category,
@@ -25,8 +25,8 @@ export const shop = {
             })
         },
         getDeliveryPrice(state, getters, rootState, rootGetters) {
-            if (rootState.delivery_price['price']) {
-                return (rootState.delivery_price['price'] + ' руб.')
+            if (rootState.delivery.delivery_price['price']) {
+                return (rootState.delivery.delivery_price['price'] + ' руб.')
             } else {
                 return 0
             }
@@ -69,8 +69,8 @@ export const shop = {
                 total = total - (total / 100 * state.discount_amount)
             }
 
-            if (rootState.delivery_price['price']) {
-                total += rootState.delivery_price['price']
+            if (rootState.delivery.delivery_price['price']) {
+                total += rootState.delivery.delivery_price['price']
             }
 
 
@@ -84,7 +84,7 @@ export const shop = {
         },
         getCurrentProduct(state, getters, rootState, rootGetters) {
             return(product) => {
-                return rootState.products.find(item => item.id === product.id)
+                return rootState.catalog.products.find(item => item.id === product.id)
             }
         },
         getCurrentCartProductQuantity(state, getters, rootState, rootGetters) {
