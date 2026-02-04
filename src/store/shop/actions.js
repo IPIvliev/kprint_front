@@ -30,6 +30,18 @@ export default {
         const cartItem = state.cart.find(item => item.id === product.id)
         commit('deleteItemFromCart', cartItem)
     },
+    AddCourseToCart({ commit, state }, courseItem) {
+        const existing = state.course_cart.find(item => item.course_id === courseItem.course_id && item.price_id === courseItem.price_id)
+        if (!existing) {
+            commit('pushCourseToCart', courseItem)
+        }
+    },
+    DeleteCourseFromCart({ commit, state }, courseItem) {
+        const existing = state.course_cart.find(item => item.course_id === courseItem.course_id && item.price_id === courseItem.price_id)
+        if (existing) {
+            commit('deleteCourseFromCart', existing)
+        }
+    },
     fetchDiscountAmount({ commit, state }, promocode) {
         console.log(promocode)
         return api

@@ -25,7 +25,7 @@
             <input type="text" name="email" class="form-control input_field" id="email" v-model="email" v-bind="emailAttrs" placeholder="Введите email" />
             <div>{{ errors.email }}</div>
         </div>
-        <div class="mb-2">
+        <div class="mb-2" v-if="showDelivery">
             <label for="delivery" class="form-label">Доставка:</label>
             <!-- <DeliveryAddress :office = "office" />  -->
         </div>
@@ -75,7 +75,7 @@ import DeliveryAddress from '@/components/elements/Shop/DeliveryAddress.vue'
 export default {
     setup: () => ({ v$: useVuelidate() }),
     components: [ DeliveryAddress ],
-    props: ['order'],
+    props: ['order', 'showDelivery'],
     data() {
         return {
             phoneNumberMask: {

@@ -16,7 +16,7 @@
                             <h3>Доставка</h3>
                         </div>
 
-                        <div class="row gy-1" v-if="GetPochtaOffices.length > 0">
+                        <div class="row gy-1" v-if="showDelivery && GetPochtaOffices.length > 0">
                             <div class="col-3">
                                 <div class="btn btn--white col-12" @click="activate('main', 'pochta')" :class="{ active : activeLink == 'pochta' }">Почта России</div>
                             </div>
@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                         </div> -->
-                        <div class="row gy-1" v-if="GetPochtaOffices.length > 0">
+                        <div class="row gy-1" v-if="showDelivery && GetPochtaOffices.length > 0">
                             <div class="col-6">
                                 <YandexMap :activeLink = activeLink :GetOffices = "activeLink == 'pochta' ? GetPochtaOffices : GetSdekOffices" :location = "location" @selectMarker="selectMarker"/>
                             </div>
@@ -95,7 +95,7 @@
                                         <div class="right">{{ getTotalPriceWithDelivery }} Р</div>
                                     </div>
                                 </div>
-                                <div class="delivery_description mt-1">
+                                <div class="delivery_description mt-1" v-if="showDelivery">
 
                                    <div class="total_row">
                                         <span class="text_gray">Общий вес</span>
@@ -108,7 +108,7 @@
                                     <h3 class="mb-1">Доставка</h3>
                                 </div>
                                 <div class="row">
-                                    <OrderForm />
+                                    <OrderForm :showDelivery="showDelivery" />
                                 </div>
 
                             </div>
@@ -248,6 +248,9 @@ export default {
         },
         getDiscountAmount() {
             return this.$store.getters['shop/getDiscountAmount']
+        },
+        showDelivery() {
+            return this.$store.getters['shop/cartHasProducts']
         },
     },
     watch: {

@@ -5,6 +5,7 @@ export const shop = {
     namespaced: true,
     state: {
         cart: [],
+        course_cart: [],
         discount_amount: 0,
         new_order: '',
     },
@@ -24,9 +25,22 @@ export const shop = {
                 }
             })
         },
+        cartCourseItems(state) {
+            return state.course_cart
+        },
+        cartCoursesTotal(state) {
+            let total = 0
+            state.course_cart.forEach(course => {
+                total += course.price * course.quantity
+            })
+            return total
+        },
         getDeliveryPrice(state, getters, rootState, rootGetters) {
+            if (state.cart.length === 0) {
+                return 0
+            }
             if (rootState.delivery.delivery_price['price']) {
-                return (rootState.delivery.delivery_price['price'] + ' руб.')
+                return (rootState.delivery.delivery_price['price'] + ' ???.')
             } else {
                 return 0
             }
@@ -47,6 +61,10 @@ export const shop = {
                 total += product.price * product.quantity
             })
 
+            getters.cartCourseItems.forEach(course => {
+                total += course.price * course.quantity
+            })
+
             return total
         },
         cartTotalWeight(state, getters) {
@@ -65,15 +83,17 @@ export const shop = {
                 total += product.price * product.quantity
             })
 
+            getters.cartCourseItems.forEach(course => {
+                total += course.price * course.quantity
+            })
+
             if (state.discount_amount > 0) {
                 total = total - (total / 100 * state.discount_amount)
             }
 
-            if (rootState.delivery.delivery_price['price']) {
+            if (state.cart.length > 0 && rootState.delivery.delivery_price['price']) {
                 total += rootState.delivery.delivery_price['price']
             }
-
-
 
             return total
         },
@@ -98,7 +118,12 @@ export const shop = {
                 
             }
         },
-        
+        cartHasProducts(state) {
+            return state.cart.length > 0
+        },
+        cartHasCourses(state) {
+            return state.course_cart.length > 0
+        },
     },
     // methods
     actions,
@@ -108,6 +133,9 @@ export const shop = {
 
             if(localStorage.getItem('cart')) {
                 state.cart = JSON.parse(localStorage.getItem('cart')) || []; 
+            }
+            if(localStorage.getItem('course_cart')) {
+                state.course_cart = JSON.parse(localStorage.getItem('course_cart')) || [];
             }
 
 		},
@@ -139,6 +167,19 @@ export const shop = {
             state.cart.splice(index, 1)
             localStorage.setItem('cart', JSON.stringify(state.cart))
         },
+        pushCourseToCart(state, courseItem) {
+            state.course_cart.push(courseItem)
+            localStorage.setItem('course_cart', JSON.stringify(state.course_cart))
+        },
+        deleteCourseFromCart(state, courseItem) {
+            const index = state.course_cart.indexOf(courseItem)
+            state.course_cart.splice(index, 1)
+            localStorage.setItem('course_cart', JSON.stringify(state.course_cart))
+        },
+        incrementCourseQuantity(state, courseItem) {
+            courseItem.quantity++
+            localStorage.setItem('course_cart', JSON.stringify(state.course_cart))
+        },
         setDiscountAmount(state, discount_amount) {
             state.discount_amount = discount_amount
         },
@@ -147,4 +188,3 @@ export const shop = {
         },
     }
 }
-

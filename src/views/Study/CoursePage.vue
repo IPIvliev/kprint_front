@@ -10,7 +10,7 @@
 
         <CourseFeedbacks :background="'light_gray_background'" :feedbacks="GetCourse.feedbacks"/>
 
-        <CoursePrices :background="'light_gray_background'" :prices="GetCourse.prices"/>
+        <CoursePrices :background="'light_gray_background'" :prices="GetCourse.prices" :course="GetCourse"/>
 
         <CourseRelated :background="'gray_background'" :related="GetCourse.related"/>
         <!-- advantages-->
