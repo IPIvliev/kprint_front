@@ -151,8 +151,9 @@
           <p><span class="header__telback modal-trigger" data-bs-toggle="modal" data-bs-target="#modalCallback">Обратный звонок	</span></p>
         </div>
         <div class="header__regbuttons">
-          <router-link class="btn btn--white" to="/login">Вход</router-link>
-          <router-link class="btn btn--black" to="/registration">Регистрация</router-link>
+          <router-link v-if="!isLoggedIn" class="btn btn--white" to="/login">Вход</router-link>
+          <router-link v-else class="btn btn--white" to="/panel">Личный кабинет</router-link>
+          <router-link v-if="!isLoggedIn" class="btn btn--black" to="/registration">Регистрация</router-link>
           <div class="header__regicon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H15" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -307,6 +308,11 @@ export default {
       catalogMenuIsOpen: false,
       languageMenuIsOpen: false
     }
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store?.state?.auth?.status?.loggedIn === true
+    },
   },
   methods: {
     openMainMenu() {

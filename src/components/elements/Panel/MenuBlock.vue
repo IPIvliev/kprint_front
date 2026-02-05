@@ -1,5 +1,5 @@
 <template>
-							{{ currentUser }}<div class="col-xxl-3 col-xl-4 d-none d-xl-block">
+							<div class="col-xxl-3 col-xl-4 d-none d-xl-block">
 								<div class="panel__block panel__block--1">
 									<div class="panel__head"><router-link class="panel__profile" to="/panel/edit">
 											<div class="panel__profile-img"> <img src="@/assets/img/user.webp" alt=""></div>
@@ -73,7 +73,7 @@
 										</ul>
                     <ul v-else class="panel__menu">
                       <li>
-                        <router-link to="/news" class="panel__menu-link">
+                        <router-link to="/panel/news" class="panel__menu-link">
                           <span class="panel__menu-icon">
                             <img src="@/assets/img/PuzzlePiece.svg" alt="">
                           </span>

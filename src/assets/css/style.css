@@ -11598,6 +11598,22 @@ body.lock {
   padding: 24px 0;
   border-bottom: 1px solid #EBEBEB;
 }
+.panel__preview {
+  border: 1px solid #EBEBEB;
+  padding: 12px;
+  border-radius: 6px;
+  background: #FAFAFA;
+}
+.panel__dropzone {
+  border: 2px dashed #D0D0D0;
+  padding: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #FFF;
+}
+.panel__dropzone:hover {
+  border-color: #111;
+}
 
 .panel__formrow:nth-last-child(-n+2) {
   border: none;
