@@ -11,6 +11,7 @@
 										<div class="panel__title">Покупатель</div>
 									</div>
 									<div class="panel__body">
+										
 										<div class="row gy-1"> 
 											<div class="col-lg-6">
 												<a class="panel__item" href="#">
