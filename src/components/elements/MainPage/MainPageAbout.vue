@@ -6,20 +6,20 @@
           <div id="aboutBlockFrom">
             <div class="about__blockrow" id="aboutBlockReplace">
               <div class="about__block about__block--1">
-                <div class="about__blcoktitle"> <span>2 </span>модели</div>
-                <div class="about__blocktext">выпущены в 2022 году</div>
+                <div class="about__blcoktitle"> <span>12 </span> курсов</div>
+                <div class="about__blocktext">онлайн и офлайн</div>
               </div>
               <div class="about__block about__block--2">
-                <div class="about__blcoktitle"> <span>16 </span>сотрудников</div>
+                <div class="about__blcoktitle"> <span>27 </span>сотрудников</div>
                 <div class="about__blocktext">в штате нашей компании</div>
               </div>
               <div class="about__block about__block--3">
-                <div class="about__blcoktitle"> <span>3 </span>года</div>
+                <div class="about__blcoktitle"> <span>7 </span>лет</div>
                 <div class="about__blocktext">на рынке</div>
               </div>
               <div class="about__block about__block--4">
-                <div class="about__blcoktitle"> <span>200+ </span>дилеров</div>
-                <div class="about__blocktext">продукции по всему миру</div>
+                <div class="about__blcoktitle"> <span>20 </span>патентов</div>
+                <div class="about__blocktext">на ИТ-решения и изобретения</div>
               </div>
             </div>
           </div>
@@ -32,23 +32,23 @@
             <div class="about__itemsrow">
               <div class="about__item">
                 <div class="about__icon"> <img src="img/tooth.svg" alt=""></div>
-                <div class="about__itemtitle">Стоматология</div>
-                <div class="about__itemtext">Производите стоматологические продукты наивысшего нового стандарта качества, избежав при этом  значительных затрат.</div>
+                <div class="about__itemtitle">ИТ услуги</div>
+                <div class="about__itemtext">Ведущий разработчик в области аддитивных технологий.</div>
               </div>
               <div class="about__item">
                 <div class="about__icon"> <img src="img/car.svg" alt=""></div>
-                <div class="about__itemtitle">Автомобилестроение</div>
-                <div class="about__itemtext">Используйте на этапе разработки и создавайте изделия более высокого качества дешевле и быстрее.</div>
+                <div class="about__itemtitle">Исследования и производство</div>
+                <div class="about__itemtext">Самостоятельно разрабатываем и производит передовые материалы для аддитивного производства.</div>
               </div>
               <div class="about__item">
                 <div class="about__icon"> <img src="img/box.svg" alt=""></div>
                 <div class="about__itemtitle">Прототипирование</div>
-                <div class="about__itemtext">Перед запуском нового изделия в производство проводят тестирование опытного прототипа.</div>
+                <div class="about__itemtext">Оказываем услуги в области 3Д печати.</div>
               </div>
               <div class="about__item">
                 <div class="about__icon"> <img src="img/design.svg" alt=""></div>
-                <div class="about__itemtitle">Дизайн</div>
-                <div class="about__itemtext">В архитектуре и дизайне трехмерные принтеры успешно применяются в основном для создания архитектурных макетов.</div>
+                <div class="about__itemtitle">Обучение</div>
+                <div class="about__itemtext">Проводим курсы обучения в области аддитивных технологий на собственной запатентованной ит-платформе.</div>
               </div>
             </div>
           </div>
