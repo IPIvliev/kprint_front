@@ -4,6 +4,7 @@
 
     <div class="content">
       <WhiteWelcome/>
+      <MainPageAbout/>
       <MainPageShop :background="'light_gray_background'"/>
       <MainPageVideo/>
       <UsageBlock/>
@@ -39,6 +40,7 @@
 <script>
 import HeaderBlock from "../components/HeaderBlock.vue"
 import WhiteWelcome from "../components/elements/WhiteWelcome.vue"
+import MainPageAbout from "../components/elements/MainPage/MainPageAbout.vue"
 import MainPageShop from "../components/elements/MainPage/MainPageShop.vue"
 import MainPageVideo from "../components/elements/MainPage/MainPageVideo.vue"
 import UsageBlock from "../components/elements/UsageBlock.vue"
@@ -48,7 +50,7 @@ import FooterBlock from "../components/FooterBlock.vue"
 
 export default {
   name: 'MainPage',
-  components: {HeaderBlock, FooterBlock, MainPageNews, MainPageVideo, UsageBlock, CallbackWindow, WhiteWelcome, MainPageShop },
+  components: {HeaderBlock, FooterBlock, MainPageNews, MainPageAbout, MainPageVideo, UsageBlock, CallbackWindow, WhiteWelcome, MainPageShop },
   props: {
     msg: String
   },

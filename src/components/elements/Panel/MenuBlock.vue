@@ -81,11 +81,19 @@
                         </router-link>
                       </li>
                       <li>
-                        <router-link class="panel__menu-link" to="/study">
+                        <router-link class="panel__menu-link" to="/panel/study/categories">
                           <span class="panel__menu-icon">
                             <img src="@/assets/img/GraduationCap.svg" alt="">
                           </span>
-                          Обучение
+                          Категории курсов
+                        </router-link>
+                      </li>
+                      <li>
+                        <router-link class="panel__menu-link" to="/panel/study/courses">
+                          <span class="panel__menu-icon">
+                            <img src="@/assets/img/GraduationCap.svg" alt="">
+                          </span>
+                          Курсы
                         </router-link>
                       </li>
                       <li>
