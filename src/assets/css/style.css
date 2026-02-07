@@ -11211,6 +11211,10 @@ body.lock {
   max-height: 780px;
 }
 
+.panel__block--menu-open {
+  max-height: none;
+}
+
 .panel__head {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -11366,6 +11370,37 @@ body.lock {
 
 .panel__menu-link:hover {
   background: #F4F7F9;
+}
+
+.panel__menu-link--active {
+  background: #F4F7F9;
+}
+
+.panel__menu-link.router-link-active {
+  background: #F4F7F9;
+}
+
+.panel__menu-link--toggle {
+  gap: 8px;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+}
+
+.panel__menu-link--flat {
+  border: none;
+  box-shadow: none;
+}
+
+.panel__menu-caret {
+  margin-left: auto;
+  font-size: 14px;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.panel__menu-caret--open {
+  transform: rotate(180deg);
 }
 
 .panel__menu-icon {
@@ -11688,6 +11723,24 @@ body.lock {
   -webkit-transition: 0.2s;
   -o-transition: 0.2s;
   transition: 0.2s;
+}
+
+.panel__table--courses {
+  overflow-x: hidden;
+}
+
+.panel__table--courses table {
+  min-width: 0;
+  table-layout: fixed;
+}
+
+.panel__table--courses td {
+  white-space: normal;
+}
+
+.panel__table--courses .panel__table-text {
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .panel__table td img {

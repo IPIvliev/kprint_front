@@ -29,6 +29,11 @@
   border-radius: 24px;
 }
 
+.cmp-components-study-coursefeedbacks .feedback_card--full, .cmp-components-study-coursefeedbacks.feedback_card--full{
+  margin-left: 0;
+  width: 100%;
+}
+
 .cmp-components-study-coursefeedbacks .feedback_card_header, .cmp-components-study-coursefeedbacks.feedback_card_header{
   vertical-align: middle;
 }
@@ -57,6 +62,10 @@
     font-size: 18px;
     line-height: 30px;
     color: #545555;
+}
+
+.cmp-components-study-coursefeedbacks .feedback_card_text--full, .cmp-components-study-coursefeedbacks.feedback_card_text--full{
+  max-width: 100%;
 }
 
 .cmp-components-study-coursefeedbacks .feedback_card_more, .cmp-components-study-coursefeedbacks.feedback_card_more{

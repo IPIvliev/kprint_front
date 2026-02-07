@@ -4,15 +4,15 @@
       <div class="content">
         <WhiteWelcome />
         <AboutCourse :background="'light_gray_background'" :course = "GetCourse"/>
-        <CourseProgramm :background="'light_gray_background'" :lessons="GetCourse.lessons"/>
+        <CourseProgramm :background="'light_gray_background'" :lessons="GetCourse.lessons || []"/>
         <!-- <WhyWeStudyBlock :background="'light_gray_background'"/> -->
-        <CourseTeachers :background="'light_gray_background'" :teachers="GetCourse.teachers"/>
+        <CourseTeachers :background="'light_gray_background'" :teachers="GetCourse.teachers || []"/>
 
-        <CourseFeedbacks :background="'light_gray_background'" :feedbacks="GetCourse.feedbacks"/>
+        <CourseFeedbacks :background="'light_gray_background'" :feedbacks="GetCourse.feedbacks || []"/>
 
-        <CoursePrices :background="'light_gray_background'" :prices="GetCourse.prices" :course="GetCourse"/>
+        <CoursePrices :background="'light_gray_background'" :prices="GetCourse.prices || []" :course="GetCourse"/>
 
-        <CourseRelated :background="'gray_background'" :related="GetCourse.related"/>
+        <CourseRelated :background="'gray_background'" :related="GetCourse.related || []"/>
         <!-- advantages-->
         <!--	/advantages-->
         <!-- halfitems-->

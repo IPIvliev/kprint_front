@@ -1,6 +1,6 @@
 <template>
 							<div class="col-xxl-3 col-xl-4 d-none d-xl-block">
-								<div class="panel__block panel__block--1">
+								<div class="panel__block panel__block--1" :class="{ 'panel__block--menu-open': studyOpen }">
 									<div class="panel__head"><router-link class="panel__profile" to="/panel/edit">
 											<div class="panel__profile-img"> <img src="@/assets/img/user.webp" alt=""></div>
 											<div class="panel__profile-content">
@@ -81,20 +81,63 @@
                         </router-link>
                       </li>
                       <li>
-                        <router-link class="panel__menu-link" to="/panel/study/categories">
+                        <button type="button" class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat" @click="toggleStudyMenu">
                           <span class="panel__menu-icon">
                             <img src="@/assets/img/GraduationCap.svg" alt="">
                           </span>
-                          Категории курсов
-                        </router-link>
-                      </li>
-                      <li>
-                        <router-link class="panel__menu-link" to="/panel/study/courses">
-                          <span class="panel__menu-icon">
-                            <img src="@/assets/img/GraduationCap.svg" alt="">
-                          </span>
-                          Курсы
-                        </router-link>
+                          Обучение
+                          <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': studyOpen }">▾</span>
+                        </button>
+                        <ul v-show="studyOpen" class="panel__menu" style="padding-left: 18px; margin-top: 8px;">
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/study/categories" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/GraduationCap.svg" alt="">
+                              </span>
+                              Категории курсов
+                            </router-link>
+                          </li>
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/study/courses" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/GraduationCap.svg" alt="">
+                              </span>
+                              Курсы
+                            </router-link>
+                          </li>
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/study/lessons" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/GraduationCap.svg" alt="">
+                              </span>
+                              Уроки
+                            </router-link>
+                          </li>
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/study/teachers" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/GraduationCap.svg" alt="">
+                              </span>
+                              Преподаватели
+                            </router-link>
+                          </li>
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/study/prices" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/GraduationCap.svg" alt="">
+                              </span>
+                              Цены
+                            </router-link>
+                          </li>
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/study/feedbacks" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/GraduationCap.svg" alt="">
+                              </span>
+                              Отзывы
+                            </router-link>
+                          </li>
+                        </ul>
                       </li>
                       <li>
                         <router-link class="panel__menu-link" to="/shop">
@@ -144,6 +187,7 @@ export default {
     return {
       panelMode: 'user',
       telegramBotUrl: process.env.VUE_APP_TELEGRAM_BOT_URL || '#',
+      studyOpen: false,
     }
   },
   computed: {
@@ -201,6 +245,9 @@ export default {
       this.panelMode = normalized;
       localStorage.setItem('panelMode', normalized);
     },
+    toggleStudyMenu() {
+      this.studyOpen = !this.studyOpen;
+    },
   },
   mounted() {
     const stored = localStorage.getItem('panelMode');
@@ -208,6 +255,9 @@ export default {
       this.panelMode = 'manager';
     } else {
       this.panelMode = 'user';
+    }
+    if (this.$route && this.$route.path && this.$route.path.includes('/panel/study')) {
+      this.studyOpen = true;
     }
   },
 }

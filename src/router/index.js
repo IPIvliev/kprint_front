@@ -161,6 +161,26 @@ const routes = [
         name: 'PanelStudyCourses',
         component: () => import('../views/Panel/PanelStudyCourses.vue'),
       },
+      {
+        path: 'study/lessons',
+        name: 'PanelStudyLessons',
+        component: () => import('../views/Panel/PanelStudyLessons.vue'),
+      },
+      {
+        path: 'study/teachers',
+        name: 'PanelStudyTeachers',
+        component: () => import('../views/Panel/PanelStudyTeachers.vue'),
+      },
+      {
+        path: 'study/prices',
+        name: 'PanelStudyPrices',
+        component: () => import('../views/Panel/PanelStudyPrices.vue'),
+      },
+      {
+        path: 'study/feedbacks',
+        name: 'PanelStudyFeedbacks',
+        component: () => import('../views/Panel/PanelStudyFeedbacks.vue'),
+      },
       // {
       //   path: 'ears',
       //   name: 'PanelEars',

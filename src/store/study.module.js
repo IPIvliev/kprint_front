@@ -1,10 +1,47 @@
-import { api } from '@/services/http'
+import { api, publicApi } from '@/services/http'
+import authHeader from '@/services/auth-header'
+
+const getCurrentUser = () => {
+  try {
+    return JSON.parse(localStorage.getItem('user'))
+  } catch (err) {
+    return null
+  }
+}
+
+const isManagerUser = (user) => {
+  if (!user) {
+    return false
+  }
+  if (user.is_superuser === true || user.is_staff === true || user.is_manager === true || user.isManager === true) {
+    return true
+  }
+  const groups = user.groups || user.group || user.roles || user.role || user.groups_names || user.groups_list
+  if (!groups) {
+    return false
+  }
+  const normalize = (value) => String(value || '').toLowerCase()
+  const isManagerName = (value) => {
+    const name = normalize(typeof value === 'string' ? value : value.name || value.title)
+    return name === 'manager' || name === 'менеджер'
+  }
+  if (Array.isArray(groups)) {
+    return groups.some(isManagerName)
+  }
+  return isManagerName(groups)
+}
 
 export const study = {
   namespaced: true,
   state: {
     courses: [],
-    course: [],
+    course: {
+      lessons: [],
+      teachers: [],
+      feedbacks: [],
+      prices: [],
+      related: [],
+    },
   },
   mutations: {
     setCoursesData(state, coursesData) {
@@ -26,23 +63,25 @@ export const study = {
       })
     },
     setCourseData(state, courseData) {
-      state.course = courseData
+      const safe = courseData || {}
+      state.course = {
+        ...safe,
+        lessons: Array.isArray(safe.lessons) ? safe.lessons : [],
+        teachers: Array.isArray(safe.teachers) ? safe.teachers : [],
+        feedbacks: Array.isArray(safe.feedbacks) ? safe.feedbacks : [],
+        prices: Array.isArray(safe.prices) ? safe.prices : [],
+        related: Array.isArray(safe.related) ? safe.related : [],
+      }
     },
   },
   actions: {
-    fetchCourses({ commit }) {
-      return api
-        .get('/api/study/courses')
-        .then(response => {
-          commit('setCoursesData', response.data)
-        })
+    async fetchCourses({ commit }) {
+      const response = await publicApi.get('/api/study/courses')
+      commit('setCoursesData', response.data)
     },
-    fetchCourse({ commit }, id) {
-      return api
-        .get('/api/study/course/' + Number(id))
-        .then(response => {
-          commit('setCourseData', response.data)
-        })
+    async fetchCourse({ commit }, id) {
+      const response = await publicApi.get('/api/study/course/' + Number(id))
+      commit('setCourseData', response.data)
     },
   },
 }

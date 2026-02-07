@@ -47,6 +47,10 @@ const userApi = axios.create({
   baseURL: USER_API_BASE,
 })
 
+const publicApi = axios.create({
+  baseURL: API_BASE,
+})
+
 const refreshClient = axios.create({
   baseURL: API_BASE,
 })
@@ -130,4 +134,4 @@ function attachInterceptors(client) {
 attachInterceptors(api)
 attachInterceptors(userApi)
 
-export { api, userApi }
+export { api, userApi, publicApi }
