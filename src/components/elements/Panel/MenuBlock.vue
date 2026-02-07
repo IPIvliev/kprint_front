@@ -353,9 +353,15 @@ export default {
     },
     toggleDeliveryMenu() {
       this.deliveryOpen = !this.deliveryOpen;
+      if (this.deliveryOpen) {
+        this.shopOpen = true;
+      }
     },
     toggleFilterMenu() {
       this.filterOpen = !this.filterOpen;
+      if (this.filterOpen) {
+        this.shopOpen = true;
+      }
     },
   },
   mounted() {
