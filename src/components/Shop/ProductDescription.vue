@@ -3,14 +3,18 @@
         <div class="container"> 
             <div class="row gy-1">
 
-                <div class="col-xl-1 d-sm-block d-none">
-                    <img :src="image.src" class="product_pictures" 
-                    v-for="image in GetPhotos" 
-                    @mouseover="current_image = image.src"
-                    width="100" height="100">
-                </div>
                 <div class="col-xl-4 col-sm-12">
-                    <img :src="current_image" class="product_photo" width="420" height="420">
+                    <img :src="current_image" class="product_photo" width="420" height="420" @click="openGallery">
+                    <div class="product_pictures_row">
+                        <div
+                          v-for="image in GetPhotos"
+                          :key="image.src"
+                          class="product_picture_item"
+                          @mouseover="current_image = image.src"
+                        >
+                          <img :src="image.src" class="product_pictures" width="84" height="84">
+                        </div>
+                    </div>
                 </div>
                 <div class="col-xl-7 col-sm-12 product_description">
                     <div class="rating-stock-m-shop-item">
@@ -84,6 +88,27 @@
             </div>
             
         </div>
+        <div v-if="show_gallery" class="product_gallery_modal" @click.self="closeGallery">
+            <div class="product_gallery_modal__content" @click.stop>
+                <button class="product_gallery_modal__close" type="button" @click.stop="closeGallery">×</button>
+                <div class="product_gallery_modal__main">
+                    <button type="button" class="product_gallery_modal__nav product_gallery_modal__nav--prev" @click="prevImage">‹</button>
+                    <img :src="currentModalImage" class="product_gallery_modal__image" alt="">
+                    <button type="button" class="product_gallery_modal__nav product_gallery_modal__nav--next" @click="nextImage">›</button>
+                </div>
+                <div class="product_gallery_modal__thumbs">
+                    <div
+                      v-for="(image, index) in GetPhotos"
+                      :key="`modal-${image.src}`"
+                      class="product_gallery_modal__thumb"
+                      :class="{ active: index === modal_index }"
+                      @click="setModalIndex(index)"
+                    >
+                      <img :src="image.src" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -95,7 +120,9 @@ import ProductAmount from '@/components/elements/Shop/ProductAmount.vue'
         components: { ProductStock, ProductAmount },
         data() {
             return {
-                current_image: ''
+                current_image: '',
+                show_gallery: false,
+                modal_index: 0,
             }
         },
         beforeCreate() {
@@ -104,12 +131,24 @@ import ProductAmount from '@/components/elements/Shop/ProductAmount.vue'
         computed: {
             GetPhotos() {
                 let photos = []
-                photos.push({ src: this.product.photo })
-                this.product.product_images.forEach((photo) => {
-                    photos.push({ src: photo.src })
-                })
-                this.current_image = this.product.photo
+                if (this.product && this.product.photo) {
+                    photos.push({ src: this.resolveMediaUrl(this.product.photo) })
+                }
+                if (this.product && Array.isArray(this.product.product_images)) {
+                    this.product.product_images.forEach((photo) => {
+                        if (photo && photo.src) {
+                            photos.push({ src: this.resolveMediaUrl(photo.src) })
+                        }
+                    })
+                }
                 return photos
+            },
+            currentModalImage() {
+                if (!this.GetPhotos.length) {
+                    return ''
+                }
+                const item = this.GetPhotos[this.modal_index] || this.GetPhotos[0]
+                return item ? item.src : ''
             },
             getCart() {
                 console.log("localStorage ", localStorage.getItem('cart'))
@@ -120,7 +159,37 @@ import ProductAmount from '@/components/elements/Shop/ProductAmount.vue'
                 return this.$store.getters['shop/productIsInStock']
             },
         },
+        watch: {
+            product: {
+                immediate: true,
+                handler() {
+                    if (this.GetPhotos.length) {
+                        this.current_image = this.GetPhotos[0].src
+                        this.modal_index = 0
+                    } else {
+                        this.current_image = ''
+                        this.modal_index = 0
+                    }
+                }
+            }
+        },
         methods: {
+            resolveMediaUrl(path) {
+                if (!path) {
+                    return ''
+                }
+                if (path.startsWith('http://') || path.startsWith('https://')) {
+                    return path
+                }
+                const base = (process.env.VUE_APP_API_BASE || '').replace(/\/+$/, '')
+                if (!base) {
+                    return path
+                }
+                if (path.startsWith('/')) {
+                    return `${base}${path}`
+                }
+                return `${base}/${path}`
+            },
             getPrice(price) {
                 price = String(price).split('.')
                 price = price[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -128,7 +197,36 @@ import ProductAmount from '@/components/elements/Shop/ProductAmount.vue'
             },
             addProductToCart() {
                 this.$store.dispatch("shop/AddProductToCart", this.product)
-            }
+            },
+            openGallery() {
+                if (!this.GetPhotos.length) {
+                    return
+                }
+                const index = this.GetPhotos.findIndex((item) => item.src === this.current_image)
+                this.modal_index = index >= 0 ? index : 0
+                this.show_gallery = true
+            },
+            closeGallery() {
+                this.show_gallery = false
+            },
+            nextImage() {
+                if (!this.GetPhotos.length) {
+                    return
+                }
+                this.modal_index = (this.modal_index + 1) % this.GetPhotos.length
+            },
+            prevImage() {
+                if (!this.GetPhotos.length) {
+                    return
+                }
+                this.modal_index = (this.modal_index - 1 + this.GetPhotos.length) % this.GetPhotos.length
+            },
+            setModalIndex(index) {
+                if (index < 0 || index >= this.GetPhotos.length) {
+                    return
+                }
+                this.modal_index = index
+            },
         }
     }
 </script>

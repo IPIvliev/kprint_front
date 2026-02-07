@@ -1,6 +1,6 @@
 <template>
 							<div class="col-xxl-3 col-xl-4 d-none d-xl-block">
-								<div class="panel__block panel__block--1" :class="{ 'panel__block--menu-open': studyOpen }">
+								<div class="panel__block panel__block--1" :class="{ 'panel__block--menu-open': studyOpen || shopOpen || filterOpen || deliveryOpen }">
 									<div class="panel__head"><router-link class="panel__profile" to="/panel/edit">
 											<div class="panel__profile-img"> <img src="@/assets/img/user.webp" alt=""></div>
 											<div class="panel__profile-content">
@@ -140,12 +140,109 @@
                         </ul>
                       </li>
                       <li>
-                        <router-link class="panel__menu-link" to="/shop">
+                        <button type="button" class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat" @click="toggleShopMenu">
                           <span class="panel__menu-icon">
                             <img src="@/assets/img/ShoppingCart.svg" alt="">
                           </span>
                           Магазин
-                        </router-link>
+                          <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': shopOpen }">▾</span>
+                        </button>
+                        <ul v-if="shopOpen" class="panel__menu-sub">
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/shop/categories" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/ShoppingCart.svg" alt="">
+                              </span>
+                              Категории магазина
+                            </router-link>
+                          </li>
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/shop/products" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/ShoppingCart.svg" alt="">
+                              </span>
+                              Товары
+                            </router-link>
+                          </li>
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/shop/orders" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/ShoppingCart.svg" alt="">
+                              </span>
+                              Заказы
+                            </router-link>
+                          </li>
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/shop/discounts" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/ShoppingCart.svg" alt="">
+                              </span>
+                              Скидки
+                            </router-link>
+                          </li>
+                          <li>
+                            <button type="button" class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat" @click="toggleFilterMenu">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/ShoppingCart.svg" alt="">
+                              </span>
+                              Фильтрация
+                              <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': filterOpen }">▾</span>
+                            </button>
+                            <ul v-if="filterOpen" class="panel__menu-sub">
+                              <li>
+                                <router-link class="panel__menu-link" to="/panel/shop/filter-attrs" active-class="panel__menu-link--active">
+                                  <span class="panel__menu-icon">
+                                    <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                  </span>
+                                  Фильтры
+                                </router-link>
+                              </li>
+                              <li>
+                                <router-link class="panel__menu-link" to="/panel/shop/filter-attr-list-values" active-class="panel__menu-link--active">
+                                  <span class="panel__menu-icon">
+                                    <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                  </span>
+                                  Значения фильтров
+                                </router-link>
+                              </li>
+                              <li>
+                                <router-link class="panel__menu-link" to="/panel/shop/filter-attr-values" active-class="panel__menu-link--active">
+                                  <span class="panel__menu-icon">
+                                    <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                  </span>
+                                  Атрибуты товаров
+                                </router-link>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <button type="button" class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat" @click="toggleDeliveryMenu">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/ShoppingCart.svg" alt="">
+                              </span>
+                              Доставка
+                              <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': deliveryOpen }">▾</span>
+                            </button>
+                            <ul v-if="deliveryOpen" class="panel__menu-sub">
+                              <li>
+                                <router-link class="panel__menu-link" to="/panel/shop/pochta-settings" active-class="panel__menu-link--active">
+                                  <span class="panel__menu-icon">
+                                    <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                  </span>
+                                  Настройки Почты России
+                                </router-link>
+                              </li>
+                              <li>
+                                <router-link class="panel__menu-link" to="/panel/shop/sdek-settings" active-class="panel__menu-link--active">
+                                  <span class="panel__menu-icon">
+                                    <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                  </span>
+                                  Настройки СДЭК
+                                </router-link>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
                       </li>
                       <li>
                         <router-link class="panel__menu-link" to="/panel/models">
@@ -188,6 +285,9 @@ export default {
       panelMode: 'user',
       telegramBotUrl: process.env.VUE_APP_TELEGRAM_BOT_URL || '#',
       studyOpen: false,
+      shopOpen: false,
+      deliveryOpen: false,
+      filterOpen: false,
     }
   },
   computed: {
@@ -248,6 +348,15 @@ export default {
     toggleStudyMenu() {
       this.studyOpen = !this.studyOpen;
     },
+    toggleShopMenu() {
+      this.shopOpen = !this.shopOpen;
+    },
+    toggleDeliveryMenu() {
+      this.deliveryOpen = !this.deliveryOpen;
+    },
+    toggleFilterMenu() {
+      this.filterOpen = !this.filterOpen;
+    },
   },
   mounted() {
     const stored = localStorage.getItem('panelMode');
@@ -258,6 +367,18 @@ export default {
     }
     if (this.$route && this.$route.path && this.$route.path.includes('/panel/study')) {
       this.studyOpen = true;
+    }
+    if (this.$route && this.$route.path && this.$route.path.includes('/panel/shop')) {
+      this.shopOpen = true;
+    }
+    if (this.$route && this.$route.path && this.$route.path.includes('/panel/shop/pochta-settings')) {
+      this.deliveryOpen = true;
+    }
+    if (this.$route && this.$route.path && this.$route.path.includes('/panel/shop/sdek-settings')) {
+      this.deliveryOpen = true;
+    }
+    if (this.$route && this.$route.path && this.$route.path.includes('/panel/shop/filter-')) {
+      this.filterOpen = true;
     }
   },
 }

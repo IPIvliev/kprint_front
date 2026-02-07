@@ -14,6 +14,127 @@
     object-position: 50% 50%;  
 }
 
+.cmp-components-shop-productdescription .product_pictures_row, .cmp-components-shop-productdescription.product_pictures_row{
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.cmp-components-shop-productdescription .product_picture_item, .cmp-components-shop-productdescription.product_picture_item{
+    width: 84px;
+    height: 84px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    padding: 2px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    background: var(--fillssecondary);
+}
+
+.cmp-components-shop-productdescription .product_picture_item:hover, .cmp-components-shop-productdescription.product_picture_item:hover{
+    transform: scale(1.04);
+}
+
+.cmp-components-shop-productdescription .product_gallery_modal, .cmp-components-shop-productdescription.product_gallery_modal{
+    position: fixed;
+    inset: 0;
+    background: rgba(9, 10, 12, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 24px;
+}
+
+.cmp-components-shop-productdescription .product_gallery_modal__content, .cmp-components-shop-productdescription.product_gallery_modal__content{
+    background: #fff;
+    border-radius: 20px;
+    max-width: 980px;
+    width: 100%;
+    padding: 24px;
+    position: relative;
+}
+
+.cmp-components-shop-productdescription .product_gallery_modal__close, .cmp-components-shop-productdescription.product_gallery_modal__close{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: #f2f2f2;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.cmp-components-shop-productdescription .product_gallery_modal__main, .cmp-components-shop-productdescription.product_gallery_modal__main{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cmp-components-shop-productdescription .product_gallery_modal__image, .cmp-components-shop-productdescription.product_gallery_modal__image{
+    max-width: 100%;
+    max-height: 70vh;
+    border-radius: 16px;
+    object-fit: contain;
+}
+
+.cmp-components-shop-productdescription .product_gallery_modal__nav, .cmp-components-shop-productdescription.product_gallery_modal__nav{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: #f2f2f2;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.cmp-components-shop-productdescription .product_gallery_modal__nav--prev, .cmp-components-shop-productdescription.product_gallery_modal__nav--prev{
+    left: 12px;
+}
+
+.cmp-components-shop-productdescription .product_gallery_modal__nav--next, .cmp-components-shop-productdescription.product_gallery_modal__nav--next{
+    right: 12px;
+}
+
+.cmp-components-shop-productdescription .product_gallery_modal__thumbs, .cmp-components-shop-productdescription.product_gallery_modal__thumbs{
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+}
+
+.cmp-components-shop-productdescription .product_gallery_modal__thumb, .cmp-components-shop-productdescription.product_gallery_modal__thumb{
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    overflow: hidden;
+    flex: 0 0 auto;
+}
+
+.cmp-components-shop-productdescription .product_gallery_modal__thumb img, .cmp-components-shop-productdescription.product_gallery_modal__thumb img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cmp-components-shop-productdescription .product_gallery_modal__thumb.active, .cmp-components-shop-productdescription.product_gallery_modal__thumb.active{
+    border-color: #D83A56;
+}
+
 .cmp-components-shop-productdescription .product_photo, .cmp-components-shop-productdescription.product_photo{
     border-radius: 20px;
     object-fit: cover;

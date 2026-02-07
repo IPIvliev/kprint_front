@@ -142,6 +142,51 @@ const routes = [
         component: () => import('../views/Panel/PanelPrinters.vue'),
       },
       {
+        path: 'shop/categories',
+        name: 'PanelShopCategories',
+        component: () => import('../views/Panel/PanelShopCategories.vue'),
+      },
+      {
+        path: 'shop/products',
+        name: 'PanelShopProducts',
+        component: () => import('../views/Panel/PanelShopProducts.vue'),
+      },
+      {
+        path: 'shop/orders',
+        name: 'PanelShopOrders',
+        component: () => import('../views/Panel/PanelShopOrders.vue'),
+      },
+      {
+        path: 'shop/discounts',
+        name: 'PanelShopDiscounts',
+        component: () => import('../views/Panel/PanelShopDiscounts.vue'),
+      },
+      {
+        path: 'shop/filter-attrs',
+        name: 'PanelShopFilterAttrs',
+        component: () => import('../views/Panel/PanelShopFilterAttrs.vue'),
+      },
+      {
+        path: 'shop/filter-attr-list-values',
+        name: 'PanelShopFilterAttrListValues',
+        component: () => import('../views/Panel/PanelShopFilterAttrListValues.vue'),
+      },
+      {
+        path: 'shop/filter-attr-values',
+        name: 'PanelShopFilterAttrValues',
+        component: () => import('../views/Panel/PanelShopFilterAttrValues.vue'),
+      },
+      {
+        path: 'shop/pochta-settings',
+        name: 'PanelShopPochtaSettings',
+        component: () => import('../views/Panel/PanelShopPochtaSettings.vue'),
+      },
+      {
+        path: 'shop/sdek-settings',
+        name: 'PanelShopSdekSettings',
+        component: () => import('../views/Panel/PanelShopSdekSettings.vue'),
+      },
+      {
         path: 'models',
         name: 'PanelModels',
         component: () => import('../views/Panel/PanelModels.vue'),
