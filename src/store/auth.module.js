@@ -1,7 +1,37 @@
 import AuthService from '../services/auth.service';
-const user = JSON.parse(localStorage.getItem('user'));
-const initialState = user
-  ? { status: { loggedIn: true }, user }
+
+function getAccessToken(user) {
+  if (!user) return null;
+  return user.accessToken || user.access || null;
+}
+
+function getRefreshToken(user) {
+  if (!user) return null;
+  return user.refreshToken || user.refresh || null;
+}
+
+function isTokenExpired(token) {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    if (!payload || !payload.exp) return true;
+    return Date.now() >= payload.exp * 1000;
+  } catch (e) {
+    return true;
+  }
+}
+
+const storedUser = JSON.parse(localStorage.getItem('user'));
+const storedAccess = getAccessToken(storedUser);
+const storedRefresh = getRefreshToken(storedUser);
+const accessValid = storedAccess && !isTokenExpired(storedAccess);
+const refreshValid = storedRefresh && !isTokenExpired(storedRefresh);
+
+if (!accessValid && !refreshValid && storedUser) {
+  localStorage.removeItem('user');
+}
+
+const initialState = accessValid || refreshValid
+  ? { status: { loggedIn: true }, user: storedUser }
   : { status: { loggedIn: false }, user: null };
 export const auth = {
   namespaced: true,
