@@ -1,14 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import Registration from '../views/Registration.vue'
-import Login from '../views/Login.vue'
-import About from '../views/About.vue'
-import Innovations from '../views/Innovations.vue'
-import News from '../views/News.vue'
-import Article from '../views/Article.vue'
-import Gallery from '../views/Gallery.vue'
-import Contact from '../views/Contact.vue'
-import NotFound from '../views/404.vue'
+
+const Home = () => import('../views/Home.vue')
+const Registration = () => import('../views/Registration.vue')
+const Login = () => import('../views/Login.vue')
+const About = () => import('../views/About.vue')
+const Innovations = () => import('../views/Innovations.vue')
+const News = () => import('../views/News.vue')
+const Article = () => import('../views/Article.vue')
+const Gallery = () => import('../views/Gallery.vue')
+const Contact = () => import('../views/Contact.vue')
+const NotFound = () => import('../views/404.vue')
 
 const routes = [
   {

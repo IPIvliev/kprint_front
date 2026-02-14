@@ -5,6 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:ci": "vue-cli-service build && npm run check:bundle-budget",
+    "check:bundle-budget": "node scripts/check-bundle-budget.js",
     "lint": "vue-cli-service lint",
     "gen:api-types": "openapi-typescript ../kprint_back/openapi.json -o src/types/openapi.d.ts",
     "check:api-types": "npm run gen:api-types && node scripts/check-api-types.js"
