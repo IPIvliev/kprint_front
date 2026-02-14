@@ -1,0 +1,53 @@
+<svg width="720" height="720" viewBox="0 0 720 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(360 338) rotate(90) scale(312 312)">
+      <stop offset="0" stop-color="#3A3E45"/>
+      <stop offset="1" stop-color="#2A2D33"/>
+    </radialGradient>
+    <clipPath id="pinClip">
+      <path d="M360 152C285.44 152 225 212.44 225 287C225 337.97 253.34 382.31 295.13 405.2L334.05 509.75C336.95 517.53 344.38 522.69 352.68 522.69H367.32C375.62 522.69 383.05 517.53 385.95 509.75L424.87 405.2C466.66 382.31 495 337.97 495 287C495 212.44 434.56 152 360 152Z"/>
+    </clipPath>
+  </defs>
+
+  <rect width="720" height="720" fill="#D8D8DB"/>
+  <circle cx="360" cy="360" r="292" fill="url(#bg)"/>
+
+  <g clip-path="url(#pinClip)">
+    <rect x="210" y="142" width="300" height="390" fill="#D61E22"/>
+    <g stroke="#F2F2F2" stroke-width="10" stroke-linecap="square">
+      <path d="M250 170H470"/>
+      <path d="M240 193H480"/>
+      <path d="M232 216H488"/>
+      <path d="M228 239H492"/>
+      <path d="M224 262H496"/>
+      <path d="M224 285H496"/>
+      <path d="M228 308H492"/>
+      <path d="M236 331H484"/>
+      <path d="M248 354H472"/>
+      <path d="M258 377H462"/>
+      <path d="M266 400H454"/>
+      <path d="M276 423H444"/>
+      <path d="M288 446H432"/>
+      <path d="M304 469H416"/>
+      <path d="M322 492H398"/>
+    </g>
+    <g stroke="#F2F2F2" stroke-width="10" stroke-linecap="square">
+      <path d="M226 249H304"/>
+      <path d="M392 272H496"/>
+      <path d="M224 296H332"/>
+      <path d="M408 319H492"/>
+      <path d="M246 365H352"/>
+      <path d="M400 388H454"/>
+      <path d="M292 436H380"/>
+      <path d="M350 459H432"/>
+    </g>
+  </g>
+
+  <g transform="translate(460 380)" stroke="#E9E9E9" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M0 18H72"/>
+    <path d="M36 18V0H60V18"/>
+    <path d="M20 10H52V30H20V10Z"/>
+    <path d="M30 30L36 40L42 30"/>
+    <circle cx="36" cy="20" r="3.5"/>
+  </g>
+</svg>

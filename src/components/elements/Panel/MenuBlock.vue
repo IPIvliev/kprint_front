@@ -2,9 +2,9 @@
 							<div class="col-xxl-3 col-xl-4 d-none d-xl-block">
 								<div class="panel__block panel__block--1" :class="{ 'panel__block--menu-open': studyOpen || shopOpen || filterOpen || deliveryOpen }">
 									<div class="panel__head"><router-link class="panel__profile" to="/panel/edit">
-											<div class="panel__profile-img"> <img src="@/assets/img/user.webp" alt=""></div>
+											<div class="panel__profile-img"> <img :src="profileAvatar" alt=""></div>
 											<div class="panel__profile-content">
-												<div class="panel__profile-title">{{ currentUser.username }}</div>
+												<div class="panel__profile-title">{{ displayName }}</div>
 												<div class="panel__profile-text">Редактировать профиль</div>
 												<div class="panel__profile-icon">
 													<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -279,6 +279,8 @@
 </template>
 
 <script>
+import { defaultAvatarPlaceholder } from '@/constants/avatarPlaceholders'
+
 export default {
   data() {
     return {
@@ -293,6 +295,15 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
+    },
+    displayName() {
+      const user = this.currentUser || {};
+      return user.full_name || user.username || user.email || 'User';
+    },
+    profileAvatar() {
+      const user = this.currentUser || {};
+      const resolved = this.resolveMediaUrl(user.avatar || '');
+      return resolved || defaultAvatarPlaceholder;
     },
     isManager() {
       const user = this.currentUser;
@@ -337,6 +348,22 @@ export default {
     },
   },
   methods: {
+    resolveMediaUrl(path) {
+      if (!path) {
+        return '';
+      }
+      if (path.startsWith('http://') || path.startsWith('https://')) {
+        return path;
+      }
+      const base = (process.env.VUE_APP_API_BASE || '').replace(/\/+$/, '');
+      if (!base) {
+        return path;
+      }
+      if (path.startsWith('/')) {
+        return `${base}${path}`;
+      }
+      return `${base}/${path}`;
+    },
     setPanelMode(mode) {
       const normalized = mode === 'manager' ? 'manager' : 'user';
       if (normalized === 'manager' && !this.isManager) {

@@ -12,11 +12,11 @@
 									</div>
 									<div class="panel__body">
 										<form class="panel__avatar" action="#"> 
-											<div class="panel__avatar-img"> <img src="@/assets/img/user.webp" alt=""></div>
+											<div class="panel__avatar-img"> <img :src="avatarSrc" alt=""></div>
 											<div class="panel__avatar-content"> 
 												<div class="panel__avatar-buttons"> 
 													<div class="panel__avatar-btn">
-														<input id="avatar" type="file">
+														<input id="avatar" type="file" accept="image/*" @change="onAvatarChange">
 														<label class="btn btn--border" for="avatar"> 
 															<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 																<path fill-rule="evenodd" clip-rule="evenodd" d="M2.40039 13.5999C2.40039 13.3878 2.48468 13.1843 2.63471 13.0342C2.78473 12.8842 2.98822 12.7999 3.20039 12.7999H12.8004C13.0126 12.7999 13.216 12.8842 13.3661 13.0342C13.5161 13.1843 13.6004 13.3878 13.6004 13.5999C13.6004 13.8121 13.5161 14.0156 13.3661 14.1656C13.216 14.3156 13.0126 14.3999 12.8004 14.3999H3.20039C2.98822 14.3999 2.78473 14.3156 2.63471 14.1656C2.48468 14.0156 2.40039 13.8121 2.40039 13.5999ZM5.03479 5.36553C4.88481 5.2155 4.80056 5.01206 4.80056 4.79993C4.80056 4.5878 4.88481 4.38435 5.03479 4.23433L7.43479 1.83433C7.58481 1.68435 7.78826 1.6001 8.00039 1.6001C8.21252 1.6001 8.41597 1.68435 8.56599 1.83433L10.966 4.23433C11.1117 4.38521 11.1924 4.58729 11.1905 4.79705C11.1887 5.0068 11.1046 5.20745 10.9562 5.35578C10.8079 5.50411 10.6073 5.58824 10.3975 5.59007C10.1878 5.59189 9.98567 5.51125 9.83479 5.36553L8.80039 4.33113V10.3999C8.80039 10.6121 8.71611 10.8156 8.56608 10.9656C8.41605 11.1156 8.21256 11.1999 8.00039 11.1999C7.78822 11.1999 7.58473 11.1156 7.43471 10.9656C7.28468 10.8156 7.20039 10.6121 7.20039 10.3999V4.33113L6.16599 5.36553C6.01597 5.5155 5.81252 5.59976 5.60039 5.59976C5.38826 5.59976 5.18481 5.5155 5.03479 5.36553Z"></path>
@@ -24,38 +24,48 @@
 														</label>
 													</div>
 													<div class="panel__avatar-btn"> 
-														<div class="btn btn--border"> 
+														<button class="btn btn--border" type="button" @click="clearAvatar"> 
 															<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 																<path fill-rule="evenodd" clip-rule="evenodd" d="M7.20039 1.6001C7.05186 1.60018 6.90629 1.6416 6.77997 1.71974C6.65365 1.79787 6.55158 1.90963 6.48519 2.0425L5.90599 3.2001H3.20039C2.98822 3.2001 2.78473 3.28438 2.63471 3.43441C2.48468 3.58444 2.40039 3.78792 2.40039 4.0001C2.40039 4.21227 2.48468 4.41575 2.63471 4.56578C2.78473 4.71581 2.98822 4.8001 3.20039 4.8001V12.8001C3.20039 13.2244 3.36896 13.6314 3.66902 13.9315C3.96908 14.2315 4.37604 14.4001 4.80039 14.4001H11.2004C11.6247 14.4001 12.0317 14.2315 12.3318 13.9315C12.6318 13.6314 12.8004 13.2244 12.8004 12.8001V4.8001C13.0126 4.8001 13.216 4.71581 13.3661 4.56578C13.5161 4.41575 13.6004 4.21227 13.6004 4.0001C13.6004 3.78792 13.5161 3.58444 13.3661 3.43441C13.216 3.28438 13.0126 3.2001 12.8004 3.2001H10.0948L9.51559 2.0425C9.4492 1.90963 9.34713 1.79787 9.22081 1.71974C9.0945 1.6416 8.94892 1.60018 8.80039 1.6001H7.20039ZM5.60039 6.4001C5.60039 6.18792 5.68468 5.98444 5.83471 5.83441C5.98473 5.68438 6.18822 5.6001 6.40039 5.6001C6.61256 5.6001 6.81605 5.68438 6.96608 5.83441C7.11611 5.98444 7.20039 6.18792 7.20039 6.4001V11.2001C7.20039 11.4123 7.11611 11.6158 6.96608 11.7658C6.81605 11.9158 6.61256 12.0001 6.40039 12.0001C6.18822 12.0001 5.98473 11.9158 5.83471 11.7658C5.68468 11.6158 5.60039 11.4123 5.60039 11.2001V6.4001ZM9.60039 5.6001C9.38822 5.6001 9.18473 5.68438 9.03471 5.83441C8.88468 5.98444 8.80039 6.18792 8.80039 6.4001V11.2001C8.80039 11.4123 8.88468 11.6158 9.03471 11.7658C9.18473 11.9158 9.38822 12.0001 9.60039 12.0001C9.81256 12.0001 10.016 11.9158 10.1661 11.7658C10.3161 11.6158 10.4004 11.4123 10.4004 11.2001V6.4001C10.4004 6.18792 10.3161 5.98444 10.1661 5.83441C10.016 5.68438 9.81256 5.6001 9.60039 5.6001Z"></path>
 															</svg>Удалить
-														</div>
+														</button>
 													</div>
 												</div>
 												<div class="panel__avatar-text">Загружаемое изображение должно весить не более 1 мб.</div>
 											</div>
 										</form>
-										<form class="panel__form" action="#">
+										<form class="panel__form" action="#" @submit.prevent="saveProfile">
 											<div class="panel__formrow"> 
 												<div class="row gy-1">
 													<div class="col-md-6">
 														<div class="input input--label"> 
-															<input type="text">
+															<input type="text" v-model.trim="profile.full_name">
 															<div class="input__label">Ваше имя или никнейм</div>
 														</div>
 													</div>
+													</div>
 												</div>
-											</div>
-											<div class="panel__formrow"> 
+												<div class="panel__formrow"> 
+													<div class="row gy-1">
+														<div class="col-md-6">
+															<div class="input input--label"> 
+																<input type="text" name="telegram" v-model.trim="profile.telegram">
+																<div class="input__label">Telegram</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="panel__formrow"> 
 												<div class="row gy-1">
 													<div class="col-md-6">
 														<div class="input input--label"> 
-															<input type="text" name="tel">
+															<input type="text" name="phone" v-model.trim="profile.phone">
 															<div class="input__label">Номер телефона</div>
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="input input--label"> 
-															<input type="text" name="email">
+															<input type="text" name="email" v-model.trim="profile.email">
 															<div class="input__label">Ваш e-mail адрес</div>
 														</div>
 													</div>
@@ -104,7 +114,7 @@
 											<div class="panel__formrow">
 												<div class="row gy-1">
 													<div class="col-md-6">
-														<button class="btn btn--grayborder" type="submit">
+															<button class="btn btn--grayborder" type="button">
 																<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																	<g opacity="0.24">
 																		<path d="M6 15C7.65685 15 9 13.6569 9 12C9 10.3431 7.65685 9 6 9C4.34315 9 3 10.3431 3 12C3 13.6569 4.34315 15 6 15Z" stroke="#3F3F3F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -121,7 +131,9 @@
 												</div>
 											</div>
 											<div class="panel__formbtn"> 
-												<button class="btn btn--red btn--big" type="submit">Сохранить изменения</button>
+												<button class="btn btn--red btn--big" type="submit" :disabled="loading">Сохранить изменения</button>
+												<div v-if="errorMessage" style="margin-top:10px;color:#d83a56;">{{ errorMessage }}</div>
+												<div v-if="successMessage" style="margin-top:10px;color:#2f8f4e;">{{ successMessage }}</div>
 											</div>
 										</form>
 									</div>
@@ -199,33 +211,195 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import { api } from '@/services/http'
+import authHeader from '@/services/auth-header'
+import { defaultAvatarPlaceholder } from '@/constants/avatarPlaceholders'
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
 
 export default {
   name: 'MainPanel',
+  components: { MenuBlock },
   data() {
     return {
-      password: "",
-      oldPasswordFieldType: "password",
+      profile: {
+        id: null,
+        avatar: '',
+        full_name: '',
+        phone: '',
+        email: '',
+        telegram: '',
+      },
+      avatarFile: null,
+      removeAvatar: false,
+      avatarPreview: '',
+      loading: false,
+      errorMessage: '',
+      successMessage: '',
+      oldPasswordFieldType: 'password',
       oldPasswordVisibleOff: true,
       oldPasswordVisibleOn: false,
-      newPasswordFieldType: "password",
+      newPasswordFieldType: 'password',
       newPasswordVisibleOff: true,
       newPasswordVisibleOn: false,
     }
   },
-  components: { MenuBlock },
+  computed: {
+    avatarSrc() {
+      if (this.removeAvatar && !this.avatarFile) {
+        return defaultAvatarPlaceholder
+      }
+      return this.avatarPreview || this.resolveMediaUrl(this.profile.avatar) || defaultAvatarPlaceholder
+    },
+  },
   methods: {
+    normalizeProfile(data = {}) {
+      return {
+        id: data.id || null,
+        avatar: data.avatar || '',
+        full_name: data.full_name || '',
+        phone: data.phone || '',
+        email: data.email || '',
+        telegram: data.telegram || '',
+      }
+    },
+    applyProfile(data = {}) {
+      this.profile = this.normalizeProfile(data)
+      this.removeAvatar = false
+      this.syncStoredUser()
+    },
+    resolveMediaUrl(path) {
+      if (!path) {
+        return ''
+      }
+      if (path.startsWith('http://') || path.startsWith('https://')) {
+        return path
+      }
+      const base = (process.env.VUE_APP_API_BASE || '').replace(/\/+$/, '')
+      if (!base) {
+        return path
+      }
+      if (path.startsWith('/')) {
+        return `${base}${path}`
+      }
+      return `${base}/${path}`
+    },
+    syncStoredUser() {
+      const storeUser = this.$store && this.$store.state && this.$store.state.auth
+        ? this.$store.state.auth.user
+        : null
+      if (!storeUser) {
+        return
+      }
+      const nextUser = {
+        ...storeUser,
+        email: this.profile.email ?? storeUser.email,
+        full_name: this.profile.full_name ?? storeUser.full_name ?? '',
+        avatar: this.profile.avatar ?? storeUser.avatar ?? '',
+      }
+      if (!nextUser.username && nextUser.full_name) {
+        nextUser.username = nextUser.full_name
+      }
+      try {
+        localStorage.setItem('user', JSON.stringify(nextUser))
+        this.$store.commit('auth/loginSuccess', nextUser)
+      } catch (error) {
+        // keep profile flow working even if store update fails
+      }
+    },
+    clearAvatarPreview() {
+      if (this.avatarPreview) {
+        URL.revokeObjectURL(this.avatarPreview)
+        this.avatarPreview = ''
+      }
+    },
+    onAvatarChange(event) {
+      const files = event && event.target ? event.target.files : null
+      const file = files && files.length ? files[0] : null
+      if (!file) {
+        return
+      }
+      this.avatarFile = file
+      this.removeAvatar = false
+      this.clearAvatarPreview()
+      this.avatarPreview = URL.createObjectURL(file)
+    },
+    clearAvatar() {
+      this.avatarFile = null
+      this.removeAvatar = true
+      this.clearAvatarPreview()
+      const input = this.$el ? this.$el.querySelector('#avatar') : null
+      if (input) {
+        input.value = ''
+      }
+    },
+    async fetchProfile() {
+      this.loading = true
+      this.errorMessage = ''
+      try {
+        const response = await api.get('/api/user/profile', { headers: authHeader() })
+        this.applyProfile(response && response.data ? response.data : {})
+      } catch (error) {
+        this.errorMessage = 'Не удалось загрузить профиль.'
+      } finally {
+        this.loading = false
+      }
+    },
+    buildPayload() {
+      const formData = new FormData()
+      formData.append('full_name', this.profile.full_name || '')
+      formData.append('phone', this.profile.phone || '')
+      formData.append('email', this.profile.email || '')
+      formData.append('telegram', this.profile.telegram || '')
+      if (this.avatarFile) {
+        formData.append('avatar', this.avatarFile)
+      } else if (this.removeAvatar) {
+        formData.append('avatar', '')
+      }
+      return formData
+    },
+    async saveProfile() {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+      this.errorMessage = ''
+      this.successMessage = ''
+      try {
+        const payload = this.buildPayload()
+        const response = await api.patch('/api/user/profile', payload, {
+          headers: authHeader(),
+        })
+        this.applyProfile(response && response.data ? response.data : {})
+        this.avatarFile = null
+        this.removeAvatar = false
+        this.clearAvatarPreview()
+        const input = this.$el ? this.$el.querySelector('#avatar') : null
+        if (input) {
+          input.value = ''
+        }
+        this.successMessage = 'Профиль сохранен.'
+      } catch (error) {
+        this.errorMessage = 'Не удалось сохранить профиль.'
+      } finally {
+        this.loading = false
+      }
+    },
     switchVisibilityOldPassword() {
-      this.oldPasswordFieldType = this.oldPasswordFieldType === "password" ? "text" : "password";
+      this.oldPasswordFieldType = this.oldPasswordFieldType === 'password' ? 'text' : 'password'
       this.oldPasswordVisibleOn = !this.oldPasswordVisibleOn
       this.oldPasswordVisibleOff = !this.oldPasswordVisibleOff
     },
     switchVisibilityNewPassword() {
-      this.newPasswordFieldType = this.newPasswordFieldType === "password" ? "text" : "password";
+      this.newPasswordFieldType = this.newPasswordFieldType === 'password' ? 'text' : 'password'
       this.newPasswordVisibleOn = !this.newPasswordVisibleOn
       this.newPasswordVisibleOff = !this.newPasswordVisibleOff
-    }
-  }
+    },
+  },
+  mounted() {
+    this.fetchProfile()
+  },
+  beforeUnmount() {
+    this.clearAvatarPreview()
+  },
 }
 </script>
