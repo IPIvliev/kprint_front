@@ -114,8 +114,10 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import {
+  fetchShopManagerPochtaSettings,
+  updateShopManagerPochtaSettings,
+} from '@/services/panel.service'
 
 export default {
   name: 'ShopPochtaSettings',
@@ -152,7 +154,7 @@ export default {
       this.loading = true
       this.error = ''
       try {
-        const response = await api.get('/api/shop/manager/pochta-settings', { headers: authHeader() })
+        const response = await fetchShopManagerPochtaSettings()
         const data = response.data || {}
         this.form = {
           title: data.title || '',
@@ -172,7 +174,7 @@ export default {
           key: data.key || '',
         }
       } catch (err) {
-        this.error = 'Failed to load settings'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -182,9 +184,9 @@ export default {
       this.error = ''
       try {
         const payload = { ...this.form }
-        await api.patch('/api/shop/manager/pochta-settings', payload, { headers: authHeader() })
+        await updateShopManagerPochtaSettings(payload)
       } catch (err) {
-        this.error = 'Failed to save settings'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.saving = false
       }

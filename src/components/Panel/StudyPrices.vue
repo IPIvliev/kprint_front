@@ -157,8 +157,13 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import {
+  createStudyManagerPrice,
+  deleteStudyManagerPrice,
+  fetchStudyManagerCourses,
+  fetchStudyManagerPrices,
+  updateStudyManagerPrice,
+} from '@/services/panel.service'
 
 export default {
   name: 'StudyPrices',
@@ -205,7 +210,7 @@ export default {
   methods: {
     async fetchCourses() {
       try {
-        const response = await api.get('/api/study/manager/courses', { headers: authHeader() })
+        const response = await fetchStudyManagerCourses()
         this.courses = Array.isArray(response.data) ? response.data : []
         if (!this.selectedCourse && this.courses.length) {
           this.selectedCourse = this.courses[0].id
@@ -214,7 +219,7 @@ export default {
         }
         await this.fetchPrices()
       } catch (err) {
-        this.error = 'Не удалось загрузить курсы'
+        this.error = err.userMessage || 'Ошибка запроса'
       }
     },
     async fetchPrices() {
@@ -222,10 +227,10 @@ export default {
       this.error = ''
       try {
         const params = this.selectedCourse ? { course: this.selectedCourse } : {}
-        const response = await api.get('/api/study/manager/prices', { headers: authHeader(), params })
+        const response = await fetchStudyManagerPrices(params)
         this.prices = Array.isArray(response.data) ? response.data : []
       } catch (err) {
-        this.error = 'Не удалось загрузить цены'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -341,15 +346,15 @@ export default {
           course: this.form.course,
         }
         if (this.isEditing && this.currentId) {
-          await api.patch(`/api/study/manager/prices/${this.currentId}`, payload, { headers: authHeader() })
+          await updateStudyManagerPrice(this.currentId, payload)
         } else {
-          await api.post('/api/study/manager/prices', payload, { headers: authHeader() })
+          await createStudyManagerPrice(payload)
         }
         this.closeModal()
         this.error = ''
         await this.fetchPrices()
       } catch (err) {
-        this.error = 'Не удалось сохранить цену'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.saving = false
       }
@@ -364,10 +369,10 @@ export default {
       }
       this.error = ''
       try {
-        await api.delete(`/api/study/manager/prices/${id}`, { headers: authHeader() })
+        await deleteStudyManagerPrice(id)
         await this.fetchPrices()
       } catch (err) {
-        this.error = 'Не удалось удалить цену'
+        this.error = err.userMessage || 'Ошибка запроса'
       }
     },
   },

@@ -162,8 +162,14 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import {
+  createStudyManagerLesson,
+  deleteStudyManagerLesson,
+  fetchStudyManagerCourses,
+  fetchStudyManagerLessons,
+  reorderStudyManagerLessons,
+  updateStudyManagerLesson,
+} from '@/services/panel.service'
 
 export default {
   name: 'StudyLessons',
@@ -211,7 +217,7 @@ export default {
   methods: {
     async fetchCourses() {
       try {
-        const response = await api.get('/api/study/manager/courses', { headers: authHeader() })
+        const response = await fetchStudyManagerCourses()
         this.courses = Array.isArray(response.data) ? response.data : []
         if (!this.selectedCourse && this.courses.length) {
           this.selectedCourse = this.courses[0].id
@@ -220,7 +226,7 @@ export default {
         }
         await this.fetchLessons()
       } catch (err) {
-        this.error = 'Не удалось загрузить курсы'
+        this.error = err.userMessage || 'Ошибка запроса'
       }
     },
     async fetchLessons() {
@@ -228,10 +234,10 @@ export default {
       this.error = ''
       try {
         const params = this.selectedCourse ? { course: this.selectedCourse } : {}
-        const response = await api.get('/api/study/manager/lessons', { headers: authHeader(), params })
+        const response = await fetchStudyManagerLessons(params)
         this.lessons = Array.isArray(response.data) ? response.data : []
       } catch (err) {
-        this.error = 'Не удалось загрузить уроки'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -287,14 +293,14 @@ export default {
           course: this.form.course,
         }
         if (this.isEditing && this.currentId) {
-          await api.patch(`/api/study/manager/lessons/${this.currentId}`, payload, { headers: authHeader() })
+          await updateStudyManagerLesson(this.currentId, payload)
         } else {
-          await api.post('/api/study/manager/lessons', payload, { headers: authHeader() })
+          await createStudyManagerLesson(payload)
         }
         this.closeModal()
         await this.fetchLessons()
       } catch (err) {
-        this.error = 'Не удалось сохранить урок'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.saving = false
       }
@@ -309,10 +315,10 @@ export default {
       }
       this.error = ''
       try {
-        await api.delete(`/api/study/manager/lessons/${id}`, { headers: authHeader() })
+        await deleteStudyManagerLesson(id)
         await this.fetchLessons()
       } catch (err) {
-        this.error = 'Не удалось удалить урок'
+        this.error = err.userMessage || 'Ошибка запроса'
       }
     },
     onDragStart(index) {
@@ -348,10 +354,10 @@ export default {
           id: lesson.id || lesson.pk,
           order: index + 1,
         }))
-        await api.post('/api/study/manager/lessons/reorder', payload, { headers: authHeader() })
+        await reorderStudyManagerLessons(payload)
         await this.fetchLessons()
       } catch (err) {
-        this.error = 'Не удалось сохранить порядок'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.savingOrder = false
       }

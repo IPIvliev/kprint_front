@@ -61,8 +61,10 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import {
+  fetchShopManagerSdekSettings,
+  updateShopManagerSdekSettings,
+} from '@/services/panel.service'
 
 export default {
   name: 'ShopSdekSettings',
@@ -90,7 +92,7 @@ export default {
       this.loading = true
       this.error = ''
       try {
-        const response = await api.get('/api/shop/manager/sdek-settings', { headers: authHeader() })
+        const response = await fetchShopManagerSdekSettings()
         const data = response.data || {}
         this.form = {
           title: data.title || '',
@@ -101,7 +103,7 @@ export default {
           secure: data.secure || '',
         }
       } catch (err) {
-        this.error = 'Failed to load settings'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -111,9 +113,9 @@ export default {
       this.error = ''
       try {
         const payload = { ...this.form }
-        await api.patch('/api/shop/manager/sdek-settings', payload, { headers: authHeader() })
+        await updateShopManagerSdekSettings(payload)
       } catch (err) {
-        this.error = 'Failed to save settings'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.saving = false
       }

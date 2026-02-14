@@ -167,8 +167,12 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import {
+  createShopManagerCategory,
+  deleteShopManagerCategory,
+  fetchShopManagerCategories,
+  updateShopManagerCategory,
+} from '@/services/panel.service'
 
 export default {
   name: 'ShopCategories',
@@ -216,10 +220,10 @@ export default {
       this.loading = true
       this.error = ''
       try {
-        const response = await api.get('/api/shop/manager/categories', { headers: authHeader() })
+        const response = await fetchShopManagerCategories()
         this.categories = Array.isArray(response.data) ? response.data : []
       } catch (err) {
-        this.error = 'Не удалось загрузить категории'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -330,14 +334,14 @@ export default {
           payload.append('photo', this.imageFile)
         }
         if (this.isEditing && this.currentId) {
-          await api.patch(`/api/shop/manager/categories/${this.currentId}`, payload, { headers: authHeader() })
+          await updateShopManagerCategory(this.currentId, payload)
         } else {
-          await api.post('/api/shop/manager/categories', payload, { headers: authHeader() })
+          await createShopManagerCategory(payload)
         }
         this.closeModal()
         await this.fetchCategories()
       } catch (err) {
-        this.error = 'Не удалось сохранить категорию'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.saving = false
       }
@@ -352,10 +356,10 @@ export default {
       }
       this.error = ''
       try {
-        await api.delete(`/api/shop/manager/categories/${id}`, { headers: authHeader() })
+        await deleteShopManagerCategory(id)
         await this.fetchCategories()
       } catch (err) {
-        this.error = 'Не удалось удалить категорию'
+        this.error = err.userMessage || 'Ошибка запроса'
       }
     },
   },

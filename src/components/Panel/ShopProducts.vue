@@ -216,8 +216,17 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import {
+  createShopManagerProduct,
+  createShopManagerProductImage,
+  deleteShopManagerProduct,
+  deleteShopManagerProductImage,
+  fetchShopManagerCategories,
+  fetchShopManagerProduct,
+  fetchShopManagerProducts,
+  fetchShopPublicProduct,
+  updateShopManagerProduct,
+} from '@/services/panel.service'
 
 export default {
   name: 'ShopProducts',
@@ -272,13 +281,13 @@ export default {
       this.error = ''
       try {
         const [categoriesResponse, productsResponse] = await Promise.all([
-          api.get('/api/shop/manager/categories', { headers: authHeader() }),
-          api.get('/api/shop/manager/products', { headers: authHeader() }),
+          fetchShopManagerCategories(),
+          fetchShopManagerProducts(),
         ])
         this.categories = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
         this.products = Array.isArray(productsResponse.data) ? productsResponse.data : []
       } catch (err) {
-        this.error = 'Не удалось загрузить товары'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -411,11 +420,11 @@ export default {
         return
       }
       try {
-        let response = await api.get(`/api/shop/manager/products/${this.currentId}`, { headers: authHeader() })
+        let response = await fetchShopManagerProduct(this.currentId)
         let data = response && response.data ? response.data : {}
         let list = Array.isArray(data.product_images) ? data.product_images : []
         if (!list.length) {
-          response = await api.get(`/api/shop/products/${this.currentId}`, { headers: authHeader() })
+          response = await fetchShopPublicProduct(this.currentId)
           data = response && response.data ? response.data : {}
           list = Array.isArray(data.product_images) ? data.product_images : []
         }
@@ -435,7 +444,7 @@ export default {
         payload.append('src', file)
         payload.append('product', this.currentId)
         try {
-          const response = await api.post('/api/shop/manager/product-images', payload, { headers: authHeader() })
+          const response = await createShopManagerProductImage(payload)
           if (response && response.data) {
             created.push(response.data)
           }
@@ -458,7 +467,7 @@ export default {
       if (!confirm('Удалить изображение?')) {
         return
       }
-      await api.delete(`/api/shop/manager/product-images/${img.id}`, { headers: authHeader() })
+      await deleteShopManagerProductImage(img.id)
       await this.fetchProductImages()
     },
     async saveProduct() {
@@ -481,14 +490,14 @@ export default {
           payload.append('photo', this.imageFile)
         }
         if (this.isEditing && this.currentId) {
-          await api.patch(`/api/shop/manager/products/${this.currentId}`, payload, { headers: authHeader() })
+          await updateShopManagerProduct(this.currentId, payload)
         } else {
-          await api.post('/api/shop/manager/products', payload, { headers: authHeader() })
+          await createShopManagerProduct(payload)
         }
         this.closeModal()
         await this.fetchData()
       } catch (err) {
-        this.error = 'Не удалось сохранить товар'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.saving = false
       }
@@ -503,10 +512,10 @@ export default {
       }
       this.error = ''
       try {
-        await api.delete(`/api/shop/manager/products/${id}`, { headers: authHeader() })
+        await deleteShopManagerProduct(id)
         await this.fetchData()
       } catch (err) {
-        this.error = 'Не удалось удалить товар'
+        this.error = err.userMessage || 'Ошибка запроса'
       }
     },
   },

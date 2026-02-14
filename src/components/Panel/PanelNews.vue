@@ -203,8 +203,12 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import {
+  createPanelArticle,
+  deletePanelArticle,
+  fetchPanelArticles,
+  updatePanelArticle,
+} from '@/services/panel.service'
 
 export default {
   name: 'PanelNews',
@@ -269,10 +273,10 @@ export default {
       this.loading = true
       this.error = ''
       try {
-        const response = await api.get('/api/articles/', { headers: authHeader() })
+        const response = await fetchPanelArticles()
         this.articles = Array.isArray(response.data) ? response.data : []
       } catch (err) {
-        this.error = 'Не удалось загрузить новости'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -407,14 +411,14 @@ export default {
           payload.append('article_image', this.imageFile)
         }
         if (this.isEditing && this.currentId) {
-          await api.patch(`/api/articles/${this.currentId}/`, payload, { headers: authHeader() })
+          await updatePanelArticle(this.currentId, payload)
         } else {
-          await api.post('/api/articles/', payload, { headers: authHeader() })
+          await createPanelArticle(payload)
         }
         this.closeModal()
         await this.fetchArticles()
       } catch (err) {
-        this.error = 'Не удалось сохранить новость'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.saving = false
       }
@@ -429,10 +433,10 @@ export default {
       }
       this.error = ''
       try {
-        await api.delete(`/api/articles/${id}/`, { headers: authHeader() })
+        await deletePanelArticle(id)
         await this.fetchArticles()
       } catch (err) {
-        this.error = 'Не удалось удалить новость'
+        this.error = err.userMessage || 'Ошибка запроса'
       }
     },
     categoryTitle(categoryId) {

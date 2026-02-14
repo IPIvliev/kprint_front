@@ -192,8 +192,13 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import {
+  createStudyManagerFeedback,
+  deleteStudyManagerFeedback,
+  fetchStudyManagerCourses,
+  fetchStudyManagerFeedbacks,
+  updateStudyManagerFeedback,
+} from '@/services/panel.service'
 
 export default {
   name: 'StudyFeedbacks',
@@ -240,7 +245,7 @@ export default {
   methods: {
     async fetchCourses() {
       try {
-        const response = await api.get('/api/study/manager/courses', { headers: authHeader() })
+        const response = await fetchStudyManagerCourses()
         this.courses = Array.isArray(response.data) ? response.data : []
         if (!this.selectedCourse && this.courses.length) {
           this.selectedCourse = this.courses[0].id
@@ -249,7 +254,7 @@ export default {
         }
         await this.fetchFeedbacks()
       } catch (err) {
-        this.error = 'Не удалось загрузить курсы'
+        this.error = err.userMessage || 'Ошибка запроса'
       }
     },
     async fetchFeedbacks() {
@@ -257,10 +262,10 @@ export default {
       this.error = ''
       try {
         const params = this.selectedCourse ? { course: this.selectedCourse } : {}
-        const response = await api.get('/api/study/manager/feedbacks', { headers: authHeader(), params })
+        const response = await fetchStudyManagerFeedbacks(params)
         this.feedbacks = Array.isArray(response.data) ? response.data : []
       } catch (err) {
-        this.error = 'Не удалось загрузить отзывы'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -379,14 +384,14 @@ export default {
           payload.append('photo', this.imageFile)
         }
         if (this.isEditing && this.currentId) {
-          await api.patch(`/api/study/manager/feedbacks/${this.currentId}`, payload, { headers: authHeader() })
+          await updateStudyManagerFeedback(this.currentId, payload)
         } else {
-          await api.post('/api/study/manager/feedbacks', payload, { headers: authHeader() })
+          await createStudyManagerFeedback(payload)
         }
         this.closeModal()
         await this.fetchFeedbacks()
       } catch (err) {
-        this.error = 'Не удалось сохранить отзыв'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.saving = false
       }
@@ -401,10 +406,10 @@ export default {
       }
       this.error = ''
       try {
-        await api.delete(`/api/study/manager/feedbacks/${id}`, { headers: authHeader() })
+        await deleteStudyManagerFeedback(id)
         await this.fetchFeedbacks()
       } catch (err) {
-        this.error = 'Не удалось удалить отзыв'
+        this.error = err.userMessage || 'Ошибка запроса'
       }
     },
   },

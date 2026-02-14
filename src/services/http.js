@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { normalizeApiError } from './api-error'
 
 const API_BASE = process.env.VUE_APP_API_BASE
 const USER_API_BASE = process.env.VUE_APP_USER_API_BASE
@@ -93,7 +94,7 @@ function attachInterceptors(client) {
         const refresh = getRefreshToken(user)
         if (!refresh || isTokenExpired(refresh)) {
           clearStoredUser()
-          return Promise.reject(error)
+          return Promise.reject(normalizeApiError(error))
         }
 
         if (isRefreshing) {
@@ -121,12 +122,12 @@ function attachInterceptors(client) {
         } catch (refreshError) {
           clearStoredUser()
           processQueue(refreshError, null)
-          return Promise.reject(refreshError)
+          return Promise.reject(normalizeApiError(refreshError))
         } finally {
           isRefreshing = false
         }
       }
-      return Promise.reject(error)
+      return Promise.reject(normalizeApiError(error))
     }
   )
 }

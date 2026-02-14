@@ -153,8 +153,12 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import {
+  createStudyManagerTeacher,
+  deleteStudyManagerTeacher,
+  fetchStudyManagerTeachers,
+  updateStudyManagerTeacher,
+} from '@/services/panel.service'
 
 export default {
   name: 'StudyTeachers',
@@ -201,10 +205,10 @@ export default {
       this.loading = true
       this.error = ''
       try {
-        const teachersResponse = await api.get('/api/study/manager/teachers', { headers: authHeader() })
+        const teachersResponse = await fetchStudyManagerTeachers()
         this.teachers = Array.isArray(teachersResponse.data) ? teachersResponse.data : []
       } catch (err) {
-        this.error = 'Не удалось загрузить преподавателей'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -317,14 +321,14 @@ export default {
           payload.append('photo', this.imageFile)
         }
         if (this.isEditing && this.currentId) {
-          await api.patch(`/api/study/manager/teachers/${this.currentId}`, payload, { headers: authHeader() })
+          await updateStudyManagerTeacher(this.currentId, payload)
         } else {
-          await api.post('/api/study/manager/teachers', payload, { headers: authHeader() })
+          await createStudyManagerTeacher(payload)
         }
         this.closeModal()
         await this.fetchTeachers()
       } catch (err) {
-        this.error = 'Не удалось сохранить преподавателя'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.saving = false
       }
@@ -339,10 +343,10 @@ export default {
       }
       this.error = ''
       try {
-        await api.delete(`/api/study/manager/teachers/${id}`, { headers: authHeader() })
+        await deleteStudyManagerTeacher(id)
         await this.fetchTeachers()
       } catch (err) {
-        this.error = 'Не удалось удалить преподавателя'
+        this.error = err.userMessage || 'Ошибка запроса'
       }
     },
   },

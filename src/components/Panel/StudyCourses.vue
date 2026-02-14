@@ -207,8 +207,14 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import {
+  createStudyManagerCourse,
+  deleteStudyManagerCourse,
+  fetchStudyManagerCategories,
+  fetchStudyManagerCourses,
+  fetchStudyManagerTeachers,
+  updateStudyManagerCourse,
+} from '@/services/panel.service'
 
 export default {
   name: 'StudyCourses',
@@ -265,15 +271,15 @@ export default {
       this.error = ''
       try {
         const [categoriesResponse, coursesResponse, teachersResponse] = await Promise.all([
-          api.get('/api/study/manager/categories', { headers: authHeader() }),
-          api.get('/api/study/manager/courses', { headers: authHeader() }),
-          api.get('/api/study/manager/teachers', { headers: authHeader() }),
+          fetchStudyManagerCategories(),
+          fetchStudyManagerCourses(),
+          fetchStudyManagerTeachers(),
         ])
         this.categories = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
         this.courses = Array.isArray(coursesResponse.data) ? coursesResponse.data : []
         this.teachers = Array.isArray(teachersResponse.data) ? teachersResponse.data : []
       } catch (err) {
-        this.error = 'Не удалось загрузить курсы'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -462,14 +468,14 @@ export default {
           payload.append('photo', this.imageFile)
         }
         if (this.isEditing && this.currentId) {
-          await api.patch(`/api/study/manager/courses/${this.currentId}`, payload, { headers: authHeader() })
+          await updateStudyManagerCourse(this.currentId, payload)
         } else {
-          await api.post('/api/study/manager/courses', payload, { headers: authHeader() })
+          await createStudyManagerCourse(payload)
         }
         this.closeModal()
         await this.fetchData()
       } catch (err) {
-        this.error = 'Не удалось сохранить курс'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.saving = false
       }
@@ -484,10 +490,10 @@ export default {
       }
       this.error = ''
       try {
-        await api.delete(`/api/study/manager/courses/${id}`, { headers: authHeader() })
+        await deleteStudyManagerCourse(id)
         await this.fetchData()
       } catch (err) {
-        this.error = 'Не удалось удалить курс'
+        this.error = err.userMessage || 'Ошибка запроса'
       }
     },
   },

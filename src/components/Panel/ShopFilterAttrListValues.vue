@@ -157,8 +157,13 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import {
+  createShopManagerFilterAttrListValue,
+  deleteShopManagerFilterAttrListValue,
+  fetchShopManagerFilterAttrListValues,
+  fetchShopManagerFilterAttrs,
+  updateShopManagerFilterAttrListValue,
+} from '@/services/panel.service'
 
 export default {
   name: 'ShopFilterAttrListValues',
@@ -207,13 +212,13 @@ export default {
       this.error = ''
       try {
         const [valuesResponse, attrsResponse] = await Promise.all([
-          api.get('/api/shop/manager/filter-attr-list-values', { headers: authHeader() }),
-          api.get('/api/shop/manager/filter-attrs', { headers: authHeader() }),
+          fetchShopManagerFilterAttrListValues(),
+          fetchShopManagerFilterAttrs(),
         ])
         this.values = Array.isArray(valuesResponse.data) ? valuesResponse.data : []
         this.attrs = Array.isArray(attrsResponse.data) ? attrsResponse.data : []
       } catch (err) {
-        this.error = 'Не удалось загрузить значения фильтров'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -276,14 +281,14 @@ export default {
           color: this.form.color || null,
         }
         if (this.isEditing && this.currentId) {
-          await api.patch(`/api/shop/manager/filter-attr-list-values/${this.currentId}`, payload, { headers: authHeader() })
+          await updateShopManagerFilterAttrListValue(this.currentId, payload)
         } else {
-          await api.post('/api/shop/manager/filter-attr-list-values', payload, { headers: authHeader() })
+          await createShopManagerFilterAttrListValue(payload)
         }
         this.closeModal()
         await this.fetchData()
       } catch (err) {
-        this.error = 'Не удалось сохранить значение'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.saving = false
       }
@@ -298,10 +303,10 @@ export default {
       }
       this.error = ''
       try {
-        await api.delete(`/api/shop/manager/filter-attr-list-values/${id}`, { headers: authHeader() })
+        await deleteShopManagerFilterAttrListValue(id)
         await this.fetchData()
       } catch (err) {
-        this.error = 'Не удалось удалить значение'
+        this.error = err.userMessage || 'Ошибка запроса'
       }
     },
   },

@@ -1,0 +1,269 @@
+import { api, publicApi } from './http'
+
+export function fetchUserProfile() {
+  return api.get('/api/user/profile')
+}
+
+export function updateUserProfile(payload) {
+  return api.patch('/api/user/profile', payload)
+}
+
+export function fetchPanelArticles() {
+  return api.get('/api/articles/')
+}
+
+export function createPanelArticle(payload) {
+  return api.post('/api/articles/', payload)
+}
+
+export function updatePanelArticle(articleId, payload) {
+  return api.patch(`/api/articles/${articleId}/`, payload)
+}
+
+export function deletePanelArticle(articleId) {
+  return api.delete(`/api/articles/${articleId}/`)
+}
+
+export function fetchShopManagerCategories() {
+  return api.get('/api/shop/manager/categories')
+}
+
+export function createShopManagerCategory(payload) {
+  return api.post('/api/shop/manager/categories', payload)
+}
+
+export function updateShopManagerCategory(categoryId, payload) {
+  return api.patch(`/api/shop/manager/categories/${categoryId}`, payload)
+}
+
+export function deleteShopManagerCategory(categoryId) {
+  return api.delete(`/api/shop/manager/categories/${categoryId}`)
+}
+
+export function fetchShopManagerProducts() {
+  return api.get('/api/shop/manager/products')
+}
+
+export function fetchShopManagerProduct(productId) {
+  return api.get(`/api/shop/manager/products/${productId}`)
+}
+
+export function fetchShopPublicProduct(productId) {
+  return publicApi.get(`/api/shop/products/${productId}`)
+}
+
+export function createShopManagerProduct(payload) {
+  return api.post('/api/shop/manager/products', payload)
+}
+
+export function updateShopManagerProduct(productId, payload) {
+  return api.patch(`/api/shop/manager/products/${productId}`, payload)
+}
+
+export function deleteShopManagerProduct(productId) {
+  return api.delete(`/api/shop/manager/products/${productId}`)
+}
+
+export function createShopManagerProductImage(payload) {
+  return api.post('/api/shop/manager/product-images', payload)
+}
+
+export function deleteShopManagerProductImage(imageId) {
+  return api.delete(`/api/shop/manager/product-images/${imageId}`)
+}
+
+export function fetchShopManagerDiscounts() {
+  return api.get('/api/shop/manager/discounts')
+}
+
+export function createShopManagerDiscount(payload) {
+  return api.post('/api/shop/manager/discounts', payload)
+}
+
+export function updateShopManagerDiscount(discountId, payload) {
+  return api.patch(`/api/shop/manager/discounts/${discountId}`, payload)
+}
+
+export function deleteShopManagerDiscount(discountId) {
+  return api.delete(`/api/shop/manager/discounts/${discountId}`)
+}
+
+export function fetchShopManagerFilterAttrs() {
+  return api.get('/api/shop/manager/filter-attrs')
+}
+
+export function createShopManagerFilterAttr(payload) {
+  return api.post('/api/shop/manager/filter-attrs', payload)
+}
+
+export function updateShopManagerFilterAttr(attrId, payload) {
+  return api.patch(`/api/shop/manager/filter-attrs/${attrId}`, payload)
+}
+
+export function deleteShopManagerFilterAttr(attrId) {
+  return api.delete(`/api/shop/manager/filter-attrs/${attrId}`)
+}
+
+export function fetchShopManagerFilterAttrListValues() {
+  return api.get('/api/shop/manager/filter-attr-list-values')
+}
+
+export function createShopManagerFilterAttrListValue(payload) {
+  return api.post('/api/shop/manager/filter-attr-list-values', payload)
+}
+
+export function updateShopManagerFilterAttrListValue(valueId, payload) {
+  return api.patch(`/api/shop/manager/filter-attr-list-values/${valueId}`, payload)
+}
+
+export function deleteShopManagerFilterAttrListValue(valueId) {
+  return api.delete(`/api/shop/manager/filter-attr-list-values/${valueId}`)
+}
+
+export function fetchShopManagerFilterAttrValues() {
+  return api.get('/api/shop/manager/filter-attr-values')
+}
+
+export function createShopManagerFilterAttrValue(payload) {
+  return api.post('/api/shop/manager/filter-attr-values', payload)
+}
+
+export function updateShopManagerFilterAttrValue(valueId, payload) {
+  return api.patch(`/api/shop/manager/filter-attr-values/${valueId}`, payload)
+}
+
+export function deleteShopManagerFilterAttrValue(valueId) {
+  return api.delete(`/api/shop/manager/filter-attr-values/${valueId}`)
+}
+
+export function fetchShopOrderStatuses() {
+  return api.get('/api/shop/order-statuses')
+}
+
+export function fetchShopOrders() {
+  return api.get('/api/shop/orders')
+}
+
+export function fetchShopOrder(orderId) {
+  return api.get(`/api/shop/orders/${orderId}`)
+}
+
+export function updateShopOrder(orderId, payload) {
+  return api.patch(`/api/shop/orders/${orderId}`, payload)
+}
+
+export function fetchShopManagerPochtaSettings() {
+  return api.get('/api/shop/manager/pochta-settings')
+}
+
+export function updateShopManagerPochtaSettings(payload) {
+  return api.patch('/api/shop/manager/pochta-settings', payload)
+}
+
+export function fetchShopManagerSdekSettings() {
+  return api.get('/api/shop/manager/sdek-settings')
+}
+
+export function updateShopManagerSdekSettings(payload) {
+  return api.patch('/api/shop/manager/sdek-settings', payload)
+}
+
+export function fetchStudyManagerCategories() {
+  return api.get('/api/study/manager/categories')
+}
+
+export function createStudyManagerCategory(payload) {
+  return api.post('/api/study/manager/categories', payload)
+}
+
+export function updateStudyManagerCategory(categoryId, payload) {
+  return api.patch(`/api/study/manager/categories/${categoryId}`, payload)
+}
+
+export function deleteStudyManagerCategory(categoryId) {
+  return api.delete(`/api/study/manager/categories/${categoryId}`)
+}
+
+export function fetchStudyManagerCourses() {
+  return api.get('/api/study/manager/courses')
+}
+
+export function createStudyManagerCourse(payload) {
+  return api.post('/api/study/manager/courses', payload)
+}
+
+export function updateStudyManagerCourse(courseId, payload) {
+  return api.patch(`/api/study/manager/courses/${courseId}`, payload)
+}
+
+export function deleteStudyManagerCourse(courseId) {
+  return api.delete(`/api/study/manager/courses/${courseId}`)
+}
+
+export function fetchStudyManagerLessons(params = {}) {
+  return api.get('/api/study/manager/lessons', { params })
+}
+
+export function createStudyManagerLesson(payload) {
+  return api.post('/api/study/manager/lessons', payload)
+}
+
+export function updateStudyManagerLesson(lessonId, payload) {
+  return api.patch(`/api/study/manager/lessons/${lessonId}`, payload)
+}
+
+export function deleteStudyManagerLesson(lessonId) {
+  return api.delete(`/api/study/manager/lessons/${lessonId}`)
+}
+
+export function reorderStudyManagerLessons(payload) {
+  return api.post('/api/study/manager/lessons/reorder', payload)
+}
+
+export function fetchStudyManagerTeachers() {
+  return api.get('/api/study/manager/teachers')
+}
+
+export function createStudyManagerTeacher(payload) {
+  return api.post('/api/study/manager/teachers', payload)
+}
+
+export function updateStudyManagerTeacher(teacherId, payload) {
+  return api.patch(`/api/study/manager/teachers/${teacherId}`, payload)
+}
+
+export function deleteStudyManagerTeacher(teacherId) {
+  return api.delete(`/api/study/manager/teachers/${teacherId}`)
+}
+
+export function fetchStudyManagerPrices(params = {}) {
+  return api.get('/api/study/manager/prices', { params })
+}
+
+export function createStudyManagerPrice(payload) {
+  return api.post('/api/study/manager/prices', payload)
+}
+
+export function updateStudyManagerPrice(priceId, payload) {
+  return api.patch(`/api/study/manager/prices/${priceId}`, payload)
+}
+
+export function deleteStudyManagerPrice(priceId) {
+  return api.delete(`/api/study/manager/prices/${priceId}`)
+}
+
+export function fetchStudyManagerFeedbacks(params = {}) {
+  return api.get('/api/study/manager/feedbacks', { params })
+}
+
+export function createStudyManagerFeedback(payload) {
+  return api.post('/api/study/manager/feedbacks', payload)
+}
+
+export function updateStudyManagerFeedback(feedbackId, payload) {
+  return api.patch(`/api/study/manager/feedbacks/${feedbackId}`, payload)
+}
+
+export function deleteStudyManagerFeedback(feedbackId) {
+  return api.delete(`/api/study/manager/feedbacks/${feedbackId}`)
+}

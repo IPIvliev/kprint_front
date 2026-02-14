@@ -140,8 +140,13 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import {
+  createStudyManagerCategory,
+  deleteStudyManagerCategory,
+  fetchStudyManagerCategories,
+  fetchStudyManagerCourses,
+  updateStudyManagerCategory,
+} from '@/services/panel.service'
 
 export default {
   name: 'StudyCategories',
@@ -189,13 +194,13 @@ export default {
       this.error = ''
       try {
         const [categoriesResponse, coursesResponse] = await Promise.all([
-          api.get('/api/study/manager/categories', { headers: authHeader() }),
-          api.get('/api/study/manager/courses', { headers: authHeader() }),
+          fetchStudyManagerCategories(),
+          fetchStudyManagerCourses(),
         ])
         this.categories = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
         this.courses = Array.isArray(coursesResponse.data) ? coursesResponse.data : []
       } catch (err) {
-        this.error = 'Не удалось загрузить категории'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -267,14 +272,14 @@ export default {
           parent: this.form.parent || null,
         }
         if (this.isEditing && this.currentId) {
-          await api.patch(`/api/study/manager/categories/${this.currentId}`, payload, { headers: authHeader() })
+          await updateStudyManagerCategory(this.currentId, payload)
         } else {
-          await api.post('/api/study/manager/categories', payload, { headers: authHeader() })
+          await createStudyManagerCategory(payload)
         }
         this.closeModal()
         await this.fetchData()
       } catch (err) {
-        this.error = 'Не удалось сохранить категорию'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.saving = false
       }
@@ -289,10 +294,10 @@ export default {
       }
       this.error = ''
       try {
-        await api.delete(`/api/study/manager/categories/${id}`, { headers: authHeader() })
+        await deleteStudyManagerCategory(id)
         await this.fetchData()
       } catch (err) {
-        this.error = 'Не удалось удалить категорию'
+        this.error = err.userMessage || 'Ошибка запроса'
       }
     },
   },

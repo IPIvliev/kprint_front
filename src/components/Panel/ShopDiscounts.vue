@@ -154,8 +154,12 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import {
+  createShopManagerDiscount,
+  deleteShopManagerDiscount,
+  fetchShopManagerDiscounts,
+  updateShopManagerDiscount,
+} from '@/services/panel.service'
 
 export default {
   name: 'ShopDiscounts',
@@ -201,10 +205,10 @@ export default {
       this.loading = true
       this.error = ''
       try {
-        const response = await api.get('/api/shop/manager/discounts', { headers: authHeader() })
+        const response = await fetchShopManagerDiscounts()
         this.discounts = Array.isArray(response.data) ? response.data : []
       } catch (err) {
-        this.error = 'Не удалось загрузить скидки'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -260,14 +264,14 @@ export default {
           description: this.form.description || '',
         }
         if (this.isEditing && this.currentId) {
-          await api.patch(`/api/shop/manager/discounts/${this.currentId}`, payload, { headers: authHeader() })
+          await updateShopManagerDiscount(this.currentId, payload)
         } else {
-          await api.post('/api/shop/manager/discounts', payload, { headers: authHeader() })
+          await createShopManagerDiscount(payload)
         }
         this.closeModal()
         await this.fetchDiscounts()
       } catch (err) {
-        this.error = 'Не удалось сохранить скидку'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.saving = false
       }
@@ -282,10 +286,10 @@ export default {
       }
       this.error = ''
       try {
-        await api.delete(`/api/shop/manager/discounts/${id}`, { headers: authHeader() })
+        await deleteShopManagerDiscount(id)
         await this.fetchDiscounts()
       } catch (err) {
-        this.error = 'Не удалось удалить скидку'
+        this.error = err.userMessage || 'Ошибка запроса'
       }
     },
   },

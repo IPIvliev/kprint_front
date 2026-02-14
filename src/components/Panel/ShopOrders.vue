@@ -175,8 +175,12 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import {
+  fetchShopOrder,
+  fetchShopOrders,
+  fetchShopOrderStatuses,
+  updateShopOrder,
+} from '@/services/panel.service'
 
 export default {
   name: 'ShopOrders',
@@ -252,7 +256,7 @@ export default {
   methods: {
     async fetchStatuses() {
       try {
-        const response = await api.get('/api/shop/order-statuses', { headers: authHeader() })
+        const response = await fetchShopOrderStatuses()
         this.statuses = Array.isArray(response.data) ? response.data : []
       } catch (err) {
         this.statuses = []
@@ -262,10 +266,10 @@ export default {
       this.loading = true
       this.error = ''
       try {
-        const response = await api.get('/api/shop/orders', { headers: authHeader() })
+        const response = await fetchShopOrders()
         this.orders = Array.isArray(response.data) ? response.data : []
       } catch (err) {
-        this.error = 'Не удалось загрузить заказы'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -324,7 +328,7 @@ export default {
         return
       }
       try {
-        const response = await api.get(`/api/shop/orders/${this.currentId}`, { headers: authHeader() })
+        const response = await fetchShopOrder(this.currentId)
         this.orderDetail = response && response.data ? response.data : null
       } catch (err) {
         this.orderDetail = null
@@ -341,11 +345,11 @@ export default {
           status: this.form.status,
           is_paid: this.form.is_paid,
         }
-        await api.patch(`/api/shop/orders/${this.currentId}`, payload, { headers: authHeader() })
+        await updateShopOrder(this.currentId, payload)
         this.closeModal()
         await this.fetchOrders()
       } catch (err) {
-        this.error = 'Не удалось сохранить заказ'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.saving = false
       }

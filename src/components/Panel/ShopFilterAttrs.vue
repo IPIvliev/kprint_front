@@ -160,8 +160,13 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import {
+  createShopManagerFilterAttr,
+  deleteShopManagerFilterAttr,
+  fetchShopManagerCategories,
+  fetchShopManagerFilterAttrs,
+  updateShopManagerFilterAttr,
+} from '@/services/panel.service'
 
 export default {
   name: 'ShopFilterAttrs',
@@ -218,13 +223,13 @@ export default {
       this.error = ''
       try {
         const [attrsResponse, categoriesResponse] = await Promise.all([
-          api.get('/api/shop/manager/filter-attrs', { headers: authHeader() }),
-          api.get('/api/shop/manager/categories', { headers: authHeader() }),
+          fetchShopManagerFilterAttrs(),
+          fetchShopManagerCategories(),
         ])
         this.attrs = Array.isArray(attrsResponse.data) ? attrsResponse.data : []
         this.categories = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
       } catch (err) {
-        this.error = 'Не удалось загрузить фильтры'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -286,14 +291,14 @@ export default {
           category: this.form.category || [],
         }
         if (this.isEditing && this.currentId) {
-          await api.patch(`/api/shop/manager/filter-attrs/${this.currentId}`, payload, { headers: authHeader() })
+          await updateShopManagerFilterAttr(this.currentId, payload)
         } else {
-          await api.post('/api/shop/manager/filter-attrs', payload, { headers: authHeader() })
+          await createShopManagerFilterAttr(payload)
         }
         this.closeModal()
         await this.fetchData()
       } catch (err) {
-        this.error = 'Не удалось сохранить фильтр'
+        this.error = err.userMessage || 'Ошибка запроса'
       } finally {
         this.saving = false
       }
@@ -308,10 +313,10 @@ export default {
       }
       this.error = ''
       try {
-        await api.delete(`/api/shop/manager/filter-attrs/${id}`, { headers: authHeader() })
+        await deleteShopManagerFilterAttr(id)
         await this.fetchData()
       } catch (err) {
-        this.error = 'Не удалось удалить фильтр'
+        this.error = err.userMessage || 'Ошибка запроса'
       }
     },
   },

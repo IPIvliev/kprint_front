@@ -211,8 +211,7 @@
 </template>
 
 <script>
-import { api } from '@/services/http'
-import authHeader from '@/services/auth-header'
+import { fetchUserProfile, updateUserProfile } from '@/services/panel.service'
 import { defaultAvatarPlaceholder } from '@/constants/avatarPlaceholders'
 import MenuBlock from '../elements/Panel/MenuBlock.vue'
 
@@ -336,10 +335,10 @@ export default {
       this.loading = true
       this.errorMessage = ''
       try {
-        const response = await api.get('/api/user/profile', { headers: authHeader() })
+        const response = await fetchUserProfile()
         this.applyProfile(response && response.data ? response.data : {})
       } catch (error) {
-        this.errorMessage = 'Не удалось загрузить профиль.'
+        this.errorMessage = error.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
@@ -366,9 +365,7 @@ export default {
       this.successMessage = ''
       try {
         const payload = this.buildPayload()
-        const response = await api.patch('/api/user/profile', payload, {
-          headers: authHeader(),
-        })
+        const response = await updateUserProfile(payload)
         this.applyProfile(response && response.data ? response.data : {})
         this.avatarFile = null
         this.removeAvatar = false
@@ -379,7 +376,7 @@ export default {
         }
         this.successMessage = 'Профиль сохранен.'
       } catch (error) {
-        this.errorMessage = 'Не удалось сохранить профиль.'
+        this.errorMessage = error.userMessage || 'Ошибка запроса'
       } finally {
         this.loading = false
       }
