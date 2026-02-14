@@ -269,7 +269,7 @@ export default {
         const response = await fetchShopOrders()
         this.orders = Array.isArray(response.data) ? response.data : []
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить заказы'
       } finally {
         this.loading = false
       }
@@ -349,7 +349,7 @@ export default {
         this.closeModal()
         await this.fetchOrders()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось сохранить заказ'
       } finally {
         this.saving = false
       }

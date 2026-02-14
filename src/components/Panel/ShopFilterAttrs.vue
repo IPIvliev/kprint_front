@@ -229,7 +229,7 @@ export default {
         this.attrs = Array.isArray(attrsResponse.data) ? attrsResponse.data : []
         this.categories = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить фильтры'
       } finally {
         this.loading = false
       }
@@ -298,7 +298,7 @@ export default {
         this.closeModal()
         await this.fetchData()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось сохранить фильтр'
       } finally {
         this.saving = false
       }
@@ -316,7 +316,7 @@ export default {
         await deleteShopManagerFilterAttr(id)
         await this.fetchData()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось удалить фильтр'
       }
     },
   },

@@ -226,7 +226,7 @@ export default {
         }
         await this.fetchLessons()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить курсы'
       }
     },
     async fetchLessons() {
@@ -237,7 +237,7 @@ export default {
         const response = await fetchStudyManagerLessons(params)
         this.lessons = Array.isArray(response.data) ? response.data : []
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить уроки'
       } finally {
         this.loading = false
       }
@@ -300,7 +300,7 @@ export default {
         this.closeModal()
         await this.fetchLessons()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось сохранить урок'
       } finally {
         this.saving = false
       }
@@ -318,7 +318,7 @@ export default {
         await deleteStudyManagerLesson(id)
         await this.fetchLessons()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось удалить урок'
       }
     },
     onDragStart(index) {
@@ -357,7 +357,7 @@ export default {
         await reorderStudyManagerLessons(payload)
         await this.fetchLessons()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось сохранить порядок'
       } finally {
         this.savingOrder = false
       }

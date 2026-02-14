@@ -276,7 +276,7 @@ export default {
         const response = await fetchPanelArticles()
         this.articles = Array.isArray(response.data) ? response.data : []
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить новости'
       } finally {
         this.loading = false
       }
@@ -418,7 +418,7 @@ export default {
         this.closeModal()
         await this.fetchArticles()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось сохранить новость'
       } finally {
         this.saving = false
       }
@@ -436,7 +436,7 @@ export default {
         await deletePanelArticle(id)
         await this.fetchArticles()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось удалить новость'
       }
     },
     categoryTitle(categoryId) {

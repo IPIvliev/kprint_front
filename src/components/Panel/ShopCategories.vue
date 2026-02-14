@@ -223,7 +223,7 @@ export default {
         const response = await fetchShopManagerCategories()
         this.categories = Array.isArray(response.data) ? response.data : []
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить категории'
       } finally {
         this.loading = false
       }
@@ -341,7 +341,7 @@ export default {
         this.closeModal()
         await this.fetchCategories()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось сохранить категорию'
       } finally {
         this.saving = false
       }
@@ -359,7 +359,7 @@ export default {
         await deleteShopManagerCategory(id)
         await this.fetchCategories()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось удалить категорию'
       }
     },
   },

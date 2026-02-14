@@ -208,7 +208,7 @@ export default {
         const teachersResponse = await fetchStudyManagerTeachers()
         this.teachers = Array.isArray(teachersResponse.data) ? teachersResponse.data : []
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить преподавателей'
       } finally {
         this.loading = false
       }
@@ -328,7 +328,7 @@ export default {
         this.closeModal()
         await this.fetchTeachers()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось сохранить преподавателя'
       } finally {
         this.saving = false
       }
@@ -346,7 +346,7 @@ export default {
         await deleteStudyManagerTeacher(id)
         await this.fetchTeachers()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось удалить преподавателя'
       }
     },
   },

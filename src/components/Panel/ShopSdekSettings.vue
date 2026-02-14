@@ -103,7 +103,7 @@ export default {
           secure: data.secure || '',
         }
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Failed to load settings'
       } finally {
         this.loading = false
       }
@@ -115,7 +115,7 @@ export default {
         const payload = { ...this.form }
         await updateShopManagerSdekSettings(payload)
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Failed to save settings'
       } finally {
         this.saving = false
       }

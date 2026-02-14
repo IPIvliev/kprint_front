@@ -254,7 +254,7 @@ export default {
         }
         await this.fetchFeedbacks()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить курсы'
       }
     },
     async fetchFeedbacks() {
@@ -265,7 +265,7 @@ export default {
         const response = await fetchStudyManagerFeedbacks(params)
         this.feedbacks = Array.isArray(response.data) ? response.data : []
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить отзывы'
       } finally {
         this.loading = false
       }
@@ -391,7 +391,7 @@ export default {
         this.closeModal()
         await this.fetchFeedbacks()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось сохранить отзыв'
       } finally {
         this.saving = false
       }
@@ -409,7 +409,7 @@ export default {
         await deleteStudyManagerFeedback(id)
         await this.fetchFeedbacks()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось удалить отзыв'
       }
     },
   },

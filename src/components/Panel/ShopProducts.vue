@@ -287,7 +287,7 @@ export default {
         this.categories = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
         this.products = Array.isArray(productsResponse.data) ? productsResponse.data : []
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить товары'
       } finally {
         this.loading = false
       }
@@ -497,7 +497,7 @@ export default {
         this.closeModal()
         await this.fetchData()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось сохранить товар'
       } finally {
         this.saving = false
       }
@@ -515,7 +515,7 @@ export default {
         await deleteShopManagerProduct(id)
         await this.fetchData()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось удалить товар'
       }
     },
   },

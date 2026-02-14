@@ -242,7 +242,7 @@ export default {
         this.listValues = Array.isArray(listValuesResponse.data) ? listValuesResponse.data : []
         this.products = Array.isArray(productsResponse.data) ? productsResponse.data : []
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить атрибуты'
       } finally {
         this.loading = false
       }
@@ -320,7 +320,7 @@ export default {
         this.closeModal()
         await this.fetchData()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось сохранить атрибут'
       } finally {
         this.saving = false
       }
@@ -338,7 +338,7 @@ export default {
         await deleteShopManagerFilterAttrValue(id)
         await this.fetchData()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось удалить атрибут'
       }
     },
   },

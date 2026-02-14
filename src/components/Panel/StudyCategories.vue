@@ -200,7 +200,7 @@ export default {
         this.categories = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
         this.courses = Array.isArray(coursesResponse.data) ? coursesResponse.data : []
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить категории'
       } finally {
         this.loading = false
       }
@@ -279,7 +279,7 @@ export default {
         this.closeModal()
         await this.fetchData()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось сохранить категорию'
       } finally {
         this.saving = false
       }
@@ -297,7 +297,7 @@ export default {
         await deleteStudyManagerCategory(id)
         await this.fetchData()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось удалить категорию'
       }
     },
   },

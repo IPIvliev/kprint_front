@@ -219,7 +219,7 @@ export default {
         }
         await this.fetchPrices()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить курсы'
       }
     },
     async fetchPrices() {
@@ -230,7 +230,7 @@ export default {
         const response = await fetchStudyManagerPrices(params)
         this.prices = Array.isArray(response.data) ? response.data : []
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить цены'
       } finally {
         this.loading = false
       }
@@ -354,7 +354,7 @@ export default {
         this.error = ''
         await this.fetchPrices()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось сохранить цену'
       } finally {
         this.saving = false
       }
@@ -372,7 +372,7 @@ export default {
         await deleteStudyManagerPrice(id)
         await this.fetchPrices()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось удалить цену'
       }
     },
   },

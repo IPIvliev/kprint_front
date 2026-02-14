@@ -338,7 +338,7 @@ export default {
         const response = await fetchUserProfile()
         this.applyProfile(response && response.data ? response.data : {})
       } catch (error) {
-        this.errorMessage = error.userMessage || 'Ошибка запроса'
+        this.errorMessage = error.userMessage || 'Не удалось загрузить профиль.'
       } finally {
         this.loading = false
       }
@@ -376,7 +376,7 @@ export default {
         }
         this.successMessage = 'Профиль сохранен.'
       } catch (error) {
-        this.errorMessage = error.userMessage || 'Ошибка запроса'
+        this.errorMessage = error.userMessage || 'Не удалось сохранить профиль.'
       } finally {
         this.loading = false
       }

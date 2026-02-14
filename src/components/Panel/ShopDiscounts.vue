@@ -208,7 +208,7 @@ export default {
         const response = await fetchShopManagerDiscounts()
         this.discounts = Array.isArray(response.data) ? response.data : []
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить скидки'
       } finally {
         this.loading = false
       }
@@ -271,7 +271,7 @@ export default {
         this.closeModal()
         await this.fetchDiscounts()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось сохранить скидку'
       } finally {
         this.saving = false
       }
@@ -289,7 +289,7 @@ export default {
         await deleteShopManagerDiscount(id)
         await this.fetchDiscounts()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось удалить скидку'
       }
     },
   },

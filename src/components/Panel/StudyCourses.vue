@@ -279,7 +279,7 @@ export default {
         this.courses = Array.isArray(coursesResponse.data) ? coursesResponse.data : []
         this.teachers = Array.isArray(teachersResponse.data) ? teachersResponse.data : []
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось загрузить курсы'
       } finally {
         this.loading = false
       }
@@ -475,7 +475,7 @@ export default {
         this.closeModal()
         await this.fetchData()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось сохранить курс'
       } finally {
         this.saving = false
       }
@@ -493,7 +493,7 @@ export default {
         await deleteStudyManagerCourse(id)
         await this.fetchData()
       } catch (err) {
-        this.error = err.userMessage || 'Ошибка запроса'
+        this.error = err.userMessage || 'Не удалось удалить курс'
       }
     },
   },
