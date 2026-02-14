@@ -1,4 +1,13 @@
 import { api } from '@/services/http'
+import { createOrder } from '@/services/shop.service'
+
+function buildIdempotencyKey() {
+    if (typeof globalThis !== 'undefined' && globalThis.crypto && typeof globalThis.crypto.randomUUID === 'function') {
+        return globalThis.crypto.randomUUID()
+    }
+    return `order-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
+}
+
 export default {
     // actions = methods
     AddProductToCart({ commit, state, getters, rootState, rootGetters }, product) {
@@ -64,7 +73,8 @@ export default {
             price: Number(item.price || 0),
         }))
         const productsPrice = orderItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
-        const deliveryPrice = Number(rootState.delivery?.delivery_price?.price || 0)
+        const rawDeliveryPrice = rootState.delivery?.delivery_price?.price
+        const deliveryPrice = Number(rawDeliveryPrice || 0)
         const totalPrice = Number(order.total_price || (productsPrice + deliveryPrice))
         const payload = {
             total_price: totalPrice,
@@ -74,9 +84,31 @@ export default {
         if (order.status) {
             payload.status = order.status
         }
+        if (order.fio) {
+            payload.fio = order.fio
+        }
+        if (order.phone) {
+            payload.phone = order.phone
+        }
+        if (order.email) {
+            payload.email = order.email
+        }
+        if (order.delivery_company) {
+            payload.delivery_company = order.delivery_company
+        }
+        if (order.delivery_destination) {
+            payload.delivery_destination = order.delivery_destination
+        }
+        if (order.delivery_time) {
+            payload.delivery_time = String(order.delivery_time)
+        }
+        if (rawDeliveryPrice !== undefined && rawDeliveryPrice !== null) {
+            payload.delivery_price = deliveryPrice
+        }
 
-        return api
-            .post('/api/shop/order/create', payload)
+        const idempotencyKey = String(order.idempotency_key || buildIdempotencyKey())
+
+        return createOrder(payload, idempotencyKey)
             .then(response => {
                 commit("setNewOrder", response.data);
                 return response.data

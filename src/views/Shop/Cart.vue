@@ -108,7 +108,11 @@
                                     <h3 class="mb-1">Доставка</h3>
                                 </div>
                                 <div class="row">
-                                    <OrderForm :showDelivery="showDelivery" />
+                                    <OrderForm
+                                        :showDelivery="showDelivery"
+                                        :office="office"
+                                        :deliveryCompany="activeLink"
+                                    />
                                 </div>
 
                             </div>
@@ -151,7 +155,7 @@ export default {
             pochtaFilter: 'ГОПС',
             postPrice: 0,
             sdekFilter: '',
-            office: [],
+            office: {},
             productsGot: false,
         }
     },

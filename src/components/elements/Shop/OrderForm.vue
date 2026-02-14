@@ -64,13 +64,27 @@ export default {
   directives: {
     imask: IMaskDirective,
   },
-  props: ['showDelivery'],
+  props: {
+    showDelivery: {
+      type: Boolean,
+      default: false,
+    },
+    office: {
+      type: Object,
+      default: () => ({}),
+    },
+    deliveryCompany: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       fio: '',
       phone: '',
       email: '',
       agree: true,
+      idempotencyKey: '',
       submitting: false,
       submitError: '',
       formErrors: {
@@ -85,6 +99,28 @@ export default {
     }
   },
   methods: {
+    buildIdempotencyKey() {
+      if (typeof globalThis !== 'undefined' && globalThis.crypto && typeof globalThis.crypto.randomUUID === 'function') {
+        return globalThis.crypto.randomUUID()
+      }
+      return `order-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
+    },
+    normalizeDeliveryCompany() {
+      if (this.deliveryCompany === 'sdek') {
+        return 'sdek'
+      }
+      if (this.deliveryCompany === 'pochta') {
+        return 'pochta_rossii'
+      }
+      return this.deliveryCompany || ''
+    },
+    resolveDeliveryDestination() {
+      const office = this.office || {}
+      if (this.deliveryCompany === 'sdek') {
+        return office?.location?.address_full || office?.location?.postal_code || office?.address || ''
+      }
+      return office['address-source'] || office['postal-code'] || office?.address || ''
+    },
     onAccept(e) {
       const maskRef = e.detail
       this.phone = maskRef.value
@@ -128,13 +164,21 @@ export default {
           fio: this.fio,
           phone: this.phone,
           email: this.email,
+          delivery_company: this.normalizeDeliveryCompany(),
+          delivery_destination: this.resolveDeliveryDestination(),
+          delivery_time: this.$store.state.delivery?.delivery_price?.delivery_time || '',
+          idempotency_key: this.idempotencyKey || this.buildIdempotencyKey(),
         })
+        this.idempotencyKey = this.buildIdempotencyKey()
       } catch (e) {
         this.submitError = 'Не удалось оформить заказ. Попробуйте позже.'
       } finally {
         this.submitting = false
       }
     },
+  },
+  created() {
+    this.idempotencyKey = this.buildIdempotencyKey()
   },
 }
 </script>
