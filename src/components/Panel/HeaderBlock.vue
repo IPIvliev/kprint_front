@@ -1,10 +1,10 @@
-<template>
+﻿<template>
 			<!-- header-->
 			<header class="header" id="header">
-				<div class="header__container">
+				<div class="header__container" :class="{ open: mobileMenuIsOpen }">
 					<div class="container d-flex">
 						<div class="header__col">
-							<div class="header__btn js-menu-btn d-xl-none d-block" data-drop="menuDrop"></div>
+							<div class="header__btn js-menu-btn d-xl-none d-block" :class="{ active: mobileMenuIsOpen }" data-drop="menuDrop" @click="toggleMainMenu"></div>
               	<router-link class="header__logo d-xl-block d-none" to="/">
 					<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="70.4012mm" height="21.5355mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 2595.8 794.05" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
 						<path class="logo-black" d="M263.06 663.67l0 -40.53c2.36,-29.39 14.26,-54.03 35.72,-73.93 21.43,-19.9 46.97,-29.98 76.62,-30.22l23.82 0c29.39,0.23 54.79,10.32 76.25,30.22 21.43,19.9 33.37,44.54 35.72,73.93l0 40.53c-2.39,29.39 -14.3,54.04 -35.72,73.93 -21.46,19.9 -46.87,29.98 -76.25,30.22l-23.82 -0c-29.62,-0.23 -55.16,-10.32 -76.62,-30.22 -21.46,-19.87 -33.37,-44.51 -35.72,-73.93zm112.34 41.96l23.82 0c13.73,0 25.54,-4.91 35.36,-14.76 9.82,-9.85 14.76,-21.63 14.76,-35.36l0 -23.82c0,-13.73 -4.88,-25.54 -14.56,-35.36 -9.72,-9.82 -21.56,-14.86 -35.56,-15.09l-23.82 0c-13.73,0.23 -25.54,5.21 -35.36,14.93 -9.85,9.72 -14.89,21.56 -15.09,35.56l0 23.82c0.23,13.76 5.27,25.54 15.09,35.36 9.82,9.82 21.59,14.73 35.36,14.73z"/>
@@ -30,12 +30,12 @@
               	</router-link>
 							<div class="header__slogan">Личный кабинет пользователя</div>
 							<div class="header__checktheme d-xl-inline-flex d-none">
-								<div class="header__checktheme-icon header__checktheme-icon--light active">
+								<div class="header__checktheme-icon header__checktheme-icon--light" :class="{ active: !isDarkTheme }" @click="setTheme('light')">
 									<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path fill-rule="evenodd" clip-rule="evenodd" d="M9.00078 1.80005C9.23948 1.80005 9.46839 1.89487 9.63718 2.06365C9.80596 2.23244 9.90078 2.46135 9.90078 2.70005V3.60005C9.90078 3.83874 9.80596 4.06766 9.63718 4.23644C9.46839 4.40523 9.23948 4.50005 9.00078 4.50005C8.76209 4.50005 8.53317 4.40523 8.36438 4.23644C8.1956 4.06766 8.10078 3.83874 8.10078 3.60005V2.70005C8.10078 2.46135 8.1956 2.23244 8.36438 2.06365C8.53317 1.89487 8.76209 1.80005 9.00078 1.80005ZM12.6008 9.00005C12.6008 9.95483 12.2215 10.8705 11.5464 11.5456C10.8712 12.2208 9.95556 12.6 9.00078 12.6C8.046 12.6 7.13033 12.2208 6.4552 11.5456C5.78007 10.8705 5.40078 9.95483 5.40078 9.00005C5.40078 8.04527 5.78007 7.12959 6.4552 6.45446C7.13033 5.77933 8.046 5.40005 9.00078 5.40005C9.95556 5.40005 10.8712 5.77933 11.5464 6.45446C12.2215 7.12959 12.6008 8.04527 12.6008 9.00005ZM12.1832 13.455L12.8195 14.0913C12.9892 14.2553 13.2166 14.346 13.4525 14.344C13.6885 14.3419 13.9142 14.2473 14.0811 14.0804C14.248 13.9135 14.3426 13.6878 14.3447 13.4518C14.3467 13.2158 14.256 12.9885 14.0921 12.8187L13.4558 12.1824C13.286 12.0185 13.0587 11.9278 12.8227 11.9298C12.5867 11.9319 12.361 12.0265 12.1941 12.1934C12.0273 12.3603 11.9326 12.586 11.9306 12.822C11.9285 13.058 12.0192 13.2853 12.1832 13.455ZM14.0912 3.90875C14.2599 4.07752 14.3547 4.3064 14.3547 4.54505C14.3547 4.7837 14.2599 5.01257 14.0912 5.18135L13.4558 5.81765C13.3728 5.90361 13.2734 5.97217 13.1636 6.01934C13.0538 6.06651 12.9357 6.09134 12.8162 6.09237C12.6967 6.09341 12.5782 6.07064 12.4676 6.02539C12.357 5.98014 12.2565 5.91331 12.172 5.8288C12.0875 5.7443 12.0207 5.64381 11.9754 5.53321C11.9302 5.4226 11.9074 5.30409 11.9085 5.18459C11.9095 5.06509 11.9343 4.94699 11.9815 4.83718C12.0287 4.72738 12.0972 4.62807 12.1832 4.54505L12.8195 3.90875C12.9883 3.74002 13.2171 3.64524 13.4558 3.64524C13.6944 3.64524 13.9233 3.74002 14.0921 3.90875H14.0912ZM15.3008 9.90005C15.5395 9.90005 15.7684 9.80523 15.9372 9.63644C16.106 9.46766 16.2008 9.23874 16.2008 9.00005C16.2008 8.76135 16.106 8.53243 15.9372 8.36365C15.7684 8.19487 15.5395 8.10005 15.3008 8.10005H14.4008C14.1621 8.10005 13.9332 8.19487 13.7644 8.36365C13.5956 8.53243 13.5008 8.76135 13.5008 9.00005C13.5008 9.23874 13.5956 9.46766 13.7644 9.63644C13.9332 9.80523 14.1621 9.90005 14.4008 9.90005H15.3008ZM9.00078 13.5C9.23948 13.5 9.46839 13.5949 9.63718 13.7637C9.80596 13.9324 9.90078 14.1614 9.90078 14.4V15.3C9.90078 15.5387 9.80596 15.7677 9.63718 15.9364C9.46839 16.1052 9.23948 16.2 9.00078 16.2C8.76209 16.2 8.53317 16.1052 8.36438 15.9364C8.1956 15.7677 8.10078 15.5387 8.10078 15.3V14.4C8.10078 14.1614 8.1956 13.9324 8.36438 13.7637C8.53317 13.5949 8.76209 13.5 9.00078 13.5ZM4.54578 5.81765C4.62934 5.90127 4.72855 5.96761 4.83775 6.01289C4.94695 6.05816 5.064 6.08149 5.18221 6.08153C5.30043 6.08157 5.41749 6.05833 5.52672 6.01313C5.63595 5.96793 5.73521 5.90166 5.81883 5.8181C5.90245 5.73454 5.96879 5.63533 6.01407 5.52613C6.05935 5.41693 6.08267 5.29988 6.08271 5.18167C6.08275 5.06345 6.05951 4.94639 6.01431 4.83716C5.96911 4.72793 5.90284 4.62867 5.81928 4.54505L5.18208 3.90875C5.01234 3.74481 4.785 3.65409 4.54902 3.65614C4.31304 3.65819 4.08731 3.75284 3.92044 3.91971C3.75358 4.08658 3.65893 4.31231 3.65687 4.54829C3.65482 4.78426 3.74554 5.01161 3.90948 5.18135L4.54578 5.81765ZM5.81838 13.455L5.18208 14.0913C5.01234 14.2553 4.785 14.346 4.54902 14.344C4.31304 14.3419 4.08731 14.2473 3.92044 14.0804C3.75358 13.9135 3.65893 13.6878 3.65687 13.4518C3.65482 13.2158 3.74554 12.9885 3.90948 12.8187L4.54578 12.1824C4.71552 12.0185 4.94286 11.9278 5.17884 11.9298C5.41482 11.9319 5.64055 12.0265 5.80742 12.1934C5.97428 12.3603 6.06894 12.586 6.07099 12.822C6.07304 13.058 5.98232 13.2853 5.81838 13.455ZM3.60078 9.90005C3.83948 9.90005 4.06839 9.80523 4.23718 9.63644C4.40596 9.46766 4.50078 9.23874 4.50078 9.00005C4.50078 8.76135 4.40596 8.53243 4.23718 8.36365C4.06839 8.19487 3.83948 8.10005 3.60078 8.10005H2.70078C2.46209 8.10005 2.23317 8.19487 2.06439 8.36365C1.8956 8.53243 1.80078 8.76135 1.80078 9.00005C1.80078 9.23874 1.8956 9.46766 2.06439 9.63644C2.23317 9.80523 2.46209 9.90005 2.70078 9.90005H3.60078Z"></path>
 									</svg>
 								</div>
-								<div class="header__checktheme-icon header__checktheme-icon--dark">
+								<div class="header__checktheme-icon header__checktheme-icon--dark" :class="{ active: isDarkTheme }" @click="setTheme('dark')">
 									<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M15.5636 11.9637C14.2303 12.5668 12.7448 12.7493 11.3051 12.4868C9.86548 12.2244 8.53995 11.5295 7.50518 10.4947C6.4704 9.45994 5.77551 8.13442 5.51307 6.69475C5.25063 5.25508 5.43312 3.76962 6.03622 2.43628C4.97472 2.91599 4.04545 3.64605 3.32812 4.56384C2.61079 5.48163 2.12682 6.55974 1.91773 7.70568C1.70865 8.85162 1.78068 10.0312 2.12766 11.1432C2.47464 12.2551 3.0862 13.2663 3.90988 14.09C4.73356 14.9137 5.74476 15.5253 6.85674 15.8722C7.96872 16.2192 9.14828 16.2912 10.2942 16.0822C11.4402 15.8731 12.5183 15.3891 13.4361 14.6718C14.3538 13.9544 15.0839 13.0252 15.5636 11.9637Z"></path>
 									</svg>
@@ -142,58 +142,82 @@
 					</div>
 				</div>
 				<!-- menu-->
-				<div class="menu" id="menuDrop">
+				<div class="menu menu--panel" id="menuDrop" :class="{ open: mobileMenuIsOpen }">
 					<div class="menu__profile">
 						<div class="container">
 							<div class="menu__profileblock">
-								<div class="menu__profilehead"><a class="panel__profile" href="#">
-										<div class="panel__profile-img"> <img src="@/assets/img/user.jpg" alt=""></div>
+								<div class="menu__profilehead"><router-link class="panel__profile" to="/panel/edit" @click="closeMainMenu">
+										<div class="panel__profile-img"> <img :src="profileAvatar" alt=""></div>
 										<div class="panel__profile-content">
-											<div class="panel__profile-title">Николаев Олег</div>
-											<div class="panel__profile-text">Редактировать профиль</div>
+											<div class="panel__profile-title">{{ displayName }}</div>
+											<div class="panel__profile-text">&#1056;&#1077;&#1076;&#1072;&#1082;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100; &#1087;&#1088;&#1086;&#1092;&#1080;&#1083;&#1100;</div>
 											<div class="header__checktheme d-xl-none d-inline-flex">
-												<div class="header__checktheme-icon header__checktheme-icon--light active">
+												<div class="header__checktheme-icon header__checktheme-icon--light" :class="{ active: !isDarkTheme }" @click="setTheme('light')">
 													<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 														<path fill-rule="evenodd" clip-rule="evenodd" d="M9.00078 1.80005C9.23948 1.80005 9.46839 1.89487 9.63718 2.06365C9.80596 2.23244 9.90078 2.46135 9.90078 2.70005V3.60005C9.90078 3.83874 9.80596 4.06766 9.63718 4.23644C9.46839 4.40523 9.23948 4.50005 9.00078 4.50005C8.76209 4.50005 8.53317 4.40523 8.36438 4.23644C8.1956 4.06766 8.10078 3.83874 8.10078 3.60005V2.70005C8.10078 2.46135 8.1956 2.23244 8.36438 2.06365C8.53317 1.89487 8.76209 1.80005 9.00078 1.80005ZM12.6008 9.00005C12.6008 9.95483 12.2215 10.8705 11.5464 11.5456C10.8712 12.2208 9.95556 12.6 9.00078 12.6C8.046 12.6 7.13033 12.2208 6.4552 11.5456C5.78007 10.8705 5.40078 9.95483 5.40078 9.00005C5.40078 8.04527 5.78007 7.12959 6.4552 6.45446C7.13033 5.77933 8.046 5.40005 9.00078 5.40005C9.95556 5.40005 10.8712 5.77933 11.5464 6.45446C12.2215 7.12959 12.6008 8.04527 12.6008 9.00005ZM12.1832 13.455L12.8195 14.0913C12.9892 14.2553 13.2166 14.346 13.4525 14.344C13.6885 14.3419 13.9142 14.2473 14.0811 14.0804C14.248 13.9135 14.3426 13.6878 14.3447 13.4518C14.3467 13.2158 14.256 12.9885 14.0921 12.8187L13.4558 12.1824C13.286 12.0185 13.0587 11.9278 12.8227 11.9298C12.5867 11.9319 12.361 12.0265 12.1941 12.1934C12.0273 12.3603 11.9326 12.586 11.9306 12.822C11.9285 13.058 12.0192 13.2853 12.1832 13.455ZM14.0912 3.90875C14.2599 4.07752 14.3547 4.3064 14.3547 4.54505C14.3547 4.7837 14.2599 5.01257 14.0912 5.18135L13.4558 5.81765C13.3728 5.90361 13.2734 5.97217 13.1636 6.01934C13.0538 6.06651 12.9357 6.09134 12.8162 6.09237C12.6967 6.09341 12.5782 6.07064 12.4676 6.02539C12.357 5.98014 12.2565 5.91331 12.172 5.8288C12.0875 5.7443 12.0207 5.64381 11.9754 5.53321C11.9302 5.4226 11.9074 5.30409 11.9085 5.18459C11.9095 5.06509 11.9343 4.94699 11.9815 4.83718C12.0287 4.72738 12.0972 4.62807 12.1832 4.54505L12.8195 3.90875C12.9883 3.74002 13.2171 3.64524 13.4558 3.64524C13.6944 3.64524 13.9233 3.74002 14.0921 3.90875H14.0912ZM15.3008 9.90005C15.5395 9.90005 15.7684 9.80523 15.9372 9.63644C16.106 9.46766 16.2008 9.23874 16.2008 9.00005C16.2008 8.76135 16.106 8.53243 15.9372 8.36365C15.7684 8.19487 15.5395 8.10005 15.3008 8.10005H14.4008C14.1621 8.10005 13.9332 8.19487 13.7644 8.36365C13.5956 8.53243 13.5008 8.76135 13.5008 9.00005C13.5008 9.23874 13.5956 9.46766 13.7644 9.63644C13.9332 9.80523 14.1621 9.90005 14.4008 9.90005H15.3008ZM9.00078 13.5C9.23948 13.5 9.46839 13.5949 9.63718 13.7637C9.80596 13.9324 9.90078 14.1614 9.90078 14.4V15.3C9.90078 15.5387 9.80596 15.7677 9.63718 15.9364C9.46839 16.1052 9.23948 16.2 9.00078 16.2C8.76209 16.2 8.53317 16.1052 8.36438 15.9364C8.1956 15.7677 8.10078 15.5387 8.10078 15.3V14.4C8.10078 14.1614 8.1956 13.9324 8.36438 13.7637C8.53317 13.5949 8.76209 13.5 9.00078 13.5ZM4.54578 5.81765C4.62934 5.90127 4.72855 5.96761 4.83775 6.01289C4.94695 6.05816 5.064 6.08149 5.18221 6.08153C5.30043 6.08157 5.41749 6.05833 5.52672 6.01313C5.63595 5.96793 5.73521 5.90166 5.81883 5.8181C5.90245 5.73454 5.96879 5.63533 6.01407 5.52613C6.05935 5.41693 6.08267 5.29988 6.08271 5.18167C6.08275 5.06345 6.05951 4.94639 6.01431 4.83716C5.96911 4.72793 5.90284 4.62867 5.81928 4.54505L5.18208 3.90875C5.01234 3.74481 4.785 3.65409 4.54902 3.65614C4.31304 3.65819 4.08731 3.75284 3.92044 3.91971C3.75358 4.08658 3.65893 4.31231 3.65687 4.54829C3.65482 4.78426 3.74554 5.01161 3.90948 5.18135L4.54578 5.81765ZM5.81838 13.455L5.18208 14.0913C5.01234 14.2553 4.785 14.346 4.54902 14.344C4.31304 14.3419 4.08731 14.2473 3.92044 14.0804C3.75358 13.9135 3.65893 13.6878 3.65687 13.4518C3.65482 13.2158 3.74554 12.9885 3.90948 12.8187L4.54578 12.1824C4.71552 12.0185 4.94286 11.9278 5.17884 11.9298C5.41482 11.9319 5.64055 12.0265 5.80742 12.1934C5.97428 12.3603 6.06894 12.586 6.07099 12.822C6.07304 13.058 5.98232 13.2853 5.81838 13.455ZM3.60078 9.90005C3.83948 9.90005 4.06839 9.80523 4.23718 9.63644C4.40596 9.46766 4.50078 9.23874 4.50078 9.00005C4.50078 8.76135 4.40596 8.53243 4.23718 8.36365C4.06839 8.19487 3.83948 8.10005 3.60078 8.10005H2.70078C2.46209 8.10005 2.23317 8.19487 2.06439 8.36365C1.8956 8.53243 1.80078 8.76135 1.80078 9.00005C1.80078 9.23874 1.8956 9.46766 2.06439 9.63644C2.23317 9.80523 2.46209 9.90005 2.70078 9.90005H3.60078Z"></path>
 													</svg>
 												</div>
-												<div class="header__checktheme-icon header__checktheme-icon--dark">
+												<div class="header__checktheme-icon header__checktheme-icon--dark" :class="{ active: isDarkTheme }" @click="setTheme('dark')">
 													<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 														<path d="M15.5636 11.9637C14.2303 12.5668 12.7448 12.7493 11.3051 12.4868C9.86548 12.2244 8.53995 11.5295 7.50518 10.4947C6.4704 9.45994 5.77551 8.13442 5.51307 6.69475C5.25063 5.25508 5.43312 3.76962 6.03622 2.43628C4.97472 2.91599 4.04545 3.64605 3.32812 4.56384C2.61079 5.48163 2.12682 6.55974 1.91773 7.70568C1.70865 8.85162 1.78068 10.0312 2.12766 11.1432C2.47464 12.2551 3.0862 13.2663 3.90988 14.09C4.73356 14.9137 5.74476 15.5253 6.85674 15.8722C7.96872 16.2192 9.14828 16.2912 10.2942 16.0822C11.4402 15.8731 12.5183 15.3891 13.4361 14.6718C14.3538 13.9544 15.0839 13.0252 15.5636 11.9637Z"></path>
 													</svg>
 												</div>
 											</div>
-										</div></a></div>
-								<ul class="panel__menu"> 
-									<li><a class="panel__menu-link" href="#"><span class="panel__menu-icon"> 
-												<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M6.75 15.7501H11.25M6.75 15.7501H5.25C3.59314 15.7501 2.25 14.4069 2.25 12.7501V8.0308C2.25 6.98175 2.79796 6.00891 3.69509 5.46519L7.44509 3.19246C8.40083 2.61325 9.59918 2.61325 10.5549 3.19246L14.3049 5.46519C15.2021 6.00891 15.75 6.98175 15.75 8.0308V12.7501C15.75 14.4069 14.4068 15.7501 12.75 15.7501H11.25H6.75ZM6.75 15.7501V12.7501C6.75 11.5074 7.75732 10.5001 9 10.5001C10.2427 10.5001 11.25 11.5074 11.25 12.7501V15.7501H6.75Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-												</svg></span>Панель управления</a></li>
-									<li><a class="panel__menu-link" href="#"><span class="panel__menu-icon"> 
-												<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M2.25 12.75H15.75H2.25ZM4.5 7.5V2.7C4.5 2.45147 4.70147 2.25 4.95 2.25H13.05C13.2985 2.25 13.5 2.45147 13.5 2.7V7.5H4.5ZM15.75 15.3V10.5C15.75 8.84317 14.4068 7.5 12.75 7.5H5.25C3.59314 7.5 2.25 8.84317 2.25 10.5V15.3C2.25 15.5485 2.45147 15.75 2.7 15.75H15.3C15.5485 15.75 15.75 15.5485 15.75 15.3Z" stroke-width="1.5"></path>
-													<path d="M12.75 9.75735L12.7575 9.74902" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-												</svg></span>Принтеры<span class="panel__menu-num">2</span></a></li>
-									<li><a class="panel__menu-link" href="#"><span class="panel__menu-icon"> 
-												<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M4.5 13.2L3 12.375V10.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-													<path d="M3 7.4998V5.6248L4.5 4.7998" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-													<path d="M7.5 3.075L9 2.25L10.5 3.075" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-													<path d="M13.5 4.7998L15 5.6248V7.4998" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-													<path d="M15 10.5V12.375L13.5 13.215" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-													<path d="M10.5 14.9248L9 15.7498L7.5 14.9248" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-													<path d="M9 8.9998L10.5 8.1748" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-													<path d="M13.5 6.45L15 5.625" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-													<path d="M9 9V10.875" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-													<path d="M9 13.875V15.75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-													<path d="M9 8.99991L7.5 8.15991" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-													<path d="M4.5 6.45L3 5.625" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-												</svg></span>Модели<span class="panel__menu-num">46</span></a></li>
+										</div></router-link></div>
+								<div v-if="isManager" class="panel__mode btn-group" role="group" aria-label="Panel mode">
+									<button
+										type="button"
+										class="btn btn--grayborder"
+										:class="{ active: panelModeSafe === 'user' }"
+										@click="setPanelMode('user')"
+									>
+										&#1055;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1077;&#1083;&#1100;
+									</button>
+									<button
+										type="button"
+										class="btn btn--grayborder"
+										:class="{ active: panelModeSafe === 'manager' }"
+										@click="setPanelMode('manager')"
+									>
+										&#1052;&#1077;&#1085;&#1077;&#1076;&#1078;&#1077;&#1088;
+									</button>
+								</div>
+								<ul v-if="panelModeSafe === 'user'" class="panel__menu"> 
+									<li><router-link class="panel__menu-link" to="/panel" @click="closeMainMenu"><span class="panel__menu-icon"> 
+											<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path d="M6.75 15.7501H11.25M6.75 15.7501H5.25C3.59314 15.7501 2.25 14.4069 2.25 12.7501V8.0308C2.25 6.98175 2.79796 6.00891 3.69509 5.46519L7.44509 3.19246C8.40083 2.61325 9.59918 2.61325 10.5549 3.19246L14.3049 5.46519C15.2021 6.00891 15.75 6.98175 15.75 8.0308V12.7501C15.75 14.4069 14.4068 15.7501 12.75 15.7501H11.25H6.75ZM6.75 15.7501V12.7501C6.75 11.5074 7.75732 10.5001 9 10.5001C10.2427 10.5001 11.25 11.5074 11.25 12.7501V15.7501H6.75Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+											</svg></span>&#1055;&#1072;&#1085;&#1077;&#1083;&#1100; &#1091;&#1087;&#1088;&#1072;&#1074;&#1083;&#1077;&#1085;&#1080;&#1103;</router-link></li>
+									<li><router-link class="panel__menu-link" to="/panel/shop" @click="closeMainMenu"><span class="panel__menu-icon"> 
+											<img src="@/assets/img/panel-icons/cart.svg" alt="">
+									</span>&#1047;&#1072;&#1082;&#1072;&#1079;&#1099; &#1074; &#1084;&#1072;&#1075;&#1072;&#1079;&#1080;&#1085;&#1077;</router-link></li>
+									<li><router-link class="panel__menu-link" to="/panel/models" @click="closeMainMenu"><span class="panel__menu-icon"> 
+											<img src="@/assets/img/panel-icons/models.svg" alt="">
+									</span>&#1047;&#1072;&#1082;&#1072;&#1079;&#1099; &#1085;&#1072; 3D &#1087;&#1077;&#1095;&#1072;&#1090;&#1100;</router-link></li>
+									<li><router-link class="panel__menu-link" to="/" @click="closeMainMenu"><span class="panel__menu-icon"> 
+											<img src="@/assets/img/panel-icons/news.svg" alt="">
+									</span>&#1042;&#1077;&#1088;&#1085;&#1091;&#1090;&#1100;&#1089;&#1103; &#1085;&#1072; &#1089;&#1072;&#1081;&#1090;</router-link></li>
+								</ul>
+								<ul v-else class="panel__menu"> 
+									<li><router-link class="panel__menu-link" to="/panel/news" @click="closeMainMenu"><span class="panel__menu-icon"> 
+											<img src="@/assets/img/panel-icons/news.svg" alt="">
+									</span>&#1053;&#1086;&#1074;&#1086;&#1089;&#1090;&#1080;</router-link></li>
+									<li><router-link class="panel__menu-link" to="/panel/shop/orders" @click="closeMainMenu"><span class="panel__menu-icon"> 
+											<img src="@/assets/img/panel-icons/orders.svg" alt="">
+									</span>&#1047;&#1072;&#1082;&#1072;&#1079;&#1099; &#1084;&#1072;&#1075;&#1072;&#1079;&#1080;&#1085;&#1072;</router-link></li>
+									<li><router-link class="panel__menu-link" to="/panel/shop/categories" @click="closeMainMenu"><span class="panel__menu-icon"> 
+											<img src="@/assets/img/panel-icons/categories.svg" alt="">
+									</span>&#1050;&#1072;&#1090;&#1077;&#1075;&#1086;&#1088;&#1080;&#1080; &#1084;&#1072;&#1075;&#1072;&#1079;&#1080;&#1085;&#1072;</router-link></li>
+									<li><router-link class="panel__menu-link" to="/panel/models" @click="closeMainMenu"><span class="panel__menu-icon"> 
+											<img src="@/assets/img/panel-icons/models.svg" alt="">
+									</span>&#1047;&#1072;&#1082;&#1072;&#1079;&#1099; &#1085;&#1072; &#1087;&#1077;&#1095;&#1072;&#1090;&#1100;</router-link></li>
+									<li><router-link class="panel__menu-link" to="/" @click="closeMainMenu"><span class="panel__menu-icon"> 
+											<img src="@/assets/img/panel-icons/news.svg" alt="">
+									</span>&#1042;&#1077;&#1088;&#1085;&#1091;&#1090;&#1100;&#1089;&#1103; &#1085;&#1072; &#1089;&#1072;&#1081;&#1090;</router-link></li>
 								</ul>
 							</div>
 						</div>
 					</div>
-					<div class="menu__over" id="menu-over"></div>
+					<div class="menu__over" id="menu-over" @click="closeMainMenu"></div>
 				</div>
 				<!-- /menu-->
 			</header>
@@ -201,31 +225,184 @@
 </template>
 
 <script>
+import { defaultAvatarPlaceholder } from '@/constants/avatarPlaceholders'
+import {
+  getSafePanelMode,
+  getStoredPanelMode,
+  isManagerUser,
+  PANEL_MODE_EVENT,
+  setStoredPanelMode,
+} from '@/utils/panelMode'
+
+const THEME_STORAGE_KEY = 'panelTheme'
 
 export default {
   data() {
     return {
-      languageMenuIsOpen: false
-    }
-  },
-  methods: {
-    openLanguageMenu() {
-      this.languageMenuIsOpen =! this.languageMenuIsOpen
-    },
-    logOut() {
-      this.$store.dispatch('auth/logout');
-      this.$router.push('/login');
+      languageMenuIsOpen: false,
+      mobileMenuIsOpen: false,
+      themeMode: 'light',
+      panelMode: 'user',
     }
   },
   computed: {
     currentUser() {
-      return this.$store.state.auth.user;
-    }
+      return this.$store.state.auth.user
+    },
+    displayName() {
+      const user = this.currentUser || {}
+      return user.full_name || user.username || user.email || 'User'
+    },
+    profileAvatar() {
+      const user = this.currentUser || {}
+      return this.resolveMediaUrl(user.avatar || '') || defaultAvatarPlaceholder
+    },
+    isManager() {
+      return isManagerUser(this.currentUser)
+    },
+    panelModeSafe() {
+      return this.isManager ? this.panelMode : 'user'
+    },
+    isDarkTheme() {
+      return this.themeMode === 'dark'
+    },
+  },
+  methods: {
+    resolveMediaUrl(path) {
+      if (!path) {
+        return ''
+      }
+      if (path.startsWith('http://') || path.startsWith('https://')) {
+        return path
+      }
+      const base = (process.env.VUE_APP_API_BASE || '').replace(/\/+$/, '')
+      if (!base) {
+        return path
+      }
+      if (path.startsWith('/')) {
+        return `${base}${path}`
+      }
+      return `${base}/${path}`
+    },
+    openLanguageMenu() {
+      this.languageMenuIsOpen = !this.languageMenuIsOpen
+    },
+    toggleMainMenu() {
+      this.mobileMenuIsOpen = !this.mobileMenuIsOpen
+      this.syncBodyLock()
+    },
+    closeMainMenu() {
+      if (!this.mobileMenuIsOpen) {
+        return
+      }
+      this.mobileMenuIsOpen = false
+      this.syncBodyLock()
+    },
+    syncBodyLock() {
+      if (typeof document === 'undefined') {
+        return
+      }
+      document.body.classList.toggle('lock', this.mobileMenuIsOpen)
+    },
+    applyTheme(mode, { persist = true } = {}) {
+      const normalized = mode === 'dark' ? 'dark' : 'light'
+      this.themeMode = normalized
+
+      if (typeof document !== 'undefined') {
+        document.body.classList.toggle('dark-theme', normalized === 'dark')
+      }
+
+      if (persist && typeof window !== 'undefined') {
+        window.localStorage.setItem(THEME_STORAGE_KEY, normalized)
+      }
+    },
+    setTheme(mode) {
+      this.applyTheme(mode)
+    },
+    setPanelMode(mode) {
+      const normalized = mode === 'manager' ? 'manager' : 'user'
+      if (normalized === 'manager' && !this.isManager) {
+        return
+      }
+      this.panelMode = setStoredPanelMode(normalized)
+    },
+    syncPanelMode() {
+      this.panelMode = getSafePanelMode(this.currentUser, getStoredPanelMode())
+    },
+    logOut() {
+      this.$store.dispatch('auth/logout')
+      this.$router.push('/login')
+    },
   },
   mounted() {
     if (!this.currentUser) {
-      this.$router.push('/login');
+      this.$router.push('/login')
+      return
     }
-  }
+
+    this.syncPanelMode()
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener(PANEL_MODE_EVENT, this.syncPanelMode)
+      window.addEventListener('storage', this.syncPanelMode)
+      const stored = window.localStorage.getItem(THEME_STORAGE_KEY)
+      if (stored === 'dark' || stored === 'light') {
+        this.applyTheme(stored, { persist: false })
+      } else if (typeof document !== 'undefined' && document.body.classList.contains('dark-theme')) {
+        this.applyTheme('dark', { persist: false })
+      }
+    }
+  },
+  beforeUnmount() {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener(PANEL_MODE_EVENT, this.syncPanelMode)
+      window.removeEventListener('storage', this.syncPanelMode)
+    }
+    if (typeof document !== 'undefined') {
+      document.body.classList.remove('lock')
+    }
+  },
+  watch: {
+    currentUser() {
+      this.syncPanelMode()
+    },
+    '$route.fullPath'() {
+      this.closeMainMenu()
+      this.languageMenuIsOpen = false
+    },
+  },
 }
 </script>
+
+<style scoped>
+@media (max-width: 1199.98px) {
+  .menu--panel .menu__profile .container {
+    max-width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .menu--panel .menu__profileblock {
+    max-width: none;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .menu--panel .panel__menu {
+    width: 100%;
+  }
+
+  .menu--panel .panel__menu-link {
+    width: 100%;
+  }
+
+  .menu--panel .panel__mode {
+    margin-bottom: 16px;
+  }
+
+  .menu--panel .panel__mode .btn {
+    flex: 1 1 0;
+  }
+}
+</style>
