@@ -151,17 +151,36 @@
           <p> <a href="tel:+79601863596">+7 960 186–35–96</a></p>
           <p><span class="header__telback modal-trigger" data-bs-toggle="modal" data-bs-target="#modalCallback">Обратный звонок	</span></p>
         </div>
+        <router-link
+          v-if="showMobileCartButton"
+          class="header__cartbtn nout-visible"
+          to="/shop/cart"
+          aria-label="Cart"
+        >
+          <img src="/images/icons/cart.svg" width="22" height="22" alt="" />
+        </router-link>
+        <div class="header__auth-mobile d-xl-none">
+          <template v-if="!isLoggedIn">
+            <router-link class="header__auth-mobile-link" to="/login">Вход</router-link>
+            <router-link class="header__auth-mobile-link header__auth-mobile-link--dark" to="/registration">Регистрация</router-link>
+          </template>
+          <router-link v-else class="header__auth-mobile-link" to="/panel">Панель</router-link>
+        </div>
         <div class="header__regbuttons">
           <router-link v-if="!isLoggedIn" class="btn btn--white" to="/login">Вход</router-link>
           <router-link v-else class="btn btn--white" to="/panel">Личный кабинет</router-link>
           <router-link v-if="!isLoggedIn" class="btn btn--black" to="/registration">Регистрация</router-link>
-          <div class="header__regicon">
+          <router-link
+            class="header__regicon"
+            :to="isLoggedIn ? '/panel' : '/login'"
+            :aria-label="isLoggedIn ? 'Панель' : 'Вход'"
+          >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H15" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
               <path d="M10 17L15 12L10 7" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
               <path d="M15 12H3" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
-          </div>
+          </router-link>
         </div>
       </div>
       <!-- <div class="header__line"></div> -->
@@ -314,6 +333,10 @@ export default {
     isLoggedIn() {
       return this.$store?.state?.auth?.status?.loggedIn === true
     },
+    showMobileCartButton() {
+      const hiddenRoutes = ['Cart', 'ShopOrder']
+      return !hiddenRoutes.includes(this.$route?.name)
+    },
   },
   methods: {
     openMainMenu() {
@@ -334,3 +357,50 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.header__cartbtn {
+  width: 42px;
+  height: 42px;
+  margin-right: 12px;
+  border-radius: 50%;
+  border: 1px solid #d2d3d4;
+  background: #f4f7f9;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.header__cartbtn img {
+  display: block;
+}
+
+.header__auth-mobile {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 12px;
+}
+
+.header__auth-mobile-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 18px;
+  border: 1px solid #d2d3d4;
+  background: #f4f7f9;
+  color: #111;
+  font-size: 13px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.header__auth-mobile-link--dark {
+  background: #111;
+  border-color: #111;
+  color: #fff;
+}
+</style>

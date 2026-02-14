@@ -41,7 +41,7 @@
 											<li>
                         <router-link class="panel__menu-link" to="/panel/shop">
                           <span class="panel__menu-icon">
-							  <img src="@/assets/img/ShoppingCart.svg" alt="">
+							  <img src="@/assets/img/panel-icons/cart.svg" alt="">
                             </span>
                             Заказы в магазине<span class="panel__menu-num">2</span>
                         </router-link>
@@ -49,7 +49,7 @@
 											<li>
                         <router-link class="panel__menu-link" to="/panel/models">
                           <span class="panel__menu-icon">
-							<img src="@/assets/img/PuzzlePiece.svg" alt="">
+							<img src="@/assets/img/panel-icons/models.svg" alt="">
                           </span>
                           Заказы на 3Д печать<span class="panel__menu-num">46</span>
                         </router-link>
@@ -57,7 +57,7 @@
 					<li>
                         <router-link class="panel__menu-link" to="/panel/study">
                           	<span class="panel__menu-icon">
-								<img src="@/assets/img/GraduationCap.svg" alt="">
+								<img src="@/assets/img/panel-icons/study.svg" alt="">
                           	</span>
                           	Обучение<span class="panel__menu-num">46</span>
                         </router-link>
@@ -75,15 +75,20 @@
                       <li>
                         <router-link to="/panel/news" class="panel__menu-link">
                           <span class="panel__menu-icon">
-                            <img src="@/assets/img/PuzzlePiece.svg" alt="">
+                            <img src="@/assets/img/panel-icons/news.svg" alt="">
                           </span>
                           Новости
                         </router-link>
                       </li>
                       <li>
-                        <button type="button" class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat" @click="toggleStudyMenu">
+                        <button
+                          type="button"
+                          class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"
+                          :class="{ 'panel__menu-link--open': studyOpen }"
+                          @click="toggleStudyMenu"
+                        >
                           <span class="panel__menu-icon">
-                            <img src="@/assets/img/GraduationCap.svg" alt="">
+                            <img src="@/assets/img/panel-icons/study.svg" alt="">
                           </span>
                           Обучение
                           <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': studyOpen }">▾</span>
@@ -92,7 +97,7 @@
                           <li>
                             <router-link class="panel__menu-link" to="/panel/study/categories" active-class="panel__menu-link--active">
                               <span class="panel__menu-icon">
-                                <img src="@/assets/img/GraduationCap.svg" alt="">
+                                <img src="@/assets/img/panel-icons/categories.svg" alt="">
                               </span>
                               Категории курсов
                             </router-link>
@@ -100,7 +105,7 @@
                           <li>
                             <router-link class="panel__menu-link" to="/panel/study/courses" active-class="panel__menu-link--active">
                               <span class="panel__menu-icon">
-                                <img src="@/assets/img/GraduationCap.svg" alt="">
+                                <img src="@/assets/img/panel-icons/courses.svg" alt="">
                               </span>
                               Курсы
                             </router-link>
@@ -108,7 +113,7 @@
                           <li>
                             <router-link class="panel__menu-link" to="/panel/study/lessons" active-class="panel__menu-link--active">
                               <span class="panel__menu-icon">
-                                <img src="@/assets/img/GraduationCap.svg" alt="">
+                                <img src="@/assets/img/panel-icons/lessons.svg" alt="">
                               </span>
                               Уроки
                             </router-link>
@@ -116,7 +121,7 @@
                           <li>
                             <router-link class="panel__menu-link" to="/panel/study/teachers" active-class="panel__menu-link--active">
                               <span class="panel__menu-icon">
-                                <img src="@/assets/img/GraduationCap.svg" alt="">
+                                <img src="@/assets/img/panel-icons/teachers.svg" alt="">
                               </span>
                               Преподаватели
                             </router-link>
@@ -124,7 +129,7 @@
                           <li>
                             <router-link class="panel__menu-link" to="/panel/study/prices" active-class="panel__menu-link--active">
                               <span class="panel__menu-icon">
-                                <img src="@/assets/img/GraduationCap.svg" alt="">
+                                <img src="@/assets/img/panel-icons/prices.svg" alt="">
                               </span>
                               Цены
                             </router-link>
@@ -132,7 +137,7 @@
                           <li>
                             <router-link class="panel__menu-link" to="/panel/study/feedbacks" active-class="panel__menu-link--active">
                               <span class="panel__menu-icon">
-                                <img src="@/assets/img/GraduationCap.svg" alt="">
+                                <img src="@/assets/img/panel-icons/feedback.svg" alt="">
                               </span>
                               Отзывы
                             </router-link>
@@ -140,9 +145,14 @@
                         </ul>
                       </li>
                       <li>
-                        <button type="button" class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat" @click="toggleShopMenu">
+                        <button
+                          type="button"
+                          class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"
+                          :class="{ 'panel__menu-link--open': shopOpen }"
+                          @click="toggleShopMenu"
+                        >
                           <span class="panel__menu-icon">
-                            <img src="@/assets/img/ShoppingCart.svg" alt="">
+                            <img src="@/assets/img/panel-icons/shop.svg" alt="">
                           </span>
                           Магазин
                           <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': shopOpen }">▾</span>
@@ -151,7 +161,7 @@
                           <li>
                             <router-link class="panel__menu-link" to="/panel/shop/categories" active-class="panel__menu-link--active">
                               <span class="panel__menu-icon">
-                                <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                <img src="@/assets/img/panel-icons/categories.svg" alt="">
                               </span>
                               Категории магазина
                             </router-link>
@@ -159,7 +169,7 @@
                           <li>
                             <router-link class="panel__menu-link" to="/panel/shop/products" active-class="panel__menu-link--active">
                               <span class="panel__menu-icon">
-                                <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                <img src="@/assets/img/panel-icons/products.svg" alt="">
                               </span>
                               Товары
                             </router-link>
@@ -167,7 +177,7 @@
                           <li>
                             <router-link class="panel__menu-link" to="/panel/shop/orders" active-class="panel__menu-link--active">
                               <span class="panel__menu-icon">
-                                <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                <img src="@/assets/img/panel-icons/orders.svg" alt="">
                               </span>
                               Заказы
                             </router-link>
@@ -175,15 +185,20 @@
                           <li>
                             <router-link class="panel__menu-link" to="/panel/shop/discounts" active-class="panel__menu-link--active">
                               <span class="panel__menu-icon">
-                                <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                <img src="@/assets/img/panel-icons/discounts.svg" alt="">
                               </span>
                               Скидки
                             </router-link>
                           </li>
                           <li>
-                            <button type="button" class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat" @click="toggleFilterMenu">
+                            <button
+                              type="button"
+                              class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"
+                              :class="{ 'panel__menu-link--open': filterOpen }"
+                              @click="toggleFilterMenu"
+                            >
                               <span class="panel__menu-icon">
-                                <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                <img src="@/assets/img/panel-icons/filter.svg" alt="">
                               </span>
                               Фильтрация
                               <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': filterOpen }">▾</span>
@@ -192,7 +207,7 @@
                               <li>
                                 <router-link class="panel__menu-link" to="/panel/shop/filter-attrs" active-class="panel__menu-link--active">
                                   <span class="panel__menu-icon">
-                                    <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                    <img src="@/assets/img/panel-icons/filter.svg" alt="">
                                   </span>
                                   Фильтры
                                 </router-link>
@@ -200,7 +215,7 @@
                               <li>
                                 <router-link class="panel__menu-link" to="/panel/shop/filter-attr-list-values" active-class="panel__menu-link--active">
                                   <span class="panel__menu-icon">
-                                    <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                    <img src="@/assets/img/panel-icons/filter-list.svg" alt="">
                                   </span>
                                   Значения фильтров
                                 </router-link>
@@ -208,7 +223,7 @@
                               <li>
                                 <router-link class="panel__menu-link" to="/panel/shop/filter-attr-values" active-class="panel__menu-link--active">
                                   <span class="panel__menu-icon">
-                                    <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                    <img src="@/assets/img/panel-icons/filter-values.svg" alt="">
                                   </span>
                                   Атрибуты товаров
                                 </router-link>
@@ -216,9 +231,14 @@
                             </ul>
                           </li>
                           <li>
-                            <button type="button" class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat" @click="toggleDeliveryMenu">
+                            <button
+                              type="button"
+                              class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"
+                              :class="{ 'panel__menu-link--open': deliveryOpen }"
+                              @click="toggleDeliveryMenu"
+                            >
                               <span class="panel__menu-icon">
-                                <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                <img src="@/assets/img/panel-icons/delivery.svg" alt="">
                               </span>
                               Доставка
                               <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': deliveryOpen }">▾</span>
@@ -227,7 +247,7 @@
                               <li>
                                 <router-link class="panel__menu-link" to="/panel/shop/pochta-settings" active-class="panel__menu-link--active">
                                   <span class="panel__menu-icon">
-                                    <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                    <img src="@/assets/img/panel-icons/mail.svg" alt="">
                                   </span>
                                   Настройки Почты России
                                 </router-link>
@@ -235,7 +255,7 @@
                               <li>
                                 <router-link class="panel__menu-link" to="/panel/shop/sdek-settings" active-class="panel__menu-link--active">
                                   <span class="panel__menu-icon">
-                                    <img src="@/assets/img/ShoppingCart.svg" alt="">
+                                    <img src="@/assets/img/panel-icons/sdek.svg" alt="">
                                   </span>
                                   Настройки СДЭК
                                 </router-link>
@@ -247,7 +267,7 @@
                       <li>
                         <router-link class="panel__menu-link" to="/panel/models">
                           <span class="panel__menu-icon">
-                            <img src="@/assets/img/PuzzlePiece.svg" alt="">
+                            <img src="@/assets/img/panel-icons/models.svg" alt="">
                           </span>
                           Заказы на печать
                         </router-link>
@@ -255,7 +275,7 @@
                       <li>
                         <a class="panel__menu-link" :href="telegramBotUrl" target="_blank" rel="noopener">
                           <span class="panel__menu-icon">
-                            <img src="@/assets/img/Headset.svg" alt="">
+                            <img src="@/assets/img/panel-icons/telegram.svg" alt="">
                           </span>
                           Телеграм бот
                         </a>
@@ -263,7 +283,7 @@
                     </ul>
 									</div>
 
-									<div class="panel__footer"> <a class="panel__back" href="#">
+									<div class="panel__footer"> <router-link class="panel__back" to="/">
 											<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<g clip-path="url(#clip0_78_6362)">
 													<path fill-rule="evenodd" clip-rule="evenodd" d="M15.334 7.99992C15.334 12.0499 12.0507 15.3333 8.00065 15.3333C3.95065 15.3333 0.667318 12.0499 0.667318 7.99992C0.667318 3.94992 3.95065 0.666584 8.00065 0.666585C12.0507 0.666585 15.334 3.94992 15.334 7.99992ZM9.50049 10.1333C9.50158 10.2279 9.47776 10.3211 9.43142 10.4036C9.38508 10.4861 9.31785 10.555 9.23649 10.6033C9.15745 10.6487 9.06695 10.6704 8.97589 10.6657C8.88482 10.6609 8.79706 10.63 8.72315 10.5766L5.72315 8.44325C5.65351 8.39234 5.59699 8.32557 5.55827 8.24848C5.51955 8.17139 5.49974 8.08619 5.50049 7.99992C5.49964 7.91354 5.51939 7.8282 5.55812 7.75098C5.59684 7.67377 5.65342 7.6069 5.72315 7.55592L8.72315 5.42258C8.79706 5.36916 8.88482 5.33823 8.97589 5.3335C9.06695 5.32877 9.15745 5.35044 9.23649 5.39592C9.31795 5.44427 9.38524 5.51323 9.43159 5.59586C9.47793 5.67848 9.5017 5.77186 9.50049 5.86658L9.50049 10.1333Z" fill="#D83A56"></path>
@@ -273,13 +293,20 @@
 														<rect width="16" height="16" fill="white" transform="matrix(4.37114e-08 -1 -1 -4.37114e-08 16 16)"></rect>
 													</clipPath>
 												</defs>
-											</svg>вернуться на сайт</a></div>
+											</svg>вернуться на сайт</router-link></div>
 								</div>
 							</div>
 </template>
 
 <script>
 import { defaultAvatarPlaceholder } from '@/constants/avatarPlaceholders'
+import {
+  getSafePanelMode,
+  getStoredPanelMode,
+  isManagerUser,
+  PANEL_MODE_EVENT,
+  setStoredPanelMode,
+} from '@/utils/panelMode'
 
 export default {
   data() {
@@ -294,125 +321,102 @@ export default {
   },
   computed: {
     currentUser() {
-      return this.$store.state.auth.user;
+      return this.$store.state.auth.user
     },
     displayName() {
-      const user = this.currentUser || {};
-      return user.full_name || user.username || user.email || 'User';
+      const user = this.currentUser || {}
+      return user.full_name || user.username || user.email || 'User'
     },
     profileAvatar() {
-      const user = this.currentUser || {};
-      const resolved = this.resolveMediaUrl(user.avatar || '');
-      return resolved || defaultAvatarPlaceholder;
+      const user = this.currentUser || {}
+      const resolved = this.resolveMediaUrl(user.avatar || '')
+      return resolved || defaultAvatarPlaceholder
     },
     isManager() {
-      const user = this.currentUser;
-      if (!user) {
-        return false;
-      }
-      if (user.is_manager === true || user.isManager === true) {
-        return true;
-      }
-      const groups = user.groups || user.group || user.roles || user.role || user.groups_names || user.groups_list;
-      if (!groups) {
-        return false;
-      }
-      const isManagerName = (value) => {
-        if (!value) {
-          return false;
-        }
-        const name = String(value).toLowerCase();
-        return name === 'менеджер' || name === 'manager';
-      };
-      if (Array.isArray(groups)) {
-        return groups.some((item) => {
-          if (typeof item === 'string') {
-            return isManagerName(item);
-          }
-          if (item && typeof item === 'object') {
-            return isManagerName(item.name || item.title || item.label);
-          }
-          return false;
-        });
-      }
-      if (typeof groups === 'string') {
-        return isManagerName(groups);
-      }
-      if (groups && typeof groups === 'object') {
-        return isManagerName(groups.name || groups.title || groups.label);
-      }
-      return false;
+      return isManagerUser(this.currentUser)
     },
     panelModeSafe() {
-      return this.isManager ? this.panelMode : 'user';
+      return this.isManager ? this.panelMode : 'user'
     },
   },
   methods: {
     resolveMediaUrl(path) {
       if (!path) {
-        return '';
+        return ''
       }
       if (path.startsWith('http://') || path.startsWith('https://')) {
-        return path;
+        return path
       }
-      const base = (process.env.VUE_APP_API_BASE || '').replace(/\/+$/, '');
+      const base = (process.env.VUE_APP_API_BASE || '').replace(/\/+$/, '')
       if (!base) {
-        return path;
+        return path
       }
       if (path.startsWith('/')) {
-        return `${base}${path}`;
+        return `${base}${path}`
       }
-      return `${base}/${path}`;
+      return `${base}/${path}`
     },
     setPanelMode(mode) {
-      const normalized = mode === 'manager' ? 'manager' : 'user';
+      const normalized = mode === 'manager' ? 'manager' : 'user'
       if (normalized === 'manager' && !this.isManager) {
-        return;
+        return
       }
-      this.panelMode = normalized;
-      localStorage.setItem('panelMode', normalized);
+      this.panelMode = setStoredPanelMode(normalized)
+    },
+    syncPanelMode() {
+      this.panelMode = getSafePanelMode(this.currentUser, getStoredPanelMode())
     },
     toggleStudyMenu() {
-      this.studyOpen = !this.studyOpen;
+      this.studyOpen = !this.studyOpen
     },
     toggleShopMenu() {
-      this.shopOpen = !this.shopOpen;
+      this.shopOpen = !this.shopOpen
     },
     toggleDeliveryMenu() {
-      this.deliveryOpen = !this.deliveryOpen;
+      this.deliveryOpen = !this.deliveryOpen
       if (this.deliveryOpen) {
-        this.shopOpen = true;
+        this.shopOpen = true
       }
     },
     toggleFilterMenu() {
-      this.filterOpen = !this.filterOpen;
+      this.filterOpen = !this.filterOpen
       if (this.filterOpen) {
-        this.shopOpen = true;
+        this.shopOpen = true
       }
     },
   },
   mounted() {
-    const stored = localStorage.getItem('panelMode');
-    if (stored === 'manager' && this.isManager) {
-      this.panelMode = 'manager';
-    } else {
-      this.panelMode = 'user';
+    this.syncPanelMode()
+    if (typeof window !== 'undefined') {
+      window.addEventListener(PANEL_MODE_EVENT, this.syncPanelMode)
+      window.addEventListener('storage', this.syncPanelMode)
     }
     if (this.$route && this.$route.path && this.$route.path.includes('/panel/study')) {
-      this.studyOpen = true;
+      this.studyOpen = true
     }
     if (this.$route && this.$route.path && this.$route.path.includes('/panel/shop')) {
-      this.shopOpen = true;
+      this.shopOpen = true
     }
     if (this.$route && this.$route.path && this.$route.path.includes('/panel/shop/pochta-settings')) {
-      this.deliveryOpen = true;
+      this.deliveryOpen = true
     }
     if (this.$route && this.$route.path && this.$route.path.includes('/panel/shop/sdek-settings')) {
-      this.deliveryOpen = true;
+      this.deliveryOpen = true
     }
     if (this.$route && this.$route.path && this.$route.path.includes('/panel/shop/filter-')) {
-      this.filterOpen = true;
+      this.filterOpen = true
     }
+  },
+  beforeUnmount() {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener(PANEL_MODE_EVENT, this.syncPanelMode)
+      window.removeEventListener('storage', this.syncPanelMode)
+    }
+  },
+  watch: {
+    currentUser() {
+      this.syncPanelMode()
+    },
   },
 }
 </script>

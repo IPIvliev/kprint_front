@@ -2,4 +2,11 @@
     position: fixed;
     bottom: 50%;
     right: 50px;
+    z-index: 20;
+  }
+
+  @media (max-width: 991.98px) {
+    .cmp-components-elements-shop-cartsticky .cart, .cmp-components-elements-shop-cartsticky.cart{
+      display: none !important;
+    }
   }
