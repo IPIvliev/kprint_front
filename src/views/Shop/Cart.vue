@@ -181,17 +181,7 @@ export default {
             console.log(error);
         });
 
-        // Запрос координат по api. Платно, но точно
-        // axios.get('https://ipgeolocation.abstractapi.com/v1/?api_key=28400f98798f43aa9c5bd5fa15be0ce0').then(response => {
-        //     this.gettingLocation = false;
-        //     this.location = response.data;
-        //     this.$store.dispatch("delivery/fetchPochtaOffices", {lat: response.data.latitude, lon: response.data.longitude});
-        // })
-        // .catch(e => {
-        //     console.log(e); 
-        // });
-       
-        // Запрос координат по api. Почти бесплатно и почти точно...
+        // Запрос координат через backend endpoint.
         await fetchLocationByDadata().then(response => {
 
             this.gettingLocation = false;

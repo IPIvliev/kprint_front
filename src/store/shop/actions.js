@@ -42,8 +42,7 @@ export default {
             commit('deleteCourseFromCart', existing)
         }
     },
-    fetchDiscountAmount({ commit, state }, promocode) {
-        console.log(promocode)
+    fetchDiscountAmount({ commit }, promocode) {
         return api
             .get('/api/shop/discounts', {
                 params: {
@@ -54,22 +53,36 @@ export default {
                 commit("setDiscountAmount", response.data);
             })
             .catch(e => {
-                console.log(e); 
+                commit("setDiscountAmount", 0)
+                throw e
             });
     },
-    fetchCreateOrder({ commit, state }, order) {
-        console.log(order)
+    fetchCreateOrder({ commit, getters, rootState }, order = {}) {
+        const orderItems = getters.cartProducts.map((item) => ({
+            product: item.id,
+            quantity: item.quantity,
+            price: Number(item.price || 0),
+        }))
+        const productsPrice = orderItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
+        const deliveryPrice = Number(rootState.delivery?.delivery_price?.price || 0)
+        const totalPrice = Number(order.total_price || (productsPrice + deliveryPrice))
+        const payload = {
+            total_price: totalPrice,
+            products_price: productsPrice,
+            order_items: orderItems.map(({ product, quantity }) => ({ product, quantity })),
+        }
+        if (order.status) {
+            payload.status = order.status
+        }
+
         return api
-            .post('/api/shop/order/create', {
-                params: {
-                    total_price: order.total_price
-                }
-            })
+            .post('/api/shop/order/create', payload)
             .then(response => {
                 commit("setNewOrder", response.data);
+                return response.data
             })
             .catch(e => {
-                console.log(e); 
+                throw e
             });
     },
 }

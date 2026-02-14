@@ -1,8 +1,5 @@
-import axios from 'axios'
 import { api } from '@/services/http'
-
-const ABSTRACT_API_URL = process.env.VUE_APP_ABSTRACT_API_URL
-const ABSTRACT_API_KEY = process.env.VUE_APP_ABSTRACT_API_KEY
+import { fetchLocationByAbstract } from '@/services/external.service'
 
 export const delivery = {
   namespaced: true,
@@ -28,8 +25,7 @@ export const delivery = {
   },
   actions: {
     fetchUserLocation({ commit }) {
-      return axios
-        .get(`${ABSTRACT_API_URL}?api_key=${ABSTRACT_API_KEY}`)
+      return fetchLocationByAbstract()
         .then(response => {
           commit('setUserLocation', response.data)
         })
