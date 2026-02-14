@@ -1,0 +1,5778 @@
+openapi: 3.0.3
+info:
+  title: KPrint API
+  version: 1.0.0
+  description: Public and manager API for KPrint backend.
+paths:
+  /api/articles/:
+    get:
+      operationId: api_articles_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+          description: ''
+    post:
+      operationId: api_articles_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Article'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Article'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+          description: ''
+  /api/articles/{id}/:
+    get:
+      operationId: api_articles_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Статья.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+          description: ''
+    put:
+      operationId: api_articles_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Статья.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Article'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Article'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+          description: ''
+    patch:
+      operationId: api_articles_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Статья.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedArticle'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedArticle'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedArticle'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+          description: ''
+    delete:
+      operationId: api_articles_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Статья.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/external/ip:
+    get:
+      operationId: api_external_ip_retrieve
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalIp'
+          description: ''
+  /api/external/location:
+    get:
+      operationId: api_external_location_retrieve
+      parameters:
+      - in: query
+        name: ip
+        schema:
+          type: string
+        description: Client IP to geolocate. Falls back to request IP.
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalLocation'
+          description: ''
+        '502':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '503':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/printjobs/:
+    get:
+      operationId: api_printjobs_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PrintJob'
+          description: ''
+    post:
+      operationId: api_printjobs_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintJob'
+          description: ''
+  /api/printjobs/{id}/:
+    get:
+      operationId: api_printjobs_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Модель для печати.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintJob'
+          description: ''
+    put:
+      operationId: api_printjobs_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Модель для печати.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintJob'
+          description: ''
+    patch:
+      operationId: api_printjobs_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Модель для печати.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPrintJob'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPrintJob'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPrintJob'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintJob'
+          description: ''
+    delete:
+      operationId: api_printjobs_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Модель для печати.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/printjobs/{id}/admin_update_price/:
+    post:
+      operationId: api_printjobs_admin_update_price_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Модель для печати.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintJob'
+          description: ''
+  /api/printjobs/{id}/admin_update_status/:
+    post:
+      operationId: api_printjobs_admin_update_status_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Модель для печати.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintJob'
+          description: ''
+  /api/printjobs/{id}/admin_upload_result/:
+    post:
+      operationId: api_printjobs_admin_upload_result_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Модель для печати.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintJob'
+          description: ''
+  /api/printjobs/{id}/submit/:
+    post:
+      operationId: api_printjobs_submit_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Модель для печати.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintJob'
+          description: ''
+  /api/printjobs/{id}/user_approve/:
+    post:
+      operationId: api_printjobs_user_approve_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Модель для печати.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintJob'
+          description: ''
+  /api/printjobs/{id}/user_set_printing/:
+    post:
+      operationId: api_printjobs_user_set_printing_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Модель для печати.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PrintJob'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintJob'
+          description: ''
+  /api/printmodels/:
+    get:
+      operationId: api_printmodels_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PrintModel'
+          description: ''
+    post:
+      operationId: api_printmodels_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrintModel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PrintModel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PrintModel'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintModel'
+          description: ''
+  /api/printmodels/{id}/:
+    get:
+      operationId: api_printmodels_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Модель.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintModel'
+          description: ''
+    put:
+      operationId: api_printmodels_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Модель.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrintModel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PrintModel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PrintModel'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintModel'
+          description: ''
+    patch:
+      operationId: api_printmodels_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Модель.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPrintModel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPrintModel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPrintModel'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintModel'
+          description: ''
+    delete:
+      operationId: api_printmodels_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Модель.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/schema/:
+    get:
+      operationId: api_schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - ug
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/shop/categories:
+    get:
+      operationId: api_shop_categories_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+          description: ''
+  /api/shop/categories/{id}:
+    get:
+      operationId: api_shop_categories_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryProduct'
+          description: ''
+  /api/shop/create-payment-intent:
+    post:
+      operationId: api_shop_create_payment_intent_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentIntentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentIntentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentIntentRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePaymentIntentResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/shop/discounts:
+    get:
+      operationId: api_shop_discounts_retrieve
+      parameters:
+      - in: query
+        name: promocode
+        schema:
+          type: string
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: integer
+          description: ''
+  /api/shop/manager/categories:
+    get:
+      operationId: api_shop_manager_categories_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+          description: ''
+    post:
+      operationId: api_shop_manager_categories_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CategoryWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CategoryWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryWrite'
+          description: ''
+  /api/shop/manager/categories/{id}:
+    get:
+      operationId: api_shop_manager_categories_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Категория магазина.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    put:
+      operationId: api_shop_manager_categories_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Категория магазина.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CategoryWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CategoryWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryWrite'
+          description: ''
+    patch:
+      operationId: api_shop_manager_categories_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Категория магазина.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCategoryWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCategoryWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCategoryWrite'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryWrite'
+          description: ''
+    delete:
+      operationId: api_shop_manager_categories_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Категория магазина.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/shop/manager/discounts:
+    get:
+      operationId: api_shop_manager_discounts_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Discount'
+          description: ''
+    post:
+      operationId: api_shop_manager_discounts_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Discount'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Discount'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Discount'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Discount'
+          description: ''
+  /api/shop/manager/discounts/{id}:
+    get:
+      operationId: api_shop_manager_discounts_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Скидка.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Discount'
+          description: ''
+    put:
+      operationId: api_shop_manager_discounts_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Скидка.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Discount'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Discount'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Discount'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Discount'
+          description: ''
+    patch:
+      operationId: api_shop_manager_discounts_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Скидка.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDiscount'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDiscount'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDiscount'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Discount'
+          description: ''
+    delete:
+      operationId: api_shop_manager_discounts_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Скидка.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/shop/manager/filter-attr-list-values:
+    get:
+      operationId: api_shop_manager_filter_attr_list_values_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FilterAttrListValue'
+          description: ''
+    post:
+      operationId: api_shop_manager_filter_attr_list_values_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterAttrListValueWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FilterAttrListValueWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FilterAttrListValueWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterAttrListValueWrite'
+          description: ''
+  /api/shop/manager/filter-attr-list-values/{id}:
+    get:
+      operationId: api_shop_manager_filter_attr_list_values_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Список значения характеристики
+          фильтра.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterAttrListValue'
+          description: ''
+    put:
+      operationId: api_shop_manager_filter_attr_list_values_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Список значения характеристики
+          фильтра.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterAttrListValueWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FilterAttrListValueWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FilterAttrListValueWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterAttrListValueWrite'
+          description: ''
+    patch:
+      operationId: api_shop_manager_filter_attr_list_values_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Список значения характеристики
+          фильтра.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedFilterAttrListValueWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedFilterAttrListValueWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedFilterAttrListValueWrite'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterAttrListValueWrite'
+          description: ''
+    delete:
+      operationId: api_shop_manager_filter_attr_list_values_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Список значения характеристики
+          фильтра.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/shop/manager/filter-attr-values:
+    get:
+      operationId: api_shop_manager_filter_attr_values_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FilterAttrValue'
+          description: ''
+    post:
+      operationId: api_shop_manager_filter_attr_values_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterAttrValueWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FilterAttrValueWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FilterAttrValueWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterAttrValueWrite'
+          description: ''
+  /api/shop/manager/filter-attr-values/{id}:
+    get:
+      operationId: api_shop_manager_filter_attr_values_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Значение характеристики
+          фильтра.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterAttrValue'
+          description: ''
+    put:
+      operationId: api_shop_manager_filter_attr_values_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Значение характеристики
+          фильтра.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterAttrValueWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FilterAttrValueWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FilterAttrValueWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterAttrValueWrite'
+          description: ''
+    patch:
+      operationId: api_shop_manager_filter_attr_values_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Значение характеристики
+          фильтра.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedFilterAttrValueWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedFilterAttrValueWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedFilterAttrValueWrite'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterAttrValueWrite'
+          description: ''
+    delete:
+      operationId: api_shop_manager_filter_attr_values_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Значение характеристики
+          фильтра.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/shop/manager/filter-attrs:
+    get:
+      operationId: api_shop_manager_filter_attrs_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FilterAttr'
+          description: ''
+    post:
+      operationId: api_shop_manager_filter_attrs_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterAttrWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FilterAttrWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FilterAttrWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterAttrWrite'
+          description: ''
+  /api/shop/manager/filter-attrs/{id}:
+    get:
+      operationId: api_shop_manager_filter_attrs_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Характеристика фильтра.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterAttr'
+          description: ''
+    put:
+      operationId: api_shop_manager_filter_attrs_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Характеристика фильтра.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterAttrWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FilterAttrWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FilterAttrWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterAttrWrite'
+          description: ''
+    patch:
+      operationId: api_shop_manager_filter_attrs_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Характеристика фильтра.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedFilterAttrWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedFilterAttrWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedFilterAttrWrite'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterAttrWrite'
+          description: ''
+    delete:
+      operationId: api_shop_manager_filter_attrs_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Характеристика фильтра.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/shop/manager/pochta-settings:
+    get:
+      operationId: api_shop_manager_pochta_settings_retrieve
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PochtaSettings'
+          description: ''
+    put:
+      operationId: api_shop_manager_pochta_settings_update
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PochtaSettings'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PochtaSettings'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PochtaSettings'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PochtaSettings'
+          description: ''
+    patch:
+      operationId: api_shop_manager_pochta_settings_partial_update
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPochtaSettings'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPochtaSettings'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPochtaSettings'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PochtaSettings'
+          description: ''
+  /api/shop/manager/product-images:
+    get:
+      operationId: api_shop_manager_product_images_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductImage'
+          description: ''
+    post:
+      operationId: api_shop_manager_product_images_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductImageWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductImageWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductImageWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImageWrite'
+          description: ''
+  /api/shop/manager/product-images/{id}:
+    get:
+      operationId: api_shop_manager_product_images_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Фотография товара.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+          description: ''
+    put:
+      operationId: api_shop_manager_product_images_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Фотография товара.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductImageWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductImageWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductImageWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImageWrite'
+          description: ''
+    patch:
+      operationId: api_shop_manager_product_images_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Фотография товара.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProductImageWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProductImageWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductImageWrite'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImageWrite'
+          description: ''
+    delete:
+      operationId: api_shop_manager_product_images_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Фотография товара.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/shop/manager/products:
+    get:
+      operationId: api_shop_manager_products_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+          description: ''
+    post:
+      operationId: api_shop_manager_products_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductWrite'
+          description: ''
+  /api/shop/manager/products/{id}:
+    get:
+      operationId: api_shop_manager_products_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Товар.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+    put:
+      operationId: api_shop_manager_products_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Товар.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductWrite'
+          description: ''
+    patch:
+      operationId: api_shop_manager_products_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Товар.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProductWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProductWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductWrite'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductWrite'
+          description: ''
+    delete:
+      operationId: api_shop_manager_products_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Товар.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/shop/manager/sdek-settings:
+    get:
+      operationId: api_shop_manager_sdek_settings_retrieve
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SdekSettings'
+          description: ''
+    put:
+      operationId: api_shop_manager_sdek_settings_update
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SdekSettings'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SdekSettings'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SdekSettings'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SdekSettings'
+          description: ''
+    patch:
+      operationId: api_shop_manager_sdek_settings_partial_update
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSdekSettings'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSdekSettings'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSdekSettings'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SdekSettings'
+          description: ''
+  /api/shop/order-statuses:
+    get:
+      operationId: api_shop_order_statuses_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderStatus'
+          description: ''
+  /api/shop/order/create:
+    post:
+      operationId: api_shop_order_create_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Order'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Order'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+  /api/shop/orders:
+    get:
+      operationId: api_shop_orders_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+          description: ''
+  /api/shop/orders/{id}:
+    get:
+      operationId: api_shop_orders_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+    put:
+      operationId: api_shop_orders_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrderUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrderUpdate'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderUpdate'
+          description: ''
+    patch:
+      operationId: api_shop_orders_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOrderUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedOrderUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOrderUpdate'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderUpdate'
+          description: ''
+    delete:
+      operationId: api_shop_orders_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/shop/pochta_rossii/offices:
+    get:
+      operationId: api_shop_pochta_rossii_offices_retrieve
+      parameters:
+      - in: query
+        name: lat
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: lon
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '502':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '503':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/shop/pochta_rossii/price:
+    get:
+      operationId: api_shop_pochta_rossii_price_retrieve
+      parameters:
+      - in: query
+        name: destination
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: products_mass
+        schema:
+          type: number
+        required: true
+      - in: query
+        name: type
+        schema:
+          type: string
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '502':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '503':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/shop/products:
+    get:
+      operationId: api_shop_products_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+          description: ''
+  /api/shop/products/{id}:
+    get:
+      operationId: api_shop_products_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductView'
+          description: ''
+  /api/shop/sdek/offices:
+    get:
+      operationId: api_shop_sdek_offices_retrieve
+      parameters:
+      - in: query
+        name: postal_code
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '502':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '503':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/shop/sdek/price:
+    get:
+      operationId: api_shop_sdek_price_retrieve
+      parameters:
+      - in: query
+        name: destination
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: products_mass
+        schema:
+          type: number
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '502':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '503':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/signup:
+    post:
+      operationId: api_signup_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Signup'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Signup'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Signup'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Signup'
+          description: ''
+  /api/study/categories:
+    get:
+      operationId: api_study_categories_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudyCategory'
+          description: ''
+  /api/study/course/{id}:
+    get:
+      operationId: api_study_course_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: ''
+  /api/study/courses:
+    get:
+      operationId: api_study_courses_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+          description: ''
+  /api/study/manager/categories:
+    get:
+      operationId: api_study_manager_categories_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudyCategoryWrite'
+          description: ''
+    post:
+      operationId: api_study_manager_categories_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudyCategoryWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StudyCategoryWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StudyCategoryWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudyCategoryWrite'
+          description: ''
+  /api/study/manager/categories/{id}:
+    get:
+      operationId: api_study_manager_categories_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Категория учебных курсов.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudyCategoryWrite'
+          description: ''
+    put:
+      operationId: api_study_manager_categories_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Категория учебных курсов.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudyCategoryWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StudyCategoryWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StudyCategoryWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudyCategoryWrite'
+          description: ''
+    patch:
+      operationId: api_study_manager_categories_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Категория учебных курсов.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedStudyCategoryWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedStudyCategoryWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedStudyCategoryWrite'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudyCategoryWrite'
+          description: ''
+    delete:
+      operationId: api_study_manager_categories_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Категория учебных курсов.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/study/manager/courses:
+    get:
+      operationId: api_study_manager_courses_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+          description: ''
+    post:
+      operationId: api_study_manager_courses_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CourseWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CourseWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseWrite'
+          description: ''
+  /api/study/manager/courses/{id}:
+    get:
+      operationId: api_study_manager_courses_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Курс.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: ''
+    put:
+      operationId: api_study_manager_courses_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Курс.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CourseWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CourseWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseWrite'
+          description: ''
+    patch:
+      operationId: api_study_manager_courses_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Курс.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCourseWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCourseWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCourseWrite'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseWrite'
+          description: ''
+    delete:
+      operationId: api_study_manager_courses_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Курс.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/study/manager/feedbacks:
+    get:
+      operationId: api_study_manager_feedbacks_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Feedback'
+          description: ''
+    post:
+      operationId: api_study_manager_feedbacks_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+          description: ''
+  /api/study/manager/feedbacks/{id}:
+    get:
+      operationId: api_study_manager_feedbacks_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Отзыв.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+          description: ''
+    put:
+      operationId: api_study_manager_feedbacks_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Отзыв.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+          description: ''
+    patch:
+      operationId: api_study_manager_feedbacks_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Отзыв.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedFeedback'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedFeedback'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedFeedback'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+          description: ''
+    delete:
+      operationId: api_study_manager_feedbacks_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Отзыв.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/study/manager/lessons:
+    get:
+      operationId: api_study_manager_lessons_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LessonWrite'
+          description: ''
+    post:
+      operationId: api_study_manager_lessons_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LessonWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LessonWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LessonWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LessonWrite'
+          description: ''
+  /api/study/manager/lessons/{id}:
+    get:
+      operationId: api_study_manager_lessons_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Урок.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LessonWrite'
+          description: ''
+    put:
+      operationId: api_study_manager_lessons_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Урок.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LessonWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LessonWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LessonWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LessonWrite'
+          description: ''
+    patch:
+      operationId: api_study_manager_lessons_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Урок.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLessonWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLessonWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLessonWrite'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LessonWrite'
+          description: ''
+    delete:
+      operationId: api_study_manager_lessons_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Урок.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/study/manager/lessons/reorder:
+    post:
+      operationId: api_study_manager_lessons_reorder_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LessonWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LessonWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LessonWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LessonWrite'
+          description: ''
+  /api/study/manager/prices:
+    get:
+      operationId: api_study_manager_prices_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Price'
+          description: ''
+    post:
+      operationId: api_study_manager_prices_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PriceWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PriceWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PriceWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceWrite'
+          description: ''
+  /api/study/manager/prices/{id}:
+    get:
+      operationId: api_study_manager_prices_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Вариант обучения.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+          description: ''
+    put:
+      operationId: api_study_manager_prices_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Вариант обучения.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PriceWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PriceWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PriceWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceWrite'
+          description: ''
+    patch:
+      operationId: api_study_manager_prices_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Вариант обучения.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPriceWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPriceWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPriceWrite'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceWrite'
+          description: ''
+    delete:
+      operationId: api_study_manager_prices_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Вариант обучения.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/study/manager/teachers:
+    get:
+      operationId: api_study_manager_teachers_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Teacher'
+          description: ''
+    post:
+      operationId: api_study_manager_teachers_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeacherWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TeacherWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TeacherWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeacherWrite'
+          description: ''
+  /api/study/manager/teachers/{id}:
+    get:
+      operationId: api_study_manager_teachers_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Преподаватель.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+          description: ''
+    put:
+      operationId: api_study_manager_teachers_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Преподаватель.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeacherWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TeacherWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TeacherWrite'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeacherWrite'
+          description: ''
+    patch:
+      operationId: api_study_manager_teachers_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Преподаватель.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTeacherWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTeacherWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTeacherWrite'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeacherWrite'
+          description: ''
+    delete:
+      operationId: api_study_manager_teachers_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Преподаватель.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/token/:
+    post:
+      operationId: api_token_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MyTokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MyTokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MyTokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyTokenObtainPair'
+          description: ''
+  /api/token/refresh/:
+    post:
+      operationId: api_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /api/token/verify/:
+    post:
+      operationId: api_token_verify_create
+      description: |-
+        Takes a token and indicates if it is valid.  This view provides no
+        information about a token's fitness for a particular use.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenVerify'
+          description: ''
+  /api/user/profile:
+    get:
+      operationId: api_user_profile_retrieve
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+    put:
+      operationId: api_user_profile_update
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+    patch:
+      operationId: api_user_profile_partial_update
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+components:
+  schemas:
+    Article:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Название статьи
+          maxLength: 350
+        article_image:
+          type: string
+          format: uri
+          nullable: true
+        body:
+          type: string
+          nullable: true
+          title: Текст статьи
+        publish:
+          type: string
+          format: date-time
+          title: Дата публикации
+      required:
+      - id
+      - title
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Наименование категории
+          maxLength: 255
+        level:
+          type: integer
+          readOnly: true
+        photo:
+          type: string
+          format: uri
+          title: Обложка Категории
+        parent:
+          type: integer
+          nullable: true
+          title: Родительская категория
+        filter_attrs:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterAttr'
+          readOnly: true
+      required:
+      - filter_attrs
+      - id
+      - level
+      - photo
+      - title
+    CategoryProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Наименование категории
+          maxLength: 255
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+          readOnly: true
+      required:
+      - id
+      - products
+      - title
+    CategoryWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Наименование категории
+          maxLength: 255
+        slug:
+          type: string
+          nullable: true
+          maxLength: 50
+          pattern: ^[-a-zA-Z0-9_]+$
+        description:
+          type: string
+          nullable: true
+          title: Описание категории
+        photo:
+          type: string
+          format: uri
+          title: Обложка Категории
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        lft:
+          type: integer
+          readOnly: true
+        rght:
+          type: integer
+          readOnly: true
+        tree_id:
+          type: integer
+          readOnly: true
+        level:
+          type: integer
+          readOnly: true
+        parent:
+          type: integer
+          nullable: true
+          title: Родительская категория
+      required:
+      - created_at
+      - id
+      - level
+      - lft
+      - photo
+      - rght
+      - title
+      - tree_id
+      - updated_at
+    Course:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        category_id:
+          type: integer
+          readOnly: true
+        category_title:
+          type: string
+          title: Наименование категории
+          readOnly: true
+        name:
+          type: string
+          title: Наименование курса
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание курса
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Стоимость курса
+        photo:
+          type: string
+          format: uri
+          nullable: true
+          title: Обложка курса
+        duration:
+          type: string
+          title: Продолжительность курса
+          maxLength: 255
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status776Enum'
+          title: Статус
+        lessons_number:
+          type: integer
+          readOnly: true
+        teachers_number:
+          type: integer
+          readOnly: true
+        lessons:
+          type: array
+          items:
+            $ref: '#/components/schemas/Lesson'
+          readOnly: true
+        teachers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Teacher'
+          readOnly: true
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/Price'
+          readOnly: true
+        related:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedCourse'
+          readOnly: true
+        feedbacks:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
+      required:
+      - category_id
+      - category_title
+      - duration
+      - feedbacks
+      - id
+      - lessons
+      - lessons_number
+      - name
+      - price
+      - prices
+      - related
+      - teachers
+      - teachers_number
+    CourseWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        category:
+          type: integer
+          title: Категория курса
+        name:
+          type: string
+          title: Наименование курса
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание курса
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Стоимость курса
+        photo:
+          type: string
+          format: uri
+          nullable: true
+          title: Обложка курса
+        duration:
+          type: string
+          title: Продолжительность курса
+          maxLength: 255
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status776Enum'
+          title: Статус
+        teachers:
+          type: array
+          items:
+            type: integer
+        related:
+          type: array
+          items:
+            type: integer
+      required:
+      - category
+      - duration
+      - id
+      - name
+      - price
+    CreatePaymentIntentRequest:
+      type: object
+      properties:
+        order_id:
+          type: integer
+      required:
+      - order_id
+    CreatePaymentIntentResponse:
+      type: object
+      properties:
+        client_secret:
+          type: string
+      required:
+      - client_secret
+    Delivery:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        status:
+          type: string
+          nullable: true
+          title: Статус доставки
+          maxLength: 255
+        company:
+          type: string
+          nullable: true
+          title: Компания доставки
+          maxLength: 255
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Стоимость доставки
+        delivery_time:
+          type: string
+          nullable: true
+          title: Дни доставки
+          maxLength: 255
+        destination:
+          type: string
+          nullable: true
+          title: Пункт доставки
+          maxLength: 255
+        phone:
+          type: string
+          nullable: true
+          title: Телефон получателя
+          maxLength: 255
+        fio:
+          type: string
+          nullable: true
+          title: ФИО получателя
+          maxLength: 255
+        email:
+          type: string
+          nullable: true
+          title: Email получателя
+          maxLength: 255
+      required:
+      - id
+      - price
+    Discount:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Наименование скидки
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание скидки
+        promo:
+          type: string
+          title: Промокод
+          maxLength: 255
+        percent:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Процент скидки
+        amount:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Количество кодов
+        used:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Количество использований
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - id
+      - name
+      - promo
+      - updated_at
+    ExternalIp:
+      type: object
+      properties:
+        ip:
+          type: string
+      required:
+      - ip
+    ExternalLocation:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/ExternalLocationPayload'
+      required:
+      - location
+    ExternalLocationData:
+      type: object
+      properties:
+        geo_lat:
+          type: number
+          format: double
+          nullable: true
+        geo_lon:
+          type: number
+          format: double
+          nullable: true
+        postal_code:
+          type: string
+          nullable: true
+      required:
+      - geo_lat
+      - geo_lon
+      - postal_code
+    ExternalLocationPayload:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ExternalLocationData'
+      required:
+      - data
+    Feedback:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: ФИО
+          maxLength: 255
+        photo:
+          type: string
+          format: uri
+          nullable: true
+          title: Фотография
+        video:
+          type: string
+          nullable: true
+          title: Видео
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        status:
+          allOf:
+          - $ref: '#/components/schemas/FeedbackStatusEnum'
+          title: Статус
+        course:
+          type: integer
+          title: Отзыв о курсе
+      required:
+      - course
+      - id
+      - name
+    FeedbackStatusEnum:
+      enum:
+      - published
+      - hidden
+      type: string
+      description: |-
+        * `published` - Опубликован
+        * `hidden` - Черновик
+    FilterAttr:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Наименование
+          maxLength: 255
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        filter_attrs_list_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterAttrListValue'
+          readOnly: true
+      required:
+      - filter_attrs_list_values
+      - id
+      - title
+    FilterAttrListValue:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        value:
+          type: string
+          title: Значение характеристики
+          maxLength: 255
+        color:
+          type: string
+          nullable: true
+          title: Цвет образца
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+          maxLength: 25
+      required:
+      - id
+      - value
+    FilterAttrListValueWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        filter_attr:
+          type: integer
+        value:
+          type: string
+          title: Значение характеристики
+          maxLength: 255
+        color:
+          type: string
+          nullable: true
+          title: Цвет образца
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+          maxLength: 25
+      required:
+      - filter_attr
+      - id
+      - value
+    FilterAttrValue:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        value:
+          type: string
+          title: Значение характеристики
+          readOnly: true
+        filter_attr:
+          type: string
+          title: Наименование
+          readOnly: true
+      required:
+      - filter_attr
+      - id
+      - value
+    FilterAttrValueWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        filter_attr:
+          type: integer
+        product:
+          type: integer
+        value:
+          type: integer
+          title: Значение характеристики
+      required:
+      - filter_attr
+      - id
+      - product
+      - value
+    FilterAttrWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Наименование
+          maxLength: 255
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        category:
+          type: array
+          items:
+            type: integer
+            title: Категория фильтра
+          title: Категория фильтра
+      required:
+      - category
+      - id
+      - title
+    Lesson:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Тема урока
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание урока
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Порядок
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        course:
+          type: integer
+          title: Урок курса
+      required:
+      - course
+      - created_at
+      - id
+      - title
+      - updated_at
+    LessonWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Тема урока
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание урока
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Порядок
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        course:
+          type: integer
+          title: Урок курса
+      required:
+      - course
+      - created_at
+      - id
+      - title
+      - updated_at
+    MyTokenObtainPair:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - password
+      - username
+    NullEnum:
+      enum:
+      - null
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        total_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        products_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        idempotency_key:
+          type: string
+          readOnly: true
+          nullable: true
+        is_paid:
+          type: boolean
+        status:
+          type: integer
+          nullable: true
+        order_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        delivery:
+          type: array
+          items:
+            $ref: '#/components/schemas/Delivery'
+          readOnly: true
+        fio:
+          type: string
+          writeOnly: true
+        phone:
+          type: string
+          writeOnly: true
+        email:
+          type: string
+          format: email
+          writeOnly: true
+        delivery_company:
+          type: string
+          writeOnly: true
+        delivery_destination:
+          type: string
+          writeOnly: true
+        delivery_time:
+          type: string
+          writeOnly: true
+        delivery_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          writeOnly: true
+          nullable: true
+        delivery_status:
+          type: string
+          writeOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - delivery
+      - id
+      - idempotency_key
+      - total_price
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product:
+          type: integer
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Количество
+      required:
+      - id
+      - product
+    OrderStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Статус заказа
+          maxLength: 255
+      required:
+      - id
+      - name
+    OrderUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        status:
+          type: integer
+          title: Статус заказа
+        is_paid:
+          type: boolean
+      required:
+      - id
+      - status
+    PatchedArticle:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Название статьи
+          maxLength: 350
+        article_image:
+          type: string
+          format: uri
+          nullable: true
+        body:
+          type: string
+          nullable: true
+          title: Текст статьи
+        publish:
+          type: string
+          format: date-time
+          title: Дата публикации
+    PatchedCategoryWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Наименование категории
+          maxLength: 255
+        slug:
+          type: string
+          nullable: true
+          maxLength: 50
+          pattern: ^[-a-zA-Z0-9_]+$
+        description:
+          type: string
+          nullable: true
+          title: Описание категории
+        photo:
+          type: string
+          format: uri
+          title: Обложка Категории
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        lft:
+          type: integer
+          readOnly: true
+        rght:
+          type: integer
+          readOnly: true
+        tree_id:
+          type: integer
+          readOnly: true
+        level:
+          type: integer
+          readOnly: true
+        parent:
+          type: integer
+          nullable: true
+          title: Родительская категория
+    PatchedCourseWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        category:
+          type: integer
+          title: Категория курса
+        name:
+          type: string
+          title: Наименование курса
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание курса
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Стоимость курса
+        photo:
+          type: string
+          format: uri
+          nullable: true
+          title: Обложка курса
+        duration:
+          type: string
+          title: Продолжительность курса
+          maxLength: 255
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status776Enum'
+          title: Статус
+        teachers:
+          type: array
+          items:
+            type: integer
+        related:
+          type: array
+          items:
+            type: integer
+    PatchedDiscount:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Наименование скидки
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание скидки
+        promo:
+          type: string
+          title: Промокод
+          maxLength: 255
+        percent:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Процент скидки
+        amount:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Количество кодов
+        used:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Количество использований
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedFeedback:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: ФИО
+          maxLength: 255
+        photo:
+          type: string
+          format: uri
+          nullable: true
+          title: Фотография
+        video:
+          type: string
+          nullable: true
+          title: Видео
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        status:
+          allOf:
+          - $ref: '#/components/schemas/FeedbackStatusEnum'
+          title: Статус
+        course:
+          type: integer
+          title: Отзыв о курсе
+    PatchedFilterAttrListValueWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        filter_attr:
+          type: integer
+        value:
+          type: string
+          title: Значение характеристики
+          maxLength: 255
+        color:
+          type: string
+          nullable: true
+          title: Цвет образца
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+          maxLength: 25
+    PatchedFilterAttrValueWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        filter_attr:
+          type: integer
+        product:
+          type: integer
+        value:
+          type: integer
+          title: Значение характеристики
+    PatchedFilterAttrWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Наименование
+          maxLength: 255
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        category:
+          type: array
+          items:
+            type: integer
+            title: Категория фильтра
+          title: Категория фильтра
+    PatchedLessonWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Тема урока
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание урока
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Порядок
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        course:
+          type: integer
+          title: Урок курса
+    PatchedOrderUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        status:
+          type: integer
+          title: Статус заказа
+        is_paid:
+          type: boolean
+    PatchedPochtaSettings:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Наименование
+          maxLength: 255
+        koof:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Коэффициент цены доставки (%)
+        more_days:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Добавить дней к доставке
+        top:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Максимальное кол-во отделений в выдаче
+        searchRadius:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Максимальный радиус поиска отделений на карте (км)
+        fragile:
+          type: boolean
+          title: Осторожно/Хрупко
+        mail_category:
+          type: string
+          title: Категория РПО
+          maxLength: 256
+        mail_type:
+          type: string
+          title: Вид РПО
+          maxLength: 256
+        sms_notice_recipient:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Признак услуги SMS уведомления
+        transport_type:
+          type: string
+          title: Вид транспортировки
+          maxLength: 256
+        with_electronic_notice:
+          type: boolean
+          title: С заказным уведомлением
+        with_order_of_notice:
+          type: boolean
+          title: С простым уведомлением
+        with_simple_notice:
+          type: boolean
+          title: С простым уведомлением
+        token:
+          type: string
+          title: Токен авторизации
+          maxLength: 256
+        key:
+          type: string
+          title: Ключ авторизации
+          maxLength: 256
+    PatchedPriceWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Наименование варианта обучения
+          maxLength: 255
+        short_description:
+          type: string
+          nullable: true
+          title: Краткое описание варианта обучения
+        description:
+          type: string
+          nullable: true
+          title: Описание варианта обучения
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Стоимость варианта обучения
+        course:
+          type: integer
+          title: Вариант обучения
+    PatchedPrintJob:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          readOnly: true
+          title: Название модели
+        model_file:
+          type: string
+          format: uri
+          pattern: (?:stl)$
+        price_client:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          nullable: true
+          title: Стоимость (расчет клиента)
+        price_admin:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          readOnly: true
+          nullable: true
+          title: Стоимость (расчет администратора)
+        status:
+          readOnly: true
+          nullable: true
+          title: Статус
+          oneOf:
+          - $ref: '#/components/schemas/PrintJobStatusEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          title: Количество
+        result_photo:
+          type: string
+          format: uri
+          readOnly: true
+          nullable: true
+          title: Фото результата
+        is_submitted:
+          type: boolean
+          readOnly: true
+          title: Отправлено на печать
+        submitted_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          title: Дата отправки на печать
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата загрузки
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата изменения
+        user:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Пользователь
+    PatchedPrintModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Название модели
+          maxLength: 350
+        model_image:
+          type: string
+          format: uri
+          nullable: true
+        description:
+          type: string
+          nullable: true
+          title: Описание модели
+        model_file:
+          type: string
+          format: uri
+          pattern: (?:cbddlp)$
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата загрузки модели
+    PatchedProductImageWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        src:
+          type: string
+          format: uri
+          nullable: true
+          title: Фотография товара
+        product:
+          type: integer
+          title: Ссылка на товар
+    PatchedProductWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Наименование товара
+          maxLength: 255
+        mass:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Масса с упаковкой (гр)
+        description:
+          type: string
+          nullable: true
+          title: Описание товара
+        article:
+          type: string
+          title: Артикул
+          maxLength: 5
+        stock:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Остаток на складе
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Стоимость товара
+        photo:
+          type: string
+          format: uri
+          nullable: true
+          title: Обложка товара
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        category:
+          type: integer
+          title: Категория
+    PatchedSdekSettings:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Наименование
+          maxLength: 255
+        koof:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Коэффициент цены доставки (%)
+        more_days:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Добавить дней к доставке
+        tariff_code:
+          type: string
+          title: Код тарифа доставки
+          maxLength: 256
+        account:
+          type: string
+          maxLength: 256
+        secure:
+          type: string
+          title: Secure password
+          maxLength: 256
+    PatchedStudyCategoryWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Наименование категории
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание категории
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        lft:
+          type: integer
+          readOnly: true
+        rght:
+          type: integer
+          readOnly: true
+        tree_id:
+          type: integer
+          readOnly: true
+        level:
+          type: integer
+          readOnly: true
+        parent:
+          type: integer
+          nullable: true
+          title: Родительская категория
+    PatchedTeacherWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: ФИО
+          maxLength: 255
+        photo:
+          type: string
+          format: uri
+          nullable: true
+          title: Фотография
+        short_description:
+          type: string
+          nullable: true
+          title: Краткое описание
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        course:
+          type: array
+          items:
+            type: integer
+            title: Преподаёт на курсах
+          title: Преподаёт на курсах
+    PatchedUserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        avatar:
+          type: string
+          format: uri
+          nullable: true
+        full_name:
+          type: string
+          nullable: true
+          title: ФИО
+          maxLength: 255
+        phone:
+          type: string
+          nullable: true
+          title: Телефон
+          maxLength: 64
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        telegram:
+          type: string
+          nullable: true
+          maxLength: 255
+    PochtaSettings:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Наименование
+          maxLength: 255
+        koof:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Коэффициент цены доставки (%)
+        more_days:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Добавить дней к доставке
+        top:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Максимальное кол-во отделений в выдаче
+        searchRadius:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Максимальный радиус поиска отделений на карте (км)
+        fragile:
+          type: boolean
+          title: Осторожно/Хрупко
+        mail_category:
+          type: string
+          title: Категория РПО
+          maxLength: 256
+        mail_type:
+          type: string
+          title: Вид РПО
+          maxLength: 256
+        sms_notice_recipient:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Признак услуги SMS уведомления
+        transport_type:
+          type: string
+          title: Вид транспортировки
+          maxLength: 256
+        with_electronic_notice:
+          type: boolean
+          title: С заказным уведомлением
+        with_order_of_notice:
+          type: boolean
+          title: С простым уведомлением
+        with_simple_notice:
+          type: boolean
+          title: С простым уведомлением
+        token:
+          type: string
+          title: Токен авторизации
+          maxLength: 256
+        key:
+          type: string
+          title: Ключ авторизации
+          maxLength: 256
+      required:
+      - id
+      - title
+    Price:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        course:
+          type: integer
+          title: Вариант обучения
+        name:
+          type: string
+          title: Наименование варианта обучения
+          maxLength: 255
+        short_description:
+          type: string
+          nullable: true
+          title: Краткое описание варианта обучения
+        description:
+          type: string
+          nullable: true
+          title: Описание варианта обучения
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Стоимость варианта обучения
+      required:
+      - course
+      - id
+      - name
+      - price
+    PriceWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Наименование варианта обучения
+          maxLength: 255
+        short_description:
+          type: string
+          nullable: true
+          title: Краткое описание варианта обучения
+        description:
+          type: string
+          nullable: true
+          title: Описание варианта обучения
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Стоимость варианта обучения
+        course:
+          type: integer
+          title: Вариант обучения
+      required:
+      - course
+      - id
+      - name
+      - price
+    PrintJob:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          readOnly: true
+          title: Название модели
+        model_file:
+          type: string
+          format: uri
+          pattern: (?:stl)$
+        price_client:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          nullable: true
+          title: Стоимость (расчет клиента)
+        price_admin:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          readOnly: true
+          nullable: true
+          title: Стоимость (расчет администратора)
+        status:
+          readOnly: true
+          nullable: true
+          title: Статус
+          oneOf:
+          - $ref: '#/components/schemas/PrintJobStatusEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          title: Количество
+        result_photo:
+          type: string
+          format: uri
+          readOnly: true
+          nullable: true
+          title: Фото результата
+        is_submitted:
+          type: boolean
+          readOnly: true
+          title: Отправлено на печать
+        submitted_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          title: Дата отправки на печать
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата загрузки
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата изменения
+        user:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Пользователь
+      required:
+      - created_at
+      - id
+      - is_submitted
+      - model_file
+      - price_admin
+      - result_photo
+      - status
+      - submitted_at
+      - title
+      - updated_at
+      - user
+    PrintJobStatusEnum:
+      enum:
+      - READY
+      - PRINTING
+      - DONE
+      - REVIEW
+      - APPROVED
+      - DELIVERY
+      - AT_PICKUP
+      - RECEIVED
+      type: string
+      description: |-
+        * `READY` - Готова к заказу
+        * `PRINTING` - В печати
+        * `DONE` - Готово
+        * `REVIEW` - На проверке
+        * `APPROVED` - Согласовано
+        * `DELIVERY` - В доставке
+        * `AT_PICKUP` - В пункте выдачи
+        * `RECEIVED` - Получено
+    PrintModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Название модели
+          maxLength: 350
+        model_image:
+          type: string
+          format: uri
+          nullable: true
+        description:
+          type: string
+          nullable: true
+          title: Описание модели
+        model_file:
+          type: string
+          format: uri
+          pattern: (?:cbddlp)$
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата загрузки модели
+      required:
+      - created
+      - id
+      - model_file
+      - title
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Наименование товара
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание товара
+        article:
+          type: string
+          title: Артикул
+          maxLength: 5
+        stock:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Остаток на складе
+        mass:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Масса с упаковкой (гр)
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Стоимость товара
+        photo:
+          type: string
+          format: uri
+          nullable: true
+          title: Обложка товара
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        category:
+          type: integer
+          title: Категория
+        product_attrs_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterAttrValue'
+          readOnly: true
+      required:
+      - article
+      - category
+      - created_at
+      - id
+      - name
+      - price
+      - product_attrs_values
+    ProductImage:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        src:
+          type: string
+          format: uri
+          nullable: true
+          title: Фотография товара
+      required:
+      - id
+    ProductImageWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        src:
+          type: string
+          format: uri
+          nullable: true
+          title: Фотография товара
+        product:
+          type: integer
+          title: Ссылка на товар
+      required:
+      - id
+      - product
+    ProductView:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Наименование товара
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание товара
+        article:
+          type: string
+          title: Артикул
+          maxLength: 5
+        stock:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Остаток на складе
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Стоимость товара
+        mass:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Масса с упаковкой (гр)
+        photo:
+          type: string
+          format: uri
+          nullable: true
+          title: Обложка товара
+        product_images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductImage'
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        category:
+          type: integer
+          title: Категория
+        category_title:
+          type: string
+          title: Наименование категории
+          readOnly: true
+        product_attrs_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterAttrValue'
+          readOnly: true
+      required:
+      - article
+      - category
+      - category_title
+      - created_at
+      - id
+      - name
+      - price
+      - product_attrs_values
+      - product_images
+    ProductWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Наименование товара
+          maxLength: 255
+        mass:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Масса с упаковкой (гр)
+        description:
+          type: string
+          nullable: true
+          title: Описание товара
+        article:
+          type: string
+          title: Артикул
+          maxLength: 5
+        stock:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Остаток на складе
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Стоимость товара
+        photo:
+          type: string
+          format: uri
+          nullable: true
+          title: Обложка товара
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        category:
+          type: integer
+          title: Категория
+      required:
+      - article
+      - category
+      - created_at
+      - id
+      - name
+      - price
+      - updated_at
+    RelatedCourse:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Наименование курса
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание курса
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Стоимость курса
+        photo:
+          type: string
+          format: uri
+          nullable: true
+          title: Обложка курса
+        duration:
+          type: string
+          title: Продолжительность курса
+          maxLength: 255
+        lessons_number:
+          type: integer
+          readOnly: true
+        teachers_number:
+          type: integer
+          readOnly: true
+      required:
+      - duration
+      - id
+      - lessons_number
+      - name
+      - price
+      - teachers_number
+    SdekSettings:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Наименование
+          maxLength: 255
+        koof:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Коэффициент цены доставки (%)
+        more_days:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Добавить дней к доставке
+        tariff_code:
+          type: string
+          title: Код тарифа доставки
+          maxLength: 256
+        account:
+          type: string
+          maxLength: 256
+        secure:
+          type: string
+          title: Secure password
+          maxLength: 256
+      required:
+      - id
+      - title
+    Signup:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          title: Имя пользователя
+          description: Обязательное поле. Не более 150 символов. Только буквы, цифры
+            и символы @/./+/-/_.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Адрес электронной почты
+          maxLength: 254
+        password:
+          type: string
+          writeOnly: true
+          minLength: 8
+      required:
+      - id
+      - password
+      - username
+    Status776Enum:
+      enum:
+      - draft
+      - published
+      type: string
+      description: |-
+        * `draft` - Черновик
+        * `published` - Опубликовано
+    StudyCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Наименование категории
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание категории
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        lft:
+          type: integer
+          readOnly: true
+        rght:
+          type: integer
+          readOnly: true
+        tree_id:
+          type: integer
+          readOnly: true
+        level:
+          type: integer
+          readOnly: true
+        parent:
+          type: integer
+          nullable: true
+          title: Родительская категория
+      required:
+      - created_at
+      - id
+      - level
+      - lft
+      - rght
+      - title
+      - tree_id
+      - updated_at
+    StudyCategoryWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Наименование категории
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          title: Описание категории
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        lft:
+          type: integer
+          readOnly: true
+        rght:
+          type: integer
+          readOnly: true
+        tree_id:
+          type: integer
+          readOnly: true
+        level:
+          type: integer
+          readOnly: true
+        parent:
+          type: integer
+          nullable: true
+          title: Родительская категория
+      required:
+      - created_at
+      - id
+      - level
+      - lft
+      - rght
+      - title
+      - tree_id
+      - updated_at
+    Teacher:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: ФИО
+          maxLength: 255
+        short_description:
+          type: string
+          nullable: true
+          title: Краткое описание
+        photo:
+          type: string
+          format: uri
+          nullable: true
+          title: Фотография
+      required:
+      - id
+      - name
+    TeacherWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: ФИО
+          maxLength: 255
+        photo:
+          type: string
+          format: uri
+          nullable: true
+          title: Фотография
+        short_description:
+          type: string
+          nullable: true
+          title: Краткое описание
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        course:
+          type: array
+          items:
+            type: integer
+            title: Преподаёт на курсах
+          title: Преподаёт на курсах
+      required:
+      - id
+      - name
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          writeOnly: true
+      required:
+      - access
+      - refresh
+    TokenVerify:
+      type: object
+      properties:
+        token:
+          type: string
+          writeOnly: true
+      required:
+      - token
+    TypeEnum:
+      enum:
+      - C
+      - R
+      type: string
+      description: |-
+        * `C` - Чек лист
+        * `R` - Диапазон
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        avatar:
+          type: string
+          format: uri
+          nullable: true
+        full_name:
+          type: string
+          nullable: true
+          title: ФИО
+          maxLength: 255
+        phone:
+          type: string
+          nullable: true
+          title: Телефон
+          maxLength: 64
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        telegram:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+      - id
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

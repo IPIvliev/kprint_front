@@ -76,17 +76,20 @@
 </template>
 <script setup>
 import {
+  createYmapsOptions,
   YandexMap,
   YandexMapControls,
   YandexMapDefaultSchemeLayer,
   YandexMapZoomControl,
-  YandexMapDefaultMarker,
   YandexMapMarker,
-  YandexMapListener,
   YandexMapGeolocationControl,
   YandexMapDefaultFeaturesLayer,
 
 } from "vue-yandex-maps";
+
+createYmapsOptions({
+  apikey: process.env.VUE_APP_YMAPS_API_KEY,
+})
 
 </script>
 

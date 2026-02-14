@@ -1,0 +1,11 @@
+@import '../components/Study/AboutCourse.css';
+@import '../components/Study/AlreadyStudy.css';
+@import '../components/Study/CourcesList.css';
+@import '../components/Study/CourseFeedbacks.css';
+@import '../components/Study/CoursePrices.css';
+@import '../components/Study/CourseProgramm.css';
+@import '../components/Study/CourseRelated.css';
+@import '../components/Study/CourseTeachers.css';
+@import '../components/Study/CourseWelcome.css';
+@import '../components/Study/WhyWeStudyBlock.css';
+@import '../pages/Study/CoursePage.css';

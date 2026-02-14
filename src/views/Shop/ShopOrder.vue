@@ -36,3 +36,5 @@ export default {
     components: { HeaderBlock, FooterBlock }
 }
 </script>
+
+<style src="@/assets/css/routes/shop.css"></style>

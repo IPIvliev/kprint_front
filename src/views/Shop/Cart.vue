@@ -283,4 +283,6 @@ export default {
 
 </script>
 
+<style src="@/assets/css/routes/shop.css"></style>
+
 

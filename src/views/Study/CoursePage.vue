@@ -82,4 +82,6 @@
     }
 </script>
 
+<style src="@/assets/css/routes/study.css"></style>
+
     

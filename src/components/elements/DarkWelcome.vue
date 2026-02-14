@@ -24,3 +24,5 @@
         </div>
       </div>
 </template>
+
+<style src="@/assets/css/components/elements/DarkWelcome.css"></style>

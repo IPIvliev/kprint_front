@@ -1,4 +1,9 @@
-import { api } from '@/services/http'
+import {
+  fetchPochtaOffices,
+  fetchSdekOffices,
+  fetchPochtaPrice,
+  fetchSdekPrice,
+} from '@/services/delivery.service'
 import { fetchLocationByAbstract } from '@/services/external.service'
 
 export const delivery = {
@@ -31,48 +36,36 @@ export const delivery = {
         })
     },
     fetchPochtaOffices({ commit }, location) {
-      return api
-        .get('/api/shop/pochta_rossii/offices', {
-          params: {
-            lat: location.lat,
-            lon: location.lon,
-          },
-        })
+      return fetchPochtaOffices({
+        lat: location.lat,
+        lon: location.lon,
+      })
         .then(response => {
           commit('setPochtaOffices', response.data)
         })
     },
     fetchSdekOffices({ commit }, postal_code) {
-      return api
-        .get('/api/shop/sdek/offices', {
-          params: {
-            postal_code: postal_code,
-          },
-        })
+      return fetchSdekOffices({
+        postal_code: postal_code,
+      })
         .then(response => {
           commit('setSdekOffices', response.data)
         })
     },
     fetchPochtaPrice({ commit }, data) {
-      return api
-        .get('/api/shop/pochta_rossii/price', {
-          params: {
-            destination: data.destination,
-            products_mass: data.products_mass,
-          },
-        })
+      return fetchPochtaPrice({
+        destination: data.destination,
+        products_mass: data.products_mass,
+      })
         .then(response => {
           commit('setPrice', response.data)
         })
     },
     fetchSdekPrice({ commit }, data) {
-      return api
-        .get('/api/shop/sdek/price', {
-          params: {
-            destination: data.destination,
-            products_mass: data.products_mass,
-          },
-        })
+      return fetchSdekPrice({
+        destination: data.destination,
+        products_mass: data.products_mass,
+      })
         .then(response => {
           commit('setPrice', response.data)
         })

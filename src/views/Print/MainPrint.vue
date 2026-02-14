@@ -40,4 +40,6 @@
       }
     }
     </script>
+
+<style src="@/assets/css/routes/print.css"></style>
     

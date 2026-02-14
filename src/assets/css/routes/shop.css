@@ -1,0 +1,12 @@
+@import '../components/elements/Shop/CartProducts.css';
+@import '../components/elements/Shop/OrderForm.css';
+@import '../components/elements/Shop/ShopCategory/CategoryCard.css';
+@import '../components/elements/Shop/Showcase/FilterElement.css';
+@import '../components/Shop/DeliveryDescription.css';
+@import '../components/Shop/ProductDescription.css';
+@import '../components/Shop/ProductRelated.css';
+@import '../components/Shop/ShopFilter.css';
+@import '../components/Shop/YandexMap.css';
+@import '../pages/Shop/Cart.css';
+@import '../pages/Shop/MainShop.css';
+@import '../pages/Shop/ProductPage.css';

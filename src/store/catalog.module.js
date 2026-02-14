@@ -1,4 +1,9 @@
-import { api } from '@/services/http'
+import {
+  fetchShopCategories,
+  fetchShopProducts,
+  fetchShopCategoryProducts,
+  fetchShopProduct,
+} from '@/services/catalog.service'
 
 export const catalog = {
   namespaced: true,
@@ -31,33 +36,21 @@ export const catalog = {
     },
   },
   actions: {
-    fetchCategories({ commit }) {
-      return api
-        .get('/api/shop/categories')
-        .then(response => {
-          commit('setCategoriesData', response.data)
-        })
+    async fetchCategories({ commit }) {
+      const response = await fetchShopCategories()
+      commit('setCategoriesData', response.data)
     },
-    fetchProducts({ commit }) {
-      return api
-        .get('/api/shop/products')
-        .then(response => {
-          commit('setProductsData', response.data)
-        })
+    async fetchProducts({ commit }) {
+      const response = await fetchShopProducts()
+      commit('setProductsData', response.data)
     },
-    fetchCategoryProducts({ commit }, id) {
-      return api
-        .get('/api/shop/categories/' + Number(id))
-        .then(response => {
-          commit('setProductsData', response.data.products)
-        })
+    async fetchCategoryProducts({ commit }, id) {
+      const response = await fetchShopCategoryProducts(id)
+      commit('setProductsData', response.data.products)
     },
-    fetchProduct({ commit }, id) {
-      return api
-        .get('/api/shop/products/' + Number(id))
-        .then(response => {
-          commit('setProductData', response.data)
-        })
+    async fetchProduct({ commit }, id) {
+      const response = await fetchShopProduct(id)
+      commit('setProductData', response.data)
     },
   },
 }

@@ -8,7 +8,7 @@
     "build:ci": "vue-cli-service build && npm run check:bundle-budget",
     "check:bundle-budget": "node scripts/check-bundle-budget.js",
     "lint": "vue-cli-service lint",
-    "gen:api-types": "openapi-typescript ../kprint_back/openapi.json -o src/types/openapi.d.ts",
+    "gen:api-types": "node scripts/generate-api-types.js",
     "check:api-types": "npm run gen:api-types && node scripts/check-api-types.js"
   },
   "dependencies": {

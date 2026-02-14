@@ -1,35 +1,4 @@
-import { api, publicApi } from '@/services/http'
-import authHeader from '@/services/auth-header'
-
-const getCurrentUser = () => {
-  try {
-    return JSON.parse(localStorage.getItem('user'))
-  } catch (err) {
-    return null
-  }
-}
-
-const isManagerUser = (user) => {
-  if (!user) {
-    return false
-  }
-  if (user.is_superuser === true || user.is_staff === true || user.is_manager === true || user.isManager === true) {
-    return true
-  }
-  const groups = user.groups || user.group || user.roles || user.role || user.groups_names || user.groups_list
-  if (!groups) {
-    return false
-  }
-  const normalize = (value) => String(value || '').toLowerCase()
-  const isManagerName = (value) => {
-    const name = normalize(typeof value === 'string' ? value : value.name || value.title)
-    return name === 'manager' || name === 'менеджер'
-  }
-  if (Array.isArray(groups)) {
-    return groups.some(isManagerName)
-  }
-  return isManagerName(groups)
-}
+import { fetchStudyCourse, fetchStudyCourses } from '@/services/study.service'
 
 export const study = {
   namespaced: true,
@@ -76,11 +45,11 @@ export const study = {
   },
   actions: {
     async fetchCourses({ commit }) {
-      const response = await publicApi.get('/api/study/courses')
+      const response = await fetchStudyCourses()
       commit('setCoursesData', response.data)
     },
     async fetchCourse({ commit }, id) {
-      const response = await publicApi.get('/api/study/course/' + Number(id))
+      const response = await fetchStudyCourse(id)
       commit('setCourseData', response.data)
     },
   },

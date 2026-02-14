@@ -1,5 +1,4 @@
-import { api } from '@/services/http'
-import { createOrder } from '@/services/shop.service'
+import { createOrder, fetchDiscountAmount as fetchDiscountAmountRequest } from '@/services/shop.service'
 
 function buildIdempotencyKey() {
     if (typeof globalThis !== 'undefined' && globalThis.crypto && typeof globalThis.crypto.randomUUID === 'function') {
@@ -52,12 +51,7 @@ export default {
         }
     },
     fetchDiscountAmount({ commit }, promocode) {
-        return api
-            .get('/api/shop/discounts', {
-                params: {
-                    promocode: promocode
-                }
-            })
+        return fetchDiscountAmountRequest({ promocode: promocode })
             .then(response => {
                 commit("setDiscountAmount", response.data);
             })
