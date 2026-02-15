@@ -6,30 +6,42 @@
           <menu-block />
           <div class="col-xxl-9 col-xl-8">
             <div class="panel__block">
-              <div class="panel__head">
+              <div class="panel__head panel__head--news">
                 <div class="panel__title">Новости<span>{{ filteredArticles.length }}</span></div>
-                <div class="panel__search d-none d-lg-block">
-                  <div class="input">
-                    <input
-                      id="searchNews"
-                      type="text"
-                      v-model="searchTerm"
-                      placeholder="Поиск по названию или содержанию"
-                    >
-                    <label class="panel__search-icon" for="searchNews">
-                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7.5 12.75C10.3995 12.75 12.75 10.3995 12.75 7.5C12.75 4.60051 10.3995 2.25 7.5 2.25C4.60051 2.25 2.25 4.60051 2.25 7.5C2.25 10.3995 4.60051 12.75 7.5 12.75Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path d="M15.75 15.75L11.25 11.25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                      </svg>
-                    </label>
+                <div class="panel__head-tools d-none d-lg-flex">
+                  <div class="panel__search panel__search--head">
+                    <div class="input">
+                      <input
+                        id="searchNews"
+                        type="text"
+                        v-model="searchTerm"
+                        placeholder="Поиск по названию или содержанию"
+                      >
+                      <label class="panel__search-icon" for="searchNews">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M7.5 12.75C10.3995 12.75 12.75 10.3995 12.75 7.5C12.75 4.60051 10.3995 2.25 7.5 2.25C4.60051 2.25 2.25 4.60051 2.25 7.5C2.25 10.3995 4.60051 12.75 7.5 12.75Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                          <path d="M15.75 15.75L11.25 11.25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="panel__status-filter panel__status-filter--head">
+                    <select v-model="sourceFilter" class="form-control">
+                      <option value="all">Все источники</option>
+                      <option value="human">Человек</option>
+                      <option value="ai">ИИ</option>
+                    </select>
                   </div>
                 </div>
-                <div class="panel__add-btn">
+                <div class="panel__add-btn panel__add-btn--stack">
                   <div class="btn btn--red btn--big" @click="openCreate">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99961 14.4001C9.69699 14.4001 11.3249 13.7258 12.5251 12.5256C13.7253 11.3253 14.3996 9.69748 14.3996 8.0001C14.3996 6.30271 13.7253 4.67485 12.5251 3.47461C11.3249 2.27438 9.69699 1.6001 7.99961 1.6001C6.30222 1.6001 4.67436 2.27438 3.47413 3.47461C2.27389 4.67485 1.59961 6.30271 1.59961 8.0001C1.59961 9.69748 2.27389 11.3253 3.47413 12.5256C4.67436 13.7258 6.30222 14.4001 7.99961 14.4001ZM8.79961 5.6001C8.79961 5.38792 8.71532 5.18444 8.56529 5.03441C8.41527 4.88438 8.21178 4.8001 7.99961 4.8001C7.78744 4.8001 7.58395 4.88438 7.43392 5.03441C7.28389 5.18444 7.19961 5.38792 7.19961 5.6001V7.2001H5.59961C5.38744 7.2001 5.18395 7.28438 5.03392 7.43441C4.88389 7.58444 4.79961 7.78792 4.79961 8.0001C4.79961 8.21227 4.88389 8.41575 5.03392 8.56578C5.18395 8.71581 5.38744 8.8001 5.59961 8.8001H7.19961V10.4001C7.19961 10.6123 7.28389 10.8158 7.43392 10.9658C7.58395 11.1158 7.78744 11.2001 7.99961 11.2001C8.21178 11.2001 8.41527 11.1158 8.56529 10.9658C8.71532 10.8158 8.79961 10.6123 8.79961 10.4001V8.8001H10.3996C10.6118 8.8001 10.8153 8.71581 10.9653 8.56578C11.1153 8.41575 11.1996 8.21227 11.1996 8.0001C11.1996 7.78792 11.1153 7.58444 10.9653 7.43441C10.8153 7.28438 10.6118 7.2001 10.3996 7.2001H8.79961V5.6001Z" fill="white"></path>
                     </svg>
                     <div class="d-none d-md-block">Добавить новость</div>
+                  </div>
+                  <div class="btn btn--big panel__ai-btn" @click="openAiGenerator">
+                    <div>Добавить статью ИИ</div>
                   </div>
                 </div>
               </div>
@@ -50,6 +62,13 @@
                     </label>
                   </div>
                 </div>
+                <div class="panel__status-filter d-block d-lg-none">
+                  <select v-model="sourceFilter" class="form-control">
+                    <option value="all">Все источники</option>
+                    <option value="human">Человек</option>
+                    <option value="ai">ИИ</option>
+                  </select>
+                </div>
                 <div class="panel__table">
                   <table>
                     <tr v-for="article in filteredArticles" :key="articleKey(article)">
@@ -68,6 +87,19 @@
                       <td>
                         <span class="panel__table-subtitle">Категория:</span>
                         <span class="panel__table-text">{{ categoryTitle(article.category) }}</span>
+                      </td>
+                      <td>
+                        <span class="panel__table-subtitle">Источник:</span>
+                        <span class="panel__status-badge" :class="sourceBadgeClass(article.source)">
+                          {{ sourceLabel(article.source) }}
+                        </span>
+                        <span
+                          v-if="generationStatusLabel(article)"
+                          class="panel__table-processing"
+                          :class="generationStatusClass(article)"
+                        >
+                          {{ generationStatusLabel(article) }}
+                        </span>
                       </td>
                       <td>
                         <span class="panel__table-subtitle">Тэги:</span>
@@ -93,7 +125,11 @@
                         </router-link>
                       </td>
                       <td>
-                        <span class="panel__table-icon" @click="openEdit(article)">
+                        <span
+                          class="panel__table-icon"
+                          :class="{ 'panel__table-icon--locked': isAiProcessing(article) }"
+                          @click="handleEdit(article)"
+                        >
                           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M3 15H6L13.875 7.12498C14.2728 6.72716 14.4963 6.18759 14.4963 5.62498C14.4963 5.06237 14.2728 4.52281 13.875 4.12498C13.4772 3.72716 12.9376 3.50366 12.375 3.50366C11.8124 3.50366 11.2728 3.72716 10.875 4.12498L3 12V15Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                             <path d="M10.125 4.875L13.125 7.875" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -158,6 +194,22 @@
                   {{ option.title }}
                 </option>
               </select>
+            </div>
+            <div class="panel__formrow">
+              <label>Источник</label>
+              <select v-model="form.source" class="form-control">
+                <option value="human">Человек</option>
+                <option value="ai">ИИ</option>
+              </select>
+            </div>
+            <div v-if="normalizeArticleSource(form.source) === 'ai'" class="panel__formrow">
+              <label>Промт пользователя</label>
+              <textarea
+                v-model="form.ai_prompt"
+                class="form-control"
+                rows="3"
+                placeholder="Краткий промт, с которым была сгенерирована статья"
+              ></textarea>
             </div>
             <div class="panel__formrow">
               <label>Тэги</label>
@@ -254,6 +306,92 @@
     </div>
     <div v-if="showModal" class="modal-backdrop fade show"></div>
 
+    <div v-if="showAiModal" class="modal fade show" style="display: block;" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Добавить статью ИИ</h5>
+            <button type="button" class="btn-close" aria-label="Close" @click="closeAiGenerator"></button>
+          </div>
+          <div class="modal-body">
+            <div class="panel__formrow">
+              <label>Краткое описание</label>
+              <textarea
+                v-model="aiBrief"
+                class="form-control"
+                rows="3"
+                placeholder="Коротко: о чём должна быть статья"
+              ></textarea>
+            </div>
+            <div class="panel__formrow">
+              <label>Фотографии (1-10)</label>
+              <div
+                class="panel__dropzone"
+                @dragover.prevent
+                @dragenter.prevent
+                @drop.prevent="onAiDrop"
+                @click="triggerAiImageSelect"
+              >
+                <div>Перетащите изображения сюда или нажмите для выбора</div>
+              </div>
+              <input
+                ref="aiImageInput"
+                type="file"
+                class="form-control d-none"
+                accept="image/*"
+                multiple
+                @change="onAiImageChange"
+              >
+              <div v-if="aiImages.length" class="panel__ai-file-list">
+                <div
+                  v-for="(file, idx) in aiImages"
+                  :key="`ai-image-${idx}`"
+                  class="panel__ai-file-item"
+                >
+                  <span class="panel__ai-file-name">{{ file.name }}</span>
+                  <button type="button" class="btn btn--grayborder" @click="removeAiImage(idx)">Удалить</button>
+                </div>
+              </div>
+            </div>
+            <div v-if="aiError" class="panel__table-text">{{ aiError }}</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn--grayborder" @click="closeAiGenerator">Отмена</button>
+            <button type="button" class="btn btn--black" :disabled="aiGenerating" @click="generateAiArticle">
+              {{ aiGenerating ? 'Генерация...' : 'Сгенерировать' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="showAiModal" class="modal-backdrop fade show"></div>
+
+    <div v-if="showAiProcessingModal" class="modal fade show" style="display: block;" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Статья ИИ в процессе</h5>
+            <button type="button" class="btn-close" aria-label="Close" @click="closeAiProcessingModal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="panel__formrow">
+              <label>Заголовок</label>
+              <input type="text" class="form-control" :value="processingArticleTitle" readonly>
+            </div>
+            <div class="panel__formrow">
+              <label>Отправленный промт</label>
+              <textarea class="form-control" rows="5" :value="processingPrompt" readonly></textarea>
+            </div>
+            <div class="panel__table-text">Редактирование станет доступно после завершения генерации.</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn--grayborder" @click="closeAiProcessingModal">Закрыть</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="showAiProcessingModal" class="modal-backdrop fade show"></div>
+
     <div v-if="mediaLibraryOpen" class="modal fade show" style="display: block;" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -322,6 +460,7 @@ import {
   fetchPanelArticleCategories,
   fetchPanelArticleTags,
   fetchPanelArticles,
+  generatePanelAiArticle,
   uploadPanelArticleMedia,
   updatePanelArticle,
 } from '@/services/panel.service'
@@ -333,11 +472,21 @@ export default {
     return {
       articles: [],
       searchTerm: '',
+      sourceFilter: 'all',
       loading: false,
       error: '',
       showModal: false,
+      showAiModal: false,
+      showAiProcessingModal: false,
       isEditing: false,
       saving: false,
+      aiGenerating: false,
+      aiError: '',
+      aiBrief: '',
+      aiImages: [],
+      processingPrompt: '',
+      processingArticleTitle: '',
+      processingPollTimer: null,
       currentId: null,
       slugTouched: false,
       editorInstance: null,
@@ -358,6 +507,8 @@ export default {
         slug: '',
         body: '',
         category: null,
+        source: 'human',
+        ai_prompt: '',
         tagIds: [],
         publish: '',
       },
@@ -369,10 +520,17 @@ export default {
     },
     filteredArticles() {
       const term = this.searchTerm.trim().toLowerCase()
+      const sourceFilter = this.sourceFilter === 'all' ? '' : this.normalizeArticleSource(this.sourceFilter, '')
       if (!term) {
-        return this.articles
+        if (!sourceFilter) {
+          return this.articles
+        }
+        return this.articles.filter((article) => this.normalizeArticleSource(article.source) === sourceFilter)
       }
       return this.articles.filter((a) => {
+        if (sourceFilter && this.normalizeArticleSource(a.source) !== sourceFilter) {
+          return false
+        }
         const title = String(a.title || '').toLowerCase()
         const body = String(a.body || '').toLowerCase()
         return title.includes(term) || body.includes(term)
@@ -406,6 +564,9 @@ export default {
   mounted() {
     this.loadInitialData()
   },
+  beforeUnmount() {
+    this.stopProcessingPoll()
+  },
   methods: {
     async loadInitialData() {
       this.loading = true
@@ -419,6 +580,7 @@ export default {
         this.articles = Array.isArray(articlesResponse.data) ? articlesResponse.data : []
         this.categoryOptions = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
         this.tagOptions = Array.isArray(tagsResponse.data) ? tagsResponse.data : []
+        this.syncProcessingPoll()
       } catch (err) {
         this.error = err.userMessage || 'Не удалось загрузить данные новостей'
       } finally {
@@ -430,6 +592,7 @@ export default {
       try {
         const response = await fetchPanelArticles()
         this.articles = Array.isArray(response.data) ? response.data : []
+        this.syncProcessingPoll()
       } catch (err) {
         this.error = err.userMessage || 'Не удалось загрузить новости'
       }
@@ -455,13 +618,188 @@ export default {
     },
     newsLink(article) {
       const id = article.id || article.pk
-      return id ? `/news/${id}` : '/news'
+      if (!id) {
+        return '/news'
+      }
+      const rawSlug = String((article && article.slug) || '').trim()
+      if (!rawSlug) {
+        return `/news/${id}`
+      }
+      return `/news/${id}/${encodeURIComponent(rawSlug)}`
     },
     normalizeDate(value) {
       if (!value) {
         return '—'
       }
       return String(value)
+    },
+    sourceLabel(sourceValue) {
+      return this.normalizeArticleSource(sourceValue) === 'ai' ? 'ИИ' : 'Человек'
+    },
+    sourceBadgeClass(sourceValue) {
+      return this.normalizeArticleSource(sourceValue) === 'ai'
+        ? 'panel__status-badge--ai'
+        : 'panel__status-badge--human'
+    },
+    isAiProcessing(article) {
+      return (
+        this.normalizeArticleSource(article && article.source) === 'ai'
+        && String(article && article.ai_generation_status || '').toLowerCase() === 'processing'
+      )
+    },
+    isAiFailed(article) {
+      return (
+        this.normalizeArticleSource(article && article.source) === 'ai'
+        && String(article && article.ai_generation_status || '').toLowerCase() === 'failed'
+      )
+    },
+    generationStatusLabel(article) {
+      if (this.isAiProcessing(article)) {
+        return 'В процессе'
+      }
+      if (this.isAiFailed(article)) {
+        return 'Ошибка'
+      }
+      return ''
+    },
+    generationStatusClass(article) {
+      if (this.isAiProcessing(article)) {
+        return 'panel__table-processing--processing'
+      }
+      if (this.isAiFailed(article)) {
+        return 'panel__table-processing--failed'
+      }
+      return ''
+    },
+    syncProcessingPoll() {
+      const hasProcessing = this.articles.some((article) => this.isAiProcessing(article))
+      if (hasProcessing) {
+        this.startProcessingPoll()
+        return
+      }
+      this.stopProcessingPoll()
+    },
+    startProcessingPoll() {
+      if (this.processingPollTimer) {
+        return
+      }
+      this.processingPollTimer = setInterval(() => {
+        this.fetchArticles()
+      }, 5000)
+    },
+    stopProcessingPoll() {
+      if (!this.processingPollTimer) {
+        return
+      }
+      clearInterval(this.processingPollTimer)
+      this.processingPollTimer = null
+    },
+    normalizeArticleSource(sourceValue, fallback = 'human') {
+      const normalized = String(sourceValue || '').trim().toLowerCase()
+      if (normalized === 'ai') {
+        return 'ai'
+      }
+      if (normalized === 'human') {
+        return 'human'
+      }
+      return fallback
+    },
+    openAiGenerator() {
+      this.aiBrief = ''
+      this.aiImages = []
+      this.aiError = ''
+      this.aiGenerating = false
+      this.showAiModal = true
+    },
+    closeAiGenerator() {
+      this.showAiModal = false
+      this.aiError = ''
+    },
+    triggerAiImageSelect() {
+      if (this.$refs.aiImageInput) {
+        this.$refs.aiImageInput.click()
+      }
+    },
+    onAiImageChange(event) {
+      const files = Array.from((event && event.target && event.target.files) || [])
+      this.appendAiImages(files)
+      if (event && event.target) {
+        event.target.value = ''
+      }
+    },
+    onAiDrop(event) {
+      const files = Array.from((event && event.dataTransfer && event.dataTransfer.files) || [])
+      this.appendAiImages(files)
+    },
+    appendAiImages(files) {
+      const imageFiles = (Array.isArray(files) ? files : []).filter(
+        (file) => file && file.type && file.type.startsWith('image/'),
+      )
+      if (!imageFiles.length) {
+        return
+      }
+      const merged = [...this.aiImages, ...imageFiles]
+      this.aiImages = merged.slice(0, 10)
+      if (merged.length > 10) {
+        this.aiError = 'Можно загрузить не более 10 изображений'
+      }
+    },
+    removeAiImage(index) {
+      this.aiImages = this.aiImages.filter((_, idx) => idx !== index)
+    },
+    async generateAiArticle() {
+      const brief = String(this.aiBrief || '').trim()
+      if (!brief) {
+        this.aiError = 'Введите краткое описание статьи'
+        return
+      }
+      if (!this.aiImages.length) {
+        this.aiError = 'Добавьте хотя бы одно изображение'
+        return
+      }
+
+      this.aiGenerating = true
+      this.aiError = ''
+      this.error = ''
+      try {
+        const payload = new FormData()
+        payload.append('brief', brief)
+        this.aiImages.forEach((file) => payload.append('images', file))
+        await generatePanelAiArticle(payload)
+        this.closeAiGenerator()
+        await this.fetchArticles()
+      } catch (err) {
+        this.aiError = err.userMessage || 'Не удалось сгенерировать статью'
+      } finally {
+        this.aiGenerating = false
+      }
+    },
+    async handleEdit(article) {
+      if (this.isAiProcessing(article)) {
+        await this.openAiProcessingModal(article)
+        return
+      }
+      await this.openEdit(article)
+    },
+    async openAiProcessingModal(article) {
+      const articleId = article && (article.id || article.pk)
+      let target = article || {}
+      if (articleId && !target.ai_prompt) {
+        try {
+          const response = await fetchPanelArticle(articleId)
+          target = response && response.data ? response.data : target
+        } catch (err) {
+          // ignore fetch error and open modal with available data
+        }
+      }
+      this.processingArticleTitle = String(target.title || '').trim() || 'Статья ИИ'
+      this.processingPrompt = String(target.ai_prompt || '').trim() || 'Промт не найден'
+      this.showAiProcessingModal = true
+    },
+    closeAiProcessingModal() {
+      this.showAiProcessingModal = false
+      this.processingArticleTitle = ''
+      this.processingPrompt = ''
     },
     openCreate() {
       this.isEditing = false
@@ -474,6 +812,8 @@ export default {
         slug: '',
         body: '',
         category: firstCategoryId,
+        source: 'human',
+        ai_prompt: '',
         tagIds: [],
         publish: this.formatDateTimeLocal(new Date()),
       }
@@ -504,6 +844,8 @@ export default {
           slug: fullArticle.slug || '',
           body: fullArticle.body || '',
           category: rawCategory || null,
+          source: this.normalizeArticleSource(fullArticle.source),
+          ai_prompt: fullArticle.ai_prompt || '',
           tagIds,
           publish: this.formatDateTimeLocal(new Date(fullArticle.publish || fullArticle.publish_iso || Date.now())),
         }
@@ -807,6 +1149,8 @@ export default {
         ? this.normalizePublishForApi(this.form.publish)
         : ''
       const normalizedSlug = this.form.slug ? this.slugify(this.form.slug) : ''
+      const normalizedSource = this.normalizeArticleSource(this.form.source)
+      const normalizedAiPrompt = String(this.form.ai_prompt || '').trim()
       const normalizedTagIds = Array.isArray(this.form.tagIds)
         ? this.form.tagIds.map((id) => Number(id)).filter((id) => Number.isFinite(id) && id > 0)
         : []
@@ -817,6 +1161,8 @@ export default {
           title,
           body,
           category,
+          source: normalizedSource,
+          ai_prompt: normalizedSource === 'ai' ? normalizedAiPrompt : '',
         }
         if (normalizedSlug) {
           payload.slug = normalizedSlug
@@ -836,6 +1182,8 @@ export default {
       payload.append('title', title)
       payload.append('body', body)
       payload.append('category', category)
+      payload.append('source', normalizedSource)
+      payload.append('ai_prompt', normalizedSource === 'ai' ? normalizedAiPrompt : '')
       if (normalizedSlug) {
         payload.append('slug', normalizedSlug)
       }
@@ -964,6 +1312,131 @@ export default {
 </script>
 
 <style scoped>
+.panel__head--news {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.panel__table {
+  overflow-x: hidden;
+}
+
+.panel__table table {
+  min-width: 0;
+  table-layout: fixed;
+}
+
+.panel__table td {
+  white-space: normal;
+}
+
+.panel__table-title {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.panel__head-tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 380px;
+}
+
+.panel__search--head {
+  flex: 1;
+  margin: 0;
+  min-width: 220px;
+}
+
+.panel__add-btn {
+  display: flex;
+}
+
+.panel__add-btn--stack {
+  flex-direction: column;
+  gap: 10px;
+  min-width: 300px;
+  margin-left: auto;
+}
+
+.panel__add-btn--stack .btn {
+  width: 100%;
+  min-height: 64px;
+  border-radius: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.panel__status-filter {
+  min-width: 180px;
+}
+
+.panel__status-filter--head .form-control {
+  min-height: 52px;
+  border-radius: 10px;
+}
+
+.panel__ai-btn {
+  background: #d6d9de;
+  border: 1px solid #b4bcc6;
+  color: #101828;
+  font-weight: 700;
+}
+
+.panel__ai-btn:hover {
+  background: #ccd1d8;
+}
+
+.panel__status-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.panel__status-badge--human {
+  background: #f2f4f7;
+  color: #344054;
+}
+
+.panel__status-badge--ai {
+  background: #d83a56;
+  color: #fff;
+}
+
+.panel__table-processing {
+  display: inline-flex;
+  margin-top: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.panel__table-processing--processing {
+  background: #fff3cd;
+  color: #7a5a00;
+}
+
+.panel__table-processing--failed {
+  background: #fde2e2;
+  color: #b42318;
+}
+
+.panel__table-icon--locked {
+  opacity: 0.7;
+}
+
 .panel__tag-selector {
   display: flex;
   flex-wrap: wrap;
@@ -1059,5 +1532,53 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.panel__ai-file-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.panel__ai-file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid #e4e7ec;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.panel__ai-file-name {
+  font-size: 13px;
+  color: #344054;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 1199.98px) {
+  .panel__head-tools {
+    min-width: 0;
+  }
+
+  .panel__add-btn--stack {
+    min-width: 0;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .panel__add-btn--stack .btn {
+    min-height: 56px;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .panel__status-filter {
+    width: 100%;
+    min-width: 0;
+  }
 }
 </style>

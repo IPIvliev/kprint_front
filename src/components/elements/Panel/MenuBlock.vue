@@ -103,14 +103,6 @@
                             </router-link>
                           </li>
                           <li>
-                            <router-link class="panel__menu-link" to="/panel/news/ai-articles" active-class="panel__menu-link--active">
-                              <span class="panel__menu-icon">
-                                <img src="@/assets/img/panel-icons/courses.svg" alt="">
-                              </span>
-                              ИИ статьи
-                            </router-link>
-                          </li>
-                          <li>
                             <router-link class="panel__menu-link" to="/panel/news/tags" active-class="panel__menu-link--active">
                               <span class="panel__menu-icon">
                                 <img src="@/assets/img/panel-icons/filter.svg" alt="">

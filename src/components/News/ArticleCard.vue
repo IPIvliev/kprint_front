@@ -26,7 +26,15 @@ export default {
   },
   computed: {
     linkOpen() {
-      return `/news/${this.article.id}`
+      const id = this.article && this.article.id
+      if (!id) {
+        return '/news'
+      }
+      const rawSlug = String((this.article && this.article.slug) || '').trim()
+      if (!rawSlug) {
+        return `/news/${id}`
+      }
+      return `/news/${id}/${encodeURIComponent(rawSlug)}`
     },
     image() {
       return this.article.article_image || ''

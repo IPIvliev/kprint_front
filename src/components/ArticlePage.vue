@@ -265,8 +265,9 @@ import { publicApi } from '@/services/http'
 export default {
   name: 'ArticlePage',
   data() {
+    const parsedId = Number(this.$route.params.id)
     return {
-      id: Number(this.$route.params.id),
+      id: Number.isFinite(parsedId) ? parsedId : null,
       article: {},
     }
   },
@@ -308,7 +309,8 @@ export default {
   },
   watch: {
     '$route.params.id'(nextId) {
-      this.id = Number(nextId)
+      const parsedId = Number(nextId)
+      this.id = Number.isFinite(parsedId) ? parsedId : null
       this.loadArticle()
     },
   },
@@ -317,8 +319,45 @@ export default {
   },
   methods: {
     async loadArticle() {
+      if (!this.id) {
+        this.$router.replace('/news')
+        return
+      }
       const response = await publicApi.get(`/api/articles/${this.id}/`)
       this.article = response.data || {}
+      this.ensureCanonicalArticleUrl()
+    },
+    ensureCanonicalArticleUrl() {
+      const articleId = Number(this.article && this.article.id)
+      if (!Number.isFinite(articleId) || articleId <= 0) {
+        return
+      }
+      const targetSlug = String((this.article && this.article.slug) || '').trim()
+      const currentId = Number(this.$route.params.id)
+      const currentSlug = String(this.$route.params.slug || '').trim()
+
+      if (!targetSlug) {
+        if (currentSlug) {
+          this.$router.replace({
+            name: 'Article',
+            params: { id: String(articleId) },
+            query: this.$route.query,
+            hash: this.$route.hash,
+          })
+        }
+        return
+      }
+
+      if (currentId === articleId && currentSlug === targetSlug) {
+        return
+      }
+
+      this.$router.replace({
+        name: 'Article',
+        params: { id: String(articleId), slug: targetSlug },
+        query: this.$route.query,
+        hash: this.$route.hash,
+      })
     },
     tagLink(tag) {
       if (!tag || !tag.slug) {

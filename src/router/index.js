@@ -105,7 +105,7 @@ const routes = [
     component: () => import('../views/Print/MainPrint.vue'),
   },
   {
-    path: '/news/:id',
+    path: '/news/:id(\\d+)/:slug?',
     name: 'Article',
     component: Article,
   },
@@ -215,11 +215,6 @@ const routes = [
         path: 'news/categories',
         name: 'PanelNewsCategories',
         component: () => import('../views/Panel/PanelNewsCategories.vue'),
-      },
-      {
-        path: 'news/ai-articles',
-        name: 'PanelNewsAiArticles',
-        component: () => import('../views/Panel/PanelNewsAiArticles.vue'),
       },
       {
         path: 'news/tags',
