@@ -273,7 +273,7 @@ export default {
   },
   computed: {
     image() {
-      return this.article.article_image || ''
+      return this.resolveMediaUrl(this.article.article_image || '')
     },
     articleCategory() {
       const category = this.article.category_detail || {}
@@ -398,17 +398,42 @@ export default {
       container.querySelectorAll('*').forEach((el) => {
         Array.from(el.attributes).forEach((attr) => {
           const name = attr.name.toLowerCase()
-          const value = String(attr.value || '').trim().toLowerCase()
+          const rawValue = String(attr.value || '').trim()
+          const value = rawValue.toLowerCase()
           if (name.startsWith('on')) {
             el.removeAttribute(attr.name)
             return
           }
           if ((name === 'href' || name === 'src') && value.startsWith('javascript:')) {
             el.removeAttribute(attr.name)
+            return
+          }
+          if (name === 'src' || name === 'href') {
+            const resolved = this.resolveMediaUrl(rawValue)
+            if (resolved) {
+              el.setAttribute(attr.name, resolved)
+            }
           }
         })
       })
       return container.innerHTML
+    },
+    resolveMediaUrl(path) {
+      const raw = String(path || '').trim()
+      if (!raw) {
+        return ''
+      }
+      if (raw.startsWith('http://') || raw.startsWith('https://') || raw.startsWith('data:')) {
+        return raw
+      }
+      const base = (process.env.VUE_APP_API_BASE || '').replace(/\/+$/, '')
+      if (!base) {
+        return raw
+      }
+      if (raw.startsWith('/')) {
+        return `${base}${raw}`
+      }
+      return `${base}/${raw}`
     },
   }
 }

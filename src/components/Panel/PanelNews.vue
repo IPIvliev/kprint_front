@@ -175,7 +175,7 @@
     </div>
 
     <div v-if="showModal" class="modal fade show" style="display: block;" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog modal-xl panel__article-modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">{{ isEditing ? 'Редактировать новость' : 'Новая новость' }}</h5>
@@ -197,7 +197,7 @@
             </div>
             <div class="panel__formrow">
               <label>Источник</label>
-              <select v-model="form.source" class="form-control">
+              <select v-model="form.source" class="form-control" :disabled="isEditing">
                 <option value="human">Человек</option>
                 <option value="ai">ИИ</option>
               </select>
@@ -209,6 +209,18 @@
                 class="form-control"
                 rows="3"
                 placeholder="Краткий промт, с которым была сгенерирована статья"
+              ></textarea>
+            </div>
+            <div
+              v-if="normalizeArticleSource(form.source) === 'ai' && String(form.ai_notes_for_editor || '').trim()"
+              class="panel__formrow"
+            >
+              <label>Заметки для редактора</label>
+              <textarea
+                v-model="form.ai_notes_for_editor"
+                class="form-control"
+                rows="4"
+                placeholder="Служебные заметки для редактора"
               ></textarea>
             </div>
             <div class="panel__formrow">
@@ -509,6 +521,7 @@ export default {
         category: null,
         source: 'human',
         ai_prompt: '',
+        ai_notes_for_editor: '',
         tagIds: [],
         publish: '',
       },
@@ -814,6 +827,7 @@ export default {
         category: firstCategoryId,
         source: 'human',
         ai_prompt: '',
+        ai_notes_for_editor: '',
         tagIds: [],
         publish: this.formatDateTimeLocal(new Date()),
       }
@@ -846,6 +860,7 @@ export default {
           category: rawCategory || null,
           source: this.normalizeArticleSource(fullArticle.source),
           ai_prompt: fullArticle.ai_prompt || '',
+          ai_notes_for_editor: fullArticle.ai_notes_for_editor || '',
           tagIds,
           publish: this.formatDateTimeLocal(new Date(fullArticle.publish || fullArticle.publish_iso || Date.now())),
         }
@@ -1151,6 +1166,7 @@ export default {
       const normalizedSlug = this.form.slug ? this.slugify(this.form.slug) : ''
       const normalizedSource = this.normalizeArticleSource(this.form.source)
       const normalizedAiPrompt = String(this.form.ai_prompt || '').trim()
+      const normalizedAiNotes = String(this.form.ai_notes_for_editor || '').trim()
       const normalizedTagIds = Array.isArray(this.form.tagIds)
         ? this.form.tagIds.map((id) => Number(id)).filter((id) => Number.isFinite(id) && id > 0)
         : []
@@ -1163,6 +1179,7 @@ export default {
           category,
           source: normalizedSource,
           ai_prompt: normalizedSource === 'ai' ? normalizedAiPrompt : '',
+          ai_notes_for_editor: normalizedSource === 'ai' ? normalizedAiNotes : '',
         }
         if (normalizedSlug) {
           payload.slug = normalizedSlug
@@ -1184,6 +1201,7 @@ export default {
       payload.append('category', category)
       payload.append('source', normalizedSource)
       payload.append('ai_prompt', normalizedSource === 'ai' ? normalizedAiPrompt : '')
+      payload.append('ai_notes_for_editor', normalizedSource === 'ai' ? normalizedAiNotes : '')
       if (normalizedSlug) {
         payload.append('slug', normalizedSlug)
       }
@@ -1317,6 +1335,10 @@ export default {
   align-items: flex-start;
   gap: 14px;
   flex-wrap: wrap;
+}
+
+.panel__article-modal-dialog {
+  max-width: 1320px;
 }
 
 .panel__table {
@@ -1559,6 +1581,10 @@ export default {
 }
 
 @media (max-width: 1199.98px) {
+  .panel__article-modal-dialog {
+    max-width: calc(100vw - 32px);
+  }
+
   .panel__head-tools {
     min-width: 0;
   }
