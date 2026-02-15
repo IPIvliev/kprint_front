@@ -149,95 +149,26 @@
       <div class="block-header">
         <div class="block-header__block">
           <h2 class="title">Другие публикации</h2>
-          <div class="block-header__num">+19</div>
+          <div class="block-header__num">+{{ relatedArticles.length }}</div>
         </div>
-        <div class="btn btn--black">Все новости</div>
+        <router-link class="btn btn--black" to="/news">Все новости</router-link>
       </div>
-      <div class="slider__slider">
-        <div id="sliderArticles">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                  <!-- article--><a class="article" href="#">
-                    <div class="article__img"> <img src="../assets/img/article_1.webp" alt=""></div>
-                    <div class="article__content"> 
-                      <h3 class="article__title">Обзор полимеров для трехмерной печати</h3>
-                      <p class="article__text">Прочный, красивый, качественный и чрезвычайно простой в печати, но имеет невысокую температу...</p>
-                    </div>
-                    <ul class="article__list">
-                      <li>28 ноября, 2021</li>
-                      <li>База знаний</li>
-                    </ul></a>
-                  <!--	/article-->
-            </div>
-            <div class="swiper-slide">
-                  <!-- article--><a class="article" href="#">
-                    <div class="article__img"> <img src="../assets/img/article_2.webp" alt=""></div>
-                    <div class="article__content"> 
-                      <h3 class="article__title">Как используются 3D технологии в обучении</h3>
-                      <p class="article__text">3D-принтеры перестают быть уделом только профессионало или любителей, но и активно проникают в образоват...</p>
-                    </div>
-                    <ul class="article__list">
-                      <li>12 сентября, 2021</li>
-                      <li>Статьи</li>
-                    </ul></a>
-                  <!--	/article-->
-            </div>
-            <div class="swiper-slide">
-                  <!-- article--><a class="article" href="#">
-                    <div class="article__img"> <img src="../assets/img/article_3.webp" alt=""></div>
-                    <div class="article__content"> 
-                      <h3 class="article__title">3D-печать: основные проблемы и способы...</h3>
-                      <p class="article__text">Предлагаем вашему вниманию руководство, с помощью которого можно решить основные пробл...</p>
-                    </div>
-                    <ul class="article__list">
-                      <li>9 августа, 2021</li>
-                      <li>Пресс-релизы</li>
-                    </ul></a>
-                  <!--	/article-->
-            </div>
-            <div class="swiper-slide">
-                  <!-- article--><a class="article" href="#">
-                    <div class="article__img"> <img src="../assets/img/article_4.webp" alt=""></div>
-                    <div class="article__content"> 
-                      <h3 class="article__title">Прототипы для функциональных тестов</h3>
-                      <p class="article__text">Как 3D-печать используется для изготовления прототипов, предназначенных для тестирования.</p>
-                    </div>
-                    <ul class="article__list">
-                      <li>25 июля, 2021</li>
-                      <li>База знаний</li>
-                    </ul></a>
-                  <!--	/article-->
-            </div>
-            <div class="swiper-slide">
-                  <!-- article--><a class="article" href="#">
-                    <div class="article__img"> <img src="../assets/img/article_1.webp" alt=""></div>
-                    <div class="article__content"> 
-                      <h3 class="article__title">Обзор полимеров для трехмерной печати</h3>
-                      <p class="article__text">Прочный, красивый, качественный и чрезвычайно простой в печати, но имеет невысокую температу...</p>
-                    </div>
-                    <ul class="article__list">
-                      <li>28 ноября, 2021</li>
-                      <li>База знаний</li>
-                    </ul></a>
-                  <!--	/article-->
-            </div>
-            <div class="swiper-slide">
-                  <!-- article--><a class="article" href="#">
-                    <div class="article__img"> <img src="../assets/img/article_2.webp" alt=""></div>
-                    <div class="article__content"> 
-                      <h3 class="article__title">Как используются 3D технологии в обучении</h3>
-                      <p class="article__text">3D-принтеры перестают быть уделом только профессионало или любителей, но и активно проникают в образоват...</p>
-                    </div>
-                    <ul class="article__list">
-                      <li>12 сентября, 2021</li>
-                      <li>Статьи</li>
-                    </ul></a>
-                  <!--	/article-->
-            </div>
-          </div>
-          <div class="swiper-pagination slider__pagination"></div>
-        </div>
+      <div v-if="relatedArticles.length" class="slider__slider">
+        <swiper
+          :slides-per-view="4"
+          :space-between="30"
+          :pagination="{ clickable: true }"
+          :breakpoints="swiperBreakpoints"
+          :modules="modules"
+          class="slider__swiper"
+        >
+          <swiper-slide v-for="related in relatedArticles" :key="`related-${related.id || related.slug}`">
+            <article-card :article="related" />
+          </swiper-slide>
+        </swiper>
       </div>
+      <div v-else-if="loadingRelated" class="slider__empty">Загрузка публикаций...</div>
+      <div v-else class="slider__empty">Пока нет других публикаций</div>
     </div>
   </div>
   <!--	/slider-->
@@ -262,13 +193,30 @@
 
 <script>
 import { publicApi } from '@/services/http'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import { Pagination } from 'swiper'
+import ArticleCard from '@/components/News/ArticleCard.vue'
+
+import 'swiper/css'
+import 'swiper/css/pagination'
+
 export default {
   name: 'ArticlePage',
+  components: { Swiper, SwiperSlide, ArticleCard },
   data() {
     const parsedId = Number(this.$route.params.id)
     return {
       id: Number.isFinite(parsedId) ? parsedId : null,
       article: {},
+      relatedArticles: [],
+      loadingRelated: false,
+      modules: [Pagination],
+      swiperBreakpoints: {
+        0: { slidesPerView: 1, spaceBetween: 16 },
+        576: { slidesPerView: 2, spaceBetween: 20 },
+        992: { slidesPerView: 3, spaceBetween: 24 },
+        1400: { slidesPerView: 4, spaceBetween: 30 },
+      },
     }
   },
   computed: {
@@ -323,9 +271,43 @@ export default {
         this.$router.replace('/news')
         return
       }
-      const response = await publicApi.get(`/api/articles/${this.id}/`)
-      this.article = response.data || {}
-      this.ensureCanonicalArticleUrl()
+      try {
+        const response = await publicApi.get(`/api/articles/${this.id}/`)
+        this.article = response.data || {}
+        this.ensureCanonicalArticleUrl()
+        await this.fetchRelatedArticles()
+      } catch (error) {
+        this.$router.replace('/news')
+      }
+    },
+    extractArticles(payload) {
+      if (Array.isArray(payload)) {
+        return payload
+      }
+      if (payload && Array.isArray(payload.results)) {
+        return payload.results
+      }
+      return []
+    },
+    async fetchRelatedArticles() {
+      this.loadingRelated = true
+      try {
+        const response = await publicApi.get('/api/articles/')
+        const source = this.extractArticles(response && response.data)
+        const currentId = Number(this.article && this.article.id)
+        const sorted = source
+          .filter((item) => item && item.id && Number(item.id) !== currentId)
+          .sort((left, right) => {
+            const leftDate = new Date(left.publish_iso || left.publish || left.created || left.updated || 0).getTime()
+            const rightDate = new Date(right.publish_iso || right.publish || right.created || right.updated || 0).getTime()
+            return rightDate - leftDate
+          })
+        this.relatedArticles = sorted.slice(0, 8)
+      } catch (error) {
+        this.relatedArticles = []
+      } finally {
+        this.loadingRelated = false
+      }
     },
     ensureCanonicalArticleUrl() {
       const articleId = Number(this.article && this.article.id)
@@ -443,5 +425,12 @@ export default {
 .post__type-link {
   color: inherit;
   text-decoration: underline;
+}
+
+.slider__empty {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #667085;
+  padding: 16px 0;
 }
 </style>

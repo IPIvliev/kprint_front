@@ -11721,6 +11721,18 @@ body.lock {
   max-width: 660px;
 }
 
+.content--pbn .modal-dialog.modal-lg,
+.content--pbn .modal-dialog.modal-xl {
+  max-width: 1320px;
+}
+
+@media (max-width: 1199.98px) {
+  .content--pbn .modal-dialog.modal-lg,
+  .content--pbn .modal-dialog.modal-xl {
+    max-width: calc(100vw - 32px);
+  }
+}
+
 .panel__formbtn {
   padding-top: 60px;
 }

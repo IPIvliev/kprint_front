@@ -113,7 +113,11 @@
             </div>
             <div class="panel__formrow">
               <label>Описание</label>
-              <textarea ref="editor" class="form-control" rows="8" placeholder="Описание преподавателя"></textarea>
+              <panel-rich-text-editor
+                v-model="form.description"
+                placeholder="Описание преподавателя"
+                :min-height="240"
+              />
             </div>
             <div class="panel__formrow">
               <label>Фотография</label>
@@ -153,6 +157,7 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import PanelRichTextEditor from "../elements/Panel/RichTextEditor.vue"
 import {
   createStudyManagerTeacher,
   deleteStudyManagerTeacher,
@@ -162,7 +167,7 @@ import {
 
 export default {
   name: 'StudyTeachers',
-  components: { MenuBlock },
+  components: { MenuBlock, PanelRichTextEditor },
   data() {
     return {
       teachers: [],
@@ -173,7 +178,6 @@ export default {
       isEditing: false,
       saving: false,
       currentId: null,
-      editorInstance: null,
       imageFile: null,
       imagePreview: '',
       form: {
@@ -234,7 +238,6 @@ export default {
       this.imageFile = null
       this.imagePreview = ''
       this.showModal = true
-      this.$nextTick(() => this.initEditor())
     },
     openEdit(teacher) {
       this.isEditing = true
@@ -247,36 +250,9 @@ export default {
       this.imageFile = null
       this.imagePreview = teacher.photo || ''
       this.showModal = true
-      this.$nextTick(() => this.initEditor())
     },
     closeModal() {
       this.showModal = false
-      this.destroyEditor()
-    },
-    initEditor() {
-      if (!this.$refs.editor || !window.CKEDITOR) {
-        return
-      }
-      if (this.editorInstance) {
-        this.editorInstance.destroy()
-        this.editorInstance = null
-      }
-      this.editorInstance = window.CKEDITOR.replace(this.$refs.editor, {
-        height: 240,
-        removePlugins: 'notification',
-      })
-      this.editorInstance.on('instanceReady', () => {
-        this.editorInstance.setData(this.form.description || '')
-      })
-      this.editorInstance.on('change', () => {
-        this.form.description = this.editorInstance.getData()
-      })
-    },
-    destroyEditor() {
-      if (this.editorInstance) {
-        this.editorInstance.destroy()
-        this.editorInstance = null
-      }
     },
     triggerFileSelect() {
       if (this.$refs.imageInput) {
@@ -303,9 +279,6 @@ export default {
       this.imagePreview = URL.createObjectURL(file)
     },
     async saveTeacher() {
-      if (this.editorInstance) {
-        this.form.description = this.editorInstance.getData()
-      }
       if (!this.form.name) {
         this.error = 'Заполните ФИО преподавателя'
         return

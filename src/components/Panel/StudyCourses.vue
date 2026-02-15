@@ -151,7 +151,11 @@
             </div>
             <div class="panel__formrow">
               <label>Описание</label>
-              <textarea ref="editor" class="form-control" rows="8" placeholder="Описание курса"></textarea>
+              <panel-rich-text-editor
+                v-model="form.description"
+                placeholder="Описание курса"
+                :min-height="240"
+              />
             </div>
             <div class="panel__formrow">
               <label>Похожие курсы</label>
@@ -207,6 +211,7 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import PanelRichTextEditor from "../elements/Panel/RichTextEditor.vue"
 import {
   createStudyManagerCourse,
   deleteStudyManagerCourse,
@@ -218,7 +223,7 @@ import {
 
 export default {
   name: 'StudyCourses',
-  components: { MenuBlock },
+  components: { MenuBlock, PanelRichTextEditor },
   data() {
     return {
       courses: [],
@@ -231,7 +236,6 @@ export default {
       isEditing: false,
       saving: false,
       currentId: null,
-      editorInstance: null,
       imageFile: null,
       imagePreview: '',
       form: {
@@ -363,7 +367,6 @@ export default {
       this.imageFile = null
       this.imagePreview = ''
       this.showModal = true
-      this.$nextTick(() => this.initEditor())
     },
     openEdit(course) {
       this.isEditing = true
@@ -389,36 +392,9 @@ export default {
       this.imageFile = null
       this.imagePreview = course.photo || ''
       this.showModal = true
-      this.$nextTick(() => this.initEditor())
     },
     closeModal() {
       this.showModal = false
-      this.destroyEditor()
-    },
-    initEditor() {
-      if (!this.$refs.editor || !window.CKEDITOR) {
-        return
-      }
-      if (this.editorInstance) {
-        this.editorInstance.destroy()
-        this.editorInstance = null
-      }
-      this.editorInstance = window.CKEDITOR.replace(this.$refs.editor, {
-        height: 240,
-        removePlugins: 'notification',
-      })
-      this.editorInstance.on('instanceReady', () => {
-        this.editorInstance.setData(this.form.description || '')
-      })
-      this.editorInstance.on('change', () => {
-        this.form.description = this.editorInstance.getData()
-      })
-    },
-    destroyEditor() {
-      if (this.editorInstance) {
-        this.editorInstance.destroy()
-        this.editorInstance = null
-      }
     },
     triggerFileSelect() {
       if (this.$refs.imageInput) {
@@ -445,9 +421,6 @@ export default {
       this.imagePreview = URL.createObjectURL(file)
     },
     async saveCourse() {
-      if (this.editorInstance) {
-        this.form.description = this.editorInstance.getData()
-      }
       if (!this.form.name || !this.form.category) {
         this.error = 'Заполните название и категорию'
         return

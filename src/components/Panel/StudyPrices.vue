@@ -135,7 +135,11 @@
             </div>
             <div class="panel__formrow">
               <label>Описание</label>
-              <textarea ref="editor" class="form-control" rows="6" placeholder="Описание"></textarea>
+              <panel-rich-text-editor
+                v-model="form.description"
+                placeholder="Описание"
+                :min-height="220"
+              />
             </div>
             <div class="panel__formrow">
               <label>Цена</label>
@@ -157,6 +161,7 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import PanelRichTextEditor from "../elements/Panel/RichTextEditor.vue"
 import {
   createStudyManagerPrice,
   deleteStudyManagerPrice,
@@ -167,7 +172,7 @@ import {
 
 export default {
   name: 'StudyPrices',
-  components: { MenuBlock },
+  components: { MenuBlock, PanelRichTextEditor },
   data() {
     return {
       prices: [],
@@ -180,7 +185,6 @@ export default {
       isEditing: false,
       saving: false,
       currentId: null,
-      editorInstance: null,
       form: {
         name: '',
         short_description: '',
@@ -264,7 +268,6 @@ export default {
         course: this.selectedCourse || '',
       }
       this.showModal = true
-      this.$nextTick(() => this.initEditor())
     },
     openEdit(price) {
       this.isEditing = true
@@ -295,42 +298,12 @@ export default {
         course: courseId,
       }
       this.showModal = true
-      this.$nextTick(() => this.initEditor())
     },
     closeModal() {
       this.showModal = false
-      this.destroyEditor()
-    },
-    initEditor() {
-      if (!this.$refs.editor || !window.CKEDITOR) {
-        return
-      }
-      if (this.editorInstance) {
-        this.editorInstance.destroy()
-        this.editorInstance = null
-      }
-      this.editorInstance = window.CKEDITOR.replace(this.$refs.editor, {
-        height: 220,
-        removePlugins: 'notification',
-      })
-      this.editorInstance.on('instanceReady', () => {
-        this.editorInstance.setData(this.form.description || '')
-      })
-      this.editorInstance.on('change', () => {
-        this.form.description = this.editorInstance.getData()
-      })
-    },
-    destroyEditor() {
-      if (this.editorInstance) {
-        this.editorInstance.destroy()
-        this.editorInstance = null
-      }
     },
     async savePrice() {
       this.error = 'Отправка...'
-      if (this.editorInstance) {
-        this.form.description = this.editorInstance.getData()
-      }
       if (!this.form.name || !this.form.course) {
         this.error = 'Заполните название и курс'
         return

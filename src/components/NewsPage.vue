@@ -83,7 +83,7 @@ export default {
     return {
       articles: [],
       categories: [],
-      pageSize: 20,
+      pageSize: 12,
     }
   },
   computed: {

@@ -278,7 +278,12 @@
                   Открыть медиатеку
                 </button>
               </div>
-              <textarea ref="editor" class="form-control" rows="8" placeholder="Текст новости"></textarea>
+              <panel-rich-text-editor
+                ref="bodyEditor"
+                v-model="form.body"
+                placeholder="Текст новости"
+                :min-height="260"
+              />
             </div>
             <div class="panel__formrow">
               <label>Картинка</label>
@@ -463,6 +468,7 @@
 
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import PanelRichTextEditor from "../elements/Panel/RichTextEditor.vue"
 import {
   createPanelArticleTag,
   createPanelArticle,
@@ -479,7 +485,7 @@ import {
 
 export default {
   name: 'PanelNews',
-  components: { MenuBlock },
+  components: { MenuBlock, PanelRichTextEditor },
   data() {
     return {
       articles: [],
@@ -501,7 +507,6 @@ export default {
       processingPollTimer: null,
       currentId: null,
       slugTouched: false,
-      editorInstance: null,
       imageFile: null,
       imagePreview: '',
       newTagTitle: '',
@@ -837,7 +842,6 @@ export default {
       this.newTagTitle = ''
       this.mediaSearch = ''
       this.showModal = true
-      this.$nextTick(() => this.initEditor())
     },
     async openEdit(article) {
       this.isEditing = true
@@ -870,7 +874,6 @@ export default {
         this.newTagTitle = ''
         this.mediaSearch = ''
         this.showModal = true
-        this.$nextTick(() => this.initEditor())
       } catch (err) {
         this.error = err.userMessage || 'Не удалось загрузить статью для редактирования'
       }
@@ -878,26 +881,6 @@ export default {
     closeModal() {
       this.showModal = false
       this.closeMediaLibrary()
-      this.destroyEditor()
-    },
-    initEditor() {
-      if (!this.$refs.editor || !window.CKEDITOR) {
-        return
-      }
-      if (this.editorInstance) {
-        this.editorInstance.destroy()
-        this.editorInstance = null
-      }
-      this.editorInstance = window.CKEDITOR.replace(this.$refs.editor, {
-        height: 240,
-        removePlugins: 'notification',
-      })
-      this.editorInstance.on('instanceReady', () => {
-        this.editorInstance.setData(this.form.body || '')
-      })
-      this.editorInstance.on('change', () => {
-        this.form.body = this.editorInstance.getData()
-      })
     },
     openMediaLibrary() {
       this.mediaLibraryOpen = true
@@ -959,19 +942,13 @@ export default {
     },
     insertMediaToEditor(item) {
       const src = item && (item.absolute_url || this.resolveMediaUrl(item.url || item.path))
-      if (!src || !this.editorInstance) {
+      const editor = this.$refs.bodyEditor
+      if (!src || !editor || typeof editor.insertImage !== 'function') {
         return
       }
-      const alt = this.escapeHtml((item && item.name) || 'image')
-      this.editorInstance.insertHtml(`<p><img src="${src}" alt="${alt}" /></p>`)
-      this.form.body = this.editorInstance.getData()
+      const alt = String((item && item.name) || 'image')
+      editor.insertImage({ src, alt })
       this.closeMediaLibrary()
-    },
-    destroyEditor() {
-      if (this.editorInstance) {
-        this.editorInstance.destroy()
-        this.editorInstance = null
-      }
     },
     triggerFileSelect() {
       if (this.$refs.imageInput) {
@@ -1072,13 +1049,6 @@ export default {
       this.imageFile = this.normalizeImageFile(file)
       this.imagePreview = URL.createObjectURL(file)
     },
-    escapeHtml(text) {
-      return String(text || '')
-        .replace(/&/g, '&amp;')
-        .replace(/"/g, '&quot;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-    },
     normalizeImageFile(file) {
       const safeName = this.buildSafeUploadName(file.name)
       try {
@@ -1124,9 +1094,6 @@ export default {
       return `${base}${ext}`
     },
     async saveArticle() {
-      if (this.editorInstance) {
-        this.form.body = this.editorInstance.getData()
-      }
       const title = String(this.form.title || '').trim()
       const body = String(this.form.body || '').trim()
       const category = this.form.category
