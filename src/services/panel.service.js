@@ -28,6 +28,14 @@ export function deletePanelArticle(articleId) {
   return api.delete(`/api/articles/${articleId}/`)
 }
 
+export function fetchPanelArticleMedia() {
+  return api.get('/api/article-media/')
+}
+
+export function uploadPanelArticleMedia(payload) {
+  return api.post('/api/article-media/', payload)
+}
+
 export function fetchPanelArticleCategories() {
   return api.get('/api/article-categories/')
 }

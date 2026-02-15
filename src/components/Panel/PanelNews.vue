@@ -205,6 +205,15 @@
             </div>
             <div class="panel__formrow">
               <label>Текст</label>
+              <div class="panel__editor-tools">
+                <button
+                  type="button"
+                  class="btn btn--grayborder"
+                  @click="openMediaLibrary"
+                >
+                  Открыть медиатеку
+                </button>
+              </div>
               <textarea ref="editor" class="form-control" rows="8" placeholder="Текст новости"></textarea>
             </div>
             <div class="panel__formrow">
@@ -226,7 +235,7 @@
                 @change="onImageChange"
               >
               <div v-if="imagePreview" class="panel__formrow">
-                <img :src="imagePreview" alt="Предпросмотр" style="max-width: 100%; height: auto;">
+                <img :src="imagePreview" alt="Предпросмотр" class="panel__cover-preview">
               </div>
             </div>
             <div class="panel__formrow">
@@ -244,6 +253,61 @@
       </div>
     </div>
     <div v-if="showModal" class="modal-backdrop fade show"></div>
+
+    <div v-if="mediaLibraryOpen" class="modal fade show" style="display: block;" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Медиатека статей</h5>
+            <button type="button" class="btn-close" aria-label="Close" @click="closeMediaLibrary"></button>
+          </div>
+          <div class="modal-body">
+            <div class="panel__formrow">
+              <label>Загрузка изображений</label>
+              <div
+                class="panel__dropzone"
+                @dragover.prevent
+                @dragenter.prevent
+                @drop.prevent="onMediaDrop"
+                @click="triggerMediaUploadSelect"
+              >
+                <div>{{ mediaUploading ? 'Загрузка...' : 'Перетащите изображения сюда или нажмите для выбора' }}</div>
+              </div>
+              <input
+                ref="mediaUploadInput"
+                type="file"
+                class="form-control d-none"
+                accept="image/*"
+                multiple
+                @change="onMediaUploadChange"
+              >
+            </div>
+            <div class="panel__formrow">
+              <label>Поиск</label>
+              <input
+                v-model="mediaSearch"
+                type="text"
+                class="form-control"
+                placeholder="Поиск по имени файла"
+              >
+            </div>
+            <div v-if="mediaLoading" class="panel__table-text">Загрузка медиатеки...</div>
+            <div v-if="mediaError" class="panel__table-text">{{ mediaError }}</div>
+            <div v-if="!mediaLoading && filteredMediaItems.length" class="panel__media-grid">
+              <div v-for="item in filteredMediaItems" :key="item.path" class="panel__media-item">
+                <img :src="item.absolute_url || resolveMediaUrl(item.url || item.path)" :alt="item.name" class="panel__media-img">
+                <div class="panel__media-name">{{ item.name }}</div>
+                <button type="button" class="btn btn--black" @click="insertMediaToEditor(item)">Вставить</button>
+              </div>
+            </div>
+            <div v-if="!mediaLoading && !filteredMediaItems.length" class="panel__table-text">
+              В медиатеке пока нет изображений
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="mediaLibraryOpen" class="modal-backdrop fade show"></div>
   </div>
 </template>
 
@@ -254,9 +318,11 @@ import {
   createPanelArticle,
   deletePanelArticle,
   fetchPanelArticle,
+  fetchPanelArticleMedia,
   fetchPanelArticleCategories,
   fetchPanelArticleTags,
   fetchPanelArticles,
+  uploadPanelArticleMedia,
   updatePanelArticle,
 } from '@/services/panel.service'
 
@@ -279,6 +345,12 @@ export default {
       imagePreview: '',
       newTagTitle: '',
       creatingTag: false,
+      mediaLibraryOpen: false,
+      mediaLoading: false,
+      mediaUploading: false,
+      mediaError: '',
+      mediaSearch: '',
+      mediaItems: [],
       categoryOptions: [],
       tagOptions: [],
       form: {
@@ -304,6 +376,17 @@ export default {
         const title = String(a.title || '').toLowerCase()
         const body = String(a.body || '').toLowerCase()
         return title.includes(term) || body.includes(term)
+      })
+    },
+    filteredMediaItems() {
+      const term = String(this.mediaSearch || '').trim().toLowerCase()
+      if (!term) {
+        return this.mediaItems
+      }
+      return this.mediaItems.filter((item) => {
+        const name = String(item.name || '').toLowerCase()
+        const path = String(item.path || '').toLowerCase()
+        return name.includes(term) || path.includes(term)
       })
     },
   },
@@ -354,6 +437,22 @@ export default {
     articleKey(article) {
       return article.id || article.pk || article.slug || article.title
     },
+    resolveMediaUrl(path) {
+      if (!path) {
+        return ''
+      }
+      if (path.startsWith('http://') || path.startsWith('https://')) {
+        return path
+      }
+      const base = (process.env.VUE_APP_API_BASE || '').replace(/\/+$/, '')
+      if (!base) {
+        return path
+      }
+      if (path.startsWith('/')) {
+        return `${base}${path}`
+      }
+      return `${base}/${path}`
+    },
     newsLink(article) {
       const id = article.id || article.pk
       return id ? `/news/${id}` : '/news'
@@ -382,6 +481,7 @@ export default {
       this.imageFile = null
       this.imagePreview = ''
       this.newTagTitle = ''
+      this.mediaSearch = ''
       this.showModal = true
       this.$nextTick(() => this.initEditor())
     },
@@ -409,8 +509,9 @@ export default {
         }
         this.slugTouched = true
         this.imageFile = null
-        this.imagePreview = fullArticle.article_image || ''
+        this.imagePreview = this.resolveMediaUrl(fullArticle.article_image || '')
         this.newTagTitle = ''
+        this.mediaSearch = ''
         this.showModal = true
         this.$nextTick(() => this.initEditor())
       } catch (err) {
@@ -419,6 +520,7 @@ export default {
     },
     closeModal() {
       this.showModal = false
+      this.closeMediaLibrary()
       this.destroyEditor()
     },
     initEditor() {
@@ -439,6 +541,74 @@ export default {
       this.editorInstance.on('change', () => {
         this.form.body = this.editorInstance.getData()
       })
+    },
+    openMediaLibrary() {
+      this.mediaLibraryOpen = true
+      this.loadMediaLibrary()
+    },
+    closeMediaLibrary() {
+      this.mediaLibraryOpen = false
+      this.mediaError = ''
+    },
+    async loadMediaLibrary() {
+      this.mediaLoading = true
+      this.mediaError = ''
+      try {
+        const response = await fetchPanelArticleMedia()
+        this.mediaItems = Array.isArray(response.data) ? response.data : []
+      } catch (err) {
+        this.mediaError = err.userMessage || 'Не удалось загрузить медиатеку'
+      } finally {
+        this.mediaLoading = false
+      }
+    },
+    triggerMediaUploadSelect() {
+      if (this.$refs.mediaUploadInput) {
+        this.$refs.mediaUploadInput.click()
+      }
+    },
+    onMediaUploadChange(event) {
+      const files = Array.from((event && event.target && event.target.files) || [])
+      this.uploadMediaFiles(files)
+      if (event && event.target) {
+        event.target.value = ''
+      }
+    },
+    onMediaDrop(event) {
+      const files = Array.from((event && event.dataTransfer && event.dataTransfer.files) || [])
+      this.uploadMediaFiles(files)
+    },
+    async uploadMediaFiles(files) {
+      const imageFiles = (Array.isArray(files) ? files : []).filter(
+        (file) => file && file.type && file.type.startsWith('image/'),
+      )
+      if (!imageFiles.length) {
+        return
+      }
+      this.mediaUploading = true
+      this.mediaError = ''
+      try {
+        for (const file of imageFiles) {
+          const payload = new FormData()
+          payload.append('file', file)
+          await uploadPanelArticleMedia(payload)
+        }
+        await this.loadMediaLibrary()
+      } catch (err) {
+        this.mediaError = err.userMessage || 'Не удалось загрузить изображение'
+      } finally {
+        this.mediaUploading = false
+      }
+    },
+    insertMediaToEditor(item) {
+      const src = item && (item.absolute_url || this.resolveMediaUrl(item.url || item.path))
+      if (!src || !this.editorInstance) {
+        return
+      }
+      const alt = this.escapeHtml((item && item.name) || 'image')
+      this.editorInstance.insertHtml(`<p><img src="${src}" alt="${alt}" /></p>`)
+      this.form.body = this.editorInstance.getData()
+      this.closeMediaLibrary()
     },
     destroyEditor() {
       if (this.editorInstance) {
@@ -544,6 +714,13 @@ export default {
       }
       this.imageFile = this.normalizeImageFile(file)
       this.imagePreview = URL.createObjectURL(file)
+    },
+    escapeHtml(text) {
+      return String(text || '')
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
     },
     normalizeImageFile(file) {
       const safeName = this.buildSafeUploadName(file.name)
@@ -821,6 +998,17 @@ export default {
   margin-top: 10px;
 }
 
+.panel__editor-tools {
+  margin-bottom: 10px;
+}
+
+.panel__cover-preview {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
 .panel__table-tags {
   display: inline-flex;
   align-items: center;
@@ -842,5 +1030,34 @@ export default {
 .panel__table-tag-chip--muted {
   background: #f2f4f7;
   color: #667085;
+}
+
+.panel__media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.panel__media-item {
+  border: 1px solid #e4e7ec;
+  border-radius: 10px;
+  padding: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.panel__media-img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.panel__media-name {
+  font-size: 12px;
+  color: #475467;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>
