@@ -70,8 +70,20 @@
                         <span class="panel__table-text">{{ categoryTitle(article.category) }}</span>
                       </td>
                       <td>
-                        <span class="panel__table-subtitle">Кратко:</span>
-                        <span class="panel__table-text">{{ shortText(article.body) }}</span>
+                        <span class="panel__table-subtitle">Тэги:</span>
+                        <span v-if="displayTags(article.tags).length" class="panel__table-tags">
+                          <span
+                            v-for="tag in displayTags(article.tags)"
+                            :key="`tag-${articleKey(article)}-${tag.id || tag.title}`"
+                            class="panel__table-tag-chip"
+                          >
+                            {{ tag.title }}
+                          </span>
+                          <span v-if="remainingTagsCount(article.tags) > 0" class="panel__table-tag-chip panel__table-tag-chip--muted">
+                            +{{ remainingTagsCount(article.tags) }}
+                          </span>
+                        </span>
+                        <span v-else class="panel__table-text">—</span>
                       </td>
                       <td>
                         <router-link class="panel__table-link" :to="newsLink(article)">
@@ -140,11 +152,45 @@
             </div>
             <div class="panel__formrow">
               <label>Категория</label>
-              <select v-model="form.category" class="form-control" disabled>
+              <select v-model="form.category" class="form-control">
+                <option :value="null" disabled>Выберите категорию</option>
                 <option v-for="option in categoryOptions" :key="option.id" :value="option.id">
                   {{ option.title }}
                 </option>
               </select>
+            </div>
+            <div class="panel__formrow">
+              <label>Тэги</label>
+              <div class="panel__tag-selector">
+                <button
+                  v-for="tag in tagOptions"
+                  :key="tag.id"
+                  type="button"
+                  class="panel__tag-chip"
+                  :class="{ 'panel__tag-chip--selected': isTagSelected(tag.id) }"
+                  @click="toggleTagSelection(tag.id)"
+                >
+                  {{ tag.title }}
+                </button>
+                <span v-if="!tagOptions.length" class="panel__tag-empty">Нет доступных тэгов</span>
+              </div>
+              <div class="panel__tag-create">
+                <input
+                  v-model="newTagTitle"
+                  type="text"
+                  class="form-control"
+                  placeholder="Новый тэг"
+                  @keydown.enter.prevent="addTagFromInput"
+                >
+                <button
+                  type="button"
+                  class="btn btn--grayborder"
+                  :disabled="creatingTag || !trimmedNewTagTitle"
+                  @click="addTagFromInput"
+                >
+                  {{ creatingTag ? 'Добавление...' : 'Добавить' }}
+                </button>
+              </div>
             </div>
             <div class="panel__formrow">
               <label>Slug</label>
@@ -204,8 +250,12 @@
 <script>
 import MenuBlock from "../elements/Panel/MenuBlock.vue"
 import {
+  createPanelArticleTag,
   createPanelArticle,
   deletePanelArticle,
+  fetchPanelArticle,
+  fetchPanelArticleCategories,
+  fetchPanelArticleTags,
   fetchPanelArticles,
   updatePanelArticle,
 } from '@/services/panel.service'
@@ -227,19 +277,24 @@ export default {
       editorInstance: null,
       imageFile: null,
       imagePreview: '',
-      categoryOptions: [
-        { id: 1, title: 'Новости' },
-      ],
+      newTagTitle: '',
+      creatingTag: false,
+      categoryOptions: [],
+      tagOptions: [],
       form: {
         title: '',
         slug: '',
         body: '',
-        category: 1,
+        category: null,
+        tagIds: [],
         publish: '',
       },
     }
   },
   computed: {
+    trimmedNewTagTitle() {
+      return String(this.newTagTitle || '').trim()
+    },
     filteredArticles() {
       const term = this.searchTerm.trim().toLowerCase()
       if (!term) {
@@ -266,19 +321,34 @@ export default {
     },
   },
   mounted() {
-    this.fetchArticles()
+    this.loadInitialData()
   },
   methods: {
-    async fetchArticles() {
+    async loadInitialData() {
       this.loading = true
+      this.error = ''
+      try {
+        const [articlesResponse, categoriesResponse, tagsResponse] = await Promise.all([
+          fetchPanelArticles(),
+          fetchPanelArticleCategories(),
+          fetchPanelArticleTags(),
+        ])
+        this.articles = Array.isArray(articlesResponse.data) ? articlesResponse.data : []
+        this.categoryOptions = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
+        this.tagOptions = Array.isArray(tagsResponse.data) ? tagsResponse.data : []
+      } catch (err) {
+        this.error = err.userMessage || 'Не удалось загрузить данные новостей'
+      } finally {
+        this.loading = false
+      }
+    },
+    async fetchArticles() {
       this.error = ''
       try {
         const response = await fetchPanelArticles()
         this.articles = Array.isArray(response.data) ? response.data : []
       } catch (err) {
         this.error = err.userMessage || 'Не удалось загрузить новости'
-      } finally {
-        this.loading = false
       }
     },
     articleKey(article) {
@@ -287,13 +357,6 @@ export default {
     newsLink(article) {
       const id = article.id || article.pk
       return id ? `/news/${id}` : '/news'
-    },
-    shortText(text) {
-      const raw = String(text || '').replace(/<\/?[^>]+(>|$)/g, '')
-      if (!raw) {
-        return '—'
-      }
-      return raw.length > 120 ? `${raw.slice(0, 120)}...` : raw
     },
     normalizeDate(value) {
       if (!value) {
@@ -304,34 +367,55 @@ export default {
     openCreate() {
       this.isEditing = false
       this.currentId = null
+      const firstCategoryId = this.categoryOptions.length
+        ? (this.categoryOptions[0].id || this.categoryOptions[0].pk || null)
+        : null
       this.form = {
         title: '',
         slug: '',
         body: '',
-        category: 1,
+        category: firstCategoryId,
+        tagIds: [],
         publish: this.formatDateTimeLocal(new Date()),
       }
       this.slugTouched = false
       this.imageFile = null
       this.imagePreview = ''
+      this.newTagTitle = ''
       this.showModal = true
       this.$nextTick(() => this.initEditor())
     },
-    openEdit(article) {
+    async openEdit(article) {
       this.isEditing = true
       this.currentId = article.id || article.pk
-      this.form = {
-        title: article.title || '',
-        slug: article.slug || '',
-        body: article.body || '',
-        category: article.category || 1,
-        publish: this.formatDateTimeLocal(new Date(article.publish || Date.now())),
+      this.error = ''
+      try {
+        const response = await fetchPanelArticle(this.currentId)
+        const fullArticle = response && response.data ? response.data : article
+        const rawCategory =
+          (fullArticle.category_detail && fullArticle.category_detail.id) ||
+          fullArticle.category_id ||
+          fullArticle.category
+        const tagIds = Array.isArray(fullArticle.tags)
+          ? fullArticle.tags.map((tag) => (typeof tag === 'object' ? tag.id : tag)).filter(Boolean)
+          : []
+        this.form = {
+          title: fullArticle.title || '',
+          slug: fullArticle.slug || '',
+          body: fullArticle.body || '',
+          category: rawCategory || null,
+          tagIds,
+          publish: this.formatDateTimeLocal(new Date(fullArticle.publish || fullArticle.publish_iso || Date.now())),
+        }
+        this.slugTouched = true
+        this.imageFile = null
+        this.imagePreview = fullArticle.article_image || ''
+        this.newTagTitle = ''
+        this.showModal = true
+        this.$nextTick(() => this.initEditor())
+      } catch (err) {
+        this.error = err.userMessage || 'Не удалось загрузить статью для редактирования'
       }
-      this.slugTouched = true
-      this.imageFile = null
-      this.imagePreview = article.article_image || ''
-      this.showModal = true
-      this.$nextTick(() => this.initEditor())
     },
     closeModal() {
       this.showModal = false
@@ -367,12 +451,87 @@ export default {
         this.$refs.imageInput.click()
       }
     },
+    isTagSelected(tagId) {
+      return this.form.tagIds.some((id) => Number(id) === Number(tagId))
+    },
+    normalizeTagIds(ids, sourceOptions = this.tagOptions) {
+      const allowedIds = new Set(
+        (Array.isArray(sourceOptions) ? sourceOptions : [])
+          .map((tag) => Number(tag && tag.id))
+          .filter((id) => Number.isFinite(id) && id > 0),
+      )
+      const seen = new Set()
+      return (Array.isArray(ids) ? ids : [])
+        .map((id) => Number(id))
+        .filter((id) => Number.isFinite(id) && id > 0 && allowedIds.has(id))
+        .filter((id) => {
+          if (seen.has(id)) {
+            return false
+          }
+          seen.add(id)
+          return true
+        })
+    },
+    toggleTagSelection(tagId) {
+      const selected = this.isTagSelected(tagId)
+      if (selected) {
+        this.form.tagIds = this.normalizeTagIds(
+          this.form.tagIds.filter((id) => Number(id) !== Number(tagId)),
+        )
+        return
+      }
+      this.form.tagIds = this.normalizeTagIds([...this.form.tagIds, tagId])
+    },
+    async addTagFromInput() {
+      const title = this.trimmedNewTagTitle
+      if (!title) {
+        return
+      }
+      const existing = this.tagOptions.find(
+        (tag) => String(tag.title || '').trim().toLowerCase() === title.toLowerCase(),
+      )
+      if (existing) {
+        if (!this.isTagSelected(existing.id)) {
+          this.form.tagIds = this.normalizeTagIds([...this.form.tagIds, existing.id])
+        }
+        this.newTagTitle = ''
+        return
+      }
+
+      this.creatingTag = true
+      this.error = ''
+      try {
+        const response = await createPanelArticleTag({
+          title,
+          slug: this.slugify(title),
+        })
+        const createdTag = response && response.data ? response.data : null
+        if (!createdTag || !createdTag.id) {
+          throw new Error('Tag create failed')
+        }
+        const nextTagOptions = [...this.tagOptions, createdTag].sort((a, b) => {
+          const left = String(a.title || '').toLowerCase()
+          const right = String(b.title || '').toLowerCase()
+          return left.localeCompare(right)
+        })
+        this.tagOptions = nextTagOptions
+        this.form.tagIds = this.normalizeTagIds(
+          [...this.form.tagIds, createdTag.id],
+          nextTagOptions,
+        )
+        this.newTagTitle = ''
+      } catch (err) {
+        this.error = err.userMessage || 'Не удалось создать тэг'
+      } finally {
+        this.creatingTag = false
+      }
+    },
     onImageChange(event) {
       const file = event.target.files && event.target.files[0]
       if (!file) {
         return
       }
-      this.imageFile = file
+      this.imageFile = this.normalizeImageFile(file)
       this.imagePreview = URL.createObjectURL(file)
     },
     onDrop(event) {
@@ -383,33 +542,72 @@ export default {
       if (!file.type || !file.type.startsWith('image/')) {
         return
       }
-      this.imageFile = file
+      this.imageFile = this.normalizeImageFile(file)
       this.imagePreview = URL.createObjectURL(file)
+    },
+    normalizeImageFile(file) {
+      const safeName = this.buildSafeUploadName(file.name)
+      try {
+        return new File([file], safeName, {
+          type: file.type,
+          lastModified: file.lastModified,
+        })
+      } catch (e) {
+        // Fallback for environments where File constructor is unavailable.
+        return file
+      }
+    },
+    buildSafeUploadName(originalName) {
+      const uploadPrefix = 'uploads/blog/'
+      const maxTotalLength = 100
+      const maxFileNameLength = Math.max(1, maxTotalLength - uploadPrefix.length)
+
+      const source = String(originalName || 'image')
+      const lastDot = source.lastIndexOf('.')
+      const rawBase = lastDot > 0 ? source.slice(0, lastDot) : source
+      const rawExt = lastDot > 0 ? source.slice(lastDot) : ''
+
+      let ext = rawExt.replace(/[^a-zA-Z0-9.]/g, '').toLowerCase()
+      if (ext.length > 10) {
+        ext = ext.slice(0, 10)
+      }
+
+      let base = rawBase
+        .normalize('NFKD')
+        .replace(/[^a-zA-Z0-9_-]+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^[-_.]+|[-_.]+$/g, '')
+
+      if (!base) {
+        base = 'image'
+      }
+
+      const maxBaseLength = Math.max(1, maxFileNameLength - ext.length)
+      if (base.length > maxBaseLength) {
+        base = base.slice(0, maxBaseLength)
+      }
+
+      return `${base}${ext}`
     },
     async saveArticle() {
       if (this.editorInstance) {
         this.form.body = this.editorInstance.getData()
       }
-      if (!this.form.title || !this.form.body) {
+      const title = String(this.form.title || '').trim()
+      const body = String(this.form.body || '').trim()
+      const category = this.form.category
+      if (!title || !body) {
         this.error = 'Заполните заголовок и текст'
+        return
+      }
+      if (!category) {
+        this.error = 'Выберите категорию'
         return
       }
       this.saving = true
       this.error = ''
       try {
-        const payload = new FormData()
-        payload.append('title', this.form.title)
-        payload.append('body', this.form.body)
-        payload.append('category', this.form.category)
-        if (this.form.slug) {
-          payload.append('slug', this.slugify(this.form.slug))
-        }
-        if (this.form.publish) {
-          payload.append('publish', this.normalizePublishForApi(this.form.publish))
-        }
-        if (this.imageFile) {
-          payload.append('article_image', this.imageFile)
-        }
+        const payload = this.buildArticlePayload({ title, body, category })
         if (this.isEditing && this.currentId) {
           await updatePanelArticle(this.currentId, payload)
         } else {
@@ -418,10 +616,70 @@ export default {
         this.closeModal()
         await this.fetchArticles()
       } catch (err) {
-        this.error = err.userMessage || 'Не удалось сохранить новость'
+        console.error('Article save failed', {
+          status: err && err.response && err.response.status,
+          data: err && err.response && err.response.data,
+        })
+        this.error = this.extractError(err)
       } finally {
         this.saving = false
       }
+    },
+    buildArticlePayload({ title, body, category }) {
+      const normalizedPublish = this.form.publish
+        ? this.normalizePublishForApi(this.form.publish)
+        : ''
+      const normalizedSlug = this.form.slug ? this.slugify(this.form.slug) : ''
+      const normalizedTagIds = Array.isArray(this.form.tagIds)
+        ? this.form.tagIds.map((id) => Number(id)).filter((id) => Number.isFinite(id) && id > 0)
+        : []
+
+      // Prefer JSON payload unless an image is uploaded.
+      if (!this.imageFile) {
+        const payload = {
+          title,
+          body,
+          category,
+        }
+        if (normalizedSlug) {
+          payload.slug = normalizedSlug
+        }
+        if (normalizedPublish) {
+          payload.publish = normalizedPublish
+        }
+        if (normalizedTagIds.length) {
+          payload.tag_ids = normalizedTagIds
+        } else {
+          payload.tag_ids = []
+        }
+        return payload
+      }
+
+      const payload = new FormData()
+      payload.append('title', title)
+      payload.append('body', body)
+      payload.append('category', category)
+      if (normalizedSlug) {
+        payload.append('slug', normalizedSlug)
+      }
+      if (normalizedPublish) {
+        payload.append('publish', normalizedPublish)
+      }
+      normalizedTagIds.forEach((id) => payload.append('tag_ids', id))
+      payload.append('article_image', this.imageFile)
+      return payload
+    },
+    extractError(err) {
+      const status = err && err.response && err.response.status
+      const userMessage = err && err.userMessage
+      if (userMessage) {
+        return status ? `${status}: ${userMessage}` : userMessage
+      }
+      const responseData = err && err.response && err.response.data
+      if (typeof responseData === 'string' && responseData.trim()) {
+        return status ? `${status}: ${responseData}` : responseData
+      }
+      return status ? `${status}: Не удалось сохранить новость` : 'Не удалось сохранить новость'
     },
     async removeArticle(article) {
       const id = article.id || article.pk
@@ -440,11 +698,47 @@ export default {
       }
     },
     categoryTitle(categoryId) {
-      const option = this.categoryOptions.find((item) => item.id === categoryId)
+      if (categoryId && typeof categoryId === 'object') {
+        return categoryId.title || categoryId.name || '—'
+      }
+      const option = this.categoryOptions.find((item) => Number(item.id) === Number(categoryId))
       return option ? option.title : '—'
     },
+    normalizeTags(tags) {
+      if (!Array.isArray(tags)) {
+        return []
+      }
+      return tags
+        .map((tag) => {
+          if (tag && typeof tag === 'object') {
+            return {
+              id: tag.id,
+              title: String(tag.title || tag.name || '').trim(),
+            }
+          }
+          return {
+            id: Number(tag) || String(tag || ''),
+            title: String(tag || '').trim(),
+          }
+        })
+        .filter((tag) => tag.title)
+    },
+    displayTags(tags) {
+      return this.normalizeTags(tags).slice(0, 3)
+    },
+    remainingTagsCount(tags) {
+      const normalized = this.normalizeTags(tags)
+      return normalized.length > 3 ? normalized.length - 3 : 0
+    },
     formatDateTimeLocal(dateValue) {
-      const date = dateValue instanceof Date ? dateValue : new Date(dateValue)
+      let date = dateValue instanceof Date ? dateValue : new Date(dateValue)
+      if (isNaN(date.getTime()) && typeof dateValue === 'string') {
+        const match = dateValue.match(/^(\d{2})\.(\d{2})\.(\d{4})$/)
+        if (match) {
+          const [, day, month, year] = match
+          date = new Date(`${year}-${month}-${day}T00:00:00`)
+        }
+      }
       if (isNaN(date.getTime())) {
         return ''
       }
@@ -491,3 +785,62 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.panel__tag-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.panel__tag-chip {
+  border: 1px solid #c7ccd4;
+  background: #f2f4f7;
+  color: #4f5968;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.panel__tag-chip--selected {
+  border-color: #d83a56;
+  background: #d83a56;
+  color: #fff;
+}
+
+.panel__tag-empty {
+  color: #8e97a6;
+  font-size: 14px;
+}
+
+.panel__tag-create {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.panel__table-tags {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: 240px;
+}
+
+.panel__table-tag-chip {
+  border: 1px solid #d0d5dd;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 12px;
+  line-height: 1.2;
+  background: #f8fafc;
+  color: #344054;
+}
+
+.panel__table-tag-chip--muted {
+  background: #f2f4f7;
+  color: #667085;
+}
+</style>

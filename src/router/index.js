@@ -38,6 +38,16 @@ const routes = [
     component: News,
   },
   {
+    path: '/news/tag/:tagSlug',
+    name: 'NewsByTag',
+    component: News,
+  },
+  {
+    path: '/news/category/:categorySlug',
+    name: 'NewsByCategory',
+    component: News,
+  },
+  {
     path: '/shop',
     children: [
       {
@@ -194,8 +204,27 @@ const routes = [
       },      
       {
         path: 'news',
-        name: 'PanelNews',
+        redirect: '/panel/news/articles',
+      },
+      {
+        path: 'news/articles',
+        name: 'PanelNewsArticles',
         component: () => import('../views/Panel/PanelNews.vue'),
+      },
+      {
+        path: 'news/categories',
+        name: 'PanelNewsCategories',
+        component: () => import('../views/Panel/PanelNewsCategories.vue'),
+      },
+      {
+        path: 'news/ai-articles',
+        name: 'PanelNewsAiArticles',
+        component: () => import('../views/Panel/PanelNewsAiArticles.vue'),
+      },
+      {
+        path: 'news/tags',
+        name: 'PanelNewsTags',
+        component: () => import('../views/Panel/PanelNewsTags.vue'),
       },
       {
         path: 'study/categories',

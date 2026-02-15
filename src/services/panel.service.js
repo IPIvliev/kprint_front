@@ -12,6 +12,10 @@ export function fetchPanelArticles() {
   return api.get('/api/articles/')
 }
 
+export function fetchPanelArticle(articleId) {
+  return api.get(`/api/articles/${articleId}/`)
+}
+
 export function createPanelArticle(payload) {
   return api.post('/api/articles/', payload)
 }
@@ -22,6 +26,38 @@ export function updatePanelArticle(articleId, payload) {
 
 export function deletePanelArticle(articleId) {
   return api.delete(`/api/articles/${articleId}/`)
+}
+
+export function fetchPanelArticleCategories() {
+  return api.get('/api/article-categories/')
+}
+
+export function createPanelArticleCategory(payload) {
+  return api.post('/api/article-categories/', payload)
+}
+
+export function updatePanelArticleCategory(categoryId, payload) {
+  return api.patch(`/api/article-categories/${categoryId}/`, payload)
+}
+
+export function deletePanelArticleCategory(categoryId) {
+  return api.delete(`/api/article-categories/${categoryId}/`)
+}
+
+export function fetchPanelArticleTags() {
+  return api.get('/api/article-tags/')
+}
+
+export function createPanelArticleTag(payload) {
+  return api.post('/api/article-tags/', payload)
+}
+
+export function updatePanelArticleTag(tagId, payload) {
+  return api.patch(`/api/article-tags/${tagId}/`, payload)
+}
+
+export function deletePanelArticleTag(tagId) {
+  return api.delete(`/api/article-tags/${tagId}/`)
 }
 
 export function fetchShopManagerCategories() {

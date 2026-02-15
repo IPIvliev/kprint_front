@@ -1,6 +1,6 @@
 <template>
 							<div class="col-xxl-3 col-xl-4 d-none d-xl-block">
-								<div class="panel__block panel__block--1" :class="{ 'panel__block--menu-open': studyOpen || shopOpen || filterOpen || deliveryOpen }">
+								<div class="panel__block panel__block--1" :class="{ 'panel__block--menu-open': newsOpen || studyOpen || shopOpen || filterOpen || deliveryOpen }">
 									<div class="panel__head"><router-link class="panel__profile" to="/panel/edit">
 											<div class="panel__profile-img"> <img :src="profileAvatar" alt=""></div>
 											<div class="panel__profile-content">
@@ -73,12 +73,52 @@
 										</ul>
                     <ul v-else class="panel__menu">
                       <li>
-                        <router-link to="/panel/news" class="panel__menu-link">
+                        <button
+                          type="button"
+                          class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"
+                          :class="{ 'panel__menu-link--open': newsOpen }"
+                          @click="toggleNewsMenu"
+                        >
                           <span class="panel__menu-icon">
                             <img src="@/assets/img/panel-icons/news.svg" alt="">
                           </span>
                           Новости
-                        </router-link>
+                          <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': newsOpen }">▾</span>
+                        </button>
+                        <ul v-if="newsOpen" class="panel__menu-sub">
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/news/categories" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/panel-icons/categories.svg" alt="">
+                              </span>
+                              Категории
+                            </router-link>
+                          </li>
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/news/articles" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/panel-icons/news.svg" alt="">
+                              </span>
+                              Статьи
+                            </router-link>
+                          </li>
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/news/ai-articles" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/panel-icons/courses.svg" alt="">
+                              </span>
+                              ИИ статьи
+                            </router-link>
+                          </li>
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/news/tags" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/panel-icons/filter.svg" alt="">
+                              </span>
+                              Тэги
+                            </router-link>
+                          </li>
+                        </ul>
                       </li>
                       <li>
                         <button
@@ -313,6 +353,7 @@ export default {
     return {
       panelMode: 'user',
       telegramBotUrl: process.env.VUE_APP_TELEGRAM_BOT_URL || '#',
+      newsOpen: false,
       studyOpen: false,
       shopOpen: false,
       deliveryOpen: false,
@@ -366,6 +407,9 @@ export default {
     syncPanelMode() {
       this.panelMode = getSafePanelMode(this.currentUser, getStoredPanelMode())
     },
+    toggleNewsMenu() {
+      this.newsOpen = !this.newsOpen
+    },
     toggleStudyMenu() {
       this.studyOpen = !this.studyOpen
     },
@@ -393,6 +437,9 @@ export default {
     }
     if (this.$route && this.$route.path && this.$route.path.includes('/panel/study')) {
       this.studyOpen = true
+    }
+    if (this.$route && this.$route.path && this.$route.path.includes('/panel/news')) {
+      this.newsOpen = true
     }
     if (this.$route && this.$route.path && this.$route.path.includes('/panel/shop')) {
       this.shopOpen = true

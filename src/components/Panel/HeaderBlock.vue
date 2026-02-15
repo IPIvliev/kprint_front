@@ -198,7 +198,7 @@
 									</span>&#1042;&#1077;&#1088;&#1085;&#1091;&#1090;&#1100;&#1089;&#1103; &#1085;&#1072; &#1089;&#1072;&#1081;&#1090;</router-link></li>
 								</ul>
 								<ul v-else class="panel__menu"> 
-									<li><router-link class="panel__menu-link" to="/panel/news" @click="closeMainMenu"><span class="panel__menu-icon"> 
+									<li><router-link class="panel__menu-link" to="/panel/news/articles" @click="closeMainMenu"><span class="panel__menu-icon"> 
 											<img src="@/assets/img/panel-icons/news.svg" alt="">
 									</span>&#1053;&#1086;&#1074;&#1086;&#1089;&#1090;&#1080;</router-link></li>
 									<li><router-link class="panel__menu-link" to="/panel/shop/orders" @click="closeMainMenu"><span class="panel__menu-icon"> 
