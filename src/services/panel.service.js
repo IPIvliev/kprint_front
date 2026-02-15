@@ -200,6 +200,42 @@ export function updateShopOrder(orderId, payload) {
   return api.patch(`/api/shop/orders/${orderId}`, payload)
 }
 
+export function fetchPrintManagerMaterialCategories() {
+  return api.get('/api/print/manager/material-categories/')
+}
+
+export function createPrintManagerMaterialCategory(payload) {
+  return api.post('/api/print/manager/material-categories/', payload)
+}
+
+export function updatePrintManagerMaterialCategory(categoryId, payload) {
+  return api.patch(`/api/print/manager/material-categories/${categoryId}/`, payload)
+}
+
+export function deletePrintManagerMaterialCategory(categoryId) {
+  return api.delete(`/api/print/manager/material-categories/${categoryId}/`)
+}
+
+export function fetchPrintManagerMaterials() {
+  return api.get('/api/print/manager/materials/')
+}
+
+export function createPrintManagerMaterial(payload) {
+  return api.post('/api/print/manager/materials/', payload)
+}
+
+export function updatePrintManagerMaterial(materialId, payload) {
+  return api.patch(`/api/print/manager/materials/${materialId}/`, payload)
+}
+
+export function deletePrintManagerMaterial(materialId) {
+  return api.delete(`/api/print/manager/materials/${materialId}/`)
+}
+
+export function fetchPrintJobs() {
+  return api.get('/api/printjobs/')
+}
+
 export function fetchShopManagerPochtaSettings() {
   return api.get('/api/shop/manager/pochta-settings')
 }

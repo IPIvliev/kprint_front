@@ -1,23 +1,24 @@
 .cmp-components-print-printprice .item_center, .cmp-components-print-printprice.item_center{
-  display:inline-block;
-    text-align:center;
+  display: inline-block;
+  text-align: center;
 }
 
 .cmp-components-print-printprice .print_price, .cmp-components-print-printprice.print_price{
-  margin-top:120px;
-  vertical-align:middle;
-  display:inline-block;
+  margin-top: 120px;
+  vertical-align: middle;
+  display: inline-block;
 
-    background-color: rgba(45, 133, 233, .1);
-    width: 500px;
-    height: 300px;
+  background-color: rgba(45, 133, 233, .1);
+  width: 500px;
+  min-height: 300px;
+  padding: 0 24px 24px;
 
-    border-radius: 40px;
-    border: 2px dashed;
-    border-color: rgba(45, 133, 233, 1);
-    box-shadow: 0px 8px 12px #dde2e533, -10px 34px 34px #0000000f;
-    backdrop-filter: blur(8px) brightness(100%);
-    -webkit-backdrop-filter: blur(8px) brightness(100%); 
+  border-radius: 40px;
+  border: 2px dashed;
+  border-color: rgba(45, 133, 233, 1);
+  box-shadow: 0 8px 12px #dde2e533, -10px 34px 34px #0000000f;
+  backdrop-filter: blur(8px) brightness(100%);
+  -webkit-backdrop-filter: blur(8px) brightness(100%);
 }
 
 .cmp-components-print-printprice .icon_print, .cmp-components-print-printprice.icon_print{
@@ -34,4 +35,217 @@
 
 .cmp-components-print-printprice .print_button, .cmp-components-print-printprice.print_button{
   margin-top: 20px;
+}
+
+.cmp-components-print-printprice .print_error,
+.cmp-components-print-printprice .print_modal_error{
+  margin-top: 12px;
+  color: #c13333;
+  font-size: 14px;
+}
+
+.cmp-components-print-printprice .print_file_input,
+.cmp-components-print-printprice.print_file_input{
+  display: none;
+}
+
+.print_modal_overlay{
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(18, 36, 56, .6);
+}
+
+.print_modal{
+  position: relative;
+  width: 100%;
+  max-width: 1450px;
+  max-height: 92vh;
+  overflow: auto;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 24px;
+}
+
+.print_modal_close{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 1;
+  color: #253448;
+  background: #eaf0f7;
+}
+
+.print_modal_header{
+  margin-bottom: 20px;
+}
+
+.print_modal_filename{
+  margin: 8px 0 0;
+  color: #607187;
+  word-break: break-word;
+}
+
+.print_modal_content{
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.print_model_preview_wrapper{
+  background: linear-gradient(180deg, #f4f8fc 0%, #ebf1f8 100%);
+  border-radius: 16px;
+  padding: 10px;
+}
+
+.print_model_preview{
+  width: 100%;
+  height: 420px;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.print_model_preview:active{
+  cursor: grabbing;
+}
+
+.print_materials{
+  max-height: 460px;
+  overflow: auto;
+  padding-right: 8px;
+}
+
+.print_material_category + .print_material_category{
+  margin-top: 14px;
+}
+
+.print_material_category_title{
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+
+.print_material_item{
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  align-items: center;
+  column-gap: 8px;
+  margin: 0 0 8px;
+  padding: 8px 10px;
+  border: 1px solid #d6e0ec;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.print_material_item.active{
+  border-color: #2d85e9;
+  background: rgba(45, 133, 233, .06);
+}
+
+.print_material_color{
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #c3cfde;
+}
+
+.print_material_name{
+  font-weight: 600;
+}
+
+.print_material_price{
+  color: #4d627b;
+  font-size: 13px;
+}
+
+.print_result{
+  margin-top: 20px;
+  border-top: 1px solid #dde6f0;
+  padding-top: 16px;
+}
+
+.print_result p{
+  margin-bottom: 8px;
+}
+
+.print_hint{
+  color: #4d627b;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.print_size_block{
+  border: 1px solid #dde6f0;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: #f8fbff;
+}
+
+.print_size_original{
+  margin: 0 0 10px;
+}
+
+.print_size_inputs{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(110px, 1fr)) auto;
+  gap: 8px;
+  align-items: end;
+}
+
+.print_size_inputs label{
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  color: #4d627b;
+}
+
+.print_size_inputs input{
+  margin-top: 4px;
+  border: 1px solid #d6e0ec;
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+
+.print_size_reset{
+  border: 1px solid #c5d5e8;
+  border-radius: 8px;
+  background: #fff;
+  color: #355d86;
+  padding: 7px 12px;
+  height: 36px;
+}
+
+.print_scale_line{
+  margin: 10px 0 0;
+  color: #3a516d;
+  font-size: 13px;
+}
+
+@media (max-width: 992px){
+  .cmp-components-print-printprice .print_price, .cmp-components-print-printprice.print_price{
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .print_modal_content{
+    grid-template-columns: 1fr;
+  }
+
+  .print_model_preview{
+    height: 300px;
+  }
+
+  .print_size_inputs{
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,6 +1,6 @@
 <template>
 							<div class="col-xxl-3 col-xl-4 d-none d-xl-block">
-								<div class="panel__block panel__block--1" :class="{ 'panel__block--menu-open': newsOpen || studyOpen || shopOpen || filterOpen || deliveryOpen }">
+								<div class="panel__block panel__block--1" :class="{ 'panel__block--menu-open': newsOpen || studyOpen || shopOpen || filterOpen || deliveryOpen || printOpen }">
 									<div class="panel__head"><router-link class="panel__profile" to="/panel/edit">
 											<div class="panel__profile-img"> <img :src="profileAvatar" alt=""></div>
 											<div class="panel__profile-content">
@@ -297,12 +297,60 @@
                         </ul>
                       </li>
                       <li>
-                        <router-link class="panel__menu-link" to="/panel/models">
+                        <button
+                          type="button"
+                          class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"
+                          :class="{ 'panel__menu-link--open': printOpen }"
+                          @click="togglePrintMenu"
+                        >
                           <span class="panel__menu-icon">
                             <img src="@/assets/img/panel-icons/models.svg" alt="">
                           </span>
                           Заказы на печать
-                        </router-link>
+                          <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': printOpen }">▾</span>
+                        </button>
+                        <ul v-if="printOpen" class="panel__menu-sub">
+                          <li>
+                            <button
+                              type="button"
+                              class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"
+                              :class="{ 'panel__menu-link--open': printMaterialsOpen }"
+                              @click="togglePrintMaterialsMenu"
+                            >
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/panel-icons/categories.svg" alt="">
+                              </span>
+                              Материалы
+                              <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': printMaterialsOpen }">▾</span>
+                            </button>
+                            <ul v-if="printMaterialsOpen" class="panel__menu-sub">
+                              <li>
+                                <router-link class="panel__menu-link" to="/panel/print/material-categories" active-class="panel__menu-link--active">
+                                  <span class="panel__menu-icon">
+                                    <img src="@/assets/img/panel-icons/categories.svg" alt="">
+                                  </span>
+                                  Категории
+                                </router-link>
+                              </li>
+                              <li>
+                                <router-link class="panel__menu-link" to="/panel/print/materials" active-class="panel__menu-link--active">
+                                  <span class="panel__menu-icon">
+                                    <img src="@/assets/img/panel-icons/products.svg" alt="">
+                                  </span>
+                                  Материалы
+                                </router-link>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/print/orders" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/panel-icons/orders.svg" alt="">
+                              </span>
+                              Заказы
+                            </router-link>
+                          </li>
+                        </ul>
                       </li>
                       <li>
                         <a class="panel__menu-link" :href="telegramBotUrl" target="_blank" rel="noopener">
@@ -350,6 +398,8 @@ export default {
       shopOpen: false,
       deliveryOpen: false,
       filterOpen: false,
+      printOpen: false,
+      printMaterialsOpen: false,
     }
   },
   computed: {
@@ -420,6 +470,15 @@ export default {
         this.shopOpen = true
       }
     },
+    togglePrintMenu() {
+      this.printOpen = !this.printOpen
+    },
+    togglePrintMaterialsMenu() {
+      this.printMaterialsOpen = !this.printMaterialsOpen
+      if (this.printMaterialsOpen) {
+        this.printOpen = true
+      }
+    },
   },
   mounted() {
     this.syncPanelMode()
@@ -444,6 +503,12 @@ export default {
     }
     if (this.$route && this.$route.path && this.$route.path.includes('/panel/shop/filter-')) {
       this.filterOpen = true
+    }
+    if (this.$route && this.$route.path && (this.$route.path.includes('/panel/print') || this.$route.path.includes('/panel/models'))) {
+      this.printOpen = true
+    }
+    if (this.$route && this.$route.path && this.$route.path.includes('/panel/print/material-')) {
+      this.printMaterialsOpen = true
     }
   },
   beforeUnmount() {

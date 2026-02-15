@@ -200,8 +200,23 @@ const routes = [
       {
         path: 'models',
         name: 'PanelModels',
-        component: () => import('../views/Panel/PanelModels.vue'),
-      },      
+        redirect: '/panel/print/orders',
+      },
+      {
+        path: 'print/orders',
+        name: 'PanelPrintOrders',
+        component: () => import('../views/Panel/PanelPrintOrders.vue'),
+      },
+      {
+        path: 'print/material-categories',
+        name: 'PanelPrintMaterialCategories',
+        component: () => import('../views/Panel/PanelPrintMaterialCategories.vue'),
+      },
+      {
+        path: 'print/materials',
+        name: 'PanelPrintMaterials',
+        component: () => import('../views/Panel/PanelPrintMaterials.vue'),
+      },
       {
         path: 'news',
         redirect: '/panel/news/articles',
