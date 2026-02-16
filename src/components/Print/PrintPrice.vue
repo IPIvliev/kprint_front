@@ -76,14 +76,14 @@
 
           <div class="print_result">
             <p class="print_hint">
-              Если объём выглядит некорректно, задайте итоговые размеры модели.
+              Для расчета используем объём по формуле X × Y × Z. Укажите итоговые габариты модели в мм.
             </p>
 
             <div v-if="hasModelData" class="print_size_block">
               <p class="print_size_original">
-                Исходные размеры: X {{ formatVolume(originalSizeMm.x) }} мм,
-                Y {{ formatVolume(originalSizeMm.y) }} мм,
-                Z {{ formatVolume(originalSizeMm.z) }} мм
+                Исходные размеры: X {{ formatDimension(originalSizeMm.x) }} мм,
+                Y {{ formatDimension(originalSizeMm.y) }} мм,
+                Z {{ formatDimension(originalSizeMm.z) }} мм
               </p>
 
               <div class="print_size_inputs">
@@ -92,8 +92,8 @@
                   <input
                     v-model="targetSizeMm.x"
                     type="number"
-                    min="0.01"
-                    step="0.01"
+                    min="1"
+                    step="1"
                     @input="onSizeAxisInput('x')"
                   >
                 </label>
@@ -102,8 +102,8 @@
                   <input
                     v-model="targetSizeMm.y"
                     type="number"
-                    min="0.01"
-                    step="0.01"
+                    min="1"
+                    step="1"
                     @input="onSizeAxisInput('y')"
                   >
                 </label>
@@ -112,8 +112,8 @@
                   <input
                     v-model="targetSizeMm.z"
                     type="number"
-                    min="0.01"
-                    step="0.01"
+                    min="1"
+                    step="1"
                     @input="onSizeAxisInput('z')"
                   >
                 </label>
@@ -121,17 +121,33 @@
                   Подставить исходные
                 </button>
               </div>
-
-              <p class="print_scale_line">
-                Масштаб: X {{ formatScale(scaleX) }}, Y {{ formatScale(scaleY) }}, Z {{ formatScale(scaleZ) }}
-              </p>
             </div>
 
-            <p>Исходный объём: <strong>{{ formatVolume(pricedVolume) }} мм3</strong></p>
+            <p>Объём модели (X × Y × Z): <strong>{{ formatVolume(modelVolumeMm3) }} мм3</strong></p>
             <p>
               Примерная стоимость:
               <strong>{{ formatMoney(estimatedPrice) }}</strong>
             </p>
+            <div class="print_size_inputs">
+              <label>
+                Количество деталей
+                <input
+                  v-model.number="orderQuantity"
+                  type="number"
+                  min="1"
+                  step="1"
+                >
+              </label>
+              <button
+                class="btn btn--red"
+                type="button"
+                :disabled="isCreatingOrder || !canCreateOrder"
+                @click="onCreateOrderClick"
+              >
+                {{ isCreatingOrder ? 'Создаем заказ...' : 'Заказать печать' }}
+              </button>
+            </div>
+            <p v-if="orderError" class="print_modal_error">{{ orderError }}</p>
           </div>
         </div>
       </div>
@@ -144,7 +160,8 @@ import * as THREE from 'three'
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { markRaw } from 'vue'
-import { fetchPrintMaterialCategories } from '@/services/print.service'
+import { createPrintOrder, fetchPrintMaterialCategories } from '@/services/print.service'
+import { buildPrintOrderFormData, setPendingPrintOrderDraft } from '@/services/pending-print-order.service'
 
 const MONEY_FORMATTER = new Intl.NumberFormat('ru-RU', {
   style: 'currency',
@@ -154,8 +171,8 @@ const MONEY_FORMATTER = new Intl.NumberFormat('ru-RU', {
 })
 
 const VOLUME_FORMATTER = new Intl.NumberFormat('ru-RU', {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0
 })
 
 export default {
@@ -163,9 +180,13 @@ export default {
     return {
       isModalOpen: false,
       selectedFileName: '',
+      selectedFile: null,
       fileError: '',
       modelError: '',
       materialsError: '',
+      orderError: '',
+      isCreatingOrder: false,
+      orderQuantity: 1,
       isLoadingMaterials: false,
       materialCategories: [],
       selectedMaterialId: null,
@@ -180,6 +201,7 @@ export default {
         y: '',
         z: ''
       },
+      previewImageFile: null,
       renderer: null,
       scene: null,
       camera: null,
@@ -187,7 +209,6 @@ export default {
       controls: null,
       animationFrameId: null,
       hasResizeListener: false,
-      isUpdatingTargetSize: false,
       isLeftDraggingModel: false,
       isRightDraggingCamera: false,
       lastPointerPosition: {
@@ -215,48 +236,34 @@ export default {
     },
     parsedTargetSizeMm() {
       return {
-        x: this.toPositiveNumber(this.targetSizeMm.x),
-        y: this.toPositiveNumber(this.targetSizeMm.y),
-        z: this.toPositiveNumber(this.targetSizeMm.z)
+        x: this.toPositiveInteger(this.targetSizeMm.x),
+        y: this.toPositiveInteger(this.targetSizeMm.y),
+        z: this.toPositiveInteger(this.targetSizeMm.z)
       }
-    },
-    uniformScale() {
-      const axes = ['x', 'y', 'z']
-      for (const axis of axes) {
-        const target = this.parsedTargetSizeMm[axis]
-        const original = this.originalSizeMm[axis]
-        if (Number.isFinite(target) && target > 0 && Number.isFinite(original) && original > 0) {
-          return target / original
-        }
-      }
-      return 1
-    },
-    scaleX() {
-      return this.uniformScale
-    },
-    scaleY() {
-      return this.uniformScale
-    },
-    scaleZ() {
-      return this.uniformScale
-    },
-    baseModelVolumeMm3() {
-      return this.rawModelVolume
     },
     modelVolumeMm3() {
-      return this.baseModelVolumeMm3 * this.uniformScale * this.uniformScale * this.uniformScale
-    },
-    volumeWithMarginMm3() {
-      return this.modelVolumeMm3 * 1.2
-    },
-    pricedVolume() {
-      return this.volumeWithMarginMm3 / 1000
+      const { x, y, z } = this.parsedTargetSizeMm
+      if (!x || !y || !z) {
+        return 0
+      }
+      return x * y * z
     },
     estimatedPrice() {
       if (!this.selectedMaterial) {
         return 0
       }
-      return this.pricedVolume * this.toNumber(this.selectedMaterial.price_per_mm3)
+      return this.modelVolumeMm3 * this.toNumber(this.selectedMaterial.price_per_mm3)
+    },
+    canCreateOrder() {
+      return Boolean(
+        this.selectedFile &&
+        this.hasModelData &&
+        this.selectedMaterial &&
+        this.orderQuantity > 0 &&
+        this.parsedTargetSizeMm.x &&
+        this.parsedTargetSizeMm.y &&
+        this.parsedTargetSizeMm.z,
+      )
     }
   },
   methods: {
@@ -281,6 +288,10 @@ export default {
 
       this.fileError = ''
       this.selectedFileName = file.name
+      this.selectedFile = file
+      this.previewImageFile = null
+      this.orderError = ''
+      this.orderQuantity = 1
       this.isModalOpen = true
 
       try {
@@ -425,6 +436,9 @@ export default {
       }
 
       this.renderLoop()
+      window.requestAnimationFrame(() => {
+        this.capturePreviewImage()
+      })
     },
     fitCameraToMesh() {
       if (!this.mesh || !this.camera) {
@@ -520,10 +534,99 @@ export default {
         vertexC.set(position.getX(index + 2), position.getY(index + 2), position.getZ(index + 2)).sub(center)
 
         const tetrahedronVolume = vertexA.dot(cross.crossVectors(vertexB, vertexC)) / 6
-        volume += Math.abs(tetrahedronVolume)
+        volume += tetrahedronVolume
       }
 
-      return volume
+      return Math.abs(volume)
+    },
+    capturePreviewImage() {
+      const canvas = this.renderer?.domElement
+      if (!canvas || typeof canvas.toBlob !== 'function') {
+        return
+      }
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          return
+        }
+        this.previewImageFile = new File([blob], `print-preview-${Date.now()}.png`, {
+          type: 'image/png',
+        })
+      }, 'image/png')
+    },
+    buildOrderDraft() {
+      const quantity = Math.max(1, Number(this.orderQuantity) || 1)
+      const dimensionX = this.parsedTargetSizeMm.x
+      const dimensionY = this.parsedTargetSizeMm.y
+      const dimensionZ = this.parsedTargetSizeMm.z
+      return {
+        file: this.selectedFile,
+        quantity,
+        price_client: this.estimatedPrice.toFixed(2),
+        volume_mm3: String(this.modelVolumeMm3),
+        material_name: this.selectedMaterial?.name || '',
+        preview_image: this.previewImageFile,
+        dimension_x_mm: String(dimensionX || ''),
+        dimension_y_mm: String(dimensionY || ''),
+        dimension_z_mm: String(dimensionZ || ''),
+      }
+    },
+    maybeStartUploadFromRoute() {
+      if (this.$route?.query?.start !== 'upload') {
+        return
+      }
+      this.$nextTick(() => {
+        this.onCalculateClick()
+        this.$router.replace({ path: '/print' }).catch(() => {})
+      })
+    },
+    async onCreateOrderClick() {
+      if (!this.canCreateOrder) {
+        this.orderError = 'Проверьте файл, материал, габариты и количество.'
+        return
+      }
+
+      const draft = this.buildOrderDraft()
+
+      if (!this.$store?.state?.auth?.status?.loggedIn) {
+        setPendingPrintOrderDraft(draft)
+        this.closeModal()
+        this.$router.push({
+          path: '/registration',
+          query: { next: '/login', create_print_order: '1' },
+        })
+        return
+      }
+
+      this.isCreatingOrder = true
+      this.orderError = ''
+
+      try {
+        const payload = buildPrintOrderFormData(draft)
+        const response = await createPrintOrder(payload)
+        const createdId = response?.data?.id
+        this.closeModal()
+        if (createdId) {
+          this.$router.push({
+            path: '/panel/print/orders',
+            query: { orderId: String(createdId) },
+          })
+          return
+        }
+        this.$router.push('/panel/print/orders')
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          setPendingPrintOrderDraft(draft)
+          this.closeModal()
+          this.$router.push({
+            path: '/registration',
+            query: { next: '/login', create_print_order: '1' },
+          })
+          return
+        }
+        this.orderError = error?.userMessage || 'Не удалось создать заказ. Попробуйте еще раз.'
+      } finally {
+        this.isCreatingOrder = false
+      }
     },
     onViewerContextMenu(event) {
       event.preventDefault()
@@ -612,41 +715,27 @@ export default {
       }
     },
     setTargetSizeToOriginal() {
-      this.isUpdatingTargetSize = true
       this.targetSizeMm = {
         x: this.formatInputNumber(this.originalSizeMm.x),
         y: this.formatInputNumber(this.originalSizeMm.y),
         z: this.formatInputNumber(this.originalSizeMm.z)
       }
-      this.isUpdatingTargetSize = false
     },
     onSizeAxisInput(axis) {
-      if (this.isUpdatingTargetSize) {
-        return
-      }
-
-      const targetValue = this.toPositiveNumber(this.targetSizeMm[axis])
-      const originalValue = this.originalSizeMm[axis]
-      if (!targetValue || !originalValue) {
-        return
-      }
-
-      const scale = targetValue / originalValue
-      this.isUpdatingTargetSize = true
+      const current = this.toPositiveInteger(this.targetSizeMm[axis])
       this.targetSizeMm = {
-        x: this.formatInputNumber(this.originalSizeMm.x * scale),
-        y: this.formatInputNumber(this.originalSizeMm.y * scale),
-        z: this.formatInputNumber(this.originalSizeMm.z * scale)
+        ...this.targetSizeMm,
+        [axis]: current ? String(current) : ''
       }
-      this.isUpdatingTargetSize = false
     },
     formatInputNumber(value) {
-      if (!Number.isFinite(value) || value <= 0) {
+      const integer = this.toPositiveInteger(value)
+      if (!integer) {
         return ''
       }
-      return value.toFixed(2)
+      return String(integer)
     },
-    toPositiveNumber(value) {
+    toPositiveInteger(value) {
       if (value === null || value === undefined || value === '') {
         return null
       }
@@ -655,7 +744,7 @@ export default {
       if (!Number.isFinite(parsed) || parsed <= 0) {
         return null
       }
-      return parsed
+      return Math.max(1, Math.round(parsed))
     },
     clearViewer() {
       if (this.animationFrameId) {
@@ -703,10 +792,15 @@ export default {
     closeModal() {
       this.isModalOpen = false
       this.selectedFileName = ''
+      this.selectedFile = null
       this.modelError = ''
+      this.orderError = ''
+      this.isCreatingOrder = false
+      this.orderQuantity = 1
       this.rawModelVolume = 0
       this.rawBoundsSize = { x: 0, y: 0, z: 0 }
       this.targetSizeMm = { x: '', y: '', z: '' }
+      this.previewImageFile = null
       this.clearViewer()
       if (this.hasResizeListener) {
         window.removeEventListener('resize', this.handleResize)
@@ -720,12 +814,21 @@ export default {
     formatMoney(value) {
       return MONEY_FORMATTER.format(value || 0)
     },
+    formatDimension(value) {
+      const integer = this.toPositiveInteger(value)
+      return integer || 0
+    },
     formatVolume(value) {
       return VOLUME_FORMATTER.format(value || 0)
-    },
-    formatScale(value) {
-      return `${Number(value || 1).toFixed(3)}x`
     }
+  },
+  mounted() {
+    this.maybeStartUploadFromRoute()
+  },
+  watch: {
+    '$route.query.start'() {
+      this.maybeStartUploadFromRoute()
+    },
   },
   beforeUnmount() {
     this.clearViewer()

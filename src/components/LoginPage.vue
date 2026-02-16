@@ -75,6 +75,13 @@
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
+import { createPrintOrder } from "@/services/print.service";
+import {
+  buildPrintOrderFormData,
+  consumePendingPrintOrderDraft,
+  getPendingPrintOrderDraft,
+} from "@/services/pending-print-order.service";
+
 export default {
   name: "Login",
   components: {
@@ -100,26 +107,67 @@ export default {
   },
   created() {
     if (this.loggedIn) {
-      this.$router.push("/panel");
+      this.redirectAuthorizedUser();
     }
   },
   methods: {
-    handleLogin(user) {
-      this.loading = true;
-      this.$store.dispatch("auth/login", user).then(
-        () => {
-          this.$router.push("/panel");
-        },
-        (error) => {
-          this.loading = false;
-          this.message =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-              error.message ||
-              error.toString();
+    resolveRedirectRoute(createdOrderId = null) {
+      if (createdOrderId) {
+        return {
+          path: "/panel/print/orders",
+          query: { orderId: String(createdOrderId) },
+        };
+      }
+
+      const nextPath = this.$route?.query?.next;
+      if (typeof nextPath === "string" && nextPath.startsWith("/")) {
+        return nextPath;
+      }
+
+      return "/panel";
+    },
+    async finalizePendingPrintOrder() {
+      const draft = consumePendingPrintOrderDraft();
+      if (!draft) {
+        return null;
+      }
+
+      if (!draft.file) {
+        throw new Error("Черновик заказа потерян. Загрузите STL повторно.");
+      }
+
+      const payload = buildPrintOrderFormData(draft);
+      const response = await createPrintOrder(payload);
+      return response?.data?.id || null;
+    },
+    async redirectAuthorizedUser() {
+      try {
+        let createdOrderId = null;
+        if (getPendingPrintOrderDraft()) {
+          createdOrderId = await this.finalizePendingPrintOrder();
         }
-      );
+        this.$router.push(this.resolveRedirectRoute(createdOrderId));
+      } catch (error) {
+        this.message = error?.userMessage || error?.message || "Не удалось создать заказ после входа.";
+      }
+    },
+    async handleLogin(user) {
+      this.loading = true;
+      this.message = "";
+      try {
+        await this.$store.dispatch("auth/login", user);
+        await this.redirectAuthorizedUser();
+      } catch (error) {
+        this.message =
+          error?.userMessage ||
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+      } finally {
+        this.loading = false;
+      }
     },
   },
 };
