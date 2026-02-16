@@ -21,6 +21,8 @@
 import * as THREE from 'three'
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { markRaw } from 'vue'
+import { fetchPrintOrderModelFile } from '@/services/print.service'
 
 const MAX_AUTO_PREVIEW_MB = 8
 
@@ -30,6 +32,10 @@ export default {
     modelUrl: {
       type: String,
       default: '',
+    },
+    orderId: {
+      type: [Number, String],
+      default: null,
     },
   },
   data() {
@@ -63,6 +69,9 @@ export default {
         this.prepareLoad(url)
       },
     },
+    orderId() {
+      this.prepareLoad(this.modelUrl)
+    },
   },
   methods: {
     async prepareLoad(url, force = false) {
@@ -71,7 +80,7 @@ export default {
       this.fileSizeBytes = null
       this.error = ''
 
-      if (!url) {
+      if (!url && !this.orderId) {
         this.error = 'Файл модели недоступен.'
         this.loading = false
         return
@@ -94,8 +103,15 @@ export default {
       await this.prepareLoad(this.modelUrl, true)
     },
     async fetchModelSizeBytes(url) {
+      if (this.orderId) {
+        return null
+      }
+
       try {
-        const headResponse = await fetch(url, { method: 'HEAD' })
+        const headResponse = await this.fetchModelRequest(url, { method: 'HEAD' })
+        if (!headResponse.ok) {
+          return null
+        }
         const contentLengthHeader = headResponse.headers.get('content-length')
         const contentLength = Number(contentLengthHeader || 0)
         if (Number.isFinite(contentLength) && contentLength > 0) {
@@ -106,10 +122,13 @@ export default {
       }
 
       try {
-        const rangeResponse = await fetch(url, {
+        const rangeResponse = await this.fetchModelRequest(url, {
           method: 'GET',
           headers: { Range: 'bytes=0-0' },
         })
+        if (!rangeResponse.ok) {
+          return null
+        }
         const contentRange = rangeResponse.headers.get('content-range') || ''
         const sizePart = contentRange.includes('/') ? contentRange.split('/').pop() : ''
         const size = Number(sizePart || 0)
@@ -117,6 +136,108 @@ export default {
       } catch (error) {
         return null
       }
+    },
+    getAccessToken() {
+      try {
+        const user = JSON.parse(localStorage.getItem('user') || '{}')
+        return user?.accessToken || user?.access || ''
+      } catch (error) {
+        return ''
+      }
+    },
+    async fetchModelRequest(url, options = {}) {
+      const baseRequest = {
+        credentials: 'same-origin',
+        ...options,
+      }
+      let response = await fetch(url, baseRequest)
+      if (response.ok || ![401, 403].includes(response.status)) {
+        return response
+      }
+
+      const token = this.getAccessToken()
+      if (!token) {
+        return response
+      }
+
+      const headers = new Headers(baseRequest.headers || {})
+      headers.set('Authorization', `Bearer ${token}`)
+      response = await fetch(url, {
+        ...baseRequest,
+        headers,
+      })
+      return response
+    },
+    hasGeometryVertices(geometry) {
+      const position = geometry?.getAttribute ? geometry.getAttribute('position') : null
+      return Boolean(position && position.count >= 3)
+    },
+    parseGeometryFromArrayBuffer(loader, fileBuffer) {
+      let geometry = null
+      let binaryParseError = null
+      let textParseError = null
+
+      try {
+        geometry = loader.parse(fileBuffer)
+      } catch (error) {
+        binaryParseError = error
+      }
+
+      if (!this.hasGeometryVertices(geometry)) {
+        try {
+          const fileText = new TextDecoder('utf-8').decode(fileBuffer)
+          geometry = loader.parse(fileText)
+        } catch (error) {
+          textParseError = error
+        }
+      }
+
+      if (!this.hasGeometryVertices(geometry)) {
+        throw textParseError || binaryParseError || new Error('STL geometry is empty')
+      }
+
+      return geometry
+    },
+    async toArrayBuffer(payload) {
+      if (!payload) {
+        return null
+      }
+      if (payload instanceof ArrayBuffer) {
+        return payload
+      }
+      if (payload instanceof Blob) {
+        return payload.arrayBuffer()
+      }
+      if (ArrayBuffer.isView(payload)) {
+        const view = payload
+        return view.buffer.slice(view.byteOffset, view.byteOffset + view.byteLength)
+      }
+      return null
+    },
+    async loadGeometryFromUrl(url, loader) {
+      if (this.orderId) {
+        try {
+          const response = await fetchPrintOrderModelFile(this.orderId)
+          const fileBuffer = await this.toArrayBuffer(response?.data)
+          if (fileBuffer && fileBuffer.byteLength > 0) {
+            return this.parseGeometryFromArrayBuffer(loader, fileBuffer)
+          }
+        } catch (error) {
+          if (!url) {
+            throw error
+          }
+        }
+      }
+
+      const response = await this.fetchModelRequest(url, { method: 'GET' })
+      if (!response.ok) {
+        const error = new Error(`HTTP ${response.status}`)
+        error.statusCode = response.status
+        throw error
+      }
+
+      const fileBuffer = await response.arrayBuffer()
+      return this.parseGeometryFromArrayBuffer(loader, fileBuffer)
     },
     async loadModel(url) {
       await this.$nextTick()
@@ -131,17 +252,17 @@ export default {
       const width = container.clientWidth || 420
       const height = container.clientHeight || 320
 
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+      const renderer = markRaw(new THREE.WebGLRenderer({ antialias: true, alpha: true }))
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
       renderer.setSize(width, height)
       container.innerHTML = ''
       container.appendChild(renderer.domElement)
 
-      const scene = new THREE.Scene()
+      const scene = markRaw(new THREE.Scene())
       scene.background = null
 
-      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000)
-      const controls = new OrbitControls(camera, renderer.domElement)
+      const camera = markRaw(new THREE.PerspectiveCamera(45, width / height, 0.1, 10000))
+      const controls = markRaw(new OrbitControls(camera, renderer.domElement))
       controls.enableDamping = true
       controls.dampingFactor = 0.08
       controls.enableZoom = true
@@ -158,33 +279,39 @@ export default {
       this.controls = controls
 
       const loader = new STLLoader()
-      loader.load(
-        url,
-        (geometry) => {
-          geometry.computeVertexNormals()
-          geometry.computeBoundingBox()
+      try {
+        const geometry = await this.loadGeometryFromUrl(url, loader)
+        geometry.computeVertexNormals()
+        geometry.computeBoundingBox()
 
-          const material = new THREE.MeshStandardMaterial({
-            color: 0x7ea7d4,
-            metalness: 0.1,
-            roughness: 0.7,
-          })
-          const mesh = new THREE.Mesh(geometry, material)
-          scene.add(mesh)
-          this.mesh = mesh
+        const material = new THREE.MeshStandardMaterial({
+          color: 0x7ea7d4,
+          metalness: 0.1,
+          roughness: 0.7,
+        })
+        const mesh = markRaw(new THREE.Mesh(geometry, material))
+        scene.add(mesh)
+        this.mesh = mesh
 
-          this.fitCameraToMesh()
-          this.startRenderLoop()
-          this.observeResize(container)
+        this.fitCameraToMesh()
+        this.startRenderLoop()
+        this.observeResize(container)
 
-          this.loading = false
-        },
-        undefined,
-        () => {
-          this.loading = false
-          this.error = 'Не удалось загрузить 3D-модель. Попробуйте скачать STL или открыть модель позже.'
-        },
-      )
+        this.loading = false
+      } catch (error) {
+        console.error('OrderModelPreview load failed:', error)
+        this.loading = false
+        const statusCode = error?.statusCode || error?.response?.status
+        if (statusCode === 404) {
+          this.error = 'STL-файл не найден на сервере.'
+          return
+        }
+        if (statusCode === 401 || statusCode === 403) {
+          this.error = 'Нет доступа к STL-файлу. Обновите страницу и войдите заново.'
+          return
+        }
+        this.error = 'Не удалось загрузить 3D-модель. Попробуйте скачать STL или открыть модель позже.'
+      }
     },
     fitCameraToMesh() {
       if (!this.mesh || !this.camera || !this.controls) {

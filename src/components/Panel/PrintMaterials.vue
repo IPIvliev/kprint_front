@@ -38,8 +38,8 @@
                   <label for="filterPrintMaterialsCategory">Категория</label>
                   <select id="filterPrintMaterialsCategory" v-model="selectedCategoryId" class="form-control">
                     <option value="">Все категории</option>
-                    <option v-for="category in categories" :key="category.id" :value="String(category.id)">
-                      {{ category.name }}
+                    <option v-for="category in categoryOptions" :key="category.id" :value="String(category.id)">
+                      {{ categoryOptionLabel(category) }}
                     </option>
                   </select>
                 </div>
@@ -69,11 +69,11 @@
                       </td>
                       <td>
                         <span class="panel__table-subtitle">Категория:</span>
-                        <span class="panel__table-text">{{ material.category_name || categoryName(material.category) }}</span>
+                        <span class="panel__table-text">{{ material.category_full_name || material.category_name || categoryName(material.category) }}</span>
                       </td>
                       <td>
                         <span class="panel__table-subtitle">Цена:</span>
-                        <span class="panel__table-text">{{ material.price_per_mm3 }} ₽/мм3</span>
+                        <span class="panel__table-text">{{ material.price_per_mm3 }} руб/см3</span>
                       </td>
                       <td>
                         <span class="panel__table-subtitle">Цвет:</span>
@@ -136,8 +136,8 @@
               <label>Категория</label>
               <select v-model="form.category" class="form-control">
                 <option :value="null">Выберите категорию</option>
-                <option v-for="category in categories" :key="category.id" :value="category.id">
-                  {{ category.name }}
+                <option v-for="category in categoryOptions" :key="category.id" :value="category.id">
+                  {{ categoryOptionLabel(category) }}
                 </option>
               </select>
             </div>
@@ -146,8 +146,8 @@
               <input v-model="form.name" type="text" class="form-control" placeholder="Например, PLA White">
             </div>
             <div class="panel__formrow">
-              <label>Цена за 1 мм3</label>
-              <input v-model="form.price_per_mm3" type="number" min="0" step="0.0001" class="form-control">
+              <label>Цена за 1 см3, руб</label>
+              <input v-model="form.price_per_mm3" type="number" min="0" step="0.01" class="form-control">
             </div>
             <div class="panel__formrow">
               <label>Цвет</label>
@@ -209,24 +209,66 @@ export default {
         category: null,
         name: '',
         color: '#ffffff',
-        price_per_mm3: '0.0000',
+        price_per_mm3: '0.00',
         sort_order: 0,
         is_active: true,
       },
     }
   },
   computed: {
+    categoryOptions() {
+      const byParent = new Map()
+      this.categories.forEach((item) => {
+        const parentId = item.parent || null
+        if (!byParent.has(parentId)) {
+          byParent.set(parentId, [])
+        }
+        byParent.get(parentId).push(item)
+      })
+
+      for (const [, list] of byParent) {
+        list.sort((a, b) => {
+          const aSort = Number(a.sort_order || 0)
+          const bSort = Number(b.sort_order || 0)
+          if (aSort !== bSort) {
+            return aSort - bSort
+          }
+          return String(a.name || '').localeCompare(String(b.name || ''), 'ru')
+        })
+      }
+
+      const flattened = []
+      const walk = (parentId, depth) => {
+        const children = byParent.get(parentId) || []
+        children.forEach((child) => {
+          flattened.push({
+            ...child,
+            _depth: depth,
+          })
+          walk(child.id, depth + 1)
+        })
+      }
+
+      walk(null, 0)
+      return flattened
+    },
     filteredMaterials() {
       const term = this.searchTerm.trim().toLowerCase()
+      const selectedCategorySet = this.getCategoryFilterSet()
       return this.materials.filter((item) => {
-        if (this.selectedCategoryId && String(item.category) !== this.selectedCategoryId) {
+        if (selectedCategorySet && !selectedCategorySet.has(String(item.category))) {
           return false
         }
         if (!term) {
           return true
         }
         const name = String(item.name || '').toLowerCase()
-        const category = String(item.category_name || this.categoryName(item.category) || '').toLowerCase()
+        const category = String(
+          item.category_full_name ||
+          item.category_name ||
+          this.categoryName(item.category) ||
+          ''
+        ).toLowerCase()
         return name.includes(term) || category.includes(term)
       })
     },
@@ -253,7 +295,38 @@ export default {
     },
     categoryName(categoryId) {
       const category = this.categories.find((item) => Number(item.id) === Number(categoryId))
-      return category ? category.name : '—'
+      return category ? (category.full_name || category.name) : '—'
+    },
+    categoryOptionLabel(category) {
+      const depth = Number(category._depth || 0)
+      const prefix = depth ? `${'— '.repeat(depth)}` : ''
+      return `${prefix}${category.name}`
+    },
+    getCategoryFilterSet() {
+      if (!this.selectedCategoryId) {
+        return null
+      }
+      const rootId = Number(this.selectedCategoryId)
+      const childrenMap = new Map()
+      this.categories.forEach((category) => {
+        const parentId = category.parent || null
+        if (!childrenMap.has(parentId)) {
+          childrenMap.set(parentId, [])
+        }
+        childrenMap.get(parentId).push(category.id)
+      })
+
+      const result = new Set([String(rootId)])
+      const stack = [rootId]
+      while (stack.length) {
+        const current = stack.pop()
+        const children = childrenMap.get(current) || []
+        children.forEach((childId) => {
+          result.add(String(childId))
+          stack.push(childId)
+        })
+      }
+      return result
     },
     openCreate() {
       this.isEditing = false
@@ -263,7 +336,7 @@ export default {
         category: null,
         name: '',
         color: '#ffffff',
-        price_per_mm3: '0.0000',
+        price_per_mm3: '0.00',
         sort_order: 0,
         is_active: true,
       }
@@ -277,7 +350,7 @@ export default {
         category: material.category || null,
         name: material.name || '',
         color: (material.color || '#ffffff').toLowerCase(),
-        price_per_mm3: material.price_per_mm3 || '0.0000',
+        price_per_mm3: material.price_per_mm3 || '0.00',
         sort_order: Number(material.sort_order || 0),
         is_active: !!material.is_active,
       }
@@ -320,7 +393,7 @@ export default {
           category: Number(this.form.category),
           name: this.form.name.trim(),
           color,
-          price_per_mm3: price.toFixed(4),
+          price_per_mm3: price.toFixed(2),
           sort_order: Number(this.form.sort_order || 0),
           is_active: !!this.form.is_active,
         }

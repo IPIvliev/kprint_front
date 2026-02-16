@@ -50,7 +50,7 @@
                 :key="category.id"
                 class="print_material_category"
               >
-                <p class="print_material_category_title">{{ category.name }}</p>
+                <p class="print_material_category_title">{{ category.full_name || category.name }}</p>
                 <label
                   v-for="material in category.materials"
                   :key="material.id"
@@ -68,7 +68,7 @@
                     :style="{ backgroundColor: material.color || '#FFFFFF' }"
                   ></span>
                   <span class="print_material_name">{{ material.name }}</span>
-                  <span class="print_material_price">{{ material.price_per_mm3 }} ₽/мм3</span>
+                  <span class="print_material_price">{{ material.price_per_mm3 }} руб/см3</span>
                 </label>
               </div>
             </div>
@@ -76,44 +76,44 @@
 
           <div class="print_result">
             <p class="print_hint">
-              Для расчета используем объём по формуле X × Y × Z. Укажите итоговые габариты модели в мм.
+              Для расчета используем объём по формуле X × Y × Z. Укажите итоговые габариты модели в см.
             </p>
 
             <div v-if="hasModelData" class="print_size_block">
               <p class="print_size_original">
-                Исходные размеры: X {{ formatDimension(originalSizeMm.x) }} мм,
-                Y {{ formatDimension(originalSizeMm.y) }} мм,
-                Z {{ formatDimension(originalSizeMm.z) }} мм
+                Исходные размеры: X {{ formatDimension(originalSizeCm.x) }} см,
+                Y {{ formatDimension(originalSizeCm.y) }} см,
+                Z {{ formatDimension(originalSizeCm.z) }} см
               </p>
 
               <div class="print_size_inputs">
                 <label>
-                  X, мм
+                  X, см
                   <input
-                    v-model="targetSizeMm.x"
+                    v-model="targetSizeCm.x"
                     type="number"
-                    min="1"
-                    step="1"
+                    min="0.01"
+                    step="0.01"
                     @input="onSizeAxisInput('x')"
                   >
                 </label>
                 <label>
-                  Y, мм
+                  Y, см
                   <input
-                    v-model="targetSizeMm.y"
+                    v-model="targetSizeCm.y"
                     type="number"
-                    min="1"
-                    step="1"
+                    min="0.01"
+                    step="0.01"
                     @input="onSizeAxisInput('y')"
                   >
                 </label>
                 <label>
-                  Z, мм
+                  Z, см
                   <input
-                    v-model="targetSizeMm.z"
+                    v-model="targetSizeCm.z"
                     type="number"
-                    min="1"
-                    step="1"
+                    min="0.01"
+                    step="0.01"
                     @input="onSizeAxisInput('z')"
                   >
                 </label>
@@ -123,9 +123,9 @@
               </div>
             </div>
 
-            <p>Объём модели (X × Y × Z): <strong>{{ formatVolume(modelVolumeMm3) }} мм3</strong></p>
+            <p>Объём модели (X × Y × Z): <strong>{{ formatVolume(modelVolumeCm3) }} см3</strong></p>
             <p>
-              Примерная стоимость:
+              Примерная стоимость ({{ orderQuantityValue || 1 }} шт.):
               <strong>{{ formatMoney(estimatedPrice) }}</strong>
             </p>
             <div class="print_size_inputs">
@@ -171,8 +171,8 @@ const MONEY_FORMATTER = new Intl.NumberFormat('ru-RU', {
 })
 
 const VOLUME_FORMATTER = new Intl.NumberFormat('ru-RU', {
-  minimumFractionDigits: 0,
-  maximumFractionDigits: 0
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
 })
 
 export default {
@@ -196,7 +196,7 @@ export default {
         y: 0,
         z: 0
       },
-      targetSizeMm: {
+      targetSizeCm: {
         x: '',
         y: '',
         z: ''
@@ -227,42 +227,55 @@ export default {
     hasModelData() {
       return this.rawModelVolume > 0
     },
-    originalSizeMm() {
+    originalSizeCm() {
       return {
-        x: this.rawBoundsSize.x,
-        y: this.rawBoundsSize.y,
-        z: this.rawBoundsSize.z
+        x: this.rawBoundsSize.x / 10,
+        y: this.rawBoundsSize.y / 10,
+        z: this.rawBoundsSize.z / 10
       }
     },
-    parsedTargetSizeMm() {
+    parsedTargetSizeCm() {
       return {
-        x: this.toPositiveInteger(this.targetSizeMm.x),
-        y: this.toPositiveInteger(this.targetSizeMm.y),
-        z: this.toPositiveInteger(this.targetSizeMm.z)
+        x: this.toPositiveDecimal(this.targetSizeCm.x),
+        y: this.toPositiveDecimal(this.targetSizeCm.y),
+        z: this.toPositiveDecimal(this.targetSizeCm.z)
       }
     },
-    modelVolumeMm3() {
-      const { x, y, z } = this.parsedTargetSizeMm
+    modelVolumeCm3() {
+      const { x, y, z } = this.parsedTargetSizeCm
       if (!x || !y || !z) {
         return 0
       }
-      return x * y * z
+      return this.roundTo2(x * y * z)
     },
-    estimatedPrice() {
+    orderQuantityValue() {
+      const normalized = Math.floor(this.toNumber(this.orderQuantity))
+      if (!Number.isFinite(normalized) || normalized <= 0) {
+        return 0
+      }
+      return normalized
+    },
+    unitPrice() {
       if (!this.selectedMaterial) {
         return 0
       }
-      return this.modelVolumeMm3 * this.toNumber(this.selectedMaterial.price_per_mm3)
+      return this.roundTo2(this.modelVolumeCm3 * this.toNumber(this.selectedMaterial.price_per_mm3))
+    },
+    estimatedPrice() {
+      if (!this.unitPrice || !this.orderQuantityValue) {
+        return 0
+      }
+      return this.roundTo2(this.unitPrice * this.orderQuantityValue)
     },
     canCreateOrder() {
       return Boolean(
         this.selectedFile &&
         this.hasModelData &&
         this.selectedMaterial &&
-        this.orderQuantity > 0 &&
-        this.parsedTargetSizeMm.x &&
-        this.parsedTargetSizeMm.y &&
-        this.parsedTargetSizeMm.z,
+        this.orderQuantityValue > 0 &&
+        this.parsedTargetSizeCm.x &&
+        this.parsedTargetSizeCm.y &&
+        this.parsedTargetSizeCm.z,
       )
     }
   },
@@ -554,20 +567,23 @@ export default {
       }, 'image/png')
     },
     buildOrderDraft() {
-      const quantity = Math.max(1, Number(this.orderQuantity) || 1)
-      const dimensionX = this.parsedTargetSizeMm.x
-      const dimensionY = this.parsedTargetSizeMm.y
-      const dimensionZ = this.parsedTargetSizeMm.z
+      const quantity = this.orderQuantityValue || 1
+      const dimensionXcm = this.parsedTargetSizeCm.x
+      const dimensionYcm = this.parsedTargetSizeCm.y
+      const dimensionZcm = this.parsedTargetSizeCm.z
+      const dimensionXmm = this.roundTo2(dimensionXcm * 10)
+      const dimensionYmm = this.roundTo2(dimensionYcm * 10)
+      const dimensionZmm = this.roundTo2(dimensionZcm * 10)
       return {
         file: this.selectedFile,
         quantity,
         price_client: this.estimatedPrice.toFixed(2),
-        volume_mm3: String(this.modelVolumeMm3),
+        volume_mm3: String(this.roundTo2(this.modelVolumeCm3 * 1000)),
         material_name: this.selectedMaterial?.name || '',
         preview_image: this.previewImageFile,
-        dimension_x_mm: String(dimensionX || ''),
-        dimension_y_mm: String(dimensionY || ''),
-        dimension_z_mm: String(dimensionZ || ''),
+        dimension_x_mm: String(dimensionXmm || ''),
+        dimension_y_mm: String(dimensionYmm || ''),
+        dimension_z_mm: String(dimensionZmm || ''),
       }
     },
     maybeStartUploadFromRoute() {
@@ -715,27 +731,37 @@ export default {
       }
     },
     setTargetSizeToOriginal() {
-      this.targetSizeMm = {
-        x: this.formatInputNumber(this.originalSizeMm.x),
-        y: this.formatInputNumber(this.originalSizeMm.y),
-        z: this.formatInputNumber(this.originalSizeMm.z)
+      this.targetSizeCm = {
+        x: this.formatInputNumber(this.originalSizeCm.x),
+        y: this.formatInputNumber(this.originalSizeCm.y),
+        z: this.formatInputNumber(this.originalSizeCm.z)
       }
     },
     onSizeAxisInput(axis) {
-      const current = this.toPositiveInteger(this.targetSizeMm[axis])
-      this.targetSizeMm = {
-        ...this.targetSizeMm,
-        [axis]: current ? String(current) : ''
+      const current = this.toPositiveDecimal(this.targetSizeCm[axis])
+      const originalAxis = this.toPositiveDecimal(this.originalSizeCm[axis])
+      if (!current || !originalAxis) {
+        this.targetSizeCm = {
+          ...this.targetSizeCm,
+          [axis]: ''
+        }
+        return
+      }
+      const scaleFactor = current / originalAxis
+      this.targetSizeCm = {
+        x: this.formatInputNumber(this.originalSizeCm.x * scaleFactor),
+        y: this.formatInputNumber(this.originalSizeCm.y * scaleFactor),
+        z: this.formatInputNumber(this.originalSizeCm.z * scaleFactor),
       }
     },
     formatInputNumber(value) {
-      const integer = this.toPositiveInteger(value)
-      if (!integer) {
+      const number = this.toPositiveDecimal(value)
+      if (!number) {
         return ''
       }
-      return String(integer)
+      return this.roundTo2(number).toFixed(2)
     },
-    toPositiveInteger(value) {
+    toPositiveDecimal(value) {
       if (value === null || value === undefined || value === '') {
         return null
       }
@@ -744,7 +770,13 @@ export default {
       if (!Number.isFinite(parsed) || parsed <= 0) {
         return null
       }
-      return Math.max(1, Math.round(parsed))
+      return parsed
+    },
+    roundTo2(value) {
+      if (!Number.isFinite(value)) {
+        return 0
+      }
+      return Math.round(value * 100) / 100
     },
     clearViewer() {
       if (this.animationFrameId) {
@@ -799,7 +831,7 @@ export default {
       this.orderQuantity = 1
       this.rawModelVolume = 0
       this.rawBoundsSize = { x: 0, y: 0, z: 0 }
-      this.targetSizeMm = { x: '', y: '', z: '' }
+      this.targetSizeCm = { x: '', y: '', z: '' }
       this.previewImageFile = null
       this.clearViewer()
       if (this.hasResizeListener) {
@@ -815,11 +847,15 @@ export default {
       return MONEY_FORMATTER.format(value || 0)
     },
     formatDimension(value) {
-      const integer = this.toPositiveInteger(value)
-      return integer || 0
+      const number = this.toPositiveDecimal(value)
+      if (!number) {
+        return '0.00'
+      }
+      return this.roundTo2(number).toFixed(2)
     },
     formatVolume(value) {
-      return VOLUME_FORMATTER.format(value || 0)
+      const normalized = this.roundTo2(this.toNumber(value))
+      return VOLUME_FORMATTER.format(normalized)
     }
   },
   mounted() {

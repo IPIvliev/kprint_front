@@ -55,8 +55,12 @@
                   <table>
                     <tr v-for="category in filteredCategories" :key="category.id">
                       <td>
-                        <span class="panel__table-title">{{ category.name }}</span>
-                        <span class="panel__table-sn panel__table-sn--detail">ID: {{ category.id }}</span>
+                        <span class="panel__table-title">{{ displayCategoryName(category) }}</span>
+                        <span class="panel__table-sn panel__table-sn--detail">{{ category.full_name || category.name }}</span>
+                      </td>
+                      <td>
+                        <span class="panel__table-subtitle">Родитель:</span>
+                        <span class="panel__table-text">{{ parentTitle(category.parent) }}</span>
                       </td>
                       <td>
                         <span class="panel__table-subtitle">Порядок:</span>
@@ -114,6 +118,15 @@
               <input v-model="form.name" type="text" class="form-control" placeholder="Например, Фотополимеры">
             </div>
             <div class="panel__formrow">
+              <label>Родительская категория</label>
+              <select v-model="form.parent" class="form-control">
+                <option :value="null">Без родителя</option>
+                <option v-for="option in parentOptions" :key="option.id" :value="option.id">
+                  {{ displayCategoryName(option) }}
+                </option>
+              </select>
+            </div>
+            <div class="panel__formrow">
               <label>Порядок сортировки</label>
               <input v-model.number="form.sort_order" type="number" min="0" class="form-control">
             </div>
@@ -161,18 +174,63 @@ export default {
       currentId: null,
       form: {
         name: '',
+        parent: null,
         sort_order: 0,
         is_active: true,
       },
     }
   },
   computed: {
+    sortedCategories() {
+      const byParent = new Map()
+      this.categories.forEach((item) => {
+        const parentId = item.parent || null
+        if (!byParent.has(parentId)) {
+          byParent.set(parentId, [])
+        }
+        byParent.get(parentId).push(item)
+      })
+
+      for (const [, list] of byParent) {
+        list.sort((a, b) => {
+          const aSort = Number(a.sort_order || 0)
+          const bSort = Number(b.sort_order || 0)
+          if (aSort !== bSort) {
+            return aSort - bSort
+          }
+          return String(a.name || '').localeCompare(String(b.name || ''), 'ru')
+        })
+      }
+
+      const flattened = []
+      const walk = (parentId, depth) => {
+        const children = byParent.get(parentId) || []
+        children.forEach((child) => {
+          flattened.push({
+            ...child,
+            _depth: depth,
+          })
+          walk(child.id, depth + 1)
+        })
+      }
+
+      walk(null, 0)
+      return flattened
+    },
     filteredCategories() {
       const term = this.searchTerm.trim().toLowerCase()
       if (!term) {
-        return this.categories
+        return this.sortedCategories
       }
-      return this.categories.filter((item) => String(item.name || '').toLowerCase().includes(term))
+      return this.sortedCategories.filter((item) => {
+        const name = String(item.name || '').toLowerCase()
+        const fullName = String(item.full_name || '').toLowerCase()
+        return name.includes(term) || fullName.includes(term)
+      })
+    },
+    parentOptions() {
+      const excluded = new Set([this.currentId, ...this.getDescendantIds(this.currentId)].filter(Boolean))
+      return this.sortedCategories.filter((item) => !excluded.has(item.id))
     },
   },
   mounted() {
@@ -197,6 +255,7 @@ export default {
       this.error = ''
       this.form = {
         name: '',
+        parent: null,
         sort_order: 0,
         is_active: true,
       }
@@ -208,6 +267,7 @@ export default {
       this.error = ''
       this.form = {
         name: category.name || '',
+        parent: category.parent || null,
         sort_order: Number(category.sort_order || 0),
         is_active: !!category.is_active,
       }
@@ -226,6 +286,7 @@ export default {
       try {
         const payload = {
           name: this.form.name.trim(),
+          parent: this.form.parent || null,
           sort_order: Number(this.form.sort_order || 0),
           is_active: !!this.form.is_active,
         }
@@ -246,7 +307,11 @@ export default {
       if (!category || !category.id) {
         return
       }
-      if (!confirm(`Удалить категорию "${category.name}"?`)) {
+      const directChildren = this.categories.filter((item) => Number(item.parent) === Number(category.id)).length
+      const confirmText = directChildren
+        ? `Удалить категорию "${category.name}"? ${directChildren} влож. категорий станут верхнего уровня.`
+        : `Удалить категорию "${category.name}"?`
+      if (!confirm(confirmText)) {
         return
       }
       this.error = ''
@@ -256,6 +321,45 @@ export default {
       } catch (err) {
         this.error = err.userMessage || 'Не удалось удалить категорию'
       }
+    },
+    displayCategoryName(category) {
+      const depth = Number(category._depth || 0)
+      if (!depth) {
+        return category.name
+      }
+      return `${'— '.repeat(depth)}${category.name}`
+    },
+    parentTitle(parentId) {
+      if (!parentId) {
+        return '—'
+      }
+      const parent = this.categories.find((item) => Number(item.id) === Number(parentId))
+      return parent ? (parent.full_name || parent.name) : '—'
+    },
+    getDescendantIds(rootId) {
+      if (!rootId) {
+        return []
+      }
+      const byParent = new Map()
+      this.categories.forEach((item) => {
+        const parentId = item.parent || null
+        if (!byParent.has(parentId)) {
+          byParent.set(parentId, [])
+        }
+        byParent.get(parentId).push(item.id)
+      })
+
+      const result = []
+      const stack = [rootId]
+      while (stack.length) {
+        const current = stack.pop()
+        const children = byParent.get(current) || []
+        children.forEach((childId) => {
+          result.push(childId)
+          stack.push(childId)
+        })
+      }
+      return result
     },
   },
 }

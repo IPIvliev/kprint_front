@@ -5,7 +5,7 @@
  *   id: number
  *   name: string
  *   color: string
- *   price_per_mm3: string
+ *   price_per_mm3: string // Цена в рублях за 1 см3
  * }} PrintMaterial
  */
 
@@ -13,6 +13,8 @@
  * @typedef {{
  *   id: number
  *   name: string
+ *   parent: number | null
+ *   full_name: string
  *   materials: PrintMaterial[]
  * }} PrintMaterialCategory
  */
@@ -28,6 +30,10 @@ export function fetchPrintOrders(params = {}) {
 
 export function fetchPrintOrder(orderId) {
   return api.get(`/api/printjobs/${orderId}/`)
+}
+
+export function fetchPrintOrderModelFile(orderId) {
+  return api.get(`/api/printjobs/${orderId}/model_file/`, { responseType: 'blob' })
 }
 
 export function createPrintOrder(payload) {

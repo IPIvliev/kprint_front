@@ -165,7 +165,11 @@
                   {{ showModel3DPreview ? 'Скрыть 3D-превью' : 'Показать 3D-превью' }}
                 </button>
               </div>
-              <order-model-preview v-if="showModel3DPreview && resolvedModelUrl" :model-url="resolvedModelUrl" />
+              <order-model-preview
+                v-if="showModel3DPreview && resolvedModelUrl"
+                :model-url="resolvedModelUrl"
+                :order-id="selectedOrder.id"
+              />
               <div class="panel__table-text" style="margin-top: 10px;">
                 <strong>STL:</strong>
                 <a v-if="selectedOrder.model_file" :href="resolvedModelUrl" target="_blank" rel="noopener">Скачать файл</a>
@@ -212,35 +216,53 @@
                 </div>
                 <div class="print-order-dimensions__grid">
                   <label>
-                    X, мм
+                    X, см
                     <input
                       v-model="reviewDimensions.x"
                       type="number"
                       min="0.01"
                       step="0.01"
                       class="form-control"
+                      @input="onReviewDimensionInput('x')"
                     >
                   </label>
                   <label>
-                    Y, мм
+                    Y, см
                     <input
                       v-model="reviewDimensions.y"
                       type="number"
                       min="0.01"
                       step="0.01"
                       class="form-control"
+                      @input="onReviewDimensionInput('y')"
                     >
                   </label>
                   <label>
-                    Z, мм
+                    Z, см
                     <input
                       v-model="reviewDimensions.z"
                       type="number"
                       min="0.01"
                       step="0.01"
                       class="form-control"
+                      @input="onReviewDimensionInput('z')"
                     >
                   </label>
+                  <label>
+                    Количество
+                    <input
+                      v-model="reviewQuantity"
+                      type="number"
+                      min="1"
+                      step="1"
+                      class="form-control"
+                      @input="onReviewQuantityInput"
+                    >
+                  </label>
+                </div>
+                <div class="print-order-dimensions__summary">
+                  <span>Объём: <strong>{{ formatVolume(reviewVolumeCm3) }} см3</strong></span>
+                  <span>Примерная стоимость: <strong>{{ money(reviewEstimatedPrice) }}</strong></span>
                 </div>
               </div>
               <button type="button" class="btn btn--red" :disabled="actionLoading" @click="onRequestPriceReview">
@@ -458,6 +480,12 @@ export default {
         y: '',
         z: '',
       },
+      reviewQuantity: 1,
+      reviewBaseDimensionsCm: {
+        x: null,
+        y: null,
+        z: null,
+      },
     }
   },
   computed: {
@@ -589,6 +617,54 @@ export default {
     canManagerMarkReceived() {
       return this.selectedOrder && this.selectedOrder.status === 'IN_DELIVERY'
     },
+    reviewParsedDimensionsCm() {
+      return {
+        x: this.parsePositiveDimension(this.reviewDimensions.x),
+        y: this.parsePositiveDimension(this.reviewDimensions.y),
+        z: this.parsePositiveDimension(this.reviewDimensions.z),
+      }
+    },
+    reviewQuantityValue() {
+      return this.parsePositiveInteger(this.reviewQuantity) || 0
+    },
+    reviewVolumeCm3() {
+      const { x, y, z } = this.reviewParsedDimensionsCm
+      if (!x || !y || !z) {
+        return 0
+      }
+      return this.roundTo2(x * y * z)
+    },
+    reviewUnitPricePerCm3() {
+      const priceClient = this.parsePositiveDimension(this.selectedOrder?.price_client)
+      if (!priceClient) {
+        return 0
+      }
+      const baseQuantity = this.parsePositiveInteger(this.selectedOrder?.quantity) || 1
+      const volumeMm3 = this.parsePositiveDimension(this.selectedOrder?.volume_mm3)
+      if (volumeMm3) {
+        const volumeCm3 = volumeMm3 / 1000
+        if (volumeCm3 > 0) {
+          return priceClient / (volumeCm3 * baseQuantity)
+        }
+      }
+      const baseXcm = this.mmToCm(this.selectedOrder?.dimension_x_mm)
+      const baseYcm = this.mmToCm(this.selectedOrder?.dimension_y_mm)
+      const baseZcm = this.mmToCm(this.selectedOrder?.dimension_z_mm)
+      if (!baseXcm || !baseYcm || !baseZcm) {
+        return 0
+      }
+      const baseVolumeCm3 = baseXcm * baseYcm * baseZcm
+      if (baseVolumeCm3 <= 0) {
+        return 0
+      }
+      return priceClient / (baseVolumeCm3 * baseQuantity)
+    },
+    reviewEstimatedPrice() {
+      if (!this.reviewVolumeCm3 || !this.reviewUnitPricePerCm3 || !this.reviewQuantityValue) {
+        return 0
+      }
+      return this.roundTo2(this.reviewVolumeCm3 * this.reviewUnitPricePerCm3 * this.reviewQuantityValue)
+    },
   },
   mounted() {
     this.syncPanelMode()
@@ -687,11 +763,20 @@ export default {
       this.managerReviewComment = ''
       this.managerPhotos = []
       this.trackingNumber = this.selectedOrder?.tracking_number || ''
+      const reviewXcm = this.mmToCm(this.selectedOrder?.dimension_x_mm)
+      const reviewYcm = this.mmToCm(this.selectedOrder?.dimension_y_mm)
+      const reviewZcm = this.mmToCm(this.selectedOrder?.dimension_z_mm)
       this.reviewDimensions = {
-        x: this.formatDimensionForInput(this.selectedOrder?.dimension_x_mm),
-        y: this.formatDimensionForInput(this.selectedOrder?.dimension_y_mm),
-        z: this.formatDimensionForInput(this.selectedOrder?.dimension_z_mm),
+        x: this.formatDimensionForInput(reviewXcm),
+        y: this.formatDimensionForInput(reviewYcm),
+        z: this.formatDimensionForInput(reviewZcm),
       }
+      this.reviewBaseDimensionsCm = {
+        x: reviewXcm,
+        y: reviewYcm,
+        z: reviewZcm,
+      }
+      this.reviewQuantity = this.parsePositiveInteger(this.selectedOrder?.quantity) || 1
     },
     async performAction(action, successMessage) {
       if (!this.selectedOrder?.id) {
@@ -732,12 +817,12 @@ export default {
       })
     },
     async onRequestPriceReview() {
-      const dimensions = this.getValidatedReviewDimensions()
-      if (!dimensions) {
+      const payload = this.getValidatedReviewPayload()
+      if (!payload) {
         return
       }
       await this.performAction(
-        () => requestPrintOrderPriceReview(this.selectedOrder.id, dimensions),
+        () => requestPrintOrderPriceReview(this.selectedOrder.id, payload),
         'Заказ отправлен на ручную проверку стоимости.',
       )
     },
@@ -878,19 +963,120 @@ export default {
       }
       return numeric
     },
-    getValidatedReviewDimensions() {
-      const x = this.parsePositiveDimension(this.reviewDimensions.x)
-      const y = this.parsePositiveDimension(this.reviewDimensions.y)
-      const z = this.parsePositiveDimension(this.reviewDimensions.z)
-      if (!x || !y || !z) {
-        this.actionError = 'Перед отправкой укажите габариты X, Y и Z в миллиметрах.'
+    parsePositiveInteger(value) {
+      if (value === null || value === undefined || value === '') {
         return null
       }
-      return {
-        dimension_x_mm: x.toFixed(2),
-        dimension_y_mm: y.toFixed(2),
-        dimension_z_mm: z.toFixed(2),
+      const normalized = String(value).trim()
+      if (!/^\d+$/.test(normalized)) {
+        return null
       }
+      const numeric = Number(normalized)
+      if (!Number.isInteger(numeric) || numeric <= 0) {
+        return null
+      }
+      return numeric
+    },
+    mmToCm(value) {
+      const mm = this.parsePositiveDimension(value)
+      if (!mm) {
+        return null
+      }
+      return mm / 10
+    },
+    roundTo2(value) {
+      if (!Number.isFinite(value)) {
+        return 0
+      }
+      return Math.round(value * 100) / 100
+    },
+    onReviewDimensionInput(axis) {
+      const currentValue = this.parsePositiveDimension(this.reviewDimensions[axis])
+      if (!currentValue) {
+        this.reviewDimensions = {
+          ...this.reviewDimensions,
+          [axis]: '',
+        }
+        return
+      }
+      const baseDimensions = this.getReviewBaseDimensionsCm()
+      if (!baseDimensions) {
+        this.reviewDimensions = {
+          ...this.reviewDimensions,
+          [axis]: this.formatDimensionForInput(currentValue),
+        }
+        return
+      }
+      const baseAxisValue = this.parsePositiveDimension(baseDimensions[axis])
+      if (!baseAxisValue) {
+        return
+      }
+      const scaleFactor = currentValue / baseAxisValue
+      this.reviewDimensions = {
+        x: this.formatDimensionForInput(baseDimensions.x * scaleFactor),
+        y: this.formatDimensionForInput(baseDimensions.y * scaleFactor),
+        z: this.formatDimensionForInput(baseDimensions.z * scaleFactor),
+      }
+    },
+    onReviewQuantityInput() {
+      const quantity = this.parsePositiveInteger(this.reviewQuantity)
+      this.reviewQuantity = quantity || ''
+    },
+    getReviewBaseDimensionsCm() {
+      const baseX = this.parsePositiveDimension(this.reviewBaseDimensionsCm.x)
+      const baseY = this.parsePositiveDimension(this.reviewBaseDimensionsCm.y)
+      const baseZ = this.parsePositiveDimension(this.reviewBaseDimensionsCm.z)
+      if (baseX && baseY && baseZ) {
+        return {
+          x: baseX,
+          y: baseY,
+          z: baseZ,
+        }
+      }
+      const currentX = this.reviewParsedDimensionsCm.x
+      const currentY = this.reviewParsedDimensionsCm.y
+      const currentZ = this.reviewParsedDimensionsCm.z
+      if (currentX && currentY && currentZ) {
+        this.reviewBaseDimensionsCm = {
+          x: currentX,
+          y: currentY,
+          z: currentZ,
+        }
+        return this.reviewBaseDimensionsCm
+      }
+      return null
+    },
+    getValidatedReviewPayload() {
+      const xCm = this.parsePositiveDimension(this.reviewDimensions.x)
+      const yCm = this.parsePositiveDimension(this.reviewDimensions.y)
+      const zCm = this.parsePositiveDimension(this.reviewDimensions.z)
+      if (!xCm || !yCm || !zCm) {
+        this.actionError = 'Перед отправкой укажите габариты X, Y и Z в сантиметрах.'
+        return null
+      }
+      const quantity = this.parsePositiveInteger(this.reviewQuantity)
+      if (!quantity) {
+        this.actionError = 'Перед отправкой укажите количество (целое число больше 0).'
+        return null
+      }
+      const payload = {
+        dimension_x_mm: this.roundTo2(xCm * 10).toFixed(2),
+        dimension_y_mm: this.roundTo2(yCm * 10).toFixed(2),
+        dimension_z_mm: this.roundTo2(zCm * 10).toFixed(2),
+        quantity,
+        volume_mm3: this.roundTo2(this.reviewVolumeCm3 * 1000).toFixed(2),
+      }
+      if (this.reviewEstimatedPrice > 0) {
+        payload.price_client = this.reviewEstimatedPrice.toFixed(2)
+      }
+      return payload
+    },
+    formatVolume(value) {
+      const numeric = Number(value)
+      if (!Number.isFinite(numeric) || numeric <= 0) {
+        return '—'
+      }
+      return numeric.toFixed(2)
     },
     formatDimensions(order) {
       if (!order) {
@@ -929,6 +1115,10 @@ export default {
     money(value) {
       if (value === null || value === undefined || value === '') {
         return '—'
+      }
+      const numeric = Number(value)
+      if (Number.isFinite(numeric)) {
+        return `${numeric.toFixed(2)} ₽`
       }
       return `${value} ₽`
     },
@@ -1201,7 +1391,7 @@ export default {
 .print-order-dimensions__grid {
   display: grid;
   gap: 10px;
-  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
 }
 
 .print-order-dimensions__grid label {
@@ -1209,6 +1399,15 @@ export default {
   gap: 4px;
   font-size: 13px;
   color: #4f6276;
+}
+
+.print-order-dimensions__summary {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  color: #2c4056;
+  font-size: 13px;
 }
 
 @media (max-width: 992px) {
