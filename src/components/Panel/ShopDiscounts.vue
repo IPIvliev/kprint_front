@@ -153,18 +153,18 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
 import {
   createShopManagerDiscount,
   deleteShopManagerDiscount,
   fetchShopManagerDiscounts,
-  updateShopManagerDiscount,
+  updateShopManagerDiscount
 } from '@/services/panel.service'
 
 export default {
   name: 'ShopDiscounts',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       discounts: [],
       searchTerm: '',
@@ -180,12 +180,12 @@ export default {
         percent: '',
         amount: '',
         used: 0,
-        description: '',
-      },
+        description: ''
+      }
     }
   },
   computed: {
-    filteredDiscounts() {
+    filteredDiscounts () {
       const term = this.searchTerm.trim().toLowerCase()
       if (!term) {
         return this.discounts
@@ -195,13 +195,13 @@ export default {
         const promo = String(d.promo || '').toLowerCase()
         return name.includes(term) || promo.includes(term)
       })
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchDiscounts()
   },
   methods: {
-    async fetchDiscounts() {
+    async fetchDiscounts () {
       this.loading = true
       this.error = ''
       try {
@@ -213,10 +213,10 @@ export default {
         this.loading = false
       }
     },
-    discountKey(discount) {
+    discountKey (discount) {
       return discount.id || discount.pk || discount.promo
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.error = ''
@@ -226,11 +226,11 @@ export default {
         percent: '',
         amount: '',
         used: 0,
-        description: '',
+        description: ''
       }
       this.showModal = true
     },
-    openEdit(discount) {
+    openEdit (discount) {
       this.isEditing = true
       this.currentId = discount.id || discount.pk
       this.error = ''
@@ -240,14 +240,14 @@ export default {
         percent: discount.percent ?? '',
         amount: discount.amount ?? '',
         used: discount.used ?? 0,
-        description: discount.description || '',
+        description: discount.description || ''
       }
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    async saveDiscount() {
+    async saveDiscount () {
       if (!this.form.name || !this.form.promo) {
         this.error = 'Заполните название и промокод'
         return
@@ -261,7 +261,7 @@ export default {
           percent: this.form.percent || 0,
           amount: this.form.amount || 0,
           used: this.form.used || 0,
-          description: this.form.description || '',
+          description: this.form.description || ''
         }
         if (this.isEditing && this.currentId) {
           await updateShopManagerDiscount(this.currentId, payload)
@@ -276,7 +276,7 @@ export default {
         this.saving = false
       }
     },
-    async removeDiscount(discount) {
+    async removeDiscount (discount) {
       const id = discount.id || discount.pk
       if (!id) {
         return
@@ -291,7 +291,7 @@ export default {
       } catch (err) {
         this.error = err.userMessage || 'Не удалось удалить скидку'
       }
-    },
-  },
+    }
+  }
 }
 </script>

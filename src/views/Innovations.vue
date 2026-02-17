@@ -12,7 +12,7 @@ import InnovationsPage from '../components/InnovationsPage.vue'
 import FooterBlock from '../components/FooterBlock.vue'
 
 export default {
-  name: 'Innovations',
+  name: 'InnovationsPageView',
   components: {
     InnovationsPage,
     FooterBlock,

@@ -11,8 +11,8 @@ const store = createStore({
     shop,
     catalog,
     study,
-    delivery,
-  },
+    delivery
+  }
 })
 
 export default store

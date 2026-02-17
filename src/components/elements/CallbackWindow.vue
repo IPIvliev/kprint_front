@@ -1,6 +1,6 @@
 <template >
   <div class="callback" style="padding-bottom: 120px;">
-    <div class="container"> 
+    <div class="container">
       <div class="callback__block">
         <div class="callback__img">
           <img src="@/assets/img/callback.webp" alt="">
@@ -11,7 +11,7 @@
             <form action="#" class="callback__form">
               <div class="callback__input">
                 <input type="text" placeholder="Введите номер телефона">
-                
+
               </div>
               <button type="submit" class="btn btn--red btn--big"> Отправить заявку</button>
             </form>

@@ -1,7 +1,7 @@
 <template>
     <!-- video-->
     <div class="white_block" :class="background">
-      <div class="container"> 
+      <div class="container">
         <div class="row gy-1">
           <div class="col-lg-4">
             <h1 class="title">Обучение 3D печати</h1>
@@ -34,10 +34,10 @@
         </div>
       </div>
     </div>
-    <!--	/video-->
+    <!--  /video-->
 </template>
 <script>
 export default {
-  props: ['background'],
+  props: ['background']
 }
 </script>

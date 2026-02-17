@@ -1,7 +1,7 @@
 <template>
       <!-- video-->
       <div class="video">
-        <div class="container"> 
+        <div class="container">
           <div class="video__block js_youtube" id="X8Z8okhkjv8">
             <div class="video__frame"><img src="../../../assets/img/video-prev.webp" alt=""></div>
             <div class="video__play">
@@ -12,5 +12,5 @@
           </div>
         </div>
       </div>
-      <!--	/video-->
+      <!--  /video-->
 </template>

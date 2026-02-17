@@ -1,8 +1,8 @@
 <template>
   <div class="about">
-    <div class="container"> 
-      <div class="row"> 
-        <div class="col-xxl-5 col-lg-6"> 
+    <div class="container">
+      <div class="row">
+        <div class="col-xxl-5 col-lg-6">
           <div id="aboutBlockFrom">
             <div class="about__blockrow" id="aboutBlockReplace">
               <div class="about__block about__block--1">
@@ -61,11 +61,11 @@
 
 export default {
   props: ['background'],
-  created() {
+  created () {
 
-    },
+  },
   computed: {
 
-  }  
+  }
 }
 </script>

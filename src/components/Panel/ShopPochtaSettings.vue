@@ -113,16 +113,16 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
 import {
   fetchShopManagerPochtaSettings,
-  updateShopManagerPochtaSettings,
+  updateShopManagerPochtaSettings
 } from '@/services/panel.service'
 
 export default {
   name: 'ShopPochtaSettings',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       loading: false,
       saving: false,
@@ -142,15 +142,15 @@ export default {
         with_order_of_notice: false,
         with_simple_notice: false,
         token: '',
-        key: '',
-      },
+        key: ''
+      }
     }
   },
-  mounted() {
+  mounted () {
     this.fetchSettings()
   },
   methods: {
-    async fetchSettings() {
+    async fetchSettings () {
       this.loading = true
       this.error = ''
       try {
@@ -171,7 +171,7 @@ export default {
           with_order_of_notice: Boolean(data.with_order_of_notice),
           with_simple_notice: Boolean(data.with_simple_notice),
           token: data.token || '',
-          key: data.key || '',
+          key: data.key || ''
         }
       } catch (err) {
         this.error = err.userMessage || 'Failed to load settings'
@@ -179,7 +179,7 @@ export default {
         this.loading = false
       }
     },
-    async saveSettings() {
+    async saveSettings () {
       this.saving = true
       this.error = ''
       try {
@@ -190,7 +190,7 @@ export default {
       } finally {
         this.saving = false
       }
-    },
-  },
+    }
+  }
 }
 </script>

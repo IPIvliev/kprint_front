@@ -13,7 +13,7 @@ import Page404 from '../components/Page404.vue'
 import FooterBlock from '../components/FooterBlock.vue'
 
 export default {
-  name: '404',
+  name: 'NotFoundPageView',
   components: {
     Page404,
     FooterBlock,

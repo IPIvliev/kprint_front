@@ -9,12 +9,17 @@
 import HeaderBlock from '../components/HeaderBlock.vue'
 import LoginPage from '../components/LoginPage.vue'
 
-
 export default {
-  name: 'Login',
+  name: 'LoginPageView',
   components: {
     LoginPage,
     HeaderBlock
   }
 }
 </script>
+
+<style scoped>
+.page {
+  min-height: 100vh;
+}
+</style>

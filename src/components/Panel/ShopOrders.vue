@@ -174,18 +174,18 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
 import {
   fetchShopOrder,
   fetchShopOrders,
   fetchShopOrderStatuses,
-  updateShopOrder,
+  updateShopOrder
 } from '@/services/panel.service'
 
 export default {
   name: 'ShopOrders',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       orders: [],
       statuses: [],
@@ -198,18 +198,18 @@ export default {
       currentId: null,
       form: {
         status: '',
-        is_paid: false,
+        is_paid: false
       },
       filters: {
         status: '',
         is_paid: '',
         date_from: '',
-        date_to: '',
-      },
+        date_to: ''
+      }
     }
   },
   computed: {
-    filteredOrders() {
+    filteredOrders () {
       const term = this.searchTerm.trim().toLowerCase()
       const filtered = this.orders.filter((o) => {
         if (term && !String(o.id || '').includes(term)) {
@@ -247,14 +247,14 @@ export default {
         const bTime = b.created_at ? new Date(b.created_at).getTime() : 0
         return bTime - aTime
       })
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchStatuses()
     this.fetchOrders()
   },
   methods: {
-    async fetchStatuses() {
+    async fetchStatuses () {
       try {
         const response = await fetchShopOrderStatuses()
         this.statuses = Array.isArray(response.data) ? response.data : []
@@ -262,7 +262,7 @@ export default {
         this.statuses = []
       }
     },
-    async fetchOrders() {
+    async fetchOrders () {
       this.loading = true
       this.error = ''
       try {
@@ -274,10 +274,10 @@ export default {
         this.loading = false
       }
     },
-    orderKey(order) {
+    orderKey (order) {
       return order.id || order.pk
     },
-    formatDate(value) {
+    formatDate (value) {
       if (!value) {
         return '—'
       }
@@ -290,14 +290,14 @@ export default {
         month: '2-digit',
         day: '2-digit',
         hour: '2-digit',
-        minute: '2-digit',
+        minute: '2-digit'
       })
     },
-    statusName(value) {
+    statusName (value) {
       const status = this.statuses.find((item) => Number(item.id) === Number(value))
       return status ? status.name : (value || '—')
     },
-    normalizeOrderItems(items) {
+    normalizeOrderItems (items) {
       if (!items) {
         return []
       }
@@ -309,21 +309,21 @@ export default {
       }
       return []
     },
-    openEdit(order) {
+    openEdit (order) {
       this.currentId = order.id || order.pk
       this.form = {
         status: order.status || '',
-        is_paid: !!order.is_paid,
+        is_paid: !!order.is_paid
       }
       this.error = ''
       this.orderDetail = null
       this.showModal = true
       this.fetchOrderDetail()
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    async fetchOrderDetail() {
+    async fetchOrderDetail () {
       if (!this.currentId) {
         return
       }
@@ -334,7 +334,7 @@ export default {
         this.orderDetail = null
       }
     },
-    async saveOrder() {
+    async saveOrder () {
       if (!this.currentId) {
         return
       }
@@ -343,7 +343,7 @@ export default {
       try {
         const payload = {
           status: this.form.status,
-          is_paid: this.form.is_paid,
+          is_paid: this.form.is_paid
         }
         await updateShopOrder(this.currentId, payload)
         this.closeModal()
@@ -353,7 +353,7 @@ export default {
       } finally {
         this.saving = false
       }
-    },
-  },
+    }
+  }
 }
 </script>

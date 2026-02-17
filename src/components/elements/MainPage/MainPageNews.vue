@@ -39,7 +39,7 @@ import 'swiper/css/pagination'
 export default {
   name: 'MainPageNews',
   components: { Swiper, SwiperSlide, ArticleCard },
-  data() {
+  data () {
     return {
       articles: [],
       loading: false,
@@ -48,15 +48,15 @@ export default {
         0: { slidesPerView: 1, spaceBetween: 16 },
         576: { slidesPerView: 2, spaceBetween: 20 },
         992: { slidesPerView: 3, spaceBetween: 24 },
-        1400: { slidesPerView: 4, spaceBetween: 30 },
-      },
+        1400: { slidesPerView: 4, spaceBetween: 30 }
+      }
     }
   },
-  mounted() {
+  mounted () {
     this.fetchArticles()
   },
   methods: {
-    extractArticles(payload) {
+    extractArticles (payload) {
       if (Array.isArray(payload)) {
         return payload
       }
@@ -65,14 +65,14 @@ export default {
       }
       return []
     },
-    sortByDate(items) {
+    sortByDate (items) {
       return [...items].sort((left, right) => {
         const leftDate = new Date(left.publish_iso || left.publish || left.created || left.updated || 0).getTime()
         const rightDate = new Date(right.publish_iso || right.publish || right.created || right.updated || 0).getTime()
         return rightDate - leftDate
       })
     },
-    async fetchArticles() {
+    async fetchArticles () {
       this.loading = true
       try {
         const response = await publicApi.get('/api/articles/')
@@ -83,8 +83,8 @@ export default {
       } finally {
         this.loading = false
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

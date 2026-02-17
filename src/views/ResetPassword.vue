@@ -1,19 +1,18 @@
 <template lang="pug">
 .page
   header-block
-  registration-page
+  reset-password-page
 </template>
 
 <script>
-// @ is an alias to /src
 import HeaderBlock from '../components/HeaderBlock.vue'
-import RegistrationPage from '../components/RegistrationPage.vue'
+import ResetPasswordPage from '../components/ResetPasswordPage.vue'
 
 export default {
-  name: 'RegistrationPageView',
+  name: 'ResetPassword',
   components: {
-    RegistrationPage,
-    HeaderBlock
+    HeaderBlock,
+    ResetPasswordPage
   }
 }
 </script>

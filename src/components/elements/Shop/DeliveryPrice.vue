@@ -8,13 +8,12 @@
     </div>
 </template>
 <script>
-    export default {
-        props: ['office'],
-        computed: {
-            GetPrice() {
-
-                return this.$store.getters['shop/getDeliveryPrice']
-            },
-        }
+export default {
+  props: ['office'],
+  computed: {
+    GetPrice () {
+      return this.$store.getters['shop/getDeliveryPrice']
     }
+  }
+}
 </script>

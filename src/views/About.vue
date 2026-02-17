@@ -6,24 +6,24 @@
   <!-- welcomeabout-->
   <div class="welcomeabout">
     <div class="container">
-      <div class="welcomeabout__content"> 
+      <div class="welcomeabout__content">
         <div class="welcomeabout__desc">О проекте</div>
         <h1 class="welcomeabout__title">Проектируем и разрабатываем продукты в области <span>аддитивного производства </span>отличающиеся простотой и эффективностью</h1>
       </div>
-      <div class="welcomeabout__img"> 
-        <picture> 
+      <div class="welcomeabout__img">
+        <picture>
           <source media="(max-width: 758px)" srcset="img/about_sm.svg"><img src="img/about.webp" alt="">
         </picture>
       </div>
       <div class="welcomeabout__line"></div>
     </div>
   </div>
-  <!--	/welcomeabout-->
+  <!--  /welcomeabout-->
   <!-- about-->
   <div class="about">
-    <div class="container"> 
-      <div class="row"> 
-        <div class="col-xxl-5 col-lg-6"> 
+    <div class="container">
+      <div class="row">
+        <div class="col-xxl-5 col-lg-6">
           <div id="aboutBlockFrom">
             <div class="about__blockrow" id="aboutBlockReplace">
               <div class="about__block about__block--1">
@@ -77,12 +77,12 @@
       </div>
     </div>
   </div>
-  <!--	/about-->
+  <!--  /about-->
   <!-- halfitems-->
   <div class="halfitems">
     <div class="container">
       <div class="row gy-4">
-        <div class="col-lg-6"><a class="halfitems__item" href="#"> 
+        <div class="col-lg-6"><a class="halfitems__item" href="#">
             <div class="halfitems__content">
               <div class="halfitems__title">Наличие испытательной и исследовательской лаборатории</div>
               <div class="halfitems__text">Все продукты проходят лабораторные испытания и постоянно совершенствуются, так же разрабатываются новые модели.</div>
@@ -109,10 +109,10 @@
       </div>
     </div>
   </div>
-  <!--	/halfitems-->
+  <!--  /halfitems-->
 
   <PartnersBlock/>
-  <!--	/callback-->
+  <!--  /callback-->
   <DarkWelcome/>
 </div>
 
@@ -124,11 +124,11 @@
 // @ is an alias to /src
 import HeaderBlock from '@/components/HeaderBlock.vue'
 import PartnersBlock from '@/components/elements/PartnersBlock.vue'
-import DarkWelcome from "@/components/elements/DarkWelcome.vue"
+import DarkWelcome from '@/components/elements/DarkWelcome.vue'
 import FooterBlock from '@/components/FooterBlock.vue'
 
 export default {
-  name: 'About',
+  name: 'AboutPageView',
   components: {
     FooterBlock,
     PartnersBlock,

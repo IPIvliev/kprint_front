@@ -2,17 +2,17 @@
 <div class="content">
   <!-- contact-->
   <div class="contact">
-    <div class="container"> 
+    <div class="container">
       <h1 class="title">Контакты</h1>
       <div class="row gy-2">
         <div class="col-lg-6 col-xxl-5">
           <div class="contact__title">Адрес:</div>
-          <div class="contact__text"> 
+          <div class="contact__text">
             <p>194100, Российская Федерация,</p>
             <p>г. Москва, Кочновский проезд, д.4, корп. 3</p>
           </div>
-          <div class="contact__table"> 
-            <table> 
+          <div class="contact__table">
+            <table>
               <tr>
                 <td>ОРГН:</td>
                 <td> <span class="contact__copy copy-text"> 142300400410</span></td>
@@ -34,11 +34,11 @@
         </div>
         <div class="col-lg-6 col-xxl-5">
           <div class="contact__row">
-            <div class="contact__block"> 
+            <div class="contact__block">
               <div class="contact__title">Почта для связи с нами:</div>
               <div class="contact__link"><a href="mailto:info@kprint.ru">info@kprint.ru</a></div>
             </div>
-            <div class="contact__block"> 
+            <div class="contact__block">
               <div class="contact__title">Телефон:</div>
               <div class="contact__link"><a href="tel:+79601863596">+7 960 186–35–96</a></div>
               <div class="contact__btn">Перезвоните мне</div>
@@ -48,18 +48,18 @@
       </div>
     </div>
   </div>
-  <!--	/contact-->
+  <!--  /contact-->
   <!-- map-->
   <div class="map">
-    <div class="container"> 
+    <div class="container">
       <div class="map__map" id="googleMap"></div>
     </div>
   </div>
-  <!--	/map-->
+  <!--  /map-->
   <!-- dillers-->
   <div class="dillers">
-    <div class="container"> 
-      <div class="dillers__head"> 
+    <div class="container">
+      <div class="dillers__head">
         <h2 class="title">Дилеры</h2>
         <div class="header__lang">
           <div class="header__langbtn js-drop-btn" data-drop="country">
@@ -79,9 +79,9 @@
               <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00033 0.666748C3.95033 0.666748 0.666992 3.95008 0.666992 8.00008C0.666992 12.0501 3.95033 15.3334 8.00033 15.3334C12.0503 15.3334 15.3337 12.0501 15.3337 8.00008C15.3337 3.95008 12.0503 0.666748 8.00033 0.666748ZM5.86699 6.50024C5.77238 6.49915 5.67914 6.52297 5.59664 6.56931C5.51415 6.61565 5.44529 6.68288 5.39699 6.76424C5.35152 6.84329 5.32984 6.93378 5.33457 7.02485C5.3393 7.11591 5.37024 7.20367 5.42366 7.27758L7.55699 10.2776C7.6079 10.3472 7.67467 10.4037 7.75176 10.4425C7.82885 10.4812 7.91406 10.501 8.00033 10.5002C8.0867 10.5011 8.17204 10.4813 8.24926 10.4426C8.32648 10.4039 8.39335 10.3473 8.44433 10.2776L10.5777 7.27758C10.6311 7.20367 10.662 7.11591 10.6667 7.02485C10.6715 6.93378 10.6498 6.84329 10.6043 6.76424C10.556 6.68278 10.487 6.61549 10.4044 6.56914C10.3218 6.5228 10.2284 6.49904 10.1337 6.50024H5.86699Z"></path>
             </svg>
           </div>
-          <div class="header__langdrop" id="country"> 
-            <ul class="header__langlist"> 
-              <li> <a href="#"> 
+          <div class="header__langdrop" id="country">
+            <ul class="header__langlist">
+              <li> <a href="#">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_78_1856)">
                       <path d="M9 18C4.02944 18 0 13.9706 0 9C0 4.02944 4.02944 0 9 0C13.9706 0 18 4.02944 18 9C18 13.9706 13.9706 18 9 18Z" fill="#F0F0F0"></path>
@@ -94,7 +94,7 @@
                       </clipPath>
                     </defs>
                   </svg>Россия</a></li>
-              <li> <a href="#"> 
+              <li> <a href="#">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g>
                       <path d="M9 18C13.9706 18 18 13.9706 18 9C18 4.02944 13.9706 0 9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18Z" fill="#F0F0F0"></path>
@@ -115,10 +115,10 @@
         </div>
       </div>
       <p class="dillers__text">Cотрудничаем с большим количеством дилеров, которые предлагают наши продукты клиентам по всему миру. </p>
-      <div class="row"> 
+      <div class="row">
         <div class="col-xxl-3 col-lg-4 col-md-6">
-          <div class="select select--label"> 
-            <select name="#"> 
+          <div class="select select--label">
+            <select name="#">
               <option value="#">Москва</option>
               <option value="#">Санкт-Петербург</option>
               <option value="#">Казань</option>
@@ -153,21 +153,21 @@
                   <div class="dillercard__text">г. Москва, ул. Ленинградская, дом 22, корп. 3, строение 2</div>
                   <div class="dillercard__btn"> <span>Найти на карте</span></div>
                 </div>
-                <div class="dillercard__info"> 
+                <div class="dillercard__info">
                   <div class="dillercard__row">
-                    <div class="dillercard__infoblock"> 
+                    <div class="dillercard__infoblock">
                       <div class="dillercard__name">Телефон:</div><a class="dillercard__link" href="tel:+79601863596">+7 960 186–35–96</a>
                     </div>
-                    <div class="dillercard__infoblock"> 
+                    <div class="dillercard__infoblock">
                       <div class="dillercard__name">Электронная почта:</div><a class="dillercard__link" href="mailto:partners@dns-shop.ru">partners@dns-shop.ru</a>
                     </div>
-                    <div class="dillercard__infoblock"> 
+                    <div class="dillercard__infoblock">
                       <div class="dillercard__name">Сайт:</div><a class="dillercard__link" href="https://dns-shop.ru">dns-shop.ru</a>
                     </div>
                   </div>
                 </div>
               </div>
-              <!--	/dillercard-->
+              <!--  /dillercard-->
             </div>
             <div class="swiper-slide">
               <!-- dillercard-->
@@ -177,21 +177,21 @@
                   <div class="dillercard__text">г. Москва, Щелковское шоссе, д. 7, стр. 1, этаж 1, пом. 1</div>
                   <div class="dillercard__btn"> <span>Найти на карте</span></div>
                 </div>
-                <div class="dillercard__info"> 
+                <div class="dillercard__info">
                   <div class="dillercard__row">
-                    <div class="dillercard__infoblock"> 
+                    <div class="dillercard__infoblock">
                       <div class="dillercard__name">Телефон:</div><a class="dillercard__link" href="tel:+78905762286">+7 890 576–22–86</a>
                     </div>
-                    <div class="dillercard__infoblock"> 
+                    <div class="dillercard__infoblock">
                       <div class="dillercard__name">Электронная почта:</div><a class="dillercard__link" href="mailto:partners@citilink.ru">partners@citilink.ru</a>
                     </div>
-                    <div class="dillercard__infoblock"> 
+                    <div class="dillercard__infoblock">
                       <div class="dillercard__name">Сайт:</div><a class="dillercard__link" href="https://citilink.ru">citilink.ru</a>
                     </div>
                   </div>
                 </div>
               </div>
-              <!--	/dillercard-->
+              <!--  /dillercard-->
             </div>
             <div class="swiper-slide">
               <!-- dillercard-->
@@ -201,21 +201,21 @@
                   <div class="dillercard__text">г. Москва, ул. Ленинградская, дом 22, корп. 3, строение 2</div>
                   <div class="dillercard__btn"> <span>Найти на карте</span></div>
                 </div>
-                <div class="dillercard__info"> 
+                <div class="dillercard__info">
                   <div class="dillercard__row">
-                    <div class="dillercard__infoblock"> 
+                    <div class="dillercard__infoblock">
                       <div class="dillercard__name">Телефон:</div><a class="dillercard__link" href="tel:+79601863596">+7 960 186–35–96</a>
                     </div>
-                    <div class="dillercard__infoblock"> 
+                    <div class="dillercard__infoblock">
                       <div class="dillercard__name">Электронная почта:</div><a class="dillercard__link" href="mailto:partners@dns-shop.ru">partners@dns-shop.ru</a>
                     </div>
-                    <div class="dillercard__infoblock"> 
+                    <div class="dillercard__infoblock">
                       <div class="dillercard__name">Сайт:</div><a class="dillercard__link" href="https://dns-shop.ru">dns-shop.ru</a>
                     </div>
                   </div>
                 </div>
               </div>
-              <!--	/dillercard-->
+              <!--  /dillercard-->
             </div>
             <div class="swiper-slide">
               <!-- dillercard-->
@@ -225,21 +225,21 @@
                   <div class="dillercard__text">г. Москва, Щелковское шоссе, д. 7, стр. 1, этаж 1, пом. 1</div>
                   <div class="dillercard__btn"> <span>Найти на карте</span></div>
                 </div>
-                <div class="dillercard__info"> 
+                <div class="dillercard__info">
                   <div class="dillercard__row">
-                    <div class="dillercard__infoblock"> 
+                    <div class="dillercard__infoblock">
                       <div class="dillercard__name">Телефон:</div><a class="dillercard__link" href="tel:+78905762286">+7 890 576–22–86</a>
                     </div>
-                    <div class="dillercard__infoblock"> 
+                    <div class="dillercard__infoblock">
                       <div class="dillercard__name">Электронная почта:</div><a class="dillercard__link" href="mailto:partners@citilink.ru">partners@citilink.ru</a>
                     </div>
-                    <div class="dillercard__infoblock"> 
+                    <div class="dillercard__infoblock">
                       <div class="dillercard__name">Сайт:</div><a class="dillercard__link" href="https://citilink.ru">citilink.ru</a>
                     </div>
                   </div>
                 </div>
               </div>
-              <!--	/dillercard-->
+              <!--  /dillercard-->
             </div>
           </div>
           <div class="swiper-pagination dillers__pagination"></div>
@@ -247,19 +247,19 @@
       </div><a class="btn btn--red" href="#">Стать дилером</a>
     </div>
   </div>
-  <!--	/dillers-->
+  <!--  /dillers-->
   <!-- callback-->
   callback-window
-  <!--	/callback-->
+  <!--  /callback-->
 </div>
-  
+
 </template>
 
 <script>
-import CallbackWindow from "./elements/CallbackWindow.vue"
+import CallbackWindow from './elements/CallbackWindow.vue'
 
 export default {
   name: 'ContactPage',
-  components: {CallbackWindow}
+  components: { CallbackWindow }
 }
 </script>

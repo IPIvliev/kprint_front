@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="content content--pbn">
     <div class="panel">
       <div class="container">
@@ -405,13 +405,13 @@ import {
   rejectPrintOrderPrice,
   repeatPrintOrder,
   requestPrintOrderPriceReview,
-  requestPrintOrderRework,
+  requestPrintOrderRework
 } from '@/services/print.service'
 import {
   getSafePanelMode,
   getStoredPanelMode,
   isManagerUser,
-  PANEL_MODE_EVENT,
+  PANEL_MODE_EVENT
 } from '@/utils/panelMode'
 
 const STATUS_OPTIONS = [
@@ -426,7 +426,7 @@ const STATUS_OPTIONS = [
   { value: 'ACCEPTED_BY_CUSTOMER', label: 'Принят заказчиком' },
   { value: 'REWORK', label: 'На доработку' },
   { value: 'IN_DELIVERY', label: 'В доставке' },
-  { value: 'RECEIVED', label: 'Получен' },
+  { value: 'RECEIVED', label: 'Получен' }
 ]
 
 const STATUS_LABELS = STATUS_OPTIONS.reduce((acc, item) => {
@@ -444,16 +444,16 @@ const TIMELINE_FLOW = [
   'CUSTOMER_REVIEW',
   'ACCEPTED_BY_CUSTOMER',
   'IN_DELIVERY',
-  'RECEIVED',
+  'RECEIVED'
 ]
 
 export default {
   name: 'PrintOrders',
   components: {
     MenuBlock,
-    OrderModelPreview: defineAsyncComponent(() => import('@/components/Print/OrderModelPreview.vue')),
+    OrderModelPreview: defineAsyncComponent(() => import('@/components/Print/OrderModelPreview.vue'))
   },
-  data() {
+  data () {
     return {
       STATUS_OPTIONS,
       panelMode: 'user',
@@ -478,30 +478,30 @@ export default {
       reviewDimensions: {
         x: '',
         y: '',
-        z: '',
+        z: ''
       },
       reviewQuantity: 1,
       reviewBaseDimensionsCm: {
         x: null,
         y: null,
-        z: null,
-      },
+        z: null
+      }
     }
   },
   computed: {
-    currentUser() {
+    currentUser () {
       return this.$store.state.auth.user
     },
-    isManager() {
+    isManager () {
       return isManagerUser(this.currentUser)
     },
-    panelModeSafe() {
+    panelModeSafe () {
       return getSafePanelMode(this.currentUser, this.panelMode)
     },
-    isManagerMode() {
+    isManagerMode () {
       return this.isManager && this.panelModeSafe === 'manager'
     },
-    filteredOrders() {
+    filteredOrders () {
       const term = this.searchTerm.trim().toLowerCase()
       return this.orders.filter((order) => {
         if (this.statusFilter && order.status !== this.statusFilter) {
@@ -515,19 +515,19 @@ export default {
         return idPart.includes(term) || titlePart.includes(term)
       })
     },
-    resolvedModelUrl() {
+    resolvedModelUrl () {
       if (!this.selectedOrder?.model_file) {
         return ''
       }
       return this.resolveMediaUrl(this.selectedOrder.model_file)
     },
-    resolvedPreviewUrl() {
+    resolvedPreviewUrl () {
       if (!this.selectedOrder?.preview_image) {
         return ''
       }
       return this.resolveMediaUrl(this.selectedOrder.preview_image)
     },
-    timelineItems() {
+    timelineItems () {
       if (!this.selectedOrder) {
         return []
       }
@@ -560,7 +560,7 @@ export default {
           key: status,
           title: STATUS_LABELS[status] || status,
           state,
-          isFinal: false,
+          isFinal: false
         }
       })
 
@@ -570,14 +570,14 @@ export default {
           key: 'REWORK',
           title: STATUS_LABELS.REWORK,
           state: 'active',
-          isFinal: false,
+          isFinal: false
         })
       } else if (currentStatus === 'CANCELLED') {
         extraItems.push({
           key: 'CANCELLED',
           title: STATUS_LABELS.CANCELLED,
           state: 'active',
-          isFinal: true,
+          isFinal: true
         })
       }
 
@@ -587,54 +587,54 @@ export default {
       }
       return items
     },
-    canRequestPriceReview() {
+    canRequestPriceReview () {
       return this.selectedOrder && ['NEW', 'REWORK'].includes(this.selectedOrder.status)
     },
-    canAcceptOrRejectPrice() {
+    canAcceptOrRejectPrice () {
       return this.selectedOrder && this.selectedOrder.status === 'PRICE_VERIFIED'
     },
-    canPay() {
+    canPay () {
       return this.selectedOrder && this.selectedOrder.status === 'IN_PAYMENT'
     },
-    canReviewResult() {
+    canReviewResult () {
       return this.selectedOrder && this.selectedOrder.status === 'CUSTOMER_REVIEW'
     },
-    canRepeatOrder() {
+    canRepeatOrder () {
       return this.selectedOrder && ['ACCEPTED_BY_CUSTOMER', 'CANCELLED', 'IN_DELIVERY', 'RECEIVED'].includes(this.selectedOrder.status)
     },
-    canManagerSetPrice() {
+    canManagerSetPrice () {
       return this.selectedOrder && ['NEW', 'PRICE_REVIEW_REQUIRED', 'REWORK'].includes(this.selectedOrder.status)
     },
-    canManagerStartPrinting() {
+    canManagerStartPrinting () {
       return this.selectedOrder && this.selectedOrder.status === 'PAID'
     },
-    canManagerSendForReview() {
+    canManagerSendForReview () {
       return this.selectedOrder && ['PRINTING', 'REWORK'].includes(this.selectedOrder.status)
     },
-    canManagerStartDelivery() {
+    canManagerStartDelivery () {
       return this.selectedOrder && this.selectedOrder.status === 'ACCEPTED_BY_CUSTOMER'
     },
-    canManagerMarkReceived() {
+    canManagerMarkReceived () {
       return this.selectedOrder && this.selectedOrder.status === 'IN_DELIVERY'
     },
-    reviewParsedDimensionsCm() {
+    reviewParsedDimensionsCm () {
       return {
         x: this.parsePositiveDimension(this.reviewDimensions.x),
         y: this.parsePositiveDimension(this.reviewDimensions.y),
-        z: this.parsePositiveDimension(this.reviewDimensions.z),
+        z: this.parsePositiveDimension(this.reviewDimensions.z)
       }
     },
-    reviewQuantityValue() {
+    reviewQuantityValue () {
       return this.parsePositiveInteger(this.reviewQuantity) || 0
     },
-    reviewVolumeCm3() {
+    reviewVolumeCm3 () {
       const { x, y, z } = this.reviewParsedDimensionsCm
       if (!x || !y || !z) {
         return 0
       }
       return this.roundTo2(x * y * z)
     },
-    reviewUnitPricePerCm3() {
+    reviewUnitPricePerCm3 () {
       const priceClient = this.parsePositiveDimension(this.selectedOrder?.price_client)
       if (!priceClient) {
         return 0
@@ -659,14 +659,14 @@ export default {
       }
       return priceClient / (baseVolumeCm3 * baseQuantity)
     },
-    reviewEstimatedPrice() {
+    reviewEstimatedPrice () {
       if (!this.reviewVolumeCm3 || !this.reviewUnitPricePerCm3 || !this.reviewQuantityValue) {
         return 0
       }
       return this.roundTo2(this.reviewVolumeCm3 * this.reviewUnitPricePerCm3 * this.reviewQuantityValue)
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.syncPanelMode()
     if (typeof window !== 'undefined') {
       window.addEventListener(PANEL_MODE_EVENT, this.syncPanelMode)
@@ -674,29 +674,29 @@ export default {
     }
     this.fetchOrders()
   },
-  beforeUnmount() {
+  beforeUnmount () {
     if (typeof window !== 'undefined') {
       window.removeEventListener(PANEL_MODE_EVENT, this.syncPanelMode)
       window.removeEventListener('storage', this.syncPanelMode)
     }
   },
   watch: {
-    isManagerMode() {
+    isManagerMode () {
       this.fetchOrders()
     },
     '$route.query.orderId': {
-      async handler(newValue) {
+      async handler (newValue) {
         if (newValue) {
           await this.openOrderModal(Number(newValue))
         }
-      },
-    },
+      }
+    }
   },
   methods: {
-    syncPanelMode() {
+    syncPanelMode () {
       this.panelMode = getStoredPanelMode()
     },
-    async fetchOrders() {
+    async fetchOrders () {
       this.loading = true
       this.error = ''
       try {
@@ -719,7 +719,7 @@ export default {
         this.loading = false
       }
     },
-    async openOrderModal(orderId) {
+    async openOrderModal (orderId) {
       await this.selectOrder(orderId)
       if (this.selectedOrder?.id) {
         this.isDetailModalOpen = true
@@ -729,18 +729,18 @@ export default {
       if (queryOrderId !== selectedId) {
         this.$router.replace({
           path: '/panel/print/orders',
-          query: { orderId: selectedId },
+          query: { orderId: selectedId }
         })
       }
     },
-    closeDetailModal() {
+    closeDetailModal () {
       this.isDetailModalOpen = false
       this.showModel3DPreview = false
       if (this.$route?.query?.orderId) {
         this.$router.replace({ path: '/panel/print/orders' })
       }
     },
-    async selectOrder(orderId) {
+    async selectOrder (orderId) {
       if (!orderId) {
         return
       }
@@ -754,7 +754,7 @@ export default {
         this.actionError = err.userMessage || 'Не удалось открыть заказ'
       }
     },
-    prefillForms() {
+    prefillForms () {
       this.showModel3DPreview = false
       this.deliveryAddress = this.selectedOrder?.delivery_address || ''
       this.reworkReason = ''
@@ -769,16 +769,16 @@ export default {
       this.reviewDimensions = {
         x: this.formatDimensionForInput(reviewXcm),
         y: this.formatDimensionForInput(reviewYcm),
-        z: this.formatDimensionForInput(reviewZcm),
+        z: this.formatDimensionForInput(reviewZcm)
       }
       this.reviewBaseDimensionsCm = {
         x: reviewXcm,
         y: reviewYcm,
-        z: reviewZcm,
+        z: reviewZcm
       }
       this.reviewQuantity = this.parsePositiveInteger(this.selectedOrder?.quantity) || 1
     },
-    async performAction(action, successMessage) {
+    async performAction (action, successMessage) {
       if (!this.selectedOrder?.id) {
         return
       }
@@ -802,7 +802,7 @@ export default {
         this.actionLoading = false
       }
     },
-    upsertOrder(order) {
+    upsertOrder (order) {
       if (!order || !order.id) {
         return
       }
@@ -813,58 +813,58 @@ export default {
       }
       this.orders.splice(index, 1, {
         ...this.orders[index],
-        ...order,
+        ...order
       })
     },
-    async onRequestPriceReview() {
+    async onRequestPriceReview () {
       const payload = this.getValidatedReviewPayload()
       if (!payload) {
         return
       }
       await this.performAction(
         () => requestPrintOrderPriceReview(this.selectedOrder.id, payload),
-        'Заказ отправлен на ручную проверку стоимости.',
+        'Заказ отправлен на ручную проверку стоимости.'
       )
     },
-    async onAcceptPrice() {
+    async onAcceptPrice () {
       await this.performAction(
         () => acceptPrintOrderPrice(this.selectedOrder.id),
-        'Стоимость согласована, заказ переведен в оплату.',
+        'Стоимость согласована, заказ переведен в оплату.'
       )
     },
-    async onRejectPrice() {
+    async onRejectPrice () {
       await this.performAction(
         () => rejectPrintOrderPrice(this.selectedOrder.id, {}),
-        'Заказ отменен.',
+        'Заказ отменен.'
       )
     },
-    async onPayStub() {
+    async onPayStub () {
       await this.performAction(
         () => payPrintOrder(this.selectedOrder.id),
-        'Оплата отмечена (тестовый режим).',
+        'Оплата отмечена (тестовый режим).'
       )
     },
-    async onAcceptResult() {
+    async onAcceptResult () {
       if (!this.deliveryAddress.trim()) {
         this.actionError = 'Укажите адрес СДЭК.'
         return
       }
       await this.performAction(
         () => acceptPrintOrderResult(this.selectedOrder.id, { delivery_address: this.deliveryAddress.trim() }),
-        'Заказ принят. Менеджер увидит адрес доставки.',
+        'Заказ принят. Менеджер увидит адрес доставки.'
       )
     },
-    async onRequestRework() {
+    async onRequestRework () {
       if (!this.reworkReason.trim()) {
         this.actionError = 'Укажите причину доработки.'
         return
       }
       await this.performAction(
         () => requestPrintOrderRework(this.selectedOrder.id, { reason: this.reworkReason.trim() }),
-        'Заказ отправлен на доработку.',
+        'Заказ отправлен на доработку.'
       )
     },
-    async onRepeatOrder() {
+    async onRepeatOrder () {
       this.actionLoading = true
       this.actionError = ''
       this.actionSuccess = ''
@@ -882,7 +882,7 @@ export default {
         this.actionLoading = false
       }
     },
-    async onManagerSetPrice() {
+    async onManagerSetPrice () {
       if (!this.managerPrice && this.managerPrice !== 0) {
         this.actionError = 'Укажите стоимость.'
         return
@@ -890,21 +890,21 @@ export default {
       await this.performAction(
         () => managerSetPrintOrderPrice(this.selectedOrder.id, {
           price_admin: this.managerPrice,
-          manager_comment: this.managerComment,
+          manager_comment: this.managerComment
         }),
-        'Стоимость обновлена.',
+        'Стоимость обновлена.'
       )
     },
-    async onManagerStartPrinting() {
+    async onManagerStartPrinting () {
       await this.performAction(
         () => managerStartPrintOrder(this.selectedOrder.id),
-        'Статус заказа изменен на "В печати".',
+        'Статус заказа изменен на "В печати".'
       )
     },
-    onManagerPhotosChange(event) {
+    onManagerPhotosChange (event) {
       this.managerPhotos = Array.from(event?.target?.files || [])
     },
-    async onManagerSendForReview() {
+    async onManagerSendForReview () {
       const payload = new FormData()
       this.managerPhotos.forEach((file) => {
         payload.append('photos', file)
@@ -915,35 +915,35 @@ export default {
 
       await this.performAction(
         () => managerSendPrintOrderForReview(this.selectedOrder.id, payload),
-        'Заказ отправлен заказчику на проверку.',
+        'Заказ отправлен заказчику на проверку.'
       )
     },
-    async onManagerStartDelivery() {
+    async onManagerStartDelivery () {
       if (!this.trackingNumber.trim()) {
         this.actionError = 'Укажите трек-номер.'
         return
       }
       await this.performAction(
         () => managerStartPrintOrderDelivery(this.selectedOrder.id, { tracking_number: this.trackingNumber.trim() }),
-        'Заказ передан в доставку.',
+        'Заказ передан в доставку.'
       )
     },
-    async onManagerMarkReceived() {
+    async onManagerMarkReceived () {
       await this.performAction(
         () => managerMarkPrintOrderReceived(this.selectedOrder.id),
-        'Заказ отмечен как полученный.',
+        'Заказ отмечен как полученный.'
       )
     },
-    goToPrintCalculator() {
+    goToPrintCalculator () {
       this.$router.push({
         path: '/print',
-        query: { start: 'upload' },
+        query: { start: 'upload' }
       })
     },
-    resolveOrderPreviewUrl(order) {
+    resolveOrderPreviewUrl (order) {
       return this.resolveMediaUrl(order?.preview_image || '')
     },
-    formatDimensionForInput(value) {
+    formatDimensionForInput (value) {
       if (value === null || value === undefined || value === '') {
         return ''
       }
@@ -953,7 +953,7 @@ export default {
       }
       return numeric.toFixed(2)
     },
-    parsePositiveDimension(value) {
+    parsePositiveDimension (value) {
       if (value === null || value === undefined || value === '') {
         return null
       }
@@ -963,7 +963,7 @@ export default {
       }
       return numeric
     },
-    parsePositiveInteger(value) {
+    parsePositiveInteger (value) {
       if (value === null || value === undefined || value === '') {
         return null
       }
@@ -977,25 +977,25 @@ export default {
       }
       return numeric
     },
-    mmToCm(value) {
+    mmToCm (value) {
       const mm = this.parsePositiveDimension(value)
       if (!mm) {
         return null
       }
       return mm / 10
     },
-    roundTo2(value) {
+    roundTo2 (value) {
       if (!Number.isFinite(value)) {
         return 0
       }
       return Math.round(value * 100) / 100
     },
-    onReviewDimensionInput(axis) {
+    onReviewDimensionInput (axis) {
       const currentValue = this.parsePositiveDimension(this.reviewDimensions[axis])
       if (!currentValue) {
         this.reviewDimensions = {
           ...this.reviewDimensions,
-          [axis]: '',
+          [axis]: ''
         }
         return
       }
@@ -1003,7 +1003,7 @@ export default {
       if (!baseDimensions) {
         this.reviewDimensions = {
           ...this.reviewDimensions,
-          [axis]: this.formatDimensionForInput(currentValue),
+          [axis]: this.formatDimensionForInput(currentValue)
         }
         return
       }
@@ -1015,14 +1015,14 @@ export default {
       this.reviewDimensions = {
         x: this.formatDimensionForInput(baseDimensions.x * scaleFactor),
         y: this.formatDimensionForInput(baseDimensions.y * scaleFactor),
-        z: this.formatDimensionForInput(baseDimensions.z * scaleFactor),
+        z: this.formatDimensionForInput(baseDimensions.z * scaleFactor)
       }
     },
-    onReviewQuantityInput() {
+    onReviewQuantityInput () {
       const quantity = this.parsePositiveInteger(this.reviewQuantity)
       this.reviewQuantity = quantity || ''
     },
-    getReviewBaseDimensionsCm() {
+    getReviewBaseDimensionsCm () {
       const baseX = this.parsePositiveDimension(this.reviewBaseDimensionsCm.x)
       const baseY = this.parsePositiveDimension(this.reviewBaseDimensionsCm.y)
       const baseZ = this.parsePositiveDimension(this.reviewBaseDimensionsCm.z)
@@ -1030,7 +1030,7 @@ export default {
         return {
           x: baseX,
           y: baseY,
-          z: baseZ,
+          z: baseZ
         }
       }
       const currentX = this.reviewParsedDimensionsCm.x
@@ -1040,13 +1040,13 @@ export default {
         this.reviewBaseDimensionsCm = {
           x: currentX,
           y: currentY,
-          z: currentZ,
+          z: currentZ
         }
         return this.reviewBaseDimensionsCm
       }
       return null
     },
-    getValidatedReviewPayload() {
+    getValidatedReviewPayload () {
       const xCm = this.parsePositiveDimension(this.reviewDimensions.x)
       const yCm = this.parsePositiveDimension(this.reviewDimensions.y)
       const zCm = this.parsePositiveDimension(this.reviewDimensions.z)
@@ -1064,21 +1064,21 @@ export default {
         dimension_y_mm: this.roundTo2(yCm * 10).toFixed(2),
         dimension_z_mm: this.roundTo2(zCm * 10).toFixed(2),
         quantity,
-        volume_mm3: this.roundTo2(this.reviewVolumeCm3 * 1000).toFixed(2),
+        volume_mm3: this.roundTo2(this.reviewVolumeCm3 * 1000).toFixed(2)
       }
       if (this.reviewEstimatedPrice > 0) {
         payload.price_client = this.reviewEstimatedPrice.toFixed(2)
       }
       return payload
     },
-    formatVolume(value) {
+    formatVolume (value) {
       const numeric = Number(value)
       if (!Number.isFinite(numeric) || numeric <= 0) {
         return '—'
       }
       return numeric.toFixed(2)
     },
-    formatDimensions(order) {
+    formatDimensions (order) {
       if (!order) {
         return '—'
       }
@@ -1090,13 +1090,13 @@ export default {
       }
       return `X ${x.toFixed(2)} мм, Y ${y.toFixed(2)} мм, Z ${z.toFixed(2)} мм`
     },
-    statusLabel(status, labelFromApi) {
+    statusLabel (status, labelFromApi) {
       if (labelFromApi) {
         return labelFromApi
       }
       return STATUS_LABELS[status] || status || '—'
     },
-    formatDate(value) {
+    formatDate (value) {
       if (!value) {
         return '—'
       }
@@ -1109,10 +1109,10 @@ export default {
         month: '2-digit',
         day: '2-digit',
         hour: '2-digit',
-        minute: '2-digit',
+        minute: '2-digit'
       })
     },
-    money(value) {
+    money (value) {
       if (value === null || value === undefined || value === '') {
         return '—'
       }
@@ -1122,7 +1122,7 @@ export default {
       }
       return `${value} ₽`
     },
-    resolveMediaUrl(path) {
+    resolveMediaUrl (path) {
       if (!path) {
         return ''
       }
@@ -1137,8 +1137,8 @@ export default {
         return `${base}${path}`
       }
       return `${base}/${path}`
-    },
-  },
+    }
+  }
 }
 </script>
 

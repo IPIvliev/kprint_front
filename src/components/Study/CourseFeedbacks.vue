@@ -53,36 +53,36 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       show_details: false,
-      currentIndex: 0,
+      currentIndex: 0
     }
   },
   props: ['background', 'feedbacks'],
   computed: {
-    normalizedFeedbacks() {
+    normalizedFeedbacks () {
       return Array.isArray(this.feedbacks) ? this.feedbacks : []
     },
-    currentFeedback() {
+    currentFeedback () {
       if (!this.normalizedFeedbacks.length) {
         return {}
       }
       return this.normalizedFeedbacks[this.currentIndex] || this.normalizedFeedbacks[0]
     },
-    hasVideo() {
+    hasVideo () {
       return !!(this.currentFeedback && this.currentFeedback.video)
-    },
+    }
   },
   watch: {
-    feedbacks() {
+    feedbacks () {
       if (this.currentIndex >= this.normalizedFeedbacks.length) {
         this.currentIndex = 0
       }
-    },
+    }
   },
   methods: {
-    resolveMediaUrl(path) {
+    resolveMediaUrl (path) {
       if (!path) {
         return ''
       }
@@ -98,11 +98,11 @@ export default {
       }
       return `${base}/${path}`
     },
-    feedbackPhoto(item) {
+    feedbackPhoto (item) {
       const photo = item && item.photo ? this.resolveMediaUrl(item.photo) : ''
       return photo || require('@/assets/img/_avatar180.jpg')
     },
-    feedbackText(item) {
+    feedbackText (item) {
       const raw = String((item && item.description) || '').replace(/<\/?[^>]+(>|$)/g, '')
       if (!raw) {
         return ''
@@ -112,40 +112,40 @@ export default {
       }
       return raw.length > 280 ? `${raw.slice(0, 280)}...` : raw
     },
-    hasMoreText(item) {
+    hasMoreText (item) {
       const raw = String((item && item.description) || '').replace(/<\/?[^>]+(>|$)/g, '')
       return raw.length > 280
     },
-    toggleDetails() {
+    toggleDetails () {
       this.show_details = !this.show_details
     },
-    next() {
+    next () {
       if (!this.normalizedFeedbacks.length) {
         return
       }
       this.show_details = false
       this.currentIndex = (this.currentIndex + 1) % this.normalizedFeedbacks.length
     },
-    prev() {
+    prev () {
       if (!this.normalizedFeedbacks.length) {
         return
       }
       this.show_details = false
       this.currentIndex = (this.currentIndex - 1 + this.normalizedFeedbacks.length) % this.normalizedFeedbacks.length
     },
-    goTo(index) {
+    goTo (index) {
       if (index < 0 || index >= this.normalizedFeedbacks.length) {
         return
       }
       this.show_details = false
       this.currentIndex = index
     },
-    openVideo(item) {
+    openVideo (item) {
       if (!item || !item.video) {
         return
       }
       window.open(item.video, '_blank', 'noopener')
-    },
-  },
+    }
+  }
 }
 </script>

@@ -48,12 +48,12 @@
 </template>
 
 <script>
-import ProductStock from "@/components/elements/Shop/ProductStock.vue"
+import ProductStock from '@/components/elements/Shop/ProductStock.vue'
 
 export default {
-  props: ['product', ],
+  props: ['product'],
   components: { ProductStock },
-  data() {
+  data () {
     return {
 
     }
@@ -62,13 +62,11 @@ export default {
 
   },
   methods: {
-    getPrice(price) {
+    getPrice (price) {
       price = String(price).split('.')
-      price = price[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      price = price[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
       return price
     }
   }
 }
 </script>
-
-

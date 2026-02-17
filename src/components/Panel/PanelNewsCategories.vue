@@ -184,13 +184,13 @@ import {
   deletePanelArticleCategory,
   fetchPanelArticleCategories,
   fetchPanelArticles,
-  updatePanelArticleCategory,
+  updatePanelArticleCategory
 } from '@/services/panel.service'
 
 export default {
   name: 'PanelNewsCategories',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       categories: [],
       articles: [],
@@ -206,13 +206,13 @@ export default {
         title: '',
         slug: '',
         color: '#F2F4F7',
-        description: '',
+        description: ''
       },
-      colorPresets: ['#F2F4F7', '#FEE4E2', '#FEF0C7', '#ECFDF3', '#E0F2FE', '#EEF4FF', '#F5F3FF', '#FCE7F3'],
+      colorPresets: ['#F2F4F7', '#FEE4E2', '#FEF0C7', '#ECFDF3', '#E0F2FE', '#EEF4FF', '#F5F3FF', '#FCE7F3']
     }
   },
   computed: {
-    filteredCategories() {
+    filteredCategories () {
       const term = String(this.searchTerm || '').trim().toLowerCase()
       if (!term) {
         return this.categories
@@ -223,32 +223,32 @@ export default {
         const description = String(category.description || '').toLowerCase()
         return title.includes(term) || slug.includes(term) || description.includes(term)
       })
-    },
+    }
   },
   watch: {
-    'form.title'(value) {
+    'form.title' (value) {
       if (this.slugTouched) {
         return
       }
       this.form.slug = this.slugify(value)
     },
-    'form.slug'(value) {
+    'form.slug' (value) {
       if (!value) {
         this.slugTouched = false
       }
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchData()
   },
   methods: {
-    async fetchData() {
+    async fetchData () {
       this.loading = true
       this.error = ''
       try {
         const [categoriesResponse, articlesResponse] = await Promise.all([
           fetchPanelArticleCategories(),
-          fetchPanelArticles(),
+          fetchPanelArticles()
         ])
         this.categories = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
         this.articles = Array.isArray(articlesResponse.data) ? articlesResponse.data : []
@@ -258,17 +258,17 @@ export default {
         this.loading = false
       }
     },
-    categoryKey(category) {
+    categoryKey (category) {
       return category.id || category.pk || category.slug || category.title
     },
-    shortText(text) {
+    shortText (text) {
       const raw = String(text || '').replace(/<\/?[^>]+(>|$)/g, '')
       if (!raw) {
         return '—'
       }
       return raw.length > 120 ? `${raw.slice(0, 120)}...` : raw
     },
-    categoryArticlesCount(categoryId) {
+    categoryArticlesCount (categoryId) {
       return this.articles.filter((article) => {
         const rawCategory =
           (article.category_detail && article.category_detail.id) ||
@@ -277,7 +277,7 @@ export default {
         return Number(rawCategory) === Number(categoryId)
       }).length
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.slugTouched = false
@@ -285,11 +285,11 @@ export default {
         title: '',
         slug: '',
         color: '#F2F4F7',
-        description: '',
+        description: ''
       }
       this.showModal = true
     },
-    openEdit(category) {
+    openEdit (category) {
       this.isEditing = true
       this.currentId = category.id || category.pk
       this.slugTouched = true
@@ -297,14 +297,14 @@ export default {
         title: category.title || '',
         slug: category.slug || '',
         color: this.normalizeColor(category.color),
-        description: category.description || '',
+        description: category.description || ''
       }
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    async saveCategory() {
+    async saveCategory () {
       const title = String(this.form.title || '').trim()
       if (!title) {
         this.error = 'Заполните название категории'
@@ -318,7 +318,7 @@ export default {
           title,
           slug: this.form.slug ? this.slugify(this.form.slug) : '',
           color: this.normalizeColor(this.form.color),
-          description: String(this.form.description || '').trim(),
+          description: String(this.form.description || '').trim()
         }
         if (!payload.slug) {
           delete payload.slug
@@ -336,7 +336,7 @@ export default {
         this.saving = false
       }
     },
-    async removeCategory(category) {
+    async removeCategory (category) {
       const id = category.id || category.pk
       if (!id) {
         return
@@ -353,15 +353,44 @@ export default {
         this.error = err.userMessage || 'Не удалось удалить категорию'
       }
     },
-    slugify(text) {
+    slugify (text) {
       if (!text) {
         return ''
       }
       const map = {
-        а: 'a', б: 'b', в: 'v', г: 'g', д: 'd', е: 'e', ё: 'e', ж: 'zh', з: 'z',
-        и: 'i', й: 'y', к: 'k', л: 'l', м: 'm', н: 'n', о: 'o', п: 'p', р: 'r',
-        с: 's', т: 't', у: 'u', ф: 'f', х: 'h', ц: 'ts', ч: 'ch', ш: 'sh',
-        щ: 'sch', ъ: '', ы: 'y', ь: '', э: 'e', ю: 'yu', я: 'ya',
+        а: 'a',
+        б: 'b',
+        в: 'v',
+        г: 'g',
+        д: 'd',
+        е: 'e',
+        ё: 'e',
+        ж: 'zh',
+        з: 'z',
+        и: 'i',
+        й: 'y',
+        к: 'k',
+        л: 'l',
+        м: 'm',
+        н: 'n',
+        о: 'o',
+        п: 'p',
+        р: 'r',
+        с: 's',
+        т: 't',
+        у: 'u',
+        ф: 'f',
+        х: 'h',
+        ц: 'ts',
+        ч: 'ch',
+        ш: 'sh',
+        щ: 'sch',
+        ъ: '',
+        ы: 'y',
+        ь: '',
+        э: 'e',
+        ю: 'yu',
+        я: 'ya'
       }
       const lower = String(text).trim().toLowerCase()
       const translit = lower
@@ -374,14 +403,14 @@ export default {
         .replace(/-+/g, '-')
         .replace(/^-+|-+$/g, '')
     },
-    normalizeColor(value) {
+    normalizeColor (value) {
       const raw = String(value || '').trim()
       if (/^#[0-9a-fA-F]{6}$/.test(raw)) {
         return raw.toUpperCase()
       }
       return '#F2F4F7'
-    },
-  },
+    }
+  }
 }
 </script>
 

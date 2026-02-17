@@ -159,19 +159,19 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
 import {
   createShopManagerFilterAttr,
   deleteShopManagerFilterAttr,
   fetchShopManagerCategories,
   fetchShopManagerFilterAttrs,
-  updateShopManagerFilterAttr,
+  updateShopManagerFilterAttr
 } from '@/services/panel.service'
 
 export default {
   name: 'ShopFilterAttrs',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       attrs: [],
       categories: [],
@@ -184,17 +184,17 @@ export default {
       currentId: null,
       filters: {
         category: '',
-        type: '',
+        type: ''
       },
       form: {
         title: '',
         type: 'C',
-        category: [],
-      },
+        category: []
+      }
     }
   },
   computed: {
-    filteredAttrs() {
+    filteredAttrs () {
       const term = this.searchTerm.trim().toLowerCase()
       return this.attrs.filter((a) => {
         if (term && !String(a.title || '').toLowerCase().includes(term)) {
@@ -212,19 +212,19 @@ export default {
         }
         return true
       })
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchData()
   },
   methods: {
-    async fetchData() {
+    async fetchData () {
       this.loading = true
       this.error = ''
       try {
         const [attrsResponse, categoriesResponse] = await Promise.all([
           fetchShopManagerFilterAttrs(),
-          fetchShopManagerCategories(),
+          fetchShopManagerCategories()
         ])
         this.attrs = Array.isArray(attrsResponse.data) ? attrsResponse.data : []
         this.categories = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
@@ -234,10 +234,10 @@ export default {
         this.loading = false
       }
     },
-    attrKey(attr) {
+    attrKey (attr) {
       return attr.id || attr.pk || attr.title
     },
-    categoriesLabel(value) {
+    categoriesLabel (value) {
       if (!value) {
         return '—'
       }
@@ -249,18 +249,18 @@ export default {
       }
       return String(value)
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.error = ''
       this.form = {
         title: '',
         type: 'C',
-        category: [],
+        category: []
       }
       this.showModal = true
     },
-    openEdit(attr) {
+    openEdit (attr) {
       this.isEditing = true
       this.currentId = attr.id || attr.pk
       this.error = ''
@@ -270,14 +270,14 @@ export default {
       this.form = {
         title: attr.title || '',
         type: attr.type || 'C',
-        category,
+        category
       }
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    async saveAttr() {
+    async saveAttr () {
       if (!this.form.title) {
         this.error = 'Заполните название фильтра'
         return
@@ -288,7 +288,7 @@ export default {
         const payload = {
           title: this.form.title,
           type: this.form.type,
-          category: this.form.category || [],
+          category: this.form.category || []
         }
         if (this.isEditing && this.currentId) {
           await updateShopManagerFilterAttr(this.currentId, payload)
@@ -303,7 +303,7 @@ export default {
         this.saving = false
       }
     },
-    async removeAttr(attr) {
+    async removeAttr (attr) {
       const id = attr.id || attr.pk
       if (!id) {
         return
@@ -318,7 +318,7 @@ export default {
       } catch (err) {
         this.error = err.userMessage || 'Не удалось удалить фильтр'
       }
-    },
-  },
+    }
+  }
 }
 </script>

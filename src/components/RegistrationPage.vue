@@ -1,55 +1,147 @@
 <template>
   <div class="content">
-    <!-- login-->
     <div class="login">
       <div class="container">
         <div class="login__block">
-          <div class="login__buttons"> 
+          <div class="login__buttons">
             <div class="login__buttons-row">
-              <div class="login__btn"><a class="btn btn--gray" href="#">Вход</a></div>
-              <div class="login__btn"><a class="btn btn--black" href="#">Регистрация</a></div>
+              <div class="login__btn">
+                <router-link class="btn btn--gray" to="/login">Вход</router-link>
+              </div>
+              <div class="login__btn">
+                <router-link class="btn btn--black" to="/registration">Регистрация</router-link>
+              </div>
             </div>
           </div>
           <div class="login__title">Регистрация</div>
-          <div class="login__text">Пройдите простую процедуру регистрации для доступа к личному кабинету пользователя.</div>
-          <form class="login__form" action="#">
-            <div class="input input--label"> 
-              <input type="text">
+          <div class="login__text">
+            Пройдите простую процедуру регистрации для доступа к личному кабинету пользователя.
+          </div>
+          <VeeForm class="login__form" @submit="handleRegister" :validation-schema="schema">
+            <div class="form-group">
+              <div v-if="message" class="alert alert-danger" role="alert">
+                {{ message }}
+              </div>
+            </div>
+
+            <div class="input input--label">
+              <Field name="email" type="email" autocomplete="email" />
               <div class="input__label">Ваш e-mail адрес</div>
+              <ErrorMessage name="email" class="error-feedback" />
             </div>
-            <div class="input"> 
-              <input type="text" placeholder="Имя или никнейм">
+
+            <div class="input">
+              <Field name="username" type="text" placeholder="Имя или никнейм" autocomplete="username" />
+              <ErrorMessage name="username" class="error-feedback" />
             </div>
+
             <div class="input input--password">
-              <input type="password" placeholder="Пароль">
-              <div class="input__icon"> 
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g>
-                    <path d="M4.5 8C7.5 14.5 16.5 14.5 19.5 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    <path d="M16.8164 11.3174L19.5002 14.9999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    <path d="M12 12.875V16.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    <path d="M7.18383 11.3174L4.5 14.9999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                  </g>
+              <Field
+                name="password"
+                :type="showPassword ? 'text' : 'password'"
+                placeholder="Пароль"
+                autocomplete="new-password"
+              />
+              <ErrorMessage name="password" class="error-feedback" />
+              <div
+                class="input__icon"
+                :class="{ active: showPassword }"
+                role="button"
+                tabindex="0"
+                :aria-label="showPassword ? 'Hide password' : 'Show password'"
+                :aria-pressed="showPassword ? 'true' : 'false'"
+                @click="togglePasswordVisibility"
+                @keydown.enter.prevent="togglePasswordVisibility"
+                @keydown.space.prevent="togglePasswordVisibility"
+              >
+                <svg class="input__icon--hide" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.5 8C7.5 14.5 16.5 14.5 19.5 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M16.8164 11.3174L19.5002 14.9999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M12 12.875V16.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M7.18383 11.3174L4.5 14.9999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <svg class="input__icon--visible" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.5 12.5C7.5 6 16.5 6 19.5 12.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M12 16C10.8954 16 10 15.1046 10 14C10 12.8954 10.8954 12 12 12C13.1046 12 14 12.8954 14 14C14 15.1046 13.1046 16 12 16Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
               </div>
             </div>
-            <button class="btn btn--red btn--big" type="submit">Зарегистрироваться</button>
-          </form>
-          <div class="login__approval">Регистрируясь Вы подтверждаете своё согласие на обработку <a href="#">персональных данных</a></div>
+
+            <button class="btn btn--red btn--big" type="submit" :disabled="loading">
+              <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+              Зарегистрироваться
+            </button>
+          </VeeForm>
+
+          <div class="login__approval">
+            Регистрируясь Вы подтверждаете своё согласие на обработку
+            <a href="#">персональных данных</a>
+          </div>
         </div>
       </div>
     </div>
-    <!--	/login-->
   </div>
-  <!-- footer-->
+
   <footer class="footer footer--login">
-    <div class="container"> 
+    <div class="container">
       <div class="footer__line"></div>
-      <div class="footer__bottom"> 
+      <div class="footer__bottom">
         <p>&#169; 2021, Kulibin Print. Все права защищены.</p>
-        <div class="footer__dgdgf d-flex flex-wrap"><a href="#">Политика конфиденциальности</a><a href="#">Условия обслуживания</a></div>
+        <div class="footer__dgdgf d-flex flex-wrap">
+          <a href="#">Политика конфиденциальности</a><a href="#">Условия обслуживания</a>
+        </div>
       </div>
     </div>
   </footer>
-  <!-- /footer-->
 </template>
+
+<script>
+import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
+import * as yup from 'yup'
+
+export default {
+  name: 'RegistrationPage',
+  components: {
+    VeeForm,
+    Field,
+    ErrorMessage
+  },
+  data () {
+    const schema = yup.object().shape({
+      email: yup.string().required('Email is required').email('Email is invalid'),
+      username: yup.string().required('Username is required').min(3, 'Username must be at least 3 characters'),
+      password: yup.string().required('Password is required').min(8, 'Password must be at least 8 characters')
+    })
+
+    return {
+      schema,
+      loading: false,
+      message: '',
+      showPassword: false
+    }
+  },
+  methods: {
+    togglePasswordVisibility () {
+      this.showPassword = !this.showPassword
+    },
+    async handleRegister (user) {
+      this.loading = true
+      this.message = ''
+      try {
+        await this.$store.dispatch('auth/register', user)
+        this.$router.push('/login')
+      } catch (error) {
+        this.message =
+          error?.userMessage ||
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString()
+      } finally {
+        this.loading = false
+      }
+    }
+  }
+}
+</script>

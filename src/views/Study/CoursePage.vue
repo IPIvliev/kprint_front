@@ -14,74 +14,65 @@
 
         <CourseRelated :background="'gray_background'" :related="GetCourse.related || []"/>
         <!-- advantages-->
-        <!--	/advantages-->
+        <!--  /advantages-->
         <!-- halfitems-->
-        <!--	/halfitems-->
+        <!--  /halfitems-->
         <!-- callback-->
         <GalleryBlock />
         <AlreadyStudy />
-        <!--	/callback-->
-       
+        <!--  /callback-->
+
       </div>
       <footer-block/>
     </div>
 </template>
-    
+
 <script>
-    // @ is an alias to /src
-    import HeaderBlock from '@/components/HeaderBlock.vue'
-    import WhiteWelcome from "@/components/elements/WhiteWelcome.vue"
-    import AboutCourse from "@/components/Study/AboutCourse.vue"
-    import CourseProgramm from "@/components/Study/CourseProgramm.vue"
-    import CourseTeachers from "@/components/Study/CourseTeachers.vue"
-    import CourseFeedbacks from "@/components/Study/CourseFeedbacks.vue"
-    import CoursePrices from "@/components/Study/CoursePrices.vue"
-    import CourseRelated from "@/components/Study/CourseRelated.vue"
-    
-    import WhyWeStudyBlock from "@/components/Study/WhyWeStudyBlock.vue"
-    
-    import AlreadyStudy from "@/components/Study/AlreadyStudy.vue"
-    import GalleryBlock from "@/components/elements/GalleryBlock.vue"
-    import MainPageNews from "@/components/elements/MainPage/MainPageNews.vue"
-    
-    import FooterBlock from '@/components/FooterBlock.vue'
-    import CallbackWindow from "@/components/elements/CallbackWindow.vue"
-     
-    export default {
-      name: 'Курсы обучения',
-      components: {
-        WhiteWelcome,
-        AboutCourse,
-        CourseProgramm,
-        CourseTeachers,
-        CourseFeedbacks,
-        CoursePrices,
-        CourseRelated,
-        WhyWeStudyBlock,
-        AlreadyStudy,
-        GalleryBlock,
-        MainPageNews,
-        FooterBlock,
-        HeaderBlock,
-        CallbackWindow,
-    
-      },
-      data() {
-        return {
-          id: this.$route.params.id,
-        }
-      },
-      created() {
-        this.$store.dispatch("study/fetchCourse", this.id);
-      },
-      computed: {
-        GetCourse() {
-          return this.$store.state.study.course
-        },
-      }
+// @ is an alias to /src
+import HeaderBlock from '@/components/HeaderBlock.vue'
+import WhiteWelcome from '@/components/elements/WhiteWelcome.vue'
+import AboutCourse from '@/components/Study/AboutCourse.vue'
+import CourseProgramm from '@/components/Study/CourseProgramm.vue'
+import CourseTeachers from '@/components/Study/CourseTeachers.vue'
+import CourseFeedbacks from '@/components/Study/CourseFeedbacks.vue'
+import CoursePrices from '@/components/Study/CoursePrices.vue'
+import CourseRelated from '@/components/Study/CourseRelated.vue'
+
+import AlreadyStudy from '@/components/Study/AlreadyStudy.vue'
+import GalleryBlock from '@/components/elements/GalleryBlock.vue'
+
+import FooterBlock from '@/components/FooterBlock.vue'
+
+export default {
+  name: 'StudyCoursePageView',
+  components: {
+    WhiteWelcome,
+    AboutCourse,
+    CourseProgramm,
+    CourseTeachers,
+    CourseFeedbacks,
+    CoursePrices,
+    CourseRelated,
+    AlreadyStudy,
+    GalleryBlock,
+    FooterBlock,
+    HeaderBlock
+
+  },
+  data () {
+    return {
+      id: this.$route.params.id
     }
+  },
+  created () {
+    this.$store.dispatch('study/fetchCourse', this.id)
+  },
+  computed: {
+    GetCourse () {
+      return this.$store.state.study.course
+    }
+  }
+}
 </script>
 
 <style src="@/assets/css/routes/study.css"></style>
-
-    

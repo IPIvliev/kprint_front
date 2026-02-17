@@ -156,19 +156,19 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
 import {
   createShopManagerFilterAttrListValue,
   deleteShopManagerFilterAttrListValue,
   fetchShopManagerFilterAttrListValues,
   fetchShopManagerFilterAttrs,
-  updateShopManagerFilterAttrListValue,
+  updateShopManagerFilterAttrListValue
 } from '@/services/panel.service'
 
 export default {
   name: 'ShopFilterAttrListValues',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       values: [],
       attrs: [],
@@ -180,17 +180,17 @@ export default {
       saving: false,
       currentId: null,
       filters: {
-        filter_attr: '',
+        filter_attr: ''
       },
       form: {
         filter_attr: '',
         value: '',
-        color: '',
-      },
+        color: ''
+      }
     }
   },
   computed: {
-    filteredValues() {
+    filteredValues () {
       const term = this.searchTerm.trim().toLowerCase()
       return this.values.filter((v) => {
         if (term && !String(v.value || '').toLowerCase().includes(term)) {
@@ -201,19 +201,19 @@ export default {
         }
         return true
       })
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchData()
   },
   methods: {
-    async fetchData() {
+    async fetchData () {
       this.loading = true
       this.error = ''
       try {
         const [valuesResponse, attrsResponse] = await Promise.all([
           fetchShopManagerFilterAttrListValues(),
-          fetchShopManagerFilterAttrs(),
+          fetchShopManagerFilterAttrs()
         ])
         this.values = Array.isArray(valuesResponse.data) ? valuesResponse.data : []
         this.attrs = Array.isArray(attrsResponse.data) ? attrsResponse.data : []
@@ -223,14 +223,14 @@ export default {
         this.loading = false
       }
     },
-    valueKey(value) {
+    valueKey (value) {
       return value.id || value.pk || value.value
     },
-    filterTitle(filterId) {
+    filterTitle (filterId) {
       const found = this.attrs.find((item) => Number(item.id) === Number(filterId))
       return found ? found.title : (filterId || '—')
     },
-    colorSwatchStyle(color) {
+    colorSwatchStyle (color) {
       return {
         display: 'inline-block',
         width: '14px',
@@ -239,35 +239,35 @@ export default {
         background: color,
         border: '1px solid #ddd',
         marginRight: '6px',
-        verticalAlign: 'middle',
+        verticalAlign: 'middle'
       }
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.error = ''
       this.form = {
         filter_attr: '',
         value: '',
-        color: '',
+        color: ''
       }
       this.showModal = true
     },
-    openEdit(value) {
+    openEdit (value) {
       this.isEditing = true
       this.currentId = value.id || value.pk
       this.error = ''
       this.form = {
         filter_attr: value.filter_attr || '',
         value: value.value || '',
-        color: value.color || '',
+        color: value.color || ''
       }
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    async saveValue() {
+    async saveValue () {
       if (!this.form.filter_attr || !this.form.value) {
         this.error = 'Заполните фильтр и значение'
         return
@@ -278,7 +278,7 @@ export default {
         const payload = {
           filter_attr: this.form.filter_attr,
           value: this.form.value,
-          color: this.form.color || null,
+          color: this.form.color || null
         }
         if (this.isEditing && this.currentId) {
           await updateShopManagerFilterAttrListValue(this.currentId, payload)
@@ -293,7 +293,7 @@ export default {
         this.saving = false
       }
     },
-    async removeValue(value) {
+    async removeValue (value) {
       const id = value.id || value.pk
       if (!id) {
         return
@@ -308,7 +308,7 @@ export default {
       } catch (err) {
         this.error = err.userMessage || 'Не удалось удалить значение'
       }
-    },
-  },
+    }
+  }
 }
 </script>

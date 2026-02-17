@@ -6,7 +6,7 @@ import { publicApi } from './http'
  */
 
 /** @returns {Promise<import('axios').AxiosResponse<StudyCoursesResponse>>} */
-export function fetchStudyCourses() {
+export function fetchStudyCourses () {
   return publicApi.get('/api/study/courses')
 }
 
@@ -14,6 +14,6 @@ export function fetchStudyCourses() {
  * @param {number|string} courseId
  * @returns {Promise<import('axios').AxiosResponse<StudyCourseResponse>>}
  */
-export function fetchStudyCourse(courseId) {
+export function fetchStudyCourse (courseId) {
   return publicApi.get(`/api/study/course/${Number(courseId)}`)
 }

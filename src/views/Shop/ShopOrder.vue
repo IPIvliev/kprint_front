@@ -10,7 +10,7 @@
                         <div class="col-12">
                             gf
                         </div>
-             
+
                     </div>
                     <div class="row">
                         <div class="col-12">
@@ -19,9 +19,9 @@
                     </div>
                 </div>
             </div>
-            <!--	/news-->
+            <!--  /news-->
             <!-- callback-->
-            <!--	/callback-->
+            <!--  /callback-->
         </div>
 
         <footer-block />
@@ -33,7 +33,7 @@ import HeaderBlock from '../../components/HeaderBlock.vue'
 import FooterBlock from '../../components/FooterBlock.vue'
 
 export default {
-    components: { HeaderBlock, FooterBlock }
+  components: { HeaderBlock, FooterBlock }
 }
 </script>
 

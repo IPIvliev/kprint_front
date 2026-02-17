@@ -1,7 +1,7 @@
-import { api } from './http';
+import { api } from './http'
 
 class AuthService {
-  login(user) {
+  login (user) {
     // axios.defaults.xsrfCookieName = 'csrftoken'
     // axios.defaults.xsrfHeaderName = 'X-CSRFToken'
     return api
@@ -15,18 +15,32 @@ class AuthService {
           localStorage.setItem('user', JSON.stringify(data))
         }
         console.log(response.data)
-        return response.data;
-      });
+        return response.data
+      })
   }
-  logout() {
-    localStorage.removeItem('user');
+
+  logout () {
+    localStorage.removeItem('user')
   }
-  register(user) {
+
+  register (user) {
     return api.post('/api/signup', {
       username: user.username,
       email: user.email,
       password: user.password
-    });
+    })
+  }
+
+  requestPasswordReset (email) {
+    return api.post('/api/password-reset/request', { email })
+  }
+
+  confirmPasswordReset (payload) {
+    return api.post('/api/password-reset/confirm', {
+      uid: payload.uid,
+      token: payload.token,
+      new_password: payload.new_password
+    })
   }
 }
-export default new AuthService();
+export default new AuthService()

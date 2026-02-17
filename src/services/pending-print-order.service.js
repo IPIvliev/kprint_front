@@ -2,7 +2,7 @@ let pendingDraft = null
 
 const STORAGE_KEY = 'pending_print_order_meta'
 
-function writeMeta(draft) {
+function writeMeta (draft) {
   if (typeof window === 'undefined' || !window.sessionStorage) {
     return
   }
@@ -14,33 +14,33 @@ function writeMeta(draft) {
     created_at: Date.now(),
     file_name: draft.file?.name || '',
     quantity: draft.quantity,
-    material_name: draft.material_name || '',
+    material_name: draft.material_name || ''
   }
   window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(meta))
 }
 
-export function setPendingPrintOrderDraft(draft) {
+export function setPendingPrintOrderDraft (draft) {
   pendingDraft = draft || null
   writeMeta(pendingDraft)
 }
 
-export function getPendingPrintOrderDraft() {
+export function getPendingPrintOrderDraft () {
   return pendingDraft
 }
 
-export function consumePendingPrintOrderDraft() {
+export function consumePendingPrintOrderDraft () {
   const draft = pendingDraft
   pendingDraft = null
   writeMeta(null)
   return draft
 }
 
-export function clearPendingPrintOrderDraft() {
+export function clearPendingPrintOrderDraft () {
   pendingDraft = null
   writeMeta(null)
 }
 
-export function buildPrintOrderFormData(draft) {
+export function buildPrintOrderFormData (draft) {
   const payload = new FormData()
   if (!draft) {
     return payload

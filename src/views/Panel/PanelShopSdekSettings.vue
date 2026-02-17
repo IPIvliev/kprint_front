@@ -13,7 +13,7 @@ export default {
   components: {
     ShopSdekSettingsPage,
     FooterPanelBlock,
-    HeaderPanelBlock,
+    HeaderPanelBlock
   }
 }
 </script>

@@ -10,7 +10,7 @@
     </div>
 </template>
 <script>
-    export default {
-        props: ['office'],
-    }
+export default {
+  props: ['office']
+}
 </script>

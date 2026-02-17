@@ -166,18 +166,18 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
 import {
   createShopManagerCategory,
   deleteShopManagerCategory,
   fetchShopManagerCategories,
-  updateShopManagerCategory,
+  updateShopManagerCategory
 } from '@/services/panel.service'
 
 export default {
   name: 'ShopCategories',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       categories: [],
       searchTerm: '',
@@ -192,12 +192,12 @@ export default {
       form: {
         title: '',
         description: '',
-        parent: null,
-      },
+        parent: null
+      }
     }
   },
   computed: {
-    filteredCategories() {
+    filteredCategories () {
       const term = this.searchTerm.trim().toLowerCase()
       if (!term) {
         return this.categories
@@ -208,15 +208,15 @@ export default {
         return title.includes(term) || description.includes(term)
       })
     },
-    parentOptions() {
+    parentOptions () {
       return this.categories.filter((item) => item.id !== this.currentId)
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchCategories()
   },
   methods: {
-    async fetchCategories() {
+    async fetchCategories () {
       this.loading = true
       this.error = ''
       try {
@@ -228,24 +228,24 @@ export default {
         this.loading = false
       }
     },
-    categoryKey(category) {
+    categoryKey (category) {
       return category.id || category.pk || category.title
     },
-    shortText(text) {
+    shortText (text) {
       const raw = String(text || '').replace(/<\/?[^>]+(>|$)/g, '')
       if (!raw) {
         return '—'
       }
       return raw.length > 120 ? `${raw.slice(0, 120)}...` : raw
     },
-    parentTitle(parentId) {
+    parentTitle (parentId) {
       if (!parentId) {
         return '—'
       }
       const parent = this.categories.find((item) => item.id === parentId)
       return parent ? parent.title : '—'
     },
-    resolveMediaUrl(path) {
+    resolveMediaUrl (path) {
       if (!path) {
         return ''
       }
@@ -261,41 +261,41 @@ export default {
       }
       return `${base}/${path}`
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.error = ''
       this.form = {
         title: '',
         description: '',
-        parent: null,
+        parent: null
       }
       this.imageFile = null
       this.imagePreview = ''
       this.showModal = true
     },
-    openEdit(category) {
+    openEdit (category) {
       this.isEditing = true
       this.currentId = category.id || category.pk
       this.error = ''
       this.form = {
         title: category.title || '',
         description: category.description || '',
-        parent: category.parent || null,
+        parent: category.parent || null
       }
       this.imageFile = null
       this.imagePreview = category.photo ? this.resolveMediaUrl(category.photo) : ''
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    triggerFileSelect() {
+    triggerFileSelect () {
       if (this.$refs.imageInput) {
         this.$refs.imageInput.click()
       }
     },
-    onImageChange(event) {
+    onImageChange (event) {
       const file = event.target.files && event.target.files[0]
       if (!file) {
         return
@@ -303,7 +303,7 @@ export default {
       this.imageFile = file
       this.imagePreview = URL.createObjectURL(file)
     },
-    onDrop(event) {
+    onDrop (event) {
       const file = event.dataTransfer.files && event.dataTransfer.files[0]
       if (!file) {
         return
@@ -314,7 +314,7 @@ export default {
       this.imageFile = file
       this.imagePreview = URL.createObjectURL(file)
     },
-    async saveCategory() {
+    async saveCategory () {
       if (!this.form.title) {
         this.error = 'Заполните название категории'
         return
@@ -346,7 +346,7 @@ export default {
         this.saving = false
       }
     },
-    async removeCategory(category) {
+    async removeCategory (category) {
       const id = category.id || category.pk
       if (!id) {
         return
@@ -361,7 +361,7 @@ export default {
       } catch (err) {
         this.error = err.userMessage || 'Не удалось удалить категорию'
       }
-    },
-  },
+    }
+  }
 }
 </script>

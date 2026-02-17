@@ -160,20 +160,20 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import PanelRichTextEditor from "../elements/Panel/RichTextEditor.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
+import PanelRichTextEditor from '../elements/Panel/RichTextEditor.vue'
 import {
   createStudyManagerPrice,
   deleteStudyManagerPrice,
   fetchStudyManagerCourses,
   fetchStudyManagerPrices,
-  updateStudyManagerPrice,
+  updateStudyManagerPrice
 } from '@/services/panel.service'
 
 export default {
   name: 'StudyPrices',
   components: { MenuBlock, PanelRichTextEditor },
-  data() {
+  data () {
     return {
       prices: [],
       courses: [],
@@ -190,12 +190,12 @@ export default {
         short_description: '',
         description: '',
         price: '',
-        course: '',
-      },
+        course: ''
+      }
     }
   },
   computed: {
-    filteredPrices() {
+    filteredPrices () {
       const term = this.searchTerm.trim().toLowerCase()
       if (!term) {
         return this.prices
@@ -206,13 +206,13 @@ export default {
         const description = String(p.description || '').toLowerCase()
         return name.includes(term) || shortDescription.includes(term) || description.includes(term)
       })
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchCourses()
   },
   methods: {
-    async fetchCourses() {
+    async fetchCourses () {
       try {
         const response = await fetchStudyManagerCourses()
         this.courses = Array.isArray(response.data) ? response.data : []
@@ -226,7 +226,7 @@ export default {
         this.error = err.userMessage || 'Не удалось загрузить курсы'
       }
     },
-    async fetchPrices() {
+    async fetchPrices () {
       this.loading = true
       this.error = ''
       try {
@@ -239,24 +239,24 @@ export default {
         this.loading = false
       }
     },
-    priceKey(price) {
+    priceKey (price) {
       return price.id || price.pk || price.name
     },
-    shortText(text) {
+    shortText (text) {
       const raw = String(text || '').replace(/<\/?[^>]+(>|$)/g, '')
       if (!raw) {
         return '—'
       }
       return raw.length > 70 ? `${raw.slice(0, 70)}...` : raw
     },
-    courseTitle(courseId) {
+    courseTitle (courseId) {
       if (courseId && typeof courseId === 'object') {
         return courseId.name || courseId.title || '—'
       }
       const option = this.courses.find((item) => Number(item.id) === Number(courseId))
       return option ? option.name : '—'
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.error = ''
@@ -265,11 +265,11 @@ export default {
         short_description: '',
         description: '',
         price: '',
-        course: this.selectedCourse || '',
+        course: this.selectedCourse || ''
       }
       this.showModal = true
     },
-    openEdit(price) {
+    openEdit (price) {
       this.isEditing = true
       this.currentId = price.id || price.pk
       this.error = ''
@@ -295,14 +295,14 @@ export default {
         short_description: price.short_description || '',
         description: price.description || '',
         price: price.price || '',
-        course: courseId,
+        course: courseId
       }
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    async savePrice() {
+    async savePrice () {
       this.error = 'Отправка...'
       if (!this.form.name || !this.form.course) {
         this.error = 'Заполните название и курс'
@@ -316,7 +316,7 @@ export default {
           short_description: this.form.short_description || '',
           description: this.form.description || '',
           price: this.form.price || '0',
-          course: this.form.course,
+          course: this.form.course
         }
         if (this.isEditing && this.currentId) {
           await updateStudyManagerPrice(this.currentId, payload)
@@ -332,7 +332,7 @@ export default {
         this.saving = false
       }
     },
-    async removePrice(price) {
+    async removePrice (price) {
       const id = price.id || price.pk
       if (!id) {
         return
@@ -347,7 +347,7 @@ export default {
       } catch (err) {
         this.error = err.userMessage || 'Не удалось удалить цену'
       }
-    },
-  },
+    }
+  }
 }
 </script>

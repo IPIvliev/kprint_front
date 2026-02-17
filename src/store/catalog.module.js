@@ -2,7 +2,7 @@ import {
   fetchShopCategories,
   fetchShopProducts,
   fetchShopCategoryProducts,
-  fetchShopProduct,
+  fetchShopProduct
 } from '@/services/catalog.service'
 
 export const catalog = {
@@ -10,13 +10,13 @@ export const catalog = {
   state: {
     categories: [],
     products: [],
-    product: [],
+    product: []
   },
   mutations: {
-    setCategoriesData(state, categoriesData) {
+    setCategoriesData (state, categoriesData) {
       state.categories = categoriesData
     },
-    setProductsData(state, productsData) {
+    setProductsData (state, productsData) {
       state.products = productsData.map(product => {
         return {
           id: product.id,
@@ -31,26 +31,26 @@ export const catalog = {
         }
       })
     },
-    setProductData(state, productData) {
+    setProductData (state, productData) {
       state.product = productData
-    },
+    }
   },
   actions: {
-    async fetchCategories({ commit }) {
+    async fetchCategories ({ commit }) {
       const response = await fetchShopCategories()
       commit('setCategoriesData', response.data)
     },
-    async fetchProducts({ commit }) {
+    async fetchProducts ({ commit }) {
       const response = await fetchShopProducts()
       commit('setProductsData', response.data)
     },
-    async fetchCategoryProducts({ commit }, id) {
+    async fetchCategoryProducts ({ commit }, id) {
       const response = await fetchShopCategoryProducts(id)
       commit('setProductsData', response.data.products)
     },
-    async fetchProduct({ commit }, id) {
+    async fetchProduct ({ commit }, id) {
       const response = await fetchShopProduct(id)
       commit('setProductData', response.data)
-    },
-  },
+    }
+  }
 }

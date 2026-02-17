@@ -139,19 +139,19 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
 import {
   createStudyManagerCategory,
   deleteStudyManagerCategory,
   fetchStudyManagerCategories,
   fetchStudyManagerCourses,
-  updateStudyManagerCategory,
+  updateStudyManagerCategory
 } from '@/services/panel.service'
 
 export default {
   name: 'StudyCategories',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       categories: [],
       courses: [],
@@ -165,12 +165,12 @@ export default {
       form: {
         title: '',
         description: '',
-        parent: null,
-      },
+        parent: null
+      }
     }
   },
   computed: {
-    filteredCategories() {
+    filteredCategories () {
       const term = this.searchTerm.trim().toLowerCase()
       if (!term) {
         return this.categories
@@ -181,21 +181,21 @@ export default {
         return title.includes(term) || description.includes(term)
       })
     },
-    parentOptions() {
+    parentOptions () {
       return this.categories.filter((item) => item.id !== this.currentId)
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchData()
   },
   methods: {
-    async fetchData() {
+    async fetchData () {
       this.loading = true
       this.error = ''
       try {
         const [categoriesResponse, coursesResponse] = await Promise.all([
           fetchStudyManagerCategories(),
-          fetchStudyManagerCourses(),
+          fetchStudyManagerCourses()
         ])
         this.categories = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
         this.courses = Array.isArray(coursesResponse.data) ? coursesResponse.data : []
@@ -205,24 +205,24 @@ export default {
         this.loading = false
       }
     },
-    categoryKey(category) {
+    categoryKey (category) {
       return category.id || category.pk || category.title
     },
-    shortText(text) {
+    shortText (text) {
       const raw = String(text || '').replace(/<\/?[^>]+(>|$)/g, '')
       if (!raw) {
         return '—'
       }
       return raw.length > 120 ? `${raw.slice(0, 120)}...` : raw
     },
-    parentTitle(parentId) {
+    parentTitle (parentId) {
       if (!parentId) {
         return '—'
       }
       const parent = this.categories.find((item) => item.id === parentId)
       return parent ? parent.title : '—'
     },
-    categoryCoursesText(categoryId) {
+    categoryCoursesText (categoryId) {
       const list = this.courses.filter((course) => {
         const cid = course.category_id || course.categoryId || (course.category && course.category.id) || course.category
         return Number(cid) === Number(categoryId)
@@ -235,30 +235,30 @@ export default {
       return list.length > max ? `${shown}?` : shown
     },
 
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.form = {
         title: '',
         description: '',
-        parent: null,
+        parent: null
       }
       this.showModal = true
     },
-    openEdit(category) {
+    openEdit (category) {
       this.isEditing = true
       this.currentId = category.id || category.pk
       this.form = {
         title: category.title || '',
         description: category.description || '',
-        parent: category.parent || null,
+        parent: category.parent || null
       }
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    async saveCategory() {
+    async saveCategory () {
       if (!this.form.title) {
         this.error = 'Заполните название категории'
         return
@@ -269,7 +269,7 @@ export default {
         const payload = {
           title: this.form.title,
           description: this.form.description || '',
-          parent: this.form.parent || null,
+          parent: this.form.parent || null
         }
         if (this.isEditing && this.currentId) {
           await updateStudyManagerCategory(this.currentId, payload)
@@ -284,7 +284,7 @@ export default {
         this.saving = false
       }
     },
-    async removeCategory(category) {
+    async removeCategory (category) {
       const id = category.id || category.pk
       if (!id) {
         return
@@ -299,7 +299,7 @@ export default {
       } catch (err) {
         this.error = err.userMessage || 'Не удалось удалить категорию'
       }
-    },
-  },
+    }
+  }
 }
 </script>

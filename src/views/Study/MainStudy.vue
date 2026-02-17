@@ -8,16 +8,15 @@
 
     <CourcesList/>
     <!-- advantages-->
-    <!--	/advantages-->
+    <!--  /advantages-->
     <!-- halfitems-->
-    <!--	/halfitems-->
+    <!--  /halfitems-->
     <!-- callback-->
     <GalleryBlock/>
     <AlreadyStudy />
-    <!--	/callback-->
+    <!--  /callback-->
     <MainPageNews/>
 
-    
   </div>
   <footer-block/>
 </div>
@@ -26,20 +25,18 @@
 <script>
 // @ is an alias to /src
 import HeaderBlock from '../../components/HeaderBlock.vue'
-import WhiteWelcome from "../../components/elements/WhiteWelcome.vue"
+import WhiteWelcome from '../../components/elements/WhiteWelcome.vue'
 
-import WhyWeStudyBlock from "@/components/Study/WhyWeStudyBlock.vue"
-import CourcesList from "@/components/Study/CourcesList.vue"
-import AlreadyStudy from "@/components/Study/AlreadyStudy.vue"
-import GalleryBlock from "@/components/elements/GalleryBlock.vue"
-import MainPageNews from "@/components/elements/MainPage/MainPageNews.vue"
+import WhyWeStudyBlock from '@/components/Study/WhyWeStudyBlock.vue'
+import CourcesList from '@/components/Study/CourcesList.vue'
+import AlreadyStudy from '@/components/Study/AlreadyStudy.vue'
+import GalleryBlock from '@/components/elements/GalleryBlock.vue'
+import MainPageNews from '@/components/elements/MainPage/MainPageNews.vue'
 
 import FooterBlock from '../../components/FooterBlock.vue'
-import CallbackWindow from "../../components/elements/CallbackWindow.vue"
-
 
 export default {
-  name: 'Курсы обучения',
+  name: 'StudyMainPageView',
   components: {
     WhiteWelcome,
     WhyWeStudyBlock,
@@ -48,13 +45,12 @@ export default {
     GalleryBlock,
     MainPageNews,
     FooterBlock,
-    HeaderBlock,
-    CallbackWindow,
+    HeaderBlock
 
   },
-  created() {
-        this.$store.dispatch("study/fetchCourses");
-  },
+  created () {
+    this.$store.dispatch('study/fetchCourses')
+  }
 }
 </script>
 

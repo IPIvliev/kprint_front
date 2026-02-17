@@ -1,6 +1,6 @@
 <template>
     <div class="white_block" :class="background">
-        <div class="container"> 
+        <div class="container">
             <div class="row gy-1">
 
                 <div class="col-12">
@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-    export default {
-        props: ['background', 'product'],
-    }
+export default {
+  props: ['background', 'product']
+}
 </script>

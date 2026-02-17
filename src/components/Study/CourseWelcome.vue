@@ -1,6 +1,6 @@
 <template>
   <div class="main-welcome cmp-components-study-coursewelcome" >
-      <div class="container"> 
+      <div class="container">
           <div class="cource">
               <div class="row">
                 <div class="col-lg-3">
@@ -17,12 +17,12 @@
                     <div class="col-lg-3">
                       <span class="period"> {{ course.duration }} </span>
                     </div>
-                    
+
                     <div class="col-lg-9">
                       <p>
-                        {{ course.lessons_number }} уроков 
-                        <img class="icon-ellipse" src="@/assets/img/Ellipse.svg" /> 
-                        {{ course.teachers_number }} преподавателя 
+                        {{ course.lessons_number }} уроков
+                        <img class="icon-ellipse" src="@/assets/img/Ellipse.svg" />
+                        {{ course.teachers_number }} преподавателя
                         <img class="icon-ellipse" src="@/assets/img/Ellipse.svg" />
                         20 часов</p>
                     </div>
@@ -34,7 +34,7 @@
       </div>
 </template>
 <script>
-  export default {
-    props: ['course']
-  }
+export default {
+  props: ['course']
+}
 </script>

@@ -1,7 +1,7 @@
 <template>
     <!-- video-->
     <div class="white_block cmp-components-study-aboutcourse" :class="background">
-      <div class="container"> 
+      <div class="container">
         <div class="row gy-1">
           <div class="col-lg-8">
             <h1 class="title">{{ course.name }}</h1>
@@ -15,10 +15,10 @@
         </div>
       </div>
     </div>
-    <!--	/video-->
+    <!--  /video-->
 </template>
 <script>
 export default {
-  props: ['background', 'course'],
+  props: ['background', 'course']
 }
 </script>

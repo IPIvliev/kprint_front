@@ -28,17 +28,17 @@ import MenuBlock from '../elements/Panel/MenuBlock.vue'
 export default {
   name: 'PanelNewsSectionPlaceholder',
   components: {
-    MenuBlock,
+    MenuBlock
   },
   props: {
     title: {
       type: String,
-      required: true,
+      required: true
     },
     description: {
       type: String,
-      default: 'Раздел находится в разработке.',
-    },
-  },
+      default: 'Раздел находится в разработке.'
+    }
+  }
 }
 </script>

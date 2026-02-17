@@ -1,11 +1,11 @@
-﻿export const PANEL_MODE_STORAGE_KEY = 'panelMode'
+export const PANEL_MODE_STORAGE_KEY = 'panelMode'
 export const PANEL_MODE_EVENT = 'panel-mode-updated'
 
-export function normalizePanelMode(mode) {
+export function normalizePanelMode (mode) {
   return mode === 'manager' ? 'manager' : 'user'
 }
 
-export function isManagerUser(user) {
+export function isManagerUser (user) {
   if (!user) {
     return false
   }
@@ -53,7 +53,7 @@ export function isManagerUser(user) {
   return false
 }
 
-export function getStoredPanelMode() {
+export function getStoredPanelMode () {
   if (typeof window === 'undefined') {
     return 'user'
   }
@@ -61,7 +61,7 @@ export function getStoredPanelMode() {
   return normalizePanelMode(window.localStorage.getItem(PANEL_MODE_STORAGE_KEY))
 }
 
-export function setStoredPanelMode(mode) {
+export function setStoredPanelMode (mode) {
   const normalized = normalizePanelMode(mode)
 
   if (typeof window === 'undefined') {
@@ -73,6 +73,6 @@ export function setStoredPanelMode(mode) {
   return normalized
 }
 
-export function getSafePanelMode(user, mode) {
+export function getSafePanelMode (user, mode) {
   return isManagerUser(user) ? normalizePanelMode(mode) : 'user'
 }

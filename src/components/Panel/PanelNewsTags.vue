@@ -145,13 +145,13 @@ import {
   deletePanelArticleTag,
   fetchPanelArticleTags,
   fetchPanelArticles,
-  updatePanelArticleTag,
+  updatePanelArticleTag
 } from '@/services/panel.service'
 
 export default {
   name: 'PanelNewsTags',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       tags: [],
       articles: [],
@@ -165,12 +165,12 @@ export default {
       slugTouched: false,
       form: {
         title: '',
-        slug: '',
-      },
+        slug: ''
+      }
     }
   },
   computed: {
-    filteredTags() {
+    filteredTags () {
       const term = String(this.searchTerm || '').trim().toLowerCase()
       if (!term) {
         return this.tags
@@ -180,32 +180,32 @@ export default {
         const slug = String(tag.slug || '').toLowerCase()
         return title.includes(term) || slug.includes(term)
       })
-    },
+    }
   },
   watch: {
-    'form.title'(value) {
+    'form.title' (value) {
       if (this.slugTouched) {
         return
       }
       this.form.slug = this.slugify(value)
     },
-    'form.slug'(value) {
+    'form.slug' (value) {
       if (!value) {
         this.slugTouched = false
       }
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchData()
   },
   methods: {
-    async fetchData() {
+    async fetchData () {
       this.loading = true
       this.error = ''
       try {
         const [tagsResponse, articlesResponse] = await Promise.all([
           fetchPanelArticleTags(),
-          fetchPanelArticles(),
+          fetchPanelArticles()
         ])
         this.tags = Array.isArray(tagsResponse.data) ? tagsResponse.data : []
         this.articles = Array.isArray(articlesResponse.data) ? articlesResponse.data : []
@@ -215,10 +215,10 @@ export default {
         this.loading = false
       }
     },
-    tagKey(tag) {
+    tagKey (tag) {
       return tag.id || tag.pk || tag.slug || tag.title
     },
-    tagArticlesCount(tagId) {
+    tagArticlesCount (tagId) {
       return this.articles.filter((article) => {
         if (!Array.isArray(article.tags)) {
           return false
@@ -229,30 +229,30 @@ export default {
         })
       }).length
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.slugTouched = false
       this.form = {
         title: '',
-        slug: '',
+        slug: ''
       }
       this.showModal = true
     },
-    openEdit(tag) {
+    openEdit (tag) {
       this.isEditing = true
       this.currentId = tag.id || tag.pk
       this.slugTouched = true
       this.form = {
         title: tag.title || '',
-        slug: tag.slug || '',
+        slug: tag.slug || ''
       }
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    async saveTag() {
+    async saveTag () {
       const title = String(this.form.title || '').trim()
       if (!title) {
         this.error = 'Заполните название тэга'
@@ -264,7 +264,7 @@ export default {
       try {
         const payload = {
           title,
-          slug: this.form.slug ? this.slugify(this.form.slug) : '',
+          slug: this.form.slug ? this.slugify(this.form.slug) : ''
         }
         if (!payload.slug) {
           delete payload.slug
@@ -282,7 +282,7 @@ export default {
         this.saving = false
       }
     },
-    async removeTag(tag) {
+    async removeTag (tag) {
       const id = tag.id || tag.pk
       if (!id) {
         return
@@ -299,15 +299,44 @@ export default {
         this.error = err.userMessage || 'Не удалось удалить тэг'
       }
     },
-    slugify(text) {
+    slugify (text) {
       if (!text) {
         return ''
       }
       const map = {
-        а: 'a', б: 'b', в: 'v', г: 'g', д: 'd', е: 'e', ё: 'e', ж: 'zh', з: 'z',
-        и: 'i', й: 'y', к: 'k', л: 'l', м: 'm', н: 'n', о: 'o', п: 'p', р: 'r',
-        с: 's', т: 't', у: 'u', ф: 'f', х: 'h', ц: 'ts', ч: 'ch', ш: 'sh',
-        щ: 'sch', ъ: '', ы: 'y', ь: '', э: 'e', ю: 'yu', я: 'ya',
+        а: 'a',
+        б: 'b',
+        в: 'v',
+        г: 'g',
+        д: 'd',
+        е: 'e',
+        ё: 'e',
+        ж: 'zh',
+        з: 'z',
+        и: 'i',
+        й: 'y',
+        к: 'k',
+        л: 'l',
+        м: 'm',
+        н: 'n',
+        о: 'o',
+        п: 'p',
+        р: 'r',
+        с: 's',
+        т: 't',
+        у: 'u',
+        ф: 'f',
+        х: 'h',
+        ц: 'ts',
+        ч: 'ch',
+        ш: 'sh',
+        щ: 'sch',
+        ъ: '',
+        ы: 'y',
+        ь: '',
+        э: 'e',
+        ю: 'yu',
+        я: 'ya'
       }
       const lower = String(text).trim().toLowerCase()
       const translit = lower
@@ -319,7 +348,7 @@ export default {
         .replace(/[^a-z0-9_-]+/g, '-')
         .replace(/-+/g, '-')
         .replace(/^-+|-+$/g, '')
-    },
-  },
+    }
+  }
 }
 </script>

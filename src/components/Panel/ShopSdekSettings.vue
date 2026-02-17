@@ -60,16 +60,16 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
 import {
   fetchShopManagerSdekSettings,
-  updateShopManagerSdekSettings,
+  updateShopManagerSdekSettings
 } from '@/services/panel.service'
 
 export default {
   name: 'ShopSdekSettings',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       loading: false,
       saving: false,
@@ -80,15 +80,15 @@ export default {
         more_days: 0,
         tariff_code: '',
         account: '',
-        secure: '',
-      },
+        secure: ''
+      }
     }
   },
-  mounted() {
+  mounted () {
     this.fetchSettings()
   },
   methods: {
-    async fetchSettings() {
+    async fetchSettings () {
       this.loading = true
       this.error = ''
       try {
@@ -100,7 +100,7 @@ export default {
           more_days: Number(data.more_days || 0),
           tariff_code: data.tariff_code || '',
           account: data.account || '',
-          secure: data.secure || '',
+          secure: data.secure || ''
         }
       } catch (err) {
         this.error = err.userMessage || 'Failed to load settings'
@@ -108,7 +108,7 @@ export default {
         this.loading = false
       }
     },
-    async saveSettings() {
+    async saveSettings () {
       this.saving = true
       this.error = ''
       try {
@@ -119,7 +119,7 @@ export default {
       } finally {
         this.saving = false
       }
-    },
-  },
+    }
+  }
 }
 </script>

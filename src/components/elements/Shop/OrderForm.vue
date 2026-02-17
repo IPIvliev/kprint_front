@@ -62,23 +62,23 @@ import { IMaskDirective } from 'vue-imask'
 
 export default {
   directives: {
-    imask: IMaskDirective,
+    imask: IMaskDirective
   },
   props: {
     showDelivery: {
       type: Boolean,
-      default: false,
+      default: false
     },
     office: {
       type: Object,
-      default: () => ({}),
+      default: () => ({})
     },
     deliveryCompany: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
   },
-  data() {
+  data () {
     return {
       fio: '',
       phone: '',
@@ -91,21 +91,21 @@ export default {
         fio: '',
         phone: '',
         email: '',
-        sign: '',
+        sign: ''
       },
       phoneNumberMask: {
-        mask: '+{7} (000) 000-00-00',
-      },
+        mask: '+{7} (000) 000-00-00'
+      }
     }
   },
   methods: {
-    buildIdempotencyKey() {
+    buildIdempotencyKey () {
       if (typeof globalThis !== 'undefined' && globalThis.crypto && typeof globalThis.crypto.randomUUID === 'function') {
         return globalThis.crypto.randomUUID()
       }
       return `order-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
     },
-    normalizeDeliveryCompany() {
+    normalizeDeliveryCompany () {
       if (this.deliveryCompany === 'sdek') {
         return 'sdek'
       }
@@ -114,18 +114,18 @@ export default {
       }
       return this.deliveryCompany || ''
     },
-    resolveDeliveryDestination() {
+    resolveDeliveryDestination () {
       const office = this.office || {}
       if (this.deliveryCompany === 'sdek') {
         return office?.location?.address_full || office?.location?.postal_code || office?.address || ''
       }
       return office['address-source'] || office['postal-code'] || office?.address || ''
     },
-    onAccept(e) {
+    onAccept (e) {
       const maskRef = e.detail
       this.phone = maskRef.value
     },
-    isNumber(e) {
+    isNumber (e) {
       const regex = /[0-9]/
       if (!regex.test(e.key)) {
         e.returnValue = false
@@ -134,7 +134,7 @@ export default {
         }
       }
     },
-    validateForm() {
+    validateForm () {
       this.formErrors = { fio: '', phone: '', email: '', sign: '' }
 
       if (!this.fio) {
@@ -152,7 +152,7 @@ export default {
 
       return !Object.values(this.formErrors).some(Boolean)
     },
-    async onSubmit() {
+    async onSubmit () {
       if (!this.validateForm() || this.submitting) {
         return
       }
@@ -167,7 +167,7 @@ export default {
           delivery_company: this.normalizeDeliveryCompany(),
           delivery_destination: this.resolveDeliveryDestination(),
           delivery_time: this.$store.state.delivery?.delivery_price?.delivery_time || '',
-          idempotency_key: this.idempotencyKey || this.buildIdempotencyKey(),
+          idempotency_key: this.idempotencyKey || this.buildIdempotencyKey()
         })
         this.idempotencyKey = this.buildIdempotencyKey()
       } catch (e) {
@@ -175,10 +175,10 @@ export default {
       } finally {
         this.submitting = false
       }
-    },
+    }
   },
-  created() {
+  created () {
     this.idempotencyKey = this.buildIdempotencyKey()
-  },
+  }
 }
 </script>

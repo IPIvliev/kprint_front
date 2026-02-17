@@ -1,353 +1,353 @@
 import { api, publicApi } from './http'
 
-export function fetchUserProfile() {
+export function fetchUserProfile () {
   return api.get('/api/user/profile')
 }
 
-export function updateUserProfile(payload) {
+export function updateUserProfile (payload) {
   return api.patch('/api/user/profile', payload)
 }
 
-export function fetchPanelArticles() {
+export function fetchPanelArticles () {
   return api.get('/api/articles/')
 }
 
-export function fetchPanelArticle(articleId) {
+export function fetchPanelArticle (articleId) {
   return api.get(`/api/articles/${articleId}/`)
 }
 
-export function createPanelArticle(payload) {
+export function createPanelArticle (payload) {
   return api.post('/api/articles/', payload)
 }
 
-export function generatePanelAiArticle(payload) {
+export function generatePanelAiArticle (payload) {
   return api.post('/api/articles/generate-ai/', payload)
 }
 
-export function updatePanelArticle(articleId, payload) {
+export function updatePanelArticle (articleId, payload) {
   return api.patch(`/api/articles/${articleId}/`, payload)
 }
 
-export function deletePanelArticle(articleId) {
+export function deletePanelArticle (articleId) {
   return api.delete(`/api/articles/${articleId}/`)
 }
 
-export function fetchPanelArticleMedia() {
+export function fetchPanelArticleMedia () {
   return api.get('/api/article-media/')
 }
 
-export function uploadPanelArticleMedia(payload) {
+export function uploadPanelArticleMedia (payload) {
   return api.post('/api/article-media/', payload)
 }
 
-export function fetchPanelArticleCategories() {
+export function fetchPanelArticleCategories () {
   return api.get('/api/article-categories/')
 }
 
-export function createPanelArticleCategory(payload) {
+export function createPanelArticleCategory (payload) {
   return api.post('/api/article-categories/', payload)
 }
 
-export function updatePanelArticleCategory(categoryId, payload) {
+export function updatePanelArticleCategory (categoryId, payload) {
   return api.patch(`/api/article-categories/${categoryId}/`, payload)
 }
 
-export function deletePanelArticleCategory(categoryId) {
+export function deletePanelArticleCategory (categoryId) {
   return api.delete(`/api/article-categories/${categoryId}/`)
 }
 
-export function fetchPanelArticleTags() {
+export function fetchPanelArticleTags () {
   return api.get('/api/article-tags/')
 }
 
-export function createPanelArticleTag(payload) {
+export function createPanelArticleTag (payload) {
   return api.post('/api/article-tags/', payload)
 }
 
-export function updatePanelArticleTag(tagId, payload) {
+export function updatePanelArticleTag (tagId, payload) {
   return api.patch(`/api/article-tags/${tagId}/`, payload)
 }
 
-export function deletePanelArticleTag(tagId) {
+export function deletePanelArticleTag (tagId) {
   return api.delete(`/api/article-tags/${tagId}/`)
 }
 
-export function fetchShopManagerCategories() {
+export function fetchShopManagerCategories () {
   return api.get('/api/shop/manager/categories')
 }
 
-export function createShopManagerCategory(payload) {
+export function createShopManagerCategory (payload) {
   return api.post('/api/shop/manager/categories', payload)
 }
 
-export function updateShopManagerCategory(categoryId, payload) {
+export function updateShopManagerCategory (categoryId, payload) {
   return api.patch(`/api/shop/manager/categories/${categoryId}`, payload)
 }
 
-export function deleteShopManagerCategory(categoryId) {
+export function deleteShopManagerCategory (categoryId) {
   return api.delete(`/api/shop/manager/categories/${categoryId}`)
 }
 
-export function fetchShopManagerProducts() {
+export function fetchShopManagerProducts () {
   return api.get('/api/shop/manager/products')
 }
 
-export function fetchShopManagerProduct(productId) {
+export function fetchShopManagerProduct (productId) {
   return api.get(`/api/shop/manager/products/${productId}`)
 }
 
-export function fetchShopPublicProduct(productId) {
+export function fetchShopPublicProduct (productId) {
   return publicApi.get(`/api/shop/products/${productId}`)
 }
 
-export function createShopManagerProduct(payload) {
+export function createShopManagerProduct (payload) {
   return api.post('/api/shop/manager/products', payload)
 }
 
-export function updateShopManagerProduct(productId, payload) {
+export function updateShopManagerProduct (productId, payload) {
   return api.patch(`/api/shop/manager/products/${productId}`, payload)
 }
 
-export function deleteShopManagerProduct(productId) {
+export function deleteShopManagerProduct (productId) {
   return api.delete(`/api/shop/manager/products/${productId}`)
 }
 
-export function createShopManagerProductImage(payload) {
+export function createShopManagerProductImage (payload) {
   return api.post('/api/shop/manager/product-images', payload)
 }
 
-export function deleteShopManagerProductImage(imageId) {
+export function deleteShopManagerProductImage (imageId) {
   return api.delete(`/api/shop/manager/product-images/${imageId}`)
 }
 
-export function fetchShopManagerDiscounts() {
+export function fetchShopManagerDiscounts () {
   return api.get('/api/shop/manager/discounts')
 }
 
-export function createShopManagerDiscount(payload) {
+export function createShopManagerDiscount (payload) {
   return api.post('/api/shop/manager/discounts', payload)
 }
 
-export function updateShopManagerDiscount(discountId, payload) {
+export function updateShopManagerDiscount (discountId, payload) {
   return api.patch(`/api/shop/manager/discounts/${discountId}`, payload)
 }
 
-export function deleteShopManagerDiscount(discountId) {
+export function deleteShopManagerDiscount (discountId) {
   return api.delete(`/api/shop/manager/discounts/${discountId}`)
 }
 
-export function fetchShopManagerFilterAttrs() {
+export function fetchShopManagerFilterAttrs () {
   return api.get('/api/shop/manager/filter-attrs')
 }
 
-export function createShopManagerFilterAttr(payload) {
+export function createShopManagerFilterAttr (payload) {
   return api.post('/api/shop/manager/filter-attrs', payload)
 }
 
-export function updateShopManagerFilterAttr(attrId, payload) {
+export function updateShopManagerFilterAttr (attrId, payload) {
   return api.patch(`/api/shop/manager/filter-attrs/${attrId}`, payload)
 }
 
-export function deleteShopManagerFilterAttr(attrId) {
+export function deleteShopManagerFilterAttr (attrId) {
   return api.delete(`/api/shop/manager/filter-attrs/${attrId}`)
 }
 
-export function fetchShopManagerFilterAttrListValues() {
+export function fetchShopManagerFilterAttrListValues () {
   return api.get('/api/shop/manager/filter-attr-list-values')
 }
 
-export function createShopManagerFilterAttrListValue(payload) {
+export function createShopManagerFilterAttrListValue (payload) {
   return api.post('/api/shop/manager/filter-attr-list-values', payload)
 }
 
-export function updateShopManagerFilterAttrListValue(valueId, payload) {
+export function updateShopManagerFilterAttrListValue (valueId, payload) {
   return api.patch(`/api/shop/manager/filter-attr-list-values/${valueId}`, payload)
 }
 
-export function deleteShopManagerFilterAttrListValue(valueId) {
+export function deleteShopManagerFilterAttrListValue (valueId) {
   return api.delete(`/api/shop/manager/filter-attr-list-values/${valueId}`)
 }
 
-export function fetchShopManagerFilterAttrValues() {
+export function fetchShopManagerFilterAttrValues () {
   return api.get('/api/shop/manager/filter-attr-values')
 }
 
-export function createShopManagerFilterAttrValue(payload) {
+export function createShopManagerFilterAttrValue (payload) {
   return api.post('/api/shop/manager/filter-attr-values', payload)
 }
 
-export function updateShopManagerFilterAttrValue(valueId, payload) {
+export function updateShopManagerFilterAttrValue (valueId, payload) {
   return api.patch(`/api/shop/manager/filter-attr-values/${valueId}`, payload)
 }
 
-export function deleteShopManagerFilterAttrValue(valueId) {
+export function deleteShopManagerFilterAttrValue (valueId) {
   return api.delete(`/api/shop/manager/filter-attr-values/${valueId}`)
 }
 
-export function fetchShopOrderStatuses() {
+export function fetchShopOrderStatuses () {
   return api.get('/api/shop/order-statuses')
 }
 
-export function fetchShopOrders() {
+export function fetchShopOrders () {
   return api.get('/api/shop/orders')
 }
 
-export function fetchShopOrder(orderId) {
+export function fetchShopOrder (orderId) {
   return api.get(`/api/shop/orders/${orderId}`)
 }
 
-export function updateShopOrder(orderId, payload) {
+export function updateShopOrder (orderId, payload) {
   return api.patch(`/api/shop/orders/${orderId}`, payload)
 }
 
-export function fetchPrintManagerMaterialCategories() {
+export function fetchPrintManagerMaterialCategories () {
   return api.get('/api/print/manager/material-categories/')
 }
 
-export function createPrintManagerMaterialCategory(payload) {
+export function createPrintManagerMaterialCategory (payload) {
   return api.post('/api/print/manager/material-categories/', payload)
 }
 
-export function updatePrintManagerMaterialCategory(categoryId, payload) {
+export function updatePrintManagerMaterialCategory (categoryId, payload) {
   return api.patch(`/api/print/manager/material-categories/${categoryId}/`, payload)
 }
 
-export function deletePrintManagerMaterialCategory(categoryId) {
+export function deletePrintManagerMaterialCategory (categoryId) {
   return api.delete(`/api/print/manager/material-categories/${categoryId}/`)
 }
 
-export function fetchPrintManagerMaterials() {
+export function fetchPrintManagerMaterials () {
   return api.get('/api/print/manager/materials/')
 }
 
-export function createPrintManagerMaterial(payload) {
+export function createPrintManagerMaterial (payload) {
   return api.post('/api/print/manager/materials/', payload)
 }
 
-export function updatePrintManagerMaterial(materialId, payload) {
+export function updatePrintManagerMaterial (materialId, payload) {
   return api.patch(`/api/print/manager/materials/${materialId}/`, payload)
 }
 
-export function deletePrintManagerMaterial(materialId) {
+export function deletePrintManagerMaterial (materialId) {
   return api.delete(`/api/print/manager/materials/${materialId}/`)
 }
 
-export function fetchPrintJobs() {
+export function fetchPrintJobs () {
   return api.get('/api/printjobs/')
 }
 
-export function fetchShopManagerPochtaSettings() {
+export function fetchShopManagerPochtaSettings () {
   return api.get('/api/shop/manager/pochta-settings')
 }
 
-export function updateShopManagerPochtaSettings(payload) {
+export function updateShopManagerPochtaSettings (payload) {
   return api.patch('/api/shop/manager/pochta-settings', payload)
 }
 
-export function fetchShopManagerSdekSettings() {
+export function fetchShopManagerSdekSettings () {
   return api.get('/api/shop/manager/sdek-settings')
 }
 
-export function updateShopManagerSdekSettings(payload) {
+export function updateShopManagerSdekSettings (payload) {
   return api.patch('/api/shop/manager/sdek-settings', payload)
 }
 
-export function fetchStudyManagerCategories() {
+export function fetchStudyManagerCategories () {
   return api.get('/api/study/manager/categories')
 }
 
-export function createStudyManagerCategory(payload) {
+export function createStudyManagerCategory (payload) {
   return api.post('/api/study/manager/categories', payload)
 }
 
-export function updateStudyManagerCategory(categoryId, payload) {
+export function updateStudyManagerCategory (categoryId, payload) {
   return api.patch(`/api/study/manager/categories/${categoryId}`, payload)
 }
 
-export function deleteStudyManagerCategory(categoryId) {
+export function deleteStudyManagerCategory (categoryId) {
   return api.delete(`/api/study/manager/categories/${categoryId}`)
 }
 
-export function fetchStudyManagerCourses() {
+export function fetchStudyManagerCourses () {
   return api.get('/api/study/manager/courses')
 }
 
-export function createStudyManagerCourse(payload) {
+export function createStudyManagerCourse (payload) {
   return api.post('/api/study/manager/courses', payload)
 }
 
-export function updateStudyManagerCourse(courseId, payload) {
+export function updateStudyManagerCourse (courseId, payload) {
   return api.patch(`/api/study/manager/courses/${courseId}`, payload)
 }
 
-export function deleteStudyManagerCourse(courseId) {
+export function deleteStudyManagerCourse (courseId) {
   return api.delete(`/api/study/manager/courses/${courseId}`)
 }
 
-export function fetchStudyManagerLessons(params = {}) {
+export function fetchStudyManagerLessons (params = {}) {
   return api.get('/api/study/manager/lessons', { params })
 }
 
-export function createStudyManagerLesson(payload) {
+export function createStudyManagerLesson (payload) {
   return api.post('/api/study/manager/lessons', payload)
 }
 
-export function updateStudyManagerLesson(lessonId, payload) {
+export function updateStudyManagerLesson (lessonId, payload) {
   return api.patch(`/api/study/manager/lessons/${lessonId}`, payload)
 }
 
-export function deleteStudyManagerLesson(lessonId) {
+export function deleteStudyManagerLesson (lessonId) {
   return api.delete(`/api/study/manager/lessons/${lessonId}`)
 }
 
-export function reorderStudyManagerLessons(payload) {
+export function reorderStudyManagerLessons (payload) {
   return api.post('/api/study/manager/lessons/reorder', payload)
 }
 
-export function fetchStudyManagerTeachers() {
+export function fetchStudyManagerTeachers () {
   return api.get('/api/study/manager/teachers')
 }
 
-export function createStudyManagerTeacher(payload) {
+export function createStudyManagerTeacher (payload) {
   return api.post('/api/study/manager/teachers', payload)
 }
 
-export function updateStudyManagerTeacher(teacherId, payload) {
+export function updateStudyManagerTeacher (teacherId, payload) {
   return api.patch(`/api/study/manager/teachers/${teacherId}`, payload)
 }
 
-export function deleteStudyManagerTeacher(teacherId) {
+export function deleteStudyManagerTeacher (teacherId) {
   return api.delete(`/api/study/manager/teachers/${teacherId}`)
 }
 
-export function fetchStudyManagerPrices(params = {}) {
+export function fetchStudyManagerPrices (params = {}) {
   return api.get('/api/study/manager/prices', { params })
 }
 
-export function createStudyManagerPrice(payload) {
+export function createStudyManagerPrice (payload) {
   return api.post('/api/study/manager/prices', payload)
 }
 
-export function updateStudyManagerPrice(priceId, payload) {
+export function updateStudyManagerPrice (priceId, payload) {
   return api.patch(`/api/study/manager/prices/${priceId}`, payload)
 }
 
-export function deleteStudyManagerPrice(priceId) {
+export function deleteStudyManagerPrice (priceId) {
   return api.delete(`/api/study/manager/prices/${priceId}`)
 }
 
-export function fetchStudyManagerFeedbacks(params = {}) {
+export function fetchStudyManagerFeedbacks (params = {}) {
   return api.get('/api/study/manager/feedbacks', { params })
 }
 
-export function createStudyManagerFeedback(payload) {
+export function createStudyManagerFeedback (payload) {
   return api.post('/api/study/manager/feedbacks', payload)
 }
 
-export function updateStudyManagerFeedback(feedbackId, payload) {
+export function updateStudyManagerFeedback (feedbackId, payload) {
   return api.patch(`/api/study/manager/feedbacks/${feedbackId}`, payload)
 }
 
-export function deleteStudyManagerFeedback(feedbackId) {
+export function deleteStudyManagerFeedback (feedbackId) {
   return api.delete(`/api/study/manager/feedbacks/${feedbackId}`)
 }

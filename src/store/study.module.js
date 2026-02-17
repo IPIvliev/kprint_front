@@ -9,11 +9,11 @@ export const study = {
       teachers: [],
       feedbacks: [],
       prices: [],
-      related: [],
-    },
+      related: []
+    }
   },
   mutations: {
-    setCoursesData(state, coursesData) {
+    setCoursesData (state, coursesData) {
       state.courses = coursesData.map(course => {
         return {
           id: course.id,
@@ -31,7 +31,7 @@ export const study = {
         }
       })
     },
-    setCourseData(state, courseData) {
+    setCourseData (state, courseData) {
       const safe = courseData || {}
       state.course = {
         ...safe,
@@ -39,18 +39,18 @@ export const study = {
         teachers: Array.isArray(safe.teachers) ? safe.teachers : [],
         feedbacks: Array.isArray(safe.feedbacks) ? safe.feedbacks : [],
         prices: Array.isArray(safe.prices) ? safe.prices : [],
-        related: Array.isArray(safe.related) ? safe.related : [],
+        related: Array.isArray(safe.related) ? safe.related : []
       }
-    },
+    }
   },
   actions: {
-    async fetchCourses({ commit }) {
+    async fetchCourses ({ commit }) {
       const response = await fetchStudyCourses()
       commit('setCoursesData', response.data)
     },
-    async fetchCourse({ commit }, id) {
+    async fetchCourse ({ commit }, id) {
       const response = await fetchStudyCourse(id)
       commit('setCourseData', response.data)
-    },
-  },
+    }
+  }
 }

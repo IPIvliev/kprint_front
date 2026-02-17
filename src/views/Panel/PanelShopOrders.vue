@@ -13,7 +13,7 @@ export default {
   components: {
     ShopOrdersPage,
     FooterPanelBlock,
-    HeaderPanelBlock,
-  },
+    HeaderPanelBlock
+  }
 }
 </script>

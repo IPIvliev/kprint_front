@@ -161,20 +161,20 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
 import {
   createStudyManagerLesson,
   deleteStudyManagerLesson,
   fetchStudyManagerCourses,
   fetchStudyManagerLessons,
   reorderStudyManagerLessons,
-  updateStudyManagerLesson,
+  updateStudyManagerLesson
 } from '@/services/panel.service'
 
 export default {
   name: 'StudyLessons',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       lessons: [],
       courses: [],
@@ -191,12 +191,12 @@ export default {
       form: {
         title: '',
         description: '',
-        course: '',
-      },
+        course: ''
+      }
     }
   },
   computed: {
-    filteredLessons() {
+    filteredLessons () {
       const term = this.searchTerm.trim().toLowerCase()
       if (!term) {
         return this.lessons
@@ -207,15 +207,15 @@ export default {
         return title.includes(term) || description.includes(term)
       })
     },
-    canReorder() {
+    canReorder () {
       return !this.searchTerm.trim()
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchCourses()
   },
   methods: {
-    async fetchCourses() {
+    async fetchCourses () {
       try {
         const response = await fetchStudyManagerCourses()
         this.courses = Array.isArray(response.data) ? response.data : []
@@ -229,7 +229,7 @@ export default {
         this.error = err.userMessage || 'Не удалось загрузить курсы'
       }
     },
-    async fetchLessons() {
+    async fetchLessons () {
       this.loading = true
       this.error = ''
       try {
@@ -242,44 +242,44 @@ export default {
         this.loading = false
       }
     },
-    lessonKey(lesson) {
+    lessonKey (lesson) {
       return lesson.id || lesson.pk || lesson.title
     },
-    shortText(text) {
+    shortText (text) {
       const raw = String(text || '').replace(/<\/?[^>]+(>|$)/g, '')
       if (!raw) {
         return '—'
       }
       return raw.length > 70 ? `${raw.slice(0, 70)}...` : raw
     },
-    courseTitle(courseId) {
+    courseTitle (courseId) {
       const option = this.courses.find((item) => item.id === courseId)
       return option ? option.name : '—'
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.form = {
         title: '',
         description: '',
-        course: this.selectedCourse || '',
+        course: this.selectedCourse || ''
       }
       this.showModal = true
     },
-    openEdit(lesson) {
+    openEdit (lesson) {
       this.isEditing = true
       this.currentId = lesson.id || lesson.pk
       this.form = {
         title: lesson.title || '',
         description: lesson.description || '',
-        course: lesson.course || '',
+        course: lesson.course || ''
       }
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    async saveLesson() {
+    async saveLesson () {
       if (!this.form.title || !this.form.course) {
         this.error = 'Заполните тему и курс'
         return
@@ -290,7 +290,7 @@ export default {
         const payload = {
           title: this.form.title,
           description: this.form.description || '',
-          course: this.form.course,
+          course: this.form.course
         }
         if (this.isEditing && this.currentId) {
           await updateStudyManagerLesson(this.currentId, payload)
@@ -305,7 +305,7 @@ export default {
         this.saving = false
       }
     },
-    async removeLesson(lesson) {
+    async removeLesson (lesson) {
       const id = lesson.id || lesson.pk
       if (!id) {
         return
@@ -321,13 +321,13 @@ export default {
         this.error = err.userMessage || 'Не удалось удалить урок'
       }
     },
-    onDragStart(index) {
+    onDragStart (index) {
       if (!this.canReorder) {
         return
       }
       this.draggedIndex = index
     },
-    onDragOver(index) {
+    onDragOver (index) {
       if (!this.canReorder) {
         return
       }
@@ -340,10 +340,10 @@ export default {
       this.lessons = updated
       this.draggedIndex = index
     },
-    onDrop() {
+    onDrop () {
       this.draggedIndex = null
     },
-    async saveOrder() {
+    async saveOrder () {
       if (!this.lessons.length || !this.canReorder) {
         return
       }
@@ -352,7 +352,7 @@ export default {
       try {
         const payload = this.lessons.map((lesson, index) => ({
           id: lesson.id || lesson.pk,
-          order: index + 1,
+          order: index + 1
         }))
         await reorderStudyManagerLessons(payload)
         await this.fetchLessons()
@@ -361,7 +361,7 @@ export default {
       } finally {
         this.savingOrder = false
       }
-    },
-  },
+    }
+  }
 }
 </script>

@@ -191,19 +191,19 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
 import {
   createStudyManagerFeedback,
   deleteStudyManagerFeedback,
   fetchStudyManagerCourses,
   fetchStudyManagerFeedbacks,
-  updateStudyManagerFeedback,
+  updateStudyManagerFeedback
 } from '@/services/panel.service'
 
 export default {
   name: 'StudyFeedbacks',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       feedbacks: [],
       courses: [],
@@ -222,12 +222,12 @@ export default {
         description: '',
         video: '',
         status: 'published',
-        course: '',
-      },
+        course: ''
+      }
     }
   },
   computed: {
-    filteredFeedbacks() {
+    filteredFeedbacks () {
       const term = this.searchTerm.trim().toLowerCase()
       if (!term) {
         return this.feedbacks
@@ -237,13 +237,13 @@ export default {
         const description = String(f.description || '').toLowerCase()
         return name.includes(term) || description.includes(term)
       })
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchCourses()
   },
   methods: {
-    async fetchCourses() {
+    async fetchCourses () {
       try {
         const response = await fetchStudyManagerCourses()
         this.courses = Array.isArray(response.data) ? response.data : []
@@ -257,7 +257,7 @@ export default {
         this.error = err.userMessage || 'Не удалось загрузить курсы'
       }
     },
-    async fetchFeedbacks() {
+    async fetchFeedbacks () {
       this.loading = true
       this.error = ''
       try {
@@ -270,24 +270,24 @@ export default {
         this.loading = false
       }
     },
-    feedbackKey(feedback) {
+    feedbackKey (feedback) {
       return feedback.id || feedback.pk || feedback.name
     },
-    shortText(text) {
+    shortText (text) {
       const raw = String(text || '').replace(/<\/?[^>]+(>|$)/g, '')
       if (!raw) {
         return '—'
       }
       return raw.length > 70 ? `${raw.slice(0, 70)}...` : raw
     },
-    courseTitle(courseId) {
+    courseTitle (courseId) {
       if (courseId && typeof courseId === 'object') {
         return courseId.name || courseId.title || '—'
       }
       const option = this.courses.find((item) => Number(item.id) === Number(courseId))
       return option ? option.name : '—'
     },
-    statusLabel(value) {
+    statusLabel (value) {
       if (!value) {
         return '—'
       }
@@ -300,7 +300,7 @@ export default {
       }
       return value
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.error = ''
@@ -309,13 +309,13 @@ export default {
         description: '',
         video: '',
         status: 'published',
-        course: this.selectedCourse || '',
+        course: this.selectedCourse || ''
       }
       this.imageFile = null
       this.imagePreview = ''
       this.showModal = true
     },
-    openEdit(feedback) {
+    openEdit (feedback) {
       this.isEditing = true
       this.currentId = feedback.id || feedback.pk
       this.error = ''
@@ -333,21 +333,21 @@ export default {
         description: feedback.description || '',
         video: feedback.video || '',
         status: feedback.status || 'published',
-        course: courseId,
+        course: courseId
       }
       this.imageFile = null
       this.imagePreview = feedback.photo || ''
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    triggerFileSelect() {
+    triggerFileSelect () {
       if (this.$refs.imageInput) {
         this.$refs.imageInput.click()
       }
     },
-    onImageChange(event) {
+    onImageChange (event) {
       const file = event.target.files && event.target.files[0]
       if (!file) {
         return
@@ -355,7 +355,7 @@ export default {
       this.imageFile = file
       this.imagePreview = URL.createObjectURL(file)
     },
-    onDrop(event) {
+    onDrop (event) {
       const file = event.dataTransfer.files && event.dataTransfer.files[0]
       if (!file) {
         return
@@ -366,7 +366,7 @@ export default {
       this.imageFile = file
       this.imagePreview = URL.createObjectURL(file)
     },
-    async saveFeedback() {
+    async saveFeedback () {
       if (!this.form.name || !this.form.course) {
         this.error = 'Заполните имя и курс'
         return
@@ -396,7 +396,7 @@ export default {
         this.saving = false
       }
     },
-    async removeFeedback(feedback) {
+    async removeFeedback (feedback) {
       const id = feedback.id || feedback.pk
       if (!id) {
         return
@@ -411,7 +411,7 @@ export default {
       } catch (err) {
         this.error = err.userMessage || 'Не удалось удалить отзыв'
       }
-    },
-  },
+    }
+  }
 }
 </script>

@@ -156,19 +156,19 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import PanelRichTextEditor from "../elements/Panel/RichTextEditor.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
+import PanelRichTextEditor from '../elements/Panel/RichTextEditor.vue'
 import {
   createStudyManagerTeacher,
   deleteStudyManagerTeacher,
   fetchStudyManagerTeachers,
-  updateStudyManagerTeacher,
+  updateStudyManagerTeacher
 } from '@/services/panel.service'
 
 export default {
   name: 'StudyTeachers',
   components: { MenuBlock, PanelRichTextEditor },
-  data() {
+  data () {
     return {
       teachers: [],
       searchTerm: '',
@@ -183,12 +183,12 @@ export default {
       form: {
         name: '',
         short_description: '',
-        description: '',
-      },
+        description: ''
+      }
     }
   },
   computed: {
-    filteredTeachers() {
+    filteredTeachers () {
       const term = this.searchTerm.trim().toLowerCase()
       if (!term) {
         return this.teachers
@@ -199,13 +199,13 @@ export default {
         const description = String(t.description || '').toLowerCase()
         return name.includes(term) || shortDescription.includes(term) || description.includes(term)
       })
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchData()
   },
   methods: {
-    async fetchData() {
+    async fetchData () {
       this.loading = true
       this.error = ''
       try {
@@ -217,49 +217,49 @@ export default {
         this.loading = false
       }
     },
-    teacherKey(teacher) {
+    teacherKey (teacher) {
       return teacher.id || teacher.pk || teacher.name
     },
-    shortText(text) {
+    shortText (text) {
       const raw = String(text || '').replace(/<\/?[^>]+(>|$)/g, '')
       if (!raw) {
         return '—'
       }
       return raw.length > 70 ? `${raw.slice(0, 70)}...` : raw
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.form = {
         name: '',
         short_description: '',
-        description: '',
+        description: ''
       }
       this.imageFile = null
       this.imagePreview = ''
       this.showModal = true
     },
-    openEdit(teacher) {
+    openEdit (teacher) {
       this.isEditing = true
       this.currentId = teacher.id || teacher.pk
       this.form = {
         name: teacher.name || '',
         short_description: teacher.short_description || '',
-        description: teacher.description || '',
+        description: teacher.description || ''
       }
       this.imageFile = null
       this.imagePreview = teacher.photo || ''
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    triggerFileSelect() {
+    triggerFileSelect () {
       if (this.$refs.imageInput) {
         this.$refs.imageInput.click()
       }
     },
-    onImageChange(event) {
+    onImageChange (event) {
       const file = event.target.files && event.target.files[0]
       if (!file) {
         return
@@ -267,7 +267,7 @@ export default {
       this.imageFile = file
       this.imagePreview = URL.createObjectURL(file)
     },
-    onDrop(event) {
+    onDrop (event) {
       const file = event.dataTransfer.files && event.dataTransfer.files[0]
       if (!file) {
         return
@@ -278,7 +278,7 @@ export default {
       this.imageFile = file
       this.imagePreview = URL.createObjectURL(file)
     },
-    async saveTeacher() {
+    async saveTeacher () {
       if (!this.form.name) {
         this.error = 'Заполните ФИО преподавателя'
         return
@@ -306,7 +306,7 @@ export default {
         this.saving = false
       }
     },
-    async removeTeacher(teacher) {
+    async removeTeacher (teacher) {
       const id = teacher.id || teacher.pk
       if (!id) {
         return
@@ -321,7 +321,7 @@ export default {
       } catch (err) {
         this.error = err.userMessage || 'Не удалось удалить преподавателя'
       }
-    },
-  },
+    }
+  }
 }
 </script>

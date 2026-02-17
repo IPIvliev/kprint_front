@@ -13,7 +13,7 @@ export default {
   components: {
     StudyLessonsPage,
     FooterPanelBlock,
-    HeaderPanelBlock,
-  },
+    HeaderPanelBlock
+  }
 }
 </script>

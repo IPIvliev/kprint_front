@@ -13,10 +13,10 @@
                     </div>
                 </div>
             </div>
-            <!--	/news-->
+            <!--  /news-->
             <!-- callback-->
             <callback-window />
-            <!--	/callback-->
+            <!--  /callback-->
             <WhiteWelcome/>
         </div>
 
@@ -30,40 +30,37 @@ import FooterBlock from '../../components/FooterBlock.vue'
 import CategoryCard from '@/components/elements/Shop/ShopCategory/CategoryCard.vue'
 
 export default {
-    
-    data() {
-        return {
-            categories: [],
-            
-        }
-    },
-    components: {
-        FooterBlock,
-        HeaderBlock,
-        CategoryCard,
-    },
-    computed: {
-        FilterCategories() {
-            if (this.$route.params.id) {
-                console.log("router id present")
-                return this.$store.state.catalog.categories.filter(category => category.parent === parseInt(this.$route.params.id))
-            } else {
-                console.log("No router id")
-                return this.$store.state.catalog.categories.filter(category => category.level === 0)
-            }
-        }
-        
-    },
-    created() {
-        this.$store.dispatch("catalog/fetchCategories");
-       
-    },
-    mounted() {
 
-        
+  data () {
+    return {
+      categories: []
+
+    }
+  },
+  components: {
+    FooterBlock,
+    HeaderBlock,
+    CategoryCard
+  },
+  computed: {
+    FilterCategories () {
+      if (this.$route.params.id) {
+        console.log('router id present')
+        return this.$store.state.catalog.categories.filter(category => category.parent === parseInt(this.$route.params.id))
+      } else {
+        console.log('No router id')
+        return this.$store.state.catalog.categories.filter(category => category.level === 0)
+      }
     }
 
-    
+  },
+  created () {
+    this.$store.dispatch('catalog/fetchCategories')
+  },
+  mounted () {
+
+  }
+
 }
 </script>
 

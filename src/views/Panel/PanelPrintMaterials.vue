@@ -13,7 +13,7 @@ export default {
   components: {
     PrintMaterialsPage,
     FooterPanelBlock,
-    HeaderPanelBlock,
-  },
+    HeaderPanelBlock
+  }
 }
 </script>

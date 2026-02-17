@@ -168,7 +168,7 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
 import {
   createShopManagerFilterAttrValue,
   deleteShopManagerFilterAttrValue,
@@ -176,13 +176,13 @@ import {
   fetchShopManagerFilterAttrValues,
   fetchShopManagerFilterAttrs,
   fetchShopManagerProducts,
-  updateShopManagerFilterAttrValue,
+  updateShopManagerFilterAttrValue
 } from '@/services/panel.service'
 
 export default {
   name: 'ShopFilterAttrValues',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       values: [],
       attrs: [],
@@ -197,17 +197,17 @@ export default {
       currentId: null,
       filters: {
         filter_attr: '',
-        product: '',
+        product: ''
       },
       form: {
         filter_attr: '',
         product: '',
-        value: '',
-      },
+        value: ''
+      }
     }
   },
   computed: {
-    filteredValues() {
+    filteredValues () {
       const term = this.searchTerm.trim().toLowerCase()
       return this.values.filter((v) => {
         if (term && !String(this.productTitle(v.product)).toLowerCase().includes(term)) {
@@ -221,13 +221,13 @@ export default {
         }
         return true
       })
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchData()
   },
   methods: {
-    async fetchData() {
+    async fetchData () {
       this.loading = true
       this.error = ''
       try {
@@ -235,7 +235,7 @@ export default {
           fetchShopManagerFilterAttrValues(),
           fetchShopManagerFilterAttrs(),
           fetchShopManagerFilterAttrListValues(),
-          fetchShopManagerProducts(),
+          fetchShopManagerProducts()
         ])
         this.values = Array.isArray(valuesResponse.data) ? valuesResponse.data : []
         this.attrs = Array.isArray(attrsResponse.data) ? attrsResponse.data : []
@@ -247,59 +247,59 @@ export default {
         this.loading = false
       }
     },
-    valueKey(value) {
+    valueKey (value) {
       return value.id || value.pk
     },
-    filterTitle(filterId) {
+    filterTitle (filterId) {
       const found = this.attrs.find((item) => Number(item.id) === Number(filterId))
       return found ? found.title : (filterId || '—')
     },
-    normalizeListValue(value) {
+    normalizeListValue (value) {
       if (value && typeof value === 'object') {
         return value.id || value.pk || ''
       }
       return value
     },
-    normalizeProduct(value) {
+    normalizeProduct (value) {
       if (value && typeof value === 'object') {
         return value.id || value.pk || ''
       }
       return value
     },
-    valueLabel(valueId) {
+    valueLabel (valueId) {
       const found = this.listValues.find((item) => Number(item.id) === Number(valueId))
       return found ? found.value : (valueId || '—')
     },
-    productTitle(productId) {
+    productTitle (productId) {
       const found = this.products.find((item) => Number(item.id) === Number(productId))
       return found ? found.name : (productId || '—')
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.error = ''
       this.form = {
         filter_attr: '',
         product: '',
-        value: '',
+        value: ''
       }
       this.showModal = true
     },
-    openEdit(value) {
+    openEdit (value) {
       this.isEditing = true
       this.currentId = value.id || value.pk
       this.error = ''
       this.form = {
         filter_attr: this.normalizeProduct(value.filter_attr) || '',
         product: this.normalizeProduct(value.product) || '',
-        value: this.normalizeListValue(value.value) || '',
+        value: this.normalizeListValue(value.value) || ''
       }
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    async saveValue() {
+    async saveValue () {
       if (!this.form.filter_attr || !this.form.product || !this.form.value) {
         this.error = 'Заполните фильтр, товар и значение'
         return
@@ -310,7 +310,7 @@ export default {
         const payload = {
           filter_attr: this.form.filter_attr,
           product: this.form.product,
-          value: this.form.value,
+          value: this.form.value
         }
         if (this.isEditing && this.currentId) {
           await updateShopManagerFilterAttrValue(this.currentId, payload)
@@ -325,7 +325,7 @@ export default {
         this.saving = false
       }
     },
-    async removeValue(value) {
+    async removeValue (value) {
       const id = value.id || value.pk
       if (!id) {
         return
@@ -340,7 +340,7 @@ export default {
       } catch (err) {
         this.error = err.userMessage || 'Не удалось удалить атрибут'
       }
-    },
-  },
+    }
+  }
 }
 </script>

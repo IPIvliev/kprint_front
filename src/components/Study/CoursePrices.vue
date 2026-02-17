@@ -1,11 +1,11 @@
 <template>
   <div class="white_block cmp-components-study-courseprices" :class="background">
-      <div class="container"> 
+      <div class="container">
         <div class="row gy-1">
           <div class="col-lg-12">
             <h2 class="title">Стоимость обучения</h2>
             <div class="price_cards">
-              <div class="price_card" v-for="(price, index) in prices" :key="price.id">
+              <div class="price_card" v-for="price in prices" :key="price.id">
                     <h3 class="price_card_name">{{ price.name }}</h3>
                     <p class="price_card_short_description">{{ price.short_description }}</p>
                     <hr class="price_card_hr">
@@ -43,19 +43,19 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       show_details: null,
-      showAddedModal: false,
+      showAddedModal: false
     }
   },
   props: ['background', 'prices', 'course'],
   methods: {
-    Change(number) {
+    Change (number) {
       number = Math.trunc(number)
       return number.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + ' руб.'
     },
-    addCourseToCart(price) {
+    addCourseToCart (price) {
       if (!this.course || !price) {
         return
       }
@@ -69,10 +69,10 @@ export default {
       })
       this.showAddedModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showAddedModal = false
     },
-    goToCart() {
+    goToCart () {
       this.showAddedModal = false
       this.$router.push('/shop/cart')
     }

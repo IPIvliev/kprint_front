@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import CartSticky from './components/elements/Shop/CartSticky.vue';
+import CartSticky from './components/elements/Shop/CartSticky.vue'
 
 export default {
   components: { CartSticky }

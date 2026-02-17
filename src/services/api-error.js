@@ -1,4 +1,4 @@
-function stringifyPrimitive(value) {
+function stringifyPrimitive (value) {
   if (value === null || value === undefined) {
     return ''
   }
@@ -11,7 +11,7 @@ function stringifyPrimitive(value) {
   return ''
 }
 
-function collectMessages(value, bucket) {
+function collectMessages (value, bucket) {
   if (!value) {
     return
   }
@@ -40,7 +40,7 @@ function collectMessages(value, bucket) {
   }
 }
 
-export function extractApiErrorMessage(error) {
+export function extractApiErrorMessage (error) {
   if (!error) {
     return ''
   }
@@ -56,7 +56,7 @@ export function extractApiErrorMessage(error) {
   return stringifyPrimitive(error.message)
 }
 
-export function normalizeApiError(error) {
+export function normalizeApiError (error) {
   if (!error || typeof error !== 'object') {
     return error
   }

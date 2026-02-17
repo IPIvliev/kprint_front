@@ -23,9 +23,9 @@
           Фильтр по {{ activeFilter.type }}: <strong>{{ activeFilter.value }}</strong>.
           <router-link to="/news">Показать все статьи</router-link>
         </div>
-        <!-- <div class="row"> 
+        <!-- <div class="row">
           <div class="col-xxl-6 col-lg-8">
-            <div class="row"> 
+            <div class="row">
               <div class="col-md-12">
                 <div class="select mb-1">
                   <select name="#" data-placeholder="Тип публикации">
@@ -43,8 +43,8 @@
           <article-card v-for="article in paginatedArticles" :key="article.id" v-bind:article="article" :class="'col-xxl-3 col-lg-4 col-md-6'">
           </article-card>
         </div>
-        <div v-if="totalPages > 1" class="news__pagination"> 
-          <ul class="news__list"> 
+        <div v-if="totalPages > 1" class="news__pagination">
+          <ul class="news__list">
             <li :class="{ disabled: currentPage <= 1 }">
               <a href="#" @click.prevent="goToPage(currentPage - 1)">Назад</a>
             </li>
@@ -66,68 +66,68 @@
         </div>
       </div>
     </div>
-    <!--	/news-->
+    <!--  /news-->
     <!-- callback-->
     <callback-window />
-    <!--	/callback-->
+    <!--  /callback-->
   </div>
 </template>
 
 <script>
-import CallbackWindow from "./elements/CallbackWindow.vue"
-import ArticleCard from "./News/ArticleCard.vue"
+import CallbackWindow from './elements/CallbackWindow.vue'
+import ArticleCard from './News/ArticleCard.vue'
 import { publicApi } from '@/services/http'
 export default {
   name: 'NewsPage',
-  data() {
+  data () {
     return {
       articles: [],
       categories: [],
-      pageSize: 12,
+      pageSize: 12
     }
   },
   computed: {
-    activeTagSlug() {
+    activeTagSlug () {
       return String(this.$route.params.tagSlug || '').trim()
     },
-    activeCategorySlug() {
+    activeCategorySlug () {
       return String(this.$route.params.categorySlug || '').trim()
     },
-    activeFilter() {
+    activeFilter () {
       if (this.activeTagSlug) {
         return {
           type: 'тэгу',
-          value: this.activeTagSlug,
+          value: this.activeTagSlug
         }
       }
       if (this.activeCategorySlug) {
         const activeCategory = this.categories.find(
-          (category) => String(category.slug || '').toLowerCase() === this.activeCategorySlug.toLowerCase(),
+          (category) => String(category.slug || '').toLowerCase() === this.activeCategorySlug.toLowerCase()
         )
         return {
           type: 'категории',
-          value: activeCategory && activeCategory.title ? activeCategory.title : this.activeCategorySlug,
+          value: activeCategory && activeCategory.title ? activeCategory.title : this.activeCategorySlug
         }
       }
       return null
     },
-    categoryButtons() {
+    categoryButtons () {
       return this.categories.filter((category) => category && category.slug && category.title)
     },
-    currentPage() {
+    currentPage () {
       const raw = Number(this.$route.query.page || 1)
       return Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : 1
     },
-    totalPages() {
+    totalPages () {
       const total = Math.ceil(this.articles.length / this.pageSize)
       return total > 0 ? total : 1
     },
-    paginatedArticles() {
+    paginatedArticles () {
       const current = Math.min(this.currentPage, this.totalPages)
       const start = (current - 1) * this.pageSize
       return this.articles.slice(start, start + this.pageSize)
     },
-    visiblePages() {
+    visiblePages () {
       const total = this.totalPages
       const current = Math.min(this.currentPage, total)
       const start = Math.max(1, current - 2)
@@ -137,30 +137,30 @@ export default {
         pages.push(page)
       }
       return pages
-    },
+    }
   },
   watch: {
-    '$route.path'() {
+    '$route.path' () {
       this.fetchArticles()
     },
-    '$route.query.page'() {
+    '$route.query.page' () {
       this.ensurePageIsValid()
-    },
+    }
   },
-  components: {CallbackWindow, ArticleCard},
-  mounted() {
+  components: { CallbackWindow, ArticleCard },
+  mounted () {
     this.fetchCategories()
     this.fetchArticles()
   },
   methods: {
-    categoryLink(slug) {
+    categoryLink (slug) {
       return `/news/category/${slug}`
     },
-    async fetchCategories() {
+    async fetchCategories () {
       const response = await publicApi.get('/api/article-categories/')
       this.categories = Array.isArray(response.data) ? response.data : []
     },
-    async fetchArticles() {
+    async fetchArticles () {
       const params = {}
       if (this.activeTagSlug) {
         params.tag = this.activeTagSlug
@@ -175,13 +175,13 @@ export default {
         : (Array.isArray(payload.results) ? payload.results : [])
       this.ensurePageIsValid()
     },
-    ensurePageIsValid() {
+    ensurePageIsValid () {
       if (this.currentPage <= this.totalPages) {
         return
       }
       this.goToPage(this.totalPages, true)
     },
-    goToPage(page, replace = false) {
+    goToPage (page, replace = false) {
       const normalized = Math.max(1, Math.min(this.totalPages, Number(page) || 1))
       if (normalized === this.currentPage && !replace) {
         return
@@ -189,15 +189,15 @@ export default {
       const query = normalized > 1 ? { ...this.$route.query, page: String(normalized) } : {}
       const location = {
         path: this.$route.path,
-        query,
+        query
       }
       if (replace) {
         this.$router.replace(location)
         return
       }
       this.$router.push(location)
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -226,5 +226,3 @@ export default {
   color: #fff;
 }
 </style>
-
-

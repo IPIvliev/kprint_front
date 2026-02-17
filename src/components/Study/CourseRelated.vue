@@ -1,10 +1,10 @@
 <template>
     <!-- video-->
     <div class="white_block cmp-components-study-courserelated" :class="background">
-      <div class="container"> 
+      <div class="container">
         <h1 class="title">Похожие курсы</h1>
       </div>
-      <div class="container-fluid"> 
+      <div class="container-fluid">
         <div class="row">
           <swiper
             :spaceBetween="30"
@@ -13,7 +13,7 @@
 
             class="mySwiper"
           >
-            <swiper-slide v-for="course in related">
+            <swiper-slide v-for="course in related" :key="course.id">
               <router-link :to="{path: '/study/course/' + course.id }">
                 <div class="cource">
                   <div class="row">
@@ -33,9 +33,9 @@
                         </div>
                         <div class="col-lg-9">
                           <p>
-                            {{ course.lessons_number }} уроков 
-                            <img class="icon-ellipse" src="@/assets/img/Ellipse.svg" /> 
-                            {{ course.teachers_number }} преподавателя 
+                            {{ course.lessons_number }} уроков
+                            <img class="icon-ellipse" src="@/assets/img/Ellipse.svg" />
+                            {{ course.teachers_number }} преподавателя
                             <img class="icon-ellipse" src="@/assets/img/Ellipse.svg" />
                             20 часов</p>
                         </div>
@@ -49,17 +49,16 @@
         </div>
       </div>
     </div>
-    <!--	/video-->
+    <!--  /video-->
 </template>
 <script>
-  import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-  import SwiperClass, { Pagination } from 'swiper'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 
-  import 'swiper/css'
-  import 'swiper/css/pagination'
+import 'swiper/css'
+import 'swiper/css/pagination'
 
 export default {
   props: ['background', 'related'],
-  components: {Swiper, SwiperSlide},
+  components: { Swiper, SwiperSlide }
 }
 </script>

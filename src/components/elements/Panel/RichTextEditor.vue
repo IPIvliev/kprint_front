@@ -234,62 +234,62 @@ export default {
   props: {
     modelValue: {
       type: String,
-      default: '',
+      default: ''
     },
     placeholder: {
       type: String,
-      default: 'Введите текст',
+      default: 'Введите текст'
     },
     minHeight: {
       type: Number,
-      default: 220,
+      default: 220
     },
     editable: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   emits: ['update:modelValue', 'blur'],
-  data() {
+  data () {
     return {
       editor: null,
-      isFocused: false,
+      isFocused: false
     }
   },
   computed: {
-    isParagraphActive() {
+    isParagraphActive () {
       return Boolean(this.editor && this.editor.isActive('paragraph'))
     },
-    isBoldActive() {
+    isBoldActive () {
       return Boolean(this.editor && this.editor.isActive('bold'))
     },
-    isItalicActive() {
+    isItalicActive () {
       return Boolean(this.editor && this.editor.isActive('italic'))
     },
-    isUnderlineActive() {
+    isUnderlineActive () {
       return Boolean(this.editor && this.editor.isActive('underline'))
     },
-    isStrikeActive() {
+    isStrikeActive () {
       return Boolean(this.editor && this.editor.isActive('strike'))
     },
-    isBulletListActive() {
+    isBulletListActive () {
       return Boolean(this.editor && this.editor.isActive('bulletList'))
     },
-    isOrderedListActive() {
+    isOrderedListActive () {
       return Boolean(this.editor && this.editor.isActive('orderedList'))
     },
-    isBlockquoteActive() {
+    isBlockquoteActive () {
       return Boolean(this.editor && this.editor.isActive('blockquote'))
     },
-    isLinkActive() {
+    isLinkActive () {
       return Boolean(this.editor && this.editor.isActive('link'))
     },
-    isTableActive() {
+    isTableActive () {
       return Boolean(this.editor && this.editor.isActive('table'))
-    },
+    }
   },
   watch: {
-    modelValue(nextValue) {
+    modelValue (nextValue) {
       if (!this.editor) {
         return
       }
@@ -300,21 +300,21 @@ export default {
       }
       this.editor.commands.setContent(nextValue || '', false)
     },
-    editable(isEditable) {
+    editable (isEditable) {
       if (!this.editor) {
         return
       }
       this.editor.setEditable(Boolean(isEditable))
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.initEditor()
   },
-  beforeUnmount() {
+  beforeUnmount () {
     this.destroyEditor()
   },
   methods: {
-    initEditor() {
+    initEditor () {
       if (this.editor) {
         return
       }
@@ -324,8 +324,8 @@ export default {
         extensions: [
           StarterKit.configure({
             heading: {
-              levels: [2, 3],
-            },
+              levels: [2, 3]
+            }
           }),
           Underline,
           Link.configure({
@@ -334,31 +334,31 @@ export default {
             linkOnPaste: true,
             HTMLAttributes: {
               rel: 'noopener noreferrer nofollow',
-              target: '_blank',
-            },
+              target: '_blank'
+            }
           }),
           Placeholder.configure({
-            placeholder: this.placeholder,
+            placeholder: this.placeholder
           }),
           Image.configure({
             allowBase64: true,
-            inline: false,
+            inline: false
           }),
           Table.configure({
             resizable: true,
             HTMLAttributes: {
-              class: 'panel-rich-text__table',
-            },
+              class: 'panel-rich-text__table'
+            }
           }),
           TableRow,
           TableHeader,
-          TableCell,
+          TableCell
         ],
         editorProps: {
           attributes: {
             class: 'panel-rich-text__content',
-            style: `min-height: ${this.minHeight}px;`,
-          },
+            style: `min-height: ${this.minHeight}px;`
+          }
         },
         onFocus: () => {
           this.isFocused = true
@@ -369,93 +369,93 @@ export default {
         },
         onUpdate: ({ editor }) => {
           this.$emit('update:modelValue', editor.getHTML())
-        },
+        }
       })
     },
-    destroyEditor() {
+    destroyEditor () {
       if (!this.editor) {
         return
       }
       this.editor.destroy()
       this.editor = null
     },
-    normalizeHtml(value) {
+    normalizeHtml (value) {
       const raw = String(value || '').trim()
       if (!raw || raw === '<p></p>') {
         return ''
       }
       return raw
     },
-    toolbarButtonClass(isActive) {
+    toolbarButtonClass (isActive) {
       return {
         'panel-rich-text__btn': true,
-        'panel-rich-text__btn--active': Boolean(isActive),
+        'panel-rich-text__btn--active': Boolean(isActive)
       }
     },
-    headingIsActive(level) {
+    headingIsActive (level) {
       if (!this.editor) {
         return false
       }
       return this.editor.isActive('heading', { level })
     },
-    isHeadingLevelActive(level) {
+    isHeadingLevelActive (level) {
       return this.headingIsActive(level)
     },
-    setParagraph() {
+    setParagraph () {
       if (!this.editor) {
         return
       }
       this.editor.chain().focus().setParagraph().run()
     },
-    toggleHeading(level) {
+    toggleHeading (level) {
       if (!this.editor) {
         return
       }
       this.editor.chain().focus().toggleHeading({ level }).run()
     },
-    toggleBold() {
+    toggleBold () {
       if (!this.editor) {
         return
       }
       this.editor.chain().focus().toggleBold().run()
     },
-    toggleItalic() {
+    toggleItalic () {
       if (!this.editor) {
         return
       }
       this.editor.chain().focus().toggleItalic().run()
     },
-    toggleUnderline() {
+    toggleUnderline () {
       if (!this.editor) {
         return
       }
       this.editor.chain().focus().toggleUnderline().run()
     },
-    toggleStrike() {
+    toggleStrike () {
       if (!this.editor) {
         return
       }
       this.editor.chain().focus().toggleStrike().run()
     },
-    toggleBulletList() {
+    toggleBulletList () {
       if (!this.editor) {
         return
       }
       this.editor.chain().focus().toggleBulletList().run()
     },
-    toggleOrderedList() {
+    toggleOrderedList () {
       if (!this.editor) {
         return
       }
       this.editor.chain().focus().toggleOrderedList().run()
     },
-    toggleBlockquote() {
+    toggleBlockquote () {
       if (!this.editor) {
         return
       }
       this.editor.chain().focus().toggleBlockquote().run()
     },
-    setLink() {
+    setLink () {
       if (!this.editor) {
         return
       }
@@ -479,19 +479,19 @@ export default {
         .setLink({ href: withProtocol })
         .run()
     },
-    unsetLink() {
+    unsetLink () {
       if (!this.editor) {
         return
       }
       this.editor.chain().focus().extendMarkRange('link').unsetLink().run()
     },
-    clearFormatting() {
+    clearFormatting () {
       if (!this.editor) {
         return
       }
       this.editor.chain().focus().unsetAllMarks().clearNodes().run()
     },
-    insertTable() {
+    insertTable () {
       if (!this.editor) {
         return
       }
@@ -501,43 +501,43 @@ export default {
         .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
         .run()
     },
-    addRowAfter() {
+    addRowAfter () {
       if (!this.editor || !this.isTableActive) {
         return
       }
       this.editor.chain().focus().addRowAfter().run()
     },
-    addColumnAfter() {
+    addColumnAfter () {
       if (!this.editor || !this.isTableActive) {
         return
       }
       this.editor.chain().focus().addColumnAfter().run()
     },
-    toggleHeaderRow() {
+    toggleHeaderRow () {
       if (!this.editor || !this.isTableActive) {
         return
       }
       this.editor.chain().focus().toggleHeaderRow().run()
     },
-    deleteRow() {
+    deleteRow () {
       if (!this.editor || !this.isTableActive) {
         return
       }
       this.editor.chain().focus().deleteRow().run()
     },
-    deleteColumn() {
+    deleteColumn () {
       if (!this.editor || !this.isTableActive) {
         return
       }
       this.editor.chain().focus().deleteColumn().run()
     },
-    deleteTable() {
+    deleteTable () {
       if (!this.editor || !this.isTableActive) {
         return
       }
       this.editor.chain().focus().deleteTable().run()
     },
-    insertImage(image) {
+    insertImage (image) {
       if (!this.editor) {
         return
       }
@@ -548,19 +548,19 @@ export default {
       const alt = String(image && image.alt ? image.alt : '').trim()
       this.editor.chain().focus().setImage({ src, alt }).run()
     },
-    focus() {
+    focus () {
       if (!this.editor) {
         return
       }
       this.editor.chain().focus().run()
     },
-    getHTML() {
+    getHTML () {
       if (!this.editor) {
         return ''
       }
       return this.editor.getHTML()
-    },
-  },
+    }
+  }
 }
 </script>
 

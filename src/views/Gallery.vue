@@ -13,7 +13,7 @@ import GalleryPage from '../components/GalleryPage.vue'
 import FooterBlock from '../components/FooterBlock.vue'
 
 export default {
-  name: '404',
+  name: 'GalleryPageView',
   components: {
     GalleryPage,
     FooterBlock,

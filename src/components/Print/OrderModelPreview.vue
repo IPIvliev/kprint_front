@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="order-model-preview">
     <div v-if="loading" class="order-model-preview__state">Загружаем 3D-модель...</div>
     <div v-else-if="requiresManualLoad" class="order-model-preview__state order-model-preview__state--interactive">
@@ -31,14 +31,14 @@ export default {
   props: {
     modelUrl: {
       type: String,
-      default: '',
+      default: ''
     },
     orderId: {
       type: [Number, String],
-      default: null,
-    },
+      default: null
+    }
   },
-  data() {
+  data () {
     return {
       loading: false,
       error: '',
@@ -50,31 +50,31 @@ export default {
       animationFrameId: null,
       resizeObserver: null,
       requiresManualLoad: false,
-      fileSizeBytes: null,
+      fileSizeBytes: null
     }
   },
   computed: {
-    fileSizeLabel() {
+    fileSizeLabel () {
       const bytes = Number(this.fileSizeBytes)
       if (!Number.isFinite(bytes) || bytes <= 0) {
         return `>${MAX_AUTO_PREVIEW_MB} МБ`
       }
       return `${(bytes / (1024 * 1024)).toFixed(1)} МБ`
-    },
+    }
   },
   watch: {
     modelUrl: {
       immediate: true,
-      handler(url) {
+      handler (url) {
         this.prepareLoad(url)
-      },
+      }
     },
-    orderId() {
+    orderId () {
       this.prepareLoad(this.modelUrl)
-    },
+    }
   },
   methods: {
-    async prepareLoad(url, force = false) {
+    async prepareLoad (url, force = false) {
       this.clearViewer()
       this.requiresManualLoad = false
       this.fileSizeBytes = null
@@ -98,11 +98,11 @@ export default {
 
       await this.loadModel(url)
     },
-    async onForceLoadClick() {
+    async onForceLoadClick () {
       this.requiresManualLoad = false
       await this.prepareLoad(this.modelUrl, true)
     },
-    async fetchModelSizeBytes(url) {
+    async fetchModelSizeBytes (url) {
       if (this.orderId) {
         return null
       }
@@ -124,7 +124,7 @@ export default {
       try {
         const rangeResponse = await this.fetchModelRequest(url, {
           method: 'GET',
-          headers: { Range: 'bytes=0-0' },
+          headers: { Range: 'bytes=0-0' }
         })
         if (!rangeResponse.ok) {
           return null
@@ -137,7 +137,7 @@ export default {
         return null
       }
     },
-    getAccessToken() {
+    getAccessToken () {
       try {
         const user = JSON.parse(localStorage.getItem('user') || '{}')
         return user?.accessToken || user?.access || ''
@@ -145,10 +145,10 @@ export default {
         return ''
       }
     },
-    async fetchModelRequest(url, options = {}) {
+    async fetchModelRequest (url, options = {}) {
       const baseRequest = {
         credentials: 'same-origin',
-        ...options,
+        ...options
       }
       let response = await fetch(url, baseRequest)
       if (response.ok || ![401, 403].includes(response.status)) {
@@ -164,15 +164,15 @@ export default {
       headers.set('Authorization', `Bearer ${token}`)
       response = await fetch(url, {
         ...baseRequest,
-        headers,
+        headers
       })
       return response
     },
-    hasGeometryVertices(geometry) {
+    hasGeometryVertices (geometry) {
       const position = geometry?.getAttribute ? geometry.getAttribute('position') : null
       return Boolean(position && position.count >= 3)
     },
-    parseGeometryFromArrayBuffer(loader, fileBuffer) {
+    parseGeometryFromArrayBuffer (loader, fileBuffer) {
       let geometry = null
       let binaryParseError = null
       let textParseError = null
@@ -198,7 +198,7 @@ export default {
 
       return geometry
     },
-    async toArrayBuffer(payload) {
+    async toArrayBuffer (payload) {
       if (!payload) {
         return null
       }
@@ -214,7 +214,7 @@ export default {
       }
       return null
     },
-    async loadGeometryFromUrl(url, loader) {
+    async loadGeometryFromUrl (url, loader) {
       if (this.orderId) {
         try {
           const response = await fetchPrintOrderModelFile(this.orderId)
@@ -239,7 +239,7 @@ export default {
       const fileBuffer = await response.arrayBuffer()
       return this.parseGeometryFromArrayBuffer(loader, fileBuffer)
     },
-    async loadModel(url) {
+    async loadModel (url) {
       await this.$nextTick()
       const container = this.$refs.viewport
       if (!container) {
@@ -287,7 +287,7 @@ export default {
         const material = new THREE.MeshStandardMaterial({
           color: 0x7ea7d4,
           metalness: 0.1,
-          roughness: 0.7,
+          roughness: 0.7
         })
         const mesh = markRaw(new THREE.Mesh(geometry, material))
         scene.add(mesh)
@@ -313,7 +313,7 @@ export default {
         this.error = 'Не удалось загрузить 3D-модель. Попробуйте скачать STL или открыть модель позже.'
       }
     },
-    fitCameraToMesh() {
+    fitCameraToMesh () {
       if (!this.mesh || !this.camera || !this.controls) {
         return
       }
@@ -339,7 +339,7 @@ export default {
       this.controls.target.set(0, 0, 0)
       this.controls.update()
     },
-    startRenderLoop() {
+    startRenderLoop () {
       if (!this.renderer || !this.scene || !this.camera) {
         return
       }
@@ -356,7 +356,7 @@ export default {
       }
       tick()
     },
-    observeResize(container) {
+    observeResize (container) {
       if (!container) {
         return
       }
@@ -372,7 +372,7 @@ export default {
       })
       this.resizeObserver.observe(container)
     },
-    clearViewer() {
+    clearViewer () {
       if (this.animationFrameId) {
         window.cancelAnimationFrame(this.animationFrameId)
         this.animationFrameId = null
@@ -409,11 +409,11 @@ export default {
       this.scene = null
       this.camera = null
       this.loading = false
-    },
+    }
   },
-  beforeUnmount() {
+  beforeUnmount () {
     this.clearViewer()
-  },
+  }
 }
 </script>
 

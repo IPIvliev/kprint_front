@@ -32,7 +32,6 @@
       </tbody>
     </table>
 
-    
     <table class="table mt-2" v-if="getCartCourses.length > 0">
       <thead>
         <tr class="text-center text_gray">
@@ -65,32 +64,32 @@ import { mapGetters } from 'vuex'
 import ProductAmount from '@/components/elements/Shop/ProductAmount.vue'
 
 export default {
-    components: { ProductAmount },
-	beforeCreate() {
+  components: { ProductAmount },
+  beforeCreate () {
 
-		// this.$store.commit('shop/initialiseCart');
-	},
-    created() {
-        
-        // this.$store.dispatch("catalog/fetchProducts")
+    // this.$store.commit('shop/initialiseCart');
+  },
+  created () {
+
+    // this.$store.dispatch("catalog/fetchProducts")
+  },
+  mounted () {
+    this.$store.commit('shop/initialiseCart')
+  },
+  computed: {
+    ...mapGetters({
+      getCartProducts: 'shop/cartProducts',
+      cartProductTotal: 'shop/cartProductTotal',
+      getCartCourses: 'shop/cartCourseItems'
+    })
+  },
+  methods: {
+    deleteItemFromCart (cartProduct) {
+      this.$store.dispatch('shop/DeleteItemFromCart', cartProduct)
     },
-    mounted() {
-        this.$store.commit('shop/initialiseCart')
-    },
-    computed: {
-        ...mapGetters ({
-            getCartProducts: 'shop/cartProducts',
-            cartProductTotal: 'shop/cartProductTotal',
-            getCartCourses: 'shop/cartCourseItems'
-        })
-    },
-    methods: {
-        deleteItemFromCart(cartProduct) {
-            this.$store.dispatch("shop/DeleteItemFromCart", cartProduct)
-        },
-        deleteCourseFromCart(courseItem) {
-            this.$store.dispatch("shop/DeleteCourseFromCart", courseItem)
-        }
+    deleteCourseFromCart (courseItem) {
+      this.$store.dispatch('shop/DeleteCourseFromCart', courseItem)
     }
+  }
 }
 </script>

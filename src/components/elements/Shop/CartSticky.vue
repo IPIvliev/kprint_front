@@ -9,11 +9,10 @@
 <script>
 export default {
   computed: {
-    showCartSticky() {
+    showCartSticky () {
       const hiddenRoutes = ['Cart', 'ShopOrder']
       return !hiddenRoutes.includes(this.$route?.name)
-    },
-  },
+    }
+  }
 }
 </script>
-

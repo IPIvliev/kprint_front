@@ -21,11 +21,11 @@ export default {
   props: {
     article: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
-    linkOpen() {
+    linkOpen () {
       const id = this.article && this.article.id
       if (!id) {
         return '/news'
@@ -36,10 +36,10 @@ export default {
       }
       return `/news/${id}/${encodeURIComponent(rawSlug)}`
     },
-    image() {
+    image () {
       return this.article.article_image || ''
     },
-    excerpt() {
+    excerpt () {
       const plain = String(this.article.body || '').replace(/<\/?[^>]+(>|$)/g, '').trim()
       if (!plain) {
         return 'Описание отсутствует'
@@ -49,28 +49,28 @@ export default {
       }
       return `${plain.slice(0, 100)}...`
     },
-    category() {
+    category () {
       const categoryDetail = this.article.category_detail || {}
       return {
         title: categoryDetail.title || this.article.category_title || 'Без категории',
-        color: categoryDetail.color || this.article.category_color || '',
+        color: categoryDetail.color || this.article.category_color || ''
       }
     },
-    displayDate() {
+    displayDate () {
       return this.formatDate(
-        this.article.publish_iso || this.article.publish || this.article.created || this.article.updated,
+        this.article.publish_iso || this.article.publish || this.article.created || this.article.updated
       )
     },
-    cardStyle() {
+    cardStyle () {
       const rawColor = String(this.category.color || '').trim()
       const color = /^#[0-9a-fA-F]{6}$/.test(rawColor) ? rawColor : '#F2F4F7'
       return {
-        backgroundColor: color,
+        backgroundColor: color
       }
-    },
+    }
   },
   methods: {
-    formatDate(value) {
+    formatDate (value) {
       const raw = String(value || '').trim()
       if (!raw) {
         return '—'
@@ -84,7 +84,7 @@ export default {
       }
       const pad = (num) => String(num).padStart(2, '0')
       return `${pad(parsed.getDate())}.${pad(parsed.getMonth() + 1)}.${parsed.getFullYear()}`
-    },
-  },
+    }
+  }
 }
 </script>

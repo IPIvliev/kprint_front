@@ -13,7 +13,7 @@ import EditPanelPage from '../../components/Panel/PanelEdit.vue'
 import FooterPanelBlock from '../../components/Panel/FooterBlock.vue'
 
 export default {
-  name: 'News',
+  name: 'PanelEditView',
   components: {
     EditPanelPage,
     FooterPanelBlock,

@@ -9,17 +9,17 @@ import { api } from './http'
  * @param {CreateOrderRequest} payload
  * @param {string} idempotencyKey
  */
-export function createOrder(payload, idempotencyKey) {
+export function createOrder (payload, idempotencyKey) {
   return api.post('/api/shop/order/create', payload, {
     headers: {
-      'Idempotency-Key': idempotencyKey,
-    },
+      'Idempotency-Key': idempotencyKey
+    }
   })
 }
 
 /**
  * @param {DiscountQueryParams} params
  */
-export function fetchDiscountAmount(params) {
+export function fetchDiscountAmount (params) {
   return api.get('/api/shop/discounts', { params })
 }

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="white_block white_background cmp-components-print-printprice">
     <div class="container center">
       <div class="row gy-1 item_center">
@@ -176,7 +176,7 @@ const VOLUME_FORMATTER = new Intl.NumberFormat('ru-RU', {
 })
 
 export default {
-  data() {
+  data () {
     return {
       isModalOpen: false,
       selectedFileName: '',
@@ -218,56 +218,56 @@ export default {
     }
   },
   computed: {
-    flatMaterials() {
+    flatMaterials () {
       return this.materialCategories.flatMap(category => category.materials || [])
     },
-    selectedMaterial() {
+    selectedMaterial () {
       return this.flatMaterials.find(material => material.id === this.selectedMaterialId) || null
     },
-    hasModelData() {
+    hasModelData () {
       return this.rawModelVolume > 0
     },
-    originalSizeCm() {
+    originalSizeCm () {
       return {
         x: this.rawBoundsSize.x / 10,
         y: this.rawBoundsSize.y / 10,
         z: this.rawBoundsSize.z / 10
       }
     },
-    parsedTargetSizeCm() {
+    parsedTargetSizeCm () {
       return {
         x: this.toPositiveDecimal(this.targetSizeCm.x),
         y: this.toPositiveDecimal(this.targetSizeCm.y),
         z: this.toPositiveDecimal(this.targetSizeCm.z)
       }
     },
-    modelVolumeCm3() {
+    modelVolumeCm3 () {
       const { x, y, z } = this.parsedTargetSizeCm
       if (!x || !y || !z) {
         return 0
       }
       return this.roundTo2(x * y * z)
     },
-    orderQuantityValue() {
+    orderQuantityValue () {
       const normalized = Math.floor(this.toNumber(this.orderQuantity))
       if (!Number.isFinite(normalized) || normalized <= 0) {
         return 0
       }
       return normalized
     },
-    unitPrice() {
+    unitPrice () {
       if (!this.selectedMaterial) {
         return 0
       }
       return this.roundTo2(this.modelVolumeCm3 * this.toNumber(this.selectedMaterial.price_per_mm3))
     },
-    estimatedPrice() {
+    estimatedPrice () {
       if (!this.unitPrice || !this.orderQuantityValue) {
         return 0
       }
       return this.roundTo2(this.unitPrice * this.orderQuantityValue)
     },
-    canCreateOrder() {
+    canCreateOrder () {
       return Boolean(
         this.selectedFile &&
         this.hasModelData &&
@@ -275,18 +275,18 @@ export default {
         this.orderQuantityValue > 0 &&
         this.parsedTargetSizeCm.x &&
         this.parsedTargetSizeCm.y &&
-        this.parsedTargetSizeCm.z,
+        this.parsedTargetSizeCm.z
       )
     }
   },
   methods: {
-    onCalculateClick() {
+    onCalculateClick () {
       this.fileError = ''
       if (this.$refs.fileInput) {
         this.$refs.fileInput.click()
       }
     },
-    async onFileChange(event) {
+    async onFileChange (event) {
       const files = event.target.files || []
       const file = files[0]
       if (!file) {
@@ -317,7 +317,7 @@ export default {
         event.target.value = ''
       }
     },
-    async loadMaterialCategories() {
+    async loadMaterialCategories () {
       if (this.materialCategories.length) {
         return
       }
@@ -339,7 +339,7 @@ export default {
         this.isLoadingMaterials = false
       }
     },
-    async renderModel(file) {
+    async renderModel (file) {
       this.modelError = ''
       const loader = new STLLoader()
       let geometry = null
@@ -382,11 +382,11 @@ export default {
         this.modelError = 'Файл загружен, но браузер не смог отрисовать 3D-превью модели.'
       }
     },
-    hasGeometryVertices(geometry) {
+    hasGeometryVertices (geometry) {
       const position = geometry && geometry.getAttribute ? geometry.getAttribute('position') : null
       return Boolean(position && position.count >= 3)
     },
-    initViewer(geometry) {
+    initViewer (geometry) {
       this.clearViewer()
 
       const container = this.$refs.modelPreview
@@ -453,7 +453,7 @@ export default {
         this.capturePreviewImage()
       })
     },
-    fitCameraToMesh() {
+    fitCameraToMesh () {
       if (!this.mesh || !this.camera) {
         return
       }
@@ -482,7 +482,7 @@ export default {
         this.controls.update()
       }
     },
-    renderLoop() {
+    renderLoop () {
       if (!this.renderer || !this.scene || !this.camera) {
         return
       }
@@ -494,7 +494,7 @@ export default {
       this.renderer.render(this.scene, this.camera)
       this.animationFrameId = window.requestAnimationFrame(() => this.renderLoop())
     },
-    handleResize() {
+    handleResize () {
       const container = this.$refs.modelPreview
       if (!container || !this.renderer || !this.camera) {
         return
@@ -509,7 +509,7 @@ export default {
         this.controls.update()
       }
     },
-    updateBounds(geometry) {
+    updateBounds (geometry) {
       geometry.computeBoundingBox()
       const box = geometry.boundingBox
       if (!box) {
@@ -523,7 +523,7 @@ export default {
         z: Math.abs(size.z)
       }
     },
-    calculateVolume(geometry) {
+    calculateVolume (geometry) {
       const position = geometry.getAttribute('position')
       if (!position || position.count < 3) {
         return 0
@@ -552,7 +552,7 @@ export default {
 
       return Math.abs(volume)
     },
-    capturePreviewImage() {
+    capturePreviewImage () {
       const canvas = this.renderer?.domElement
       if (!canvas || typeof canvas.toBlob !== 'function') {
         return
@@ -562,11 +562,11 @@ export default {
           return
         }
         this.previewImageFile = new File([blob], `print-preview-${Date.now()}.png`, {
-          type: 'image/png',
+          type: 'image/png'
         })
       }, 'image/png')
     },
-    buildOrderDraft() {
+    buildOrderDraft () {
       const quantity = this.orderQuantityValue || 1
       const dimensionXcm = this.parsedTargetSizeCm.x
       const dimensionYcm = this.parsedTargetSizeCm.y
@@ -583,10 +583,10 @@ export default {
         preview_image: this.previewImageFile,
         dimension_x_mm: String(dimensionXmm || ''),
         dimension_y_mm: String(dimensionYmm || ''),
-        dimension_z_mm: String(dimensionZmm || ''),
+        dimension_z_mm: String(dimensionZmm || '')
       }
     },
-    maybeStartUploadFromRoute() {
+    maybeStartUploadFromRoute () {
       if (this.$route?.query?.start !== 'upload') {
         return
       }
@@ -595,7 +595,7 @@ export default {
         this.$router.replace({ path: '/print' }).catch(() => {})
       })
     },
-    async onCreateOrderClick() {
+    async onCreateOrderClick () {
       if (!this.canCreateOrder) {
         this.orderError = 'Проверьте файл, материал, габариты и количество.'
         return
@@ -608,7 +608,7 @@ export default {
         this.closeModal()
         this.$router.push({
           path: '/registration',
-          query: { next: '/login', create_print_order: '1' },
+          query: { next: '/login', create_print_order: '1' }
         })
         return
       }
@@ -624,7 +624,7 @@ export default {
         if (createdId) {
           this.$router.push({
             path: '/panel/print/orders',
-            query: { orderId: String(createdId) },
+            query: { orderId: String(createdId) }
           })
           return
         }
@@ -635,7 +635,7 @@ export default {
           this.closeModal()
           this.$router.push({
             path: '/registration',
-            query: { next: '/login', create_print_order: '1' },
+            query: { next: '/login', create_print_order: '1' }
           })
           return
         }
@@ -644,10 +644,10 @@ export default {
         this.isCreatingOrder = false
       }
     },
-    onViewerContextMenu(event) {
+    onViewerContextMenu (event) {
       event.preventDefault()
     },
-    onViewerPointerDown(event) {
+    onViewerPointerDown (event) {
       if (event.button === 0) {
         this.isLeftDraggingModel = true
         this.lastPointerPosition = {
@@ -668,7 +668,7 @@ export default {
         event.preventDefault()
       }
     },
-    onViewerPointerMove(event) {
+    onViewerPointerMove (event) {
       if (this.isLeftDraggingModel && this.mesh) {
         const deltaX = event.clientX - this.lastPointerPosition.x
         const deltaY = event.clientY - this.lastPointerPosition.y
@@ -697,7 +697,7 @@ export default {
         event.preventDefault()
       }
     },
-    onViewerPointerUp(event) {
+    onViewerPointerUp (event) {
       if (event.button === 0) {
         this.isLeftDraggingModel = false
       }
@@ -705,7 +705,7 @@ export default {
         this.isRightDraggingCamera = false
       }
     },
-    orbitCameraByDelta(deltaX, deltaY) {
+    orbitCameraByDelta (deltaX, deltaY) {
       if (!this.camera) {
         return
       }
@@ -730,14 +730,14 @@ export default {
         this.controls.update()
       }
     },
-    setTargetSizeToOriginal() {
+    setTargetSizeToOriginal () {
       this.targetSizeCm = {
         x: this.formatInputNumber(this.originalSizeCm.x),
         y: this.formatInputNumber(this.originalSizeCm.y),
         z: this.formatInputNumber(this.originalSizeCm.z)
       }
     },
-    onSizeAxisInput(axis) {
+    onSizeAxisInput (axis) {
       const current = this.toPositiveDecimal(this.targetSizeCm[axis])
       const originalAxis = this.toPositiveDecimal(this.originalSizeCm[axis])
       if (!current || !originalAxis) {
@@ -751,17 +751,17 @@ export default {
       this.targetSizeCm = {
         x: this.formatInputNumber(this.originalSizeCm.x * scaleFactor),
         y: this.formatInputNumber(this.originalSizeCm.y * scaleFactor),
-        z: this.formatInputNumber(this.originalSizeCm.z * scaleFactor),
+        z: this.formatInputNumber(this.originalSizeCm.z * scaleFactor)
       }
     },
-    formatInputNumber(value) {
+    formatInputNumber (value) {
       const number = this.toPositiveDecimal(value)
       if (!number) {
         return ''
       }
       return this.roundTo2(number).toFixed(2)
     },
-    toPositiveDecimal(value) {
+    toPositiveDecimal (value) {
       if (value === null || value === undefined || value === '') {
         return null
       }
@@ -772,13 +772,13 @@ export default {
       }
       return parsed
     },
-    roundTo2(value) {
+    roundTo2 (value) {
       if (!Number.isFinite(value)) {
         return 0
       }
       return Math.round(value * 100) / 100
     },
-    clearViewer() {
+    clearViewer () {
       if (this.animationFrameId) {
         window.cancelAnimationFrame(this.animationFrameId)
         this.animationFrameId = null
@@ -821,7 +821,7 @@ export default {
       this.controls = null
       this.renderer = null
     },
-    closeModal() {
+    closeModal () {
       this.isModalOpen = false
       this.selectedFileName = ''
       this.selectedFile = null
@@ -839,34 +839,34 @@ export default {
         this.hasResizeListener = false
       }
     },
-    toNumber(value) {
+    toNumber (value) {
       const parsed = Number(value)
       return Number.isFinite(parsed) ? parsed : 0
     },
-    formatMoney(value) {
+    formatMoney (value) {
       return MONEY_FORMATTER.format(value || 0)
     },
-    formatDimension(value) {
+    formatDimension (value) {
       const number = this.toPositiveDecimal(value)
       if (!number) {
         return '0.00'
       }
       return this.roundTo2(number).toFixed(2)
     },
-    formatVolume(value) {
+    formatVolume (value) {
       const normalized = this.roundTo2(this.toNumber(value))
       return VOLUME_FORMATTER.format(normalized)
     }
   },
-  mounted() {
+  mounted () {
     this.maybeStartUploadFromRoute()
   },
   watch: {
-    '$route.query.start'() {
+    '$route.query.start' () {
       this.maybeStartUploadFromRoute()
-    },
+    }
   },
-  beforeUnmount() {
+  beforeUnmount () {
     this.clearViewer()
     if (this.hasResizeListener) {
       window.removeEventListener('resize', this.handleResize)

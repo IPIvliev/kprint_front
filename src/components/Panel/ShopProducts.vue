@@ -138,6 +138,14 @@
               <input type="text" v-model="form.article" class="form-control" placeholder="Артикул">
             </div>
             <div class="panel__formrow">
+              <label>Ozon URL</label>
+              <input type="url" v-model="form.ozon_url" class="form-control" placeholder="https://www.ozon.ru/product/...">
+            </div>
+            <div class="panel__formrow">
+              <label>WB URL</label>
+              <input type="url" v-model="form.wb_url" class="form-control" placeholder="https://www.wildberries.ru/catalog/...">
+            </div>
+            <div class="panel__formrow">
               <label>Цена</label>
               <input type="number" v-model="form.price" class="form-control" placeholder="Стоимость">
             </div>
@@ -215,7 +223,7 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
 import {
   createShopManagerProduct,
   createShopManagerProductImage,
@@ -225,13 +233,13 @@ import {
   fetchShopManagerProduct,
   fetchShopManagerProducts,
   fetchShopPublicProduct,
-  updateShopManagerProduct,
+  updateShopManagerProduct
 } from '@/services/panel.service'
 
 export default {
   name: 'ShopProducts',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       products: [],
       categories: [],
@@ -252,15 +260,17 @@ export default {
         name: '',
         description: '',
         article: '',
+        ozon_url: '',
+        wb_url: '',
         stock: 0,
         mass: 0,
         price: '',
-        category: '',
-      },
+        category: ''
+      }
     }
   },
   computed: {
-    filteredProducts() {
+    filteredProducts () {
       const term = this.searchTerm.trim().toLowerCase()
       if (!term) {
         return this.products
@@ -270,19 +280,19 @@ export default {
         const article = String(p.article || '').toLowerCase()
         return name.includes(term) || article.includes(term)
       })
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchData()
   },
   methods: {
-    async fetchData() {
+    async fetchData () {
       this.loading = true
       this.error = ''
       try {
         const [categoriesResponse, productsResponse] = await Promise.all([
           fetchShopManagerCategories(),
-          fetchShopManagerProducts(),
+          fetchShopManagerProducts()
         ])
         this.categories = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
         this.products = Array.isArray(productsResponse.data) ? productsResponse.data : []
@@ -292,17 +302,17 @@ export default {
         this.loading = false
       }
     },
-    productKey(product) {
+    productKey (product) {
       return product.id || product.pk || product.name
     },
-    categoryTitle(categoryId) {
+    categoryTitle (categoryId) {
       if (categoryId && typeof categoryId === 'object') {
         return categoryId.title || categoryId.name || '—'
       }
       const option = this.categories.find((item) => Number(item.id) === Number(categoryId))
       return option ? option.title : '—'
     },
-    resolveMediaUrl(path) {
+    resolveMediaUrl (path) {
       if (!path) {
         return ''
       }
@@ -318,7 +328,7 @@ export default {
       }
       return `${base}/${path}`
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.error = ''
@@ -326,10 +336,12 @@ export default {
         name: '',
         description: '',
         article: '',
+        ozon_url: '',
+        wb_url: '',
         stock: 0,
         mass: 0,
         price: '',
-        category: '',
+        category: ''
       }
       this.imageFile = null
       this.imagePreview = ''
@@ -337,7 +349,7 @@ export default {
       this.galleryPreviews = []
       this.showModal = true
     },
-    openEdit(product) {
+    openEdit (product) {
       this.isEditing = true
       this.currentId = product.id || product.pk
       this.error = ''
@@ -353,10 +365,12 @@ export default {
         name: product.name || '',
         description: product.description || '',
         article: product.article || '',
+        ozon_url: product.ozon_url || '',
+        wb_url: product.wb_url || '',
         stock: product.stock ?? 0,
         mass: product.mass ?? 0,
         price: product.price || '',
-        category: categoryId,
+        category: categoryId
       }
       this.imageFile = null
       this.imagePreview = product.photo ? this.resolveMediaUrl(product.photo) : ''
@@ -365,15 +379,15 @@ export default {
       this.fetchProductImages()
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    triggerFileSelect() {
+    triggerFileSelect () {
       if (this.$refs.imageInput) {
         this.$refs.imageInput.click()
       }
     },
-    onImageChange(event) {
+    onImageChange (event) {
       const file = event.target.files && event.target.files[0]
       if (!file) {
         return
@@ -381,7 +395,7 @@ export default {
       this.imageFile = file
       this.imagePreview = URL.createObjectURL(file)
     },
-    onDrop(event) {
+    onDrop (event) {
       const file = event.dataTransfer.files && event.dataTransfer.files[0]
       if (!file) {
         return
@@ -392,12 +406,12 @@ export default {
       this.imageFile = file
       this.imagePreview = URL.createObjectURL(file)
     },
-    triggerGallerySelect() {
+    triggerGallerySelect () {
       if (this.$refs.galleryInput) {
         this.$refs.galleryInput.click()
       }
     },
-    onGalleryChange(event) {
+    onGalleryChange (event) {
       const files = Array.from(event.target.files || [])
       if (!files.length) {
         return
@@ -406,7 +420,7 @@ export default {
       this.galleryPreviews = files.map((file) => URL.createObjectURL(file))
       this.uploadGalleryFiles()
     },
-    onGalleryDrop(event) {
+    onGalleryDrop (event) {
       const files = Array.from(event.dataTransfer.files || [])
       if (!files.length) {
         return
@@ -415,7 +429,7 @@ export default {
       this.galleryPreviews = this.galleryFiles.map((file) => URL.createObjectURL(file))
       this.uploadGalleryFiles()
     },
-    async fetchProductImages() {
+    async fetchProductImages () {
       if (!this.currentId) {
         return
       }
@@ -433,7 +447,7 @@ export default {
         // ignore gallery load errors
       }
     },
-    async uploadGalleryFiles() {
+    async uploadGalleryFiles () {
       if (!this.currentId || !this.galleryFiles.length) {
         return
       }
@@ -460,7 +474,7 @@ export default {
       this.galleryPreviews = []
       this.uploadingGallery = false
     },
-    async removeProductImage(img) {
+    async removeProductImage (img) {
       if (!img || !img.id) {
         return
       }
@@ -470,7 +484,7 @@ export default {
       await deleteShopManagerProductImage(img.id)
       await this.fetchProductImages()
     },
-    async saveProduct() {
+    async saveProduct () {
       if (!this.form.name || !this.form.category) {
         this.error = 'Заполните название и категорию'
         return
@@ -482,6 +496,8 @@ export default {
         payload.append('name', this.form.name)
         payload.append('description', this.form.description || '')
         payload.append('article', this.form.article || '')
+        payload.append('ozon_url', this.form.ozon_url || '')
+        payload.append('wb_url', this.form.wb_url || '')
         payload.append('stock', this.form.stock ?? 0)
         payload.append('mass', this.form.mass ?? 0)
         payload.append('price', this.form.price || '0')
@@ -502,7 +518,7 @@ export default {
         this.saving = false
       }
     },
-    async removeProduct(product) {
+    async removeProduct (product) {
       const id = product.id || product.pk
       if (!id) {
         return
@@ -517,7 +533,7 @@ export default {
       } catch (err) {
         this.error = err.userMessage || 'Не удалось удалить товар'
       }
-    },
-  },
+    }
+  }
 }
 </script>

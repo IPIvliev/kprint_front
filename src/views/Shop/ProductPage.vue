@@ -30,40 +30,39 @@
 <script>
 
 import HeaderBlock from '@/components/HeaderBlock.vue'
-import ProductDescription from "@/components/Shop/ProductDescription.vue"
-import ProductVideos from "@/components/Shop/ProductVideos.vue"
-import ProductFeedbacks from "@/components/Shop/ProductFeedbacks.vue"
-import ProductRelated from "@/components/Shop/ProductRelated.vue"
-import WhiteWelcome from "@/components/elements/WhiteWelcome.vue"
+import ProductDescription from '@/components/Shop/ProductDescription.vue'
+import ProductVideos from '@/components/Shop/ProductVideos.vue'
+import ProductFeedbacks from '@/components/Shop/ProductFeedbacks.vue'
+import ProductRelated from '@/components/Shop/ProductRelated.vue'
+import WhiteWelcome from '@/components/elements/WhiteWelcome.vue'
 import FooterBlock from '@/components/FooterBlock.vue'
 
 export default {
-    components: { HeaderBlock, ProductDescription, ProductVideos, ProductFeedbacks, ProductRelated, WhiteWelcome, FooterBlock },
-    data() {
-        return {
-          id: this.$route.params.productid,
-        }
-      },
-      created() {
-        this.$store.dispatch("catalog/fetchProduct", this.id);
-      },
-      computed: {
-        GetProduct() {
-          return this.$store.state.catalog.product
-        },
-      },
-      watch: {
-        '$route.params.productid': {
-          immediate: true,
-          handler(id) {
-            this.$store.dispatch("catalog/fetchProduct", id);
-          },
-        },
-      },
+  components: { HeaderBlock, ProductDescription, ProductVideos, ProductFeedbacks, ProductRelated, WhiteWelcome, FooterBlock },
+  data () {
+    return {
+      id: this.$route.params.productid
+    }
+  },
+  created () {
+    this.$store.dispatch('catalog/fetchProduct', this.id)
+  },
+  computed: {
+    GetProduct () {
+      return this.$store.state.catalog.product
+    }
+  },
+  watch: {
+    '$route.params.productid': {
+      immediate: true,
+      handler (id) {
+        this.$store.dispatch('catalog/fetchProduct', id)
+      }
+    }
+  }
 
 }
 
 </script>
 
 <style src="@/assets/css/routes/shop.css"></style>
-

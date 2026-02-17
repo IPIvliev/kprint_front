@@ -15,9 +15,9 @@
             <br>
             <span class="title">Время работы:</span>
             <ul>
-                <li v-for="day in office['working-hours']">
+                <li v-for="day in office['working-hours']" :key="`pochta-${day['weekday-id']}`">
 
-                        {{ getWeekday(day['weekday-id']) }}: 
+                        {{ getWeekday(day['weekday-id']) }}:
                         <span v-if="day['begin-worktime']">
                             {{ day['begin-worktime'].substr(0, 5) }} - {{ day['end-worktime'].substr(0, 5) }}
                         </span>
@@ -39,7 +39,7 @@
             <br>
             <span class="title">Время работы:</span>
             <ul>
-                <li v-for="day in office['work_time_list']">
+                <li v-for="day in office['work_time_list']" :key="`sdek-${day['day']}`">
                     {{ getWeekday(day['day']) }}: {{ day['time'] }}
                 </li>
             </ul>
@@ -53,28 +53,28 @@
 import DeliveryPrice from '@/components/elements/Shop/DeliveryPrice.vue'
 import DeliveryPeriod from '@/components/elements/Shop/DeliveryPeriod.vue'
 
-    export default {
-        props: ['office'],
-        components: { DeliveryPrice, DeliveryPeriod },
-        methods: {
-            getWeekday(id) {
-            switch(id) {
-                case 1:
-                    return 'Понедельник'
-                case 2:
-                    return 'Вторник'
-                case 3:
-                    return 'Среда'
-                case 4:
-                    return 'Четверг'
-                case 5:
-                    return 'Пятница'
-                case 6:
-                    return 'Суббота'
-                case 7:
-                    return 'Воскресенье'
-           }
-        },
-        }
+export default {
+  props: ['office'],
+  components: { DeliveryPrice, DeliveryPeriod },
+  methods: {
+    getWeekday (id) {
+      switch (id) {
+        case 1:
+          return 'Понедельник'
+        case 2:
+          return 'Вторник'
+        case 3:
+          return 'Среда'
+        case 4:
+          return 'Четверг'
+        case 5:
+          return 'Пятница'
+        case 6:
+          return 'Суббота'
+        case 7:
+          return 'Воскресенье'
+      }
     }
+  }
+}
 </script>

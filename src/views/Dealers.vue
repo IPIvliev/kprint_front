@@ -11,16 +11,16 @@
         </p>
       </div>
     </div>
-    <!--	/innovation-->
+    <!--  /innovation-->
     <!-- advantages-->
     <advantages-block />
-    <!--	/advantages-->
+    <!--  /advantages-->
     <!-- halfitems-->
     <div class="halfitems">
       <div class="container">
         <h2 class="halfitems__title1">Перспективные технологии, над которыми мы работаем</h2>
         <div class="row gy-4">
-          <div class="col-lg-6"><a class="halfitems__item" href="#"> 
+          <div class="col-lg-6"><a class="halfitems__item" href="#">
               <div class="halfitems__content">
                 <div class="halfitems__title">Печать без подготовки в 1 клик</div>
                 <div class="halfitems__text">Больше не нужно подготавливать модель вручную. Наша система позволит печатать модели в один клик вне зависимости от навыков и умений оператора.</div>
@@ -47,10 +47,10 @@
         </div>
       </div>
     </div>
-    <!--	/halfitems-->
+    <!--  /halfitems-->
     <!-- callback-->
     <callback-window />
-    <!--	/callback-->
+    <!--  /callback-->
   </div>
   <footer-block/>
 </div>
@@ -60,11 +60,11 @@
 // @ is an alias to /src
 import HeaderBlock from '../components/HeaderBlock.vue'
 import FooterBlock from '../components/FooterBlock.vue'
-import CallbackWindow from "../components/elements/CallbackWindow.vue"
-import AdvantagesBlock from "../components/AdvantagesBlock.vue"
+import CallbackWindow from '../components/elements/CallbackWindow.vue'
+import AdvantagesBlock from '../components/AdvantagesBlock.vue'
 
 export default {
-  name: 'Курсы обучения',
+  name: 'DealersPageView',
   components: {
     FooterBlock,
     HeaderBlock,

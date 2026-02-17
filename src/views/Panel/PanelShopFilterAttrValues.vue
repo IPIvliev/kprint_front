@@ -13,7 +13,7 @@ export default {
   components: {
     ShopFilterAttrValuesPage,
     FooterPanelBlock,
-    HeaderPanelBlock,
-  },
+    HeaderPanelBlock
+  }
 }
 </script>

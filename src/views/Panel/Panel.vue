@@ -13,7 +13,7 @@ import MainPanelPage from '../../components/Panel/PanelMain.vue'
 import FooterPanelBlock from '../../components/Panel/FooterBlock.vue'
 
 export default {
-  name: 'News',
+  name: 'PanelHomeView',
   components: {
     MainPanelPage,
     FooterPanelBlock,

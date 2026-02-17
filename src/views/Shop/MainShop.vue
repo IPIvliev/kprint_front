@@ -26,10 +26,10 @@
                                 <ProductCard :product="product" />
                             </div>
                         </div>
-                    </div>                
+                    </div>
                 </div>
-                <div class="news__pagination"> 
-                <ul class="news__list"> 
+                <div class="news__pagination">
+                <ul class="news__list">
                     <li> <a href="#">1</a></li>
                     <li> <a class="active" href="#">2</a></li>
                     <li> <a href="#">3</a></li>
@@ -50,9 +50,9 @@
                 </div>
             </div>
             </div>
-            <!--	/news-->
+            <!--  /news-->
             <!-- callback-->
-             <!--	/callback-->
+             <!--  /callback-->
             <WhiteWelcome/>
         </div>
 
@@ -62,122 +62,102 @@
 <script>
 
 import HeaderBlock from '../../components/HeaderBlock.vue'
-import WhiteWelcome from "../../components/elements/WhiteWelcome.vue"
+import WhiteWelcome from '../../components/elements/WhiteWelcome.vue'
 import FooterBlock from '../../components/FooterBlock.vue'
-import ShopFilter from "@/components/Shop/ShopFilter.vue"
-import ProductCard from "@/components/elements/Shop/Showcase/ProductCard.vue"
-import FilterElement from "@/components/elements/Shop/Showcase/FilterElement.vue"
-
+import ShopFilter from '@/components/Shop/ShopFilter.vue'
+import ProductCard from '@/components/elements/Shop/Showcase/ProductCard.vue'
+import FilterElement from '@/components/elements/Shop/Showcase/FilterElement.vue'
 
 export default {
-    
-    data() {
-        return {
-            filters: [],
-            priceFilter: {
-                from: '',
-                to: ''
-            },
-            products: [],
-            id: this.$route.params.id,
-        }
-    },
-    components: {
-        FooterBlock,
-        HeaderBlock,
-        ShopFilter,
-        FilterElement,
-        ProductCard,
-        WhiteWelcome
-    },
-    created() {
-        this.$store.dispatch("catalog/fetchCategoryProducts", this.id);
-        this.$store.dispatch("catalog/fetchCategories");
-    },
-    computed: {
 
-        ProductsList () {
-            if (this.filters != '') {
-
-                let filtered = this.$store.state.catalog.products
-                
-
-                this.filters.forEach (filter => {
-                    filtered = filtered.filter((product) => {
-                        return product.product_attrs_values.some(
-                            ({ value }) => value === filter.attr); 
-                     })
-                
-                })
-                
-                this.products = filtered
-
-                if (this.priceFilter.from) {
-                    this.products = this.products.filter(product => product.price >= Number(this.priceFilter.from))
-                }
-                if (this.priceFilter.to) {
-                    this.products = this.products.filter(product => product.price < Number(this.priceFilter.to))
-                }
-
-                return this.products
-            } else {
-                this.products = this.$store.state.catalog.products
-
-                if (this.priceFilter.from) {
-                    this.products = this.products.filter(product => product.price >= Number(this.priceFilter.from))
-                }
-                if (this.priceFilter.to) {
-                    this.products = this.products.filter(product => product.price < Number(this.priceFilter.to))
-                }
-
-                return this.products
-            }
-        }, 
-
-        Category () {
-            // const bodyParameters = {
-            //     key: "value"
-            // }
-            return this.$store.state.catalog.categories.filter(category => category.id === parseInt(this.$route.params.id))[0]
-        },  
-    },
-    methods: {
-        // Для чеклиста
-        // ChangeFilter(name, attr) {
-        //     if (this.filters.some(filter => filter.attr === attr)) {
-        //         this.filters = this.filters.filter(item => item.attr !== attr)
-        //     } else {
-        //         this.filters.push({name, attr, checked: true})
-        //     }
-
-        // Для радиокнопки
-        ChangeFilter(name, attr) {
-            if (this.filters.some(filter => filter.name === name)) {
-                if (attr === 'all') {
-                    this.filters = this.filters.filter(item => item.name !== name)
-                } else {
-
-                    this.filters = this.filters.filter(item => item.name !== name)
-                    this.filters.push({name, attr, checked: true})
-                }
-
-            } else {
-                if (attr != 'all') {
-                    this.filters.push({name, attr, checked: true})
-                }
-            }
-        },
-        ChangeRangeFilter(th) {
-            console.log("Range Filter")
-        },
-        ChangePriceFilter(position, value) {
-            if (position == 'from') {
-                this.priceFilter.from = value
-            } else {
-                this.priceFilter.to = value
-            }
-        },
+  data () {
+    return {
+      filters: [],
+      priceFilter: {
+        from: '',
+        to: ''
+      },
+      id: this.$route.params.id
     }
+  },
+  components: {
+    FooterBlock,
+    HeaderBlock,
+    ShopFilter,
+    FilterElement,
+    ProductCard,
+    WhiteWelcome
+  },
+  created () {
+    this.$store.dispatch('catalog/fetchCategoryProducts', this.id)
+    this.$store.dispatch('catalog/fetchCategories')
+  },
+  computed: {
+
+    ProductsList () {
+      let filtered = this.$store.state.catalog.products
+
+      if (this.filters.length > 0) {
+        this.filters.forEach(filter => {
+          filtered = filtered.filter((product) => {
+            return product.product_attrs_values.some(
+              ({ value }) => value === filter.attr)
+          })
+        })
+      }
+
+      if (this.priceFilter.from) {
+        filtered = filtered.filter(product => product.price >= Number(this.priceFilter.from))
+      }
+      if (this.priceFilter.to) {
+        filtered = filtered.filter(product => product.price < Number(this.priceFilter.to))
+      }
+
+      return filtered
+    },
+
+    Category () {
+      // const bodyParameters = {
+      //     key: "value"
+      // }
+      return this.$store.state.catalog.categories.filter(category => category.id === parseInt(this.$route.params.id))[0]
+    }
+  },
+  methods: {
+    // Для чеклиста
+    // ChangeFilter(name, attr) {
+    //     if (this.filters.some(filter => filter.attr === attr)) {
+    //         this.filters = this.filters.filter(item => item.attr !== attr)
+    //     } else {
+    //         this.filters.push({name, attr, checked: true})
+    //     }
+
+    // Для радиокнопки
+    ChangeFilter (name, attr) {
+      if (this.filters.some(filter => filter.name === name)) {
+        if (attr === 'all') {
+          this.filters = this.filters.filter(item => item.name !== name)
+        } else {
+          this.filters = this.filters.filter(item => item.name !== name)
+          this.filters.push({ name, attr, checked: true })
+        }
+      } else {
+        if (attr !== 'all') {
+          this.filters.push({ name, attr, checked: true })
+        }
+      }
+    },
+    ChangeRangeFilter (th) {
+      console.log('Range Filter')
+    },
+    ChangePriceFilter (position, value) {
+      if (position === 'from') {
+        this.priceFilter.from = value
+      } else {
+        this.priceFilter.to = value
+      }
+    }
+  }
 }
 </script>
 

@@ -13,7 +13,7 @@ export default {
   components: {
     ShopPochtaSettingsPage,
     FooterPanelBlock,
-    HeaderPanelBlock,
+    HeaderPanelBlock
   }
 }
 </script>

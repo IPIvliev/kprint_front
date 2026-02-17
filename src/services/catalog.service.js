@@ -8,12 +8,12 @@ import { publicApi } from './http'
  */
 
 /** @returns {Promise<import('axios').AxiosResponse<ShopCategoriesResponse>>} */
-export function fetchShopCategories() {
+export function fetchShopCategories () {
   return publicApi.get('/api/shop/categories')
 }
 
 /** @returns {Promise<import('axios').AxiosResponse<ShopProductsResponse>>} */
-export function fetchShopProducts() {
+export function fetchShopProducts () {
   return publicApi.get('/api/shop/products')
 }
 
@@ -21,7 +21,7 @@ export function fetchShopProducts() {
  * @param {number|string} categoryId
  * @returns {Promise<import('axios').AxiosResponse<ShopCategoryProductsResponse>>}
  */
-export function fetchShopCategoryProducts(categoryId) {
+export function fetchShopCategoryProducts (categoryId) {
   return publicApi.get(`/api/shop/categories/${Number(categoryId)}`)
 }
 
@@ -29,6 +29,6 @@ export function fetchShopCategoryProducts(categoryId) {
  * @param {number|string} productId
  * @returns {Promise<import('axios').AxiosResponse<ShopProductResponse>>}
  */
-export function fetchShopProduct(productId) {
+export function fetchShopProduct (productId) {
   return publicApi.get(`/api/shop/products/${Number(productId)}`)
 }

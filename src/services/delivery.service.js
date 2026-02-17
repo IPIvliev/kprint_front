@@ -10,27 +10,27 @@ import { api } from './http'
 /**
  * @param {PochtaOfficesQuery} params
  */
-export function fetchPochtaOffices(params) {
+export function fetchPochtaOffices (params) {
   return api.get('/api/shop/pochta_rossii/offices', { params })
 }
 
 /**
  * @param {SdekOfficesQuery} params
  */
-export function fetchSdekOffices(params) {
+export function fetchSdekOffices (params) {
   return api.get('/api/shop/sdek/offices', { params })
 }
 
 /**
  * @param {PochtaPriceQuery} params
  */
-export function fetchPochtaPrice(params) {
+export function fetchPochtaPrice (params) {
   return api.get('/api/shop/pochta_rossii/price', { params })
 }
 
 /**
  * @param {SdekPriceQuery} params
  */
-export function fetchSdekPrice(params) {
+export function fetchSdekPrice (params) {
   return api.get('/api/shop/sdek/price', { params })
 }

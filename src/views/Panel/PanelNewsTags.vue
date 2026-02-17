@@ -13,7 +13,7 @@ export default {
   components: {
     HeaderPanelBlock,
     NewsTagsPanelPage,
-    FooterPanelBlock,
-  },
+    FooterPanelBlock
+  }
 }
 </script>

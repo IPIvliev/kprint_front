@@ -467,8 +467,8 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import PanelRichTextEditor from "../elements/Panel/RichTextEditor.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
+import PanelRichTextEditor from '../elements/Panel/RichTextEditor.vue'
 import {
   createPanelArticleTag,
   createPanelArticle,
@@ -480,13 +480,13 @@ import {
   fetchPanelArticles,
   generatePanelAiArticle,
   uploadPanelArticleMedia,
-  updatePanelArticle,
+  updatePanelArticle
 } from '@/services/panel.service'
 
 export default {
   name: 'PanelNews',
   components: { MenuBlock, PanelRichTextEditor },
-  data() {
+  data () {
     return {
       articles: [],
       searchTerm: '',
@@ -528,15 +528,15 @@ export default {
         ai_prompt: '',
         ai_notes_for_editor: '',
         tagIds: [],
-        publish: '',
-      },
+        publish: ''
+      }
     }
   },
   computed: {
-    trimmedNewTagTitle() {
+    trimmedNewTagTitle () {
       return String(this.newTagTitle || '').trim()
     },
-    filteredArticles() {
+    filteredArticles () {
       const term = this.searchTerm.trim().toLowerCase()
       const sourceFilter = this.sourceFilter === 'all' ? '' : this.normalizeArticleSource(this.sourceFilter, '')
       if (!term) {
@@ -554,7 +554,7 @@ export default {
         return title.includes(term) || body.includes(term)
       })
     },
-    filteredMediaItems() {
+    filteredMediaItems () {
       const term = String(this.mediaSearch || '').trim().toLowerCase()
       if (!term) {
         return this.mediaItems
@@ -564,36 +564,36 @@ export default {
         const path = String(item.path || '').toLowerCase()
         return name.includes(term) || path.includes(term)
       })
-    },
+    }
   },
   watch: {
-    'form.title'(value) {
+    'form.title' (value) {
       if (this.slugTouched) {
         return
       }
       this.form.slug = this.slugify(value)
     },
-    'form.slug'(value) {
+    'form.slug' (value) {
       if (!value) {
         this.slugTouched = false
       }
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.loadInitialData()
   },
-  beforeUnmount() {
+  beforeUnmount () {
     this.stopProcessingPoll()
   },
   methods: {
-    async loadInitialData() {
+    async loadInitialData () {
       this.loading = true
       this.error = ''
       try {
         const [articlesResponse, categoriesResponse, tagsResponse] = await Promise.all([
           fetchPanelArticles(),
           fetchPanelArticleCategories(),
-          fetchPanelArticleTags(),
+          fetchPanelArticleTags()
         ])
         this.articles = Array.isArray(articlesResponse.data) ? articlesResponse.data : []
         this.categoryOptions = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
@@ -605,7 +605,7 @@ export default {
         this.loading = false
       }
     },
-    async fetchArticles() {
+    async fetchArticles () {
       this.error = ''
       try {
         const response = await fetchPanelArticles()
@@ -615,10 +615,10 @@ export default {
         this.error = err.userMessage || 'Не удалось загрузить новости'
       }
     },
-    articleKey(article) {
+    articleKey (article) {
       return article.id || article.pk || article.slug || article.title
     },
-    resolveMediaUrl(path) {
+    resolveMediaUrl (path) {
       if (!path) {
         return ''
       }
@@ -634,7 +634,7 @@ export default {
       }
       return `${base}/${path}`
     },
-    newsLink(article) {
+    newsLink (article) {
       const id = article.id || article.pk
       if (!id) {
         return '/news'
@@ -645,33 +645,33 @@ export default {
       }
       return `/news/${id}/${encodeURIComponent(rawSlug)}`
     },
-    normalizeDate(value) {
+    normalizeDate (value) {
       if (!value) {
         return '—'
       }
       return String(value)
     },
-    sourceLabel(sourceValue) {
+    sourceLabel (sourceValue) {
       return this.normalizeArticleSource(sourceValue) === 'ai' ? 'ИИ' : 'Человек'
     },
-    sourceBadgeClass(sourceValue) {
+    sourceBadgeClass (sourceValue) {
       return this.normalizeArticleSource(sourceValue) === 'ai'
         ? 'panel__status-badge--ai'
         : 'panel__status-badge--human'
     },
-    isAiProcessing(article) {
+    isAiProcessing (article) {
       return (
-        this.normalizeArticleSource(article && article.source) === 'ai'
-        && String(article && article.ai_generation_status || '').toLowerCase() === 'processing'
+        this.normalizeArticleSource(article && article.source) === 'ai' &&
+        String((article && article.ai_generation_status) || '').toLowerCase() === 'processing'
       )
     },
-    isAiFailed(article) {
+    isAiFailed (article) {
       return (
-        this.normalizeArticleSource(article && article.source) === 'ai'
-        && String(article && article.ai_generation_status || '').toLowerCase() === 'failed'
+        this.normalizeArticleSource(article && article.source) === 'ai' &&
+        String((article && article.ai_generation_status) || '').toLowerCase() === 'failed'
       )
     },
-    generationStatusLabel(article) {
+    generationStatusLabel (article) {
       if (this.isAiProcessing(article)) {
         return 'В процессе'
       }
@@ -680,7 +680,7 @@ export default {
       }
       return ''
     },
-    generationStatusClass(article) {
+    generationStatusClass (article) {
       if (this.isAiProcessing(article)) {
         return 'panel__table-processing--processing'
       }
@@ -689,7 +689,7 @@ export default {
       }
       return ''
     },
-    syncProcessingPoll() {
+    syncProcessingPoll () {
       const hasProcessing = this.articles.some((article) => this.isAiProcessing(article))
       if (hasProcessing) {
         this.startProcessingPoll()
@@ -697,7 +697,7 @@ export default {
       }
       this.stopProcessingPoll()
     },
-    startProcessingPoll() {
+    startProcessingPoll () {
       if (this.processingPollTimer) {
         return
       }
@@ -705,14 +705,14 @@ export default {
         this.fetchArticles()
       }, 5000)
     },
-    stopProcessingPoll() {
+    stopProcessingPoll () {
       if (!this.processingPollTimer) {
         return
       }
       clearInterval(this.processingPollTimer)
       this.processingPollTimer = null
     },
-    normalizeArticleSource(sourceValue, fallback = 'human') {
+    normalizeArticleSource (sourceValue, fallback = 'human') {
       const normalized = String(sourceValue || '').trim().toLowerCase()
       if (normalized === 'ai') {
         return 'ai'
@@ -722,36 +722,36 @@ export default {
       }
       return fallback
     },
-    openAiGenerator() {
+    openAiGenerator () {
       this.aiBrief = ''
       this.aiImages = []
       this.aiError = ''
       this.aiGenerating = false
       this.showAiModal = true
     },
-    closeAiGenerator() {
+    closeAiGenerator () {
       this.showAiModal = false
       this.aiError = ''
     },
-    triggerAiImageSelect() {
+    triggerAiImageSelect () {
       if (this.$refs.aiImageInput) {
         this.$refs.aiImageInput.click()
       }
     },
-    onAiImageChange(event) {
+    onAiImageChange (event) {
       const files = Array.from((event && event.target && event.target.files) || [])
       this.appendAiImages(files)
       if (event && event.target) {
         event.target.value = ''
       }
     },
-    onAiDrop(event) {
+    onAiDrop (event) {
       const files = Array.from((event && event.dataTransfer && event.dataTransfer.files) || [])
       this.appendAiImages(files)
     },
-    appendAiImages(files) {
+    appendAiImages (files) {
       const imageFiles = (Array.isArray(files) ? files : []).filter(
-        (file) => file && file.type && file.type.startsWith('image/'),
+        (file) => file && file.type && file.type.startsWith('image/')
       )
       if (!imageFiles.length) {
         return
@@ -762,10 +762,10 @@ export default {
         this.aiError = 'Можно загрузить не более 10 изображений'
       }
     },
-    removeAiImage(index) {
+    removeAiImage (index) {
       this.aiImages = this.aiImages.filter((_, idx) => idx !== index)
     },
-    async generateAiArticle() {
+    async generateAiArticle () {
       const brief = String(this.aiBrief || '').trim()
       if (!brief) {
         this.aiError = 'Введите краткое описание статьи'
@@ -792,14 +792,14 @@ export default {
         this.aiGenerating = false
       }
     },
-    async handleEdit(article) {
+    async handleEdit (article) {
       if (this.isAiProcessing(article)) {
         await this.openAiProcessingModal(article)
         return
       }
       await this.openEdit(article)
     },
-    async openAiProcessingModal(article) {
+    async openAiProcessingModal (article) {
       const articleId = article && (article.id || article.pk)
       let target = article || {}
       if (articleId && !target.ai_prompt) {
@@ -814,12 +814,12 @@ export default {
       this.processingPrompt = String(target.ai_prompt || '').trim() || 'Промт не найден'
       this.showAiProcessingModal = true
     },
-    closeAiProcessingModal() {
+    closeAiProcessingModal () {
       this.showAiProcessingModal = false
       this.processingArticleTitle = ''
       this.processingPrompt = ''
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       const firstCategoryId = this.categoryOptions.length
@@ -834,7 +834,7 @@ export default {
         ai_prompt: '',
         ai_notes_for_editor: '',
         tagIds: [],
-        publish: this.formatDateTimeLocal(new Date()),
+        publish: this.formatDateTimeLocal(new Date())
       }
       this.slugTouched = false
       this.imageFile = null
@@ -843,7 +843,7 @@ export default {
       this.mediaSearch = ''
       this.showModal = true
     },
-    async openEdit(article) {
+    async openEdit (article) {
       this.isEditing = true
       this.currentId = article.id || article.pk
       this.error = ''
@@ -866,7 +866,7 @@ export default {
           ai_prompt: fullArticle.ai_prompt || '',
           ai_notes_for_editor: fullArticle.ai_notes_for_editor || '',
           tagIds,
-          publish: this.formatDateTimeLocal(new Date(fullArticle.publish || fullArticle.publish_iso || Date.now())),
+          publish: this.formatDateTimeLocal(new Date(fullArticle.publish || fullArticle.publish_iso || Date.now()))
         }
         this.slugTouched = true
         this.imageFile = null
@@ -878,19 +878,19 @@ export default {
         this.error = err.userMessage || 'Не удалось загрузить статью для редактирования'
       }
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
       this.closeMediaLibrary()
     },
-    openMediaLibrary() {
+    openMediaLibrary () {
       this.mediaLibraryOpen = true
       this.loadMediaLibrary()
     },
-    closeMediaLibrary() {
+    closeMediaLibrary () {
       this.mediaLibraryOpen = false
       this.mediaError = ''
     },
-    async loadMediaLibrary() {
+    async loadMediaLibrary () {
       this.mediaLoading = true
       this.mediaError = ''
       try {
@@ -902,25 +902,25 @@ export default {
         this.mediaLoading = false
       }
     },
-    triggerMediaUploadSelect() {
+    triggerMediaUploadSelect () {
       if (this.$refs.mediaUploadInput) {
         this.$refs.mediaUploadInput.click()
       }
     },
-    onMediaUploadChange(event) {
+    onMediaUploadChange (event) {
       const files = Array.from((event && event.target && event.target.files) || [])
       this.uploadMediaFiles(files)
       if (event && event.target) {
         event.target.value = ''
       }
     },
-    onMediaDrop(event) {
+    onMediaDrop (event) {
       const files = Array.from((event && event.dataTransfer && event.dataTransfer.files) || [])
       this.uploadMediaFiles(files)
     },
-    async uploadMediaFiles(files) {
+    async uploadMediaFiles (files) {
       const imageFiles = (Array.isArray(files) ? files : []).filter(
-        (file) => file && file.type && file.type.startsWith('image/'),
+        (file) => file && file.type && file.type.startsWith('image/')
       )
       if (!imageFiles.length) {
         return
@@ -940,7 +940,7 @@ export default {
         this.mediaUploading = false
       }
     },
-    insertMediaToEditor(item) {
+    insertMediaToEditor (item) {
       const src = item && (item.absolute_url || this.resolveMediaUrl(item.url || item.path))
       const editor = this.$refs.bodyEditor
       if (!src || !editor || typeof editor.insertImage !== 'function') {
@@ -950,19 +950,19 @@ export default {
       editor.insertImage({ src, alt })
       this.closeMediaLibrary()
     },
-    triggerFileSelect() {
+    triggerFileSelect () {
       if (this.$refs.imageInput) {
         this.$refs.imageInput.click()
       }
     },
-    isTagSelected(tagId) {
+    isTagSelected (tagId) {
       return this.form.tagIds.some((id) => Number(id) === Number(tagId))
     },
-    normalizeTagIds(ids, sourceOptions = this.tagOptions) {
+    normalizeTagIds (ids, sourceOptions = this.tagOptions) {
       const allowedIds = new Set(
         (Array.isArray(sourceOptions) ? sourceOptions : [])
           .map((tag) => Number(tag && tag.id))
-          .filter((id) => Number.isFinite(id) && id > 0),
+          .filter((id) => Number.isFinite(id) && id > 0)
       )
       const seen = new Set()
       return (Array.isArray(ids) ? ids : [])
@@ -976,23 +976,23 @@ export default {
           return true
         })
     },
-    toggleTagSelection(tagId) {
+    toggleTagSelection (tagId) {
       const selected = this.isTagSelected(tagId)
       if (selected) {
         this.form.tagIds = this.normalizeTagIds(
-          this.form.tagIds.filter((id) => Number(id) !== Number(tagId)),
+          this.form.tagIds.filter((id) => Number(id) !== Number(tagId))
         )
         return
       }
       this.form.tagIds = this.normalizeTagIds([...this.form.tagIds, tagId])
     },
-    async addTagFromInput() {
+    async addTagFromInput () {
       const title = this.trimmedNewTagTitle
       if (!title) {
         return
       }
       const existing = this.tagOptions.find(
-        (tag) => String(tag.title || '').trim().toLowerCase() === title.toLowerCase(),
+        (tag) => String(tag.title || '').trim().toLowerCase() === title.toLowerCase()
       )
       if (existing) {
         if (!this.isTagSelected(existing.id)) {
@@ -1007,7 +1007,7 @@ export default {
       try {
         const response = await createPanelArticleTag({
           title,
-          slug: this.slugify(title),
+          slug: this.slugify(title)
         })
         const createdTag = response && response.data ? response.data : null
         if (!createdTag || !createdTag.id) {
@@ -1021,7 +1021,7 @@ export default {
         this.tagOptions = nextTagOptions
         this.form.tagIds = this.normalizeTagIds(
           [...this.form.tagIds, createdTag.id],
-          nextTagOptions,
+          nextTagOptions
         )
         this.newTagTitle = ''
       } catch (err) {
@@ -1030,7 +1030,7 @@ export default {
         this.creatingTag = false
       }
     },
-    onImageChange(event) {
+    onImageChange (event) {
       const file = event.target.files && event.target.files[0]
       if (!file) {
         return
@@ -1038,7 +1038,7 @@ export default {
       this.imageFile = this.normalizeImageFile(file)
       this.imagePreview = URL.createObjectURL(file)
     },
-    onDrop(event) {
+    onDrop (event) {
       const file = event.dataTransfer.files && event.dataTransfer.files[0]
       if (!file) {
         return
@@ -1049,19 +1049,19 @@ export default {
       this.imageFile = this.normalizeImageFile(file)
       this.imagePreview = URL.createObjectURL(file)
     },
-    normalizeImageFile(file) {
+    normalizeImageFile (file) {
       const safeName = this.buildSafeUploadName(file.name)
       try {
         return new File([file], safeName, {
           type: file.type,
-          lastModified: file.lastModified,
+          lastModified: file.lastModified
         })
       } catch (e) {
         // Fallback for environments where File constructor is unavailable.
         return file
       }
     },
-    buildSafeUploadName(originalName) {
+    buildSafeUploadName (originalName) {
       const uploadPrefix = 'uploads/blog/'
       const maxTotalLength = 100
       const maxFileNameLength = Math.max(1, maxTotalLength - uploadPrefix.length)
@@ -1093,7 +1093,7 @@ export default {
 
       return `${base}${ext}`
     },
-    async saveArticle() {
+    async saveArticle () {
       const title = String(this.form.title || '').trim()
       const body = String(this.form.body || '').trim()
       const category = this.form.category
@@ -1119,14 +1119,14 @@ export default {
       } catch (err) {
         console.error('Article save failed', {
           status: err && err.response && err.response.status,
-          data: err && err.response && err.response.data,
+          data: err && err.response && err.response.data
         })
         this.error = this.extractError(err)
       } finally {
         this.saving = false
       }
     },
-    buildArticlePayload({ title, body, category }) {
+    buildArticlePayload ({ title, body, category }) {
       const normalizedPublish = this.form.publish
         ? this.normalizePublishForApi(this.form.publish)
         : ''
@@ -1146,7 +1146,7 @@ export default {
           category,
           source: normalizedSource,
           ai_prompt: normalizedSource === 'ai' ? normalizedAiPrompt : '',
-          ai_notes_for_editor: normalizedSource === 'ai' ? normalizedAiNotes : '',
+          ai_notes_for_editor: normalizedSource === 'ai' ? normalizedAiNotes : ''
         }
         if (normalizedSlug) {
           payload.slug = normalizedSlug
@@ -1179,7 +1179,7 @@ export default {
       payload.append('article_image', this.imageFile)
       return payload
     },
-    extractError(err) {
+    extractError (err) {
       const status = err && err.response && err.response.status
       const userMessage = err && err.userMessage
       if (userMessage) {
@@ -1191,7 +1191,7 @@ export default {
       }
       return status ? `${status}: Не удалось сохранить новость` : 'Не удалось сохранить новость'
     },
-    async removeArticle(article) {
+    async removeArticle (article) {
       const id = article.id || article.pk
       if (!id) {
         return
@@ -1207,14 +1207,14 @@ export default {
         this.error = err.userMessage || 'Не удалось удалить новость'
       }
     },
-    categoryTitle(categoryId) {
+    categoryTitle (categoryId) {
       if (categoryId && typeof categoryId === 'object') {
         return categoryId.title || categoryId.name || '—'
       }
       const option = this.categoryOptions.find((item) => Number(item.id) === Number(categoryId))
       return option ? option.title : '—'
     },
-    normalizeTags(tags) {
+    normalizeTags (tags) {
       if (!Array.isArray(tags)) {
         return []
       }
@@ -1223,24 +1223,24 @@ export default {
           if (tag && typeof tag === 'object') {
             return {
               id: tag.id,
-              title: String(tag.title || tag.name || '').trim(),
+              title: String(tag.title || tag.name || '').trim()
             }
           }
           return {
             id: Number(tag) || String(tag || ''),
-            title: String(tag || '').trim(),
+            title: String(tag || '').trim()
           }
         })
         .filter((tag) => tag.title)
     },
-    displayTags(tags) {
+    displayTags (tags) {
       return this.normalizeTags(tags).slice(0, 3)
     },
-    remainingTagsCount(tags) {
+    remainingTagsCount (tags) {
       const normalized = this.normalizeTags(tags)
       return normalized.length > 3 ? normalized.length - 3 : 0
     },
-    formatDateTimeLocal(dateValue) {
+    formatDateTimeLocal (dateValue) {
       let date = dateValue instanceof Date ? dateValue : new Date(dateValue)
       if (isNaN(date.getTime()) && typeof dateValue === 'string') {
         const match = dateValue.match(/^(\d{2})\.(\d{2})\.(\d{4})$/)
@@ -1260,7 +1260,7 @@ export default {
       const minutes = pad(date.getMinutes())
       return `${year}-${month}-${day}T${hours}:${minutes}`
     },
-    normalizePublishForApi(value) {
+    normalizePublishForApi (value) {
       const raw = String(value || '').trim()
       if (!raw) {
         return ''
@@ -1271,15 +1271,44 @@ export default {
       }
       return parsed.toISOString().replace(/\.\d{3}Z$/, 'Z')
     },
-    slugify(text) {
+    slugify (text) {
       if (!text) {
         return ''
       }
       const map = {
-        а: 'a', б: 'b', в: 'v', г: 'g', д: 'd', е: 'e', ё: 'e', ж: 'zh', з: 'z',
-        и: 'i', й: 'y', к: 'k', л: 'l', м: 'm', н: 'n', о: 'o', п: 'p', р: 'r',
-        с: 's', т: 't', у: 'u', ф: 'f', х: 'h', ц: 'ts', ч: 'ch', ш: 'sh',
-        щ: 'sch', ъ: '', ы: 'y', ь: '', э: 'e', ю: 'yu', я: 'ya',
+        а: 'a',
+        б: 'b',
+        в: 'v',
+        г: 'g',
+        д: 'd',
+        е: 'e',
+        ё: 'e',
+        ж: 'zh',
+        з: 'z',
+        и: 'i',
+        й: 'y',
+        к: 'k',
+        л: 'l',
+        м: 'm',
+        н: 'n',
+        о: 'o',
+        п: 'p',
+        р: 'r',
+        с: 's',
+        т: 't',
+        у: 'u',
+        ф: 'f',
+        х: 'h',
+        ц: 'ts',
+        ч: 'ch',
+        ш: 'sh',
+        щ: 'sch',
+        ъ: '',
+        ы: 'y',
+        ь: '',
+        э: 'e',
+        ю: 'yu',
+        я: 'ya'
       }
       const lower = String(text).trim().toLowerCase()
       const translit = lower
@@ -1291,8 +1320,8 @@ export default {
         .replace(/[^a-z0-9_-]+/g, '-')
         .replace(/-+/g, '-')
         .replace(/^-+|-+$/g, '')
-    },
-  },
+    }
+  }
 }
 </script>
 

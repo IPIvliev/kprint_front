@@ -210,21 +210,21 @@
 </template>
 
 <script>
-import MenuBlock from "../elements/Panel/MenuBlock.vue"
-import PanelRichTextEditor from "../elements/Panel/RichTextEditor.vue"
+import MenuBlock from '../elements/Panel/MenuBlock.vue'
+import PanelRichTextEditor from '../elements/Panel/RichTextEditor.vue'
 import {
   createStudyManagerCourse,
   deleteStudyManagerCourse,
   fetchStudyManagerCategories,
   fetchStudyManagerCourses,
   fetchStudyManagerTeachers,
-  updateStudyManagerCourse,
+  updateStudyManagerCourse
 } from '@/services/panel.service'
 
 export default {
   name: 'StudyCourses',
   components: { MenuBlock, PanelRichTextEditor },
-  data() {
+  data () {
     return {
       courses: [],
       categories: [],
@@ -246,12 +246,12 @@ export default {
         category: '',
         status: 'published',
         related: [],
-        teachers: [],
-      },
+        teachers: []
+      }
     }
   },
   computed: {
-    filteredCourses() {
+    filteredCourses () {
       const term = this.searchTerm.trim().toLowerCase()
       if (!term) {
         return this.courses
@@ -262,22 +262,22 @@ export default {
         return name.includes(term) || description.includes(term)
       })
     },
-    relatedOptions() {
+    relatedOptions () {
       return this.courses.filter((item) => item.id !== this.currentId)
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchData()
   },
   methods: {
-    async fetchData() {
+    async fetchData () {
       this.loading = true
       this.error = ''
       try {
         const [categoriesResponse, coursesResponse, teachersResponse] = await Promise.all([
           fetchStudyManagerCategories(),
           fetchStudyManagerCourses(),
-          fetchStudyManagerTeachers(),
+          fetchStudyManagerTeachers()
         ])
         this.categories = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
         this.courses = Array.isArray(coursesResponse.data) ? coursesResponse.data : []
@@ -288,43 +288,43 @@ export default {
         this.loading = false
       }
     },
-    courseKey(course) {
+    courseKey (course) {
       return course.id || course.pk || course.name
     },
-    shortText(text) {
+    shortText (text) {
       const raw = String(text || '').replace(/<\/?[^>]+(>|$)/g, '')
       if (!raw) {
         return '—'
       }
       return raw.length > 120 ? `${raw.slice(0, 120)}...` : raw
     },
-    categoryTitle(categoryId) {
+    categoryTitle (categoryId) {
       if (categoryId && typeof categoryId === 'object') {
         return categoryId.title || categoryId.name || '—'
       }
       const option = this.categories.find((item) => Number(item.id) === Number(categoryId))
       return option ? option.title : '—'
     },
-    categoryTitleFromCourse(course) {
+    categoryTitleFromCourse (course) {
       if (course && course.category_title) {
         return course.category_title
       }
       const id = course ? (course.category_id || course.categoryId || course.category) : null
       return this.categoryTitle(id)
     },
-    normalizeRelated(value) {
+    normalizeRelated (value) {
       if (!Array.isArray(value)) {
         return []
       }
       return value.map((item) => (typeof item === 'object' ? item.id : item)).filter(Boolean)
     },
-    normalizeTeachers(value) {
+    normalizeTeachers (value) {
       if (!Array.isArray(value)) {
         return []
       }
       return value.map((item) => (typeof item === 'object' ? item.id : item)).filter(Boolean)
     },
-    courseTeachers(course) {
+    courseTeachers (course) {
       const teachers = Array.isArray(course.teachers) ? course.teachers : []
       if (!teachers.length) {
         return '—'
@@ -338,7 +338,7 @@ export default {
       })
       return names.join(', ')
     },
-    statusLabel(value) {
+    statusLabel (value) {
       if (!value) {
         return '—'
       }
@@ -351,7 +351,7 @@ export default {
       }
       return value
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.form = {
@@ -362,13 +362,13 @@ export default {
         category: '',
         status: 'published',
         related: [],
-        teachers: [],
+        teachers: []
       }
       this.imageFile = null
       this.imagePreview = ''
       this.showModal = true
     },
-    openEdit(course) {
+    openEdit (course) {
       this.isEditing = true
       this.currentId = course.id || course.pk
       const rawCategory =
@@ -387,21 +387,21 @@ export default {
         category: categoryId,
         status: course.status || 'published',
         related: this.normalizeRelated(course.related),
-        teachers: this.normalizeTeachers(course.teachers),
+        teachers: this.normalizeTeachers(course.teachers)
       }
       this.imageFile = null
       this.imagePreview = course.photo || ''
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    triggerFileSelect() {
+    triggerFileSelect () {
       if (this.$refs.imageInput) {
         this.$refs.imageInput.click()
       }
     },
-    onImageChange(event) {
+    onImageChange (event) {
       const file = event.target.files && event.target.files[0]
       if (!file) {
         return
@@ -409,7 +409,7 @@ export default {
       this.imageFile = file
       this.imagePreview = URL.createObjectURL(file)
     },
-    onDrop(event) {
+    onDrop (event) {
       const file = event.dataTransfer.files && event.dataTransfer.files[0]
       if (!file) {
         return
@@ -420,7 +420,7 @@ export default {
       this.imageFile = file
       this.imagePreview = URL.createObjectURL(file)
     },
-    async saveCourse() {
+    async saveCourse () {
       if (!this.form.name || !this.form.category) {
         this.error = 'Заполните название и категорию'
         return
@@ -453,7 +453,7 @@ export default {
         this.saving = false
       }
     },
-    async removeCourse(course) {
+    async removeCourse (course) {
       const id = course.id || course.pk
       if (!id) {
         return
@@ -468,7 +468,7 @@ export default {
       } catch (err) {
         this.error = err.userMessage || 'Не удалось удалить курс'
       }
-    },
-  },
+    }
+  }
 }
 </script>

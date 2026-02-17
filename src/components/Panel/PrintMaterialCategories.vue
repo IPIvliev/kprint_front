@@ -156,13 +156,13 @@ import {
   createPrintManagerMaterialCategory,
   deletePrintManagerMaterialCategory,
   fetchPrintManagerMaterialCategories,
-  updatePrintManagerMaterialCategory,
+  updatePrintManagerMaterialCategory
 } from '@/services/panel.service'
 
 export default {
   name: 'PrintMaterialCategories',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       categories: [],
       searchTerm: '',
@@ -176,12 +176,12 @@ export default {
         name: '',
         parent: null,
         sort_order: 0,
-        is_active: true,
-      },
+        is_active: true
+      }
     }
   },
   computed: {
-    sortedCategories() {
+    sortedCategories () {
       const byParent = new Map()
       this.categories.forEach((item) => {
         const parentId = item.parent || null
@@ -208,7 +208,7 @@ export default {
         children.forEach((child) => {
           flattened.push({
             ...child,
-            _depth: depth,
+            _depth: depth
           })
           walk(child.id, depth + 1)
         })
@@ -217,7 +217,7 @@ export default {
       walk(null, 0)
       return flattened
     },
-    filteredCategories() {
+    filteredCategories () {
       const term = this.searchTerm.trim().toLowerCase()
       if (!term) {
         return this.sortedCategories
@@ -228,16 +228,16 @@ export default {
         return name.includes(term) || fullName.includes(term)
       })
     },
-    parentOptions() {
+    parentOptions () {
       const excluded = new Set([this.currentId, ...this.getDescendantIds(this.currentId)].filter(Boolean))
       return this.sortedCategories.filter((item) => !excluded.has(item.id))
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchCategories()
   },
   methods: {
-    async fetchCategories() {
+    async fetchCategories () {
       this.loading = true
       this.error = ''
       try {
@@ -249,7 +249,7 @@ export default {
         this.loading = false
       }
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.error = ''
@@ -257,11 +257,11 @@ export default {
         name: '',
         parent: null,
         sort_order: 0,
-        is_active: true,
+        is_active: true
       }
       this.showModal = true
     },
-    openEdit(category) {
+    openEdit (category) {
       this.isEditing = true
       this.currentId = category.id
       this.error = ''
@@ -269,14 +269,14 @@ export default {
         name: category.name || '',
         parent: category.parent || null,
         sort_order: Number(category.sort_order || 0),
-        is_active: !!category.is_active,
+        is_active: !!category.is_active
       }
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    async saveCategory() {
+    async saveCategory () {
       if (!this.form.name.trim()) {
         this.error = 'Заполните название категории'
         return
@@ -288,7 +288,7 @@ export default {
           name: this.form.name.trim(),
           parent: this.form.parent || null,
           sort_order: Number(this.form.sort_order || 0),
-          is_active: !!this.form.is_active,
+          is_active: !!this.form.is_active
         }
         if (this.isEditing && this.currentId) {
           await updatePrintManagerMaterialCategory(this.currentId, payload)
@@ -303,7 +303,7 @@ export default {
         this.saving = false
       }
     },
-    async removeCategory(category) {
+    async removeCategory (category) {
       if (!category || !category.id) {
         return
       }
@@ -322,21 +322,21 @@ export default {
         this.error = err.userMessage || 'Не удалось удалить категорию'
       }
     },
-    displayCategoryName(category) {
+    displayCategoryName (category) {
       const depth = Number(category._depth || 0)
       if (!depth) {
         return category.name
       }
       return `${'— '.repeat(depth)}${category.name}`
     },
-    parentTitle(parentId) {
+    parentTitle (parentId) {
       if (!parentId) {
         return '—'
       }
       const parent = this.categories.find((item) => Number(item.id) === Number(parentId))
       return parent ? (parent.full_name || parent.name) : '—'
     },
-    getDescendantIds(rootId) {
+    getDescendantIds (rootId) {
       if (!rootId) {
         return []
       }
@@ -360,7 +360,7 @@ export default {
         })
       }
       return result
-    },
-  },
+    }
+  }
 }
 </script>

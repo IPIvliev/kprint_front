@@ -187,13 +187,13 @@ import {
   deletePrintManagerMaterial,
   fetchPrintManagerMaterialCategories,
   fetchPrintManagerMaterials,
-  updatePrintManagerMaterial,
+  updatePrintManagerMaterial
 } from '@/services/panel.service'
 
 export default {
   name: 'PrintMaterials',
   components: { MenuBlock },
-  data() {
+  data () {
     return {
       materials: [],
       categories: [],
@@ -211,12 +211,12 @@ export default {
         color: '#ffffff',
         price_per_mm3: '0.00',
         sort_order: 0,
-        is_active: true,
-      },
+        is_active: true
+      }
     }
   },
   computed: {
-    categoryOptions() {
+    categoryOptions () {
       const byParent = new Map()
       this.categories.forEach((item) => {
         const parentId = item.parent || null
@@ -243,7 +243,7 @@ export default {
         children.forEach((child) => {
           flattened.push({
             ...child,
-            _depth: depth,
+            _depth: depth
           })
           walk(child.id, depth + 1)
         })
@@ -252,7 +252,7 @@ export default {
       walk(null, 0)
       return flattened
     },
-    filteredMaterials() {
+    filteredMaterials () {
       const term = this.searchTerm.trim().toLowerCase()
       const selectedCategorySet = this.getCategoryFilterSet()
       return this.materials.filter((item) => {
@@ -271,19 +271,19 @@ export default {
         ).toLowerCase()
         return name.includes(term) || category.includes(term)
       })
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetchData()
   },
   methods: {
-    async fetchData() {
+    async fetchData () {
       this.loading = true
       this.error = ''
       try {
         const [materialsResponse, categoriesResponse] = await Promise.all([
           fetchPrintManagerMaterials(),
-          fetchPrintManagerMaterialCategories(),
+          fetchPrintManagerMaterialCategories()
         ])
         this.materials = Array.isArray(materialsResponse.data) ? materialsResponse.data : []
         this.categories = Array.isArray(categoriesResponse.data) ? categoriesResponse.data : []
@@ -293,16 +293,16 @@ export default {
         this.loading = false
       }
     },
-    categoryName(categoryId) {
+    categoryName (categoryId) {
       const category = this.categories.find((item) => Number(item.id) === Number(categoryId))
       return category ? (category.full_name || category.name) : '—'
     },
-    categoryOptionLabel(category) {
+    categoryOptionLabel (category) {
       const depth = Number(category._depth || 0)
       const prefix = depth ? `${'— '.repeat(depth)}` : ''
       return `${prefix}${category.name}`
     },
-    getCategoryFilterSet() {
+    getCategoryFilterSet () {
       if (!this.selectedCategoryId) {
         return null
       }
@@ -328,7 +328,7 @@ export default {
       }
       return result
     },
-    openCreate() {
+    openCreate () {
       this.isEditing = false
       this.currentId = null
       this.error = ''
@@ -338,11 +338,11 @@ export default {
         color: '#ffffff',
         price_per_mm3: '0.00',
         sort_order: 0,
-        is_active: true,
+        is_active: true
       }
       this.showModal = true
     },
-    openEdit(material) {
+    openEdit (material) {
       this.isEditing = true
       this.currentId = material.id
       this.error = ''
@@ -352,21 +352,21 @@ export default {
         color: (material.color || '#ffffff').toLowerCase(),
         price_per_mm3: material.price_per_mm3 || '0.00',
         sort_order: Number(material.sort_order || 0),
-        is_active: !!material.is_active,
+        is_active: !!material.is_active
       }
       this.showModal = true
     },
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
-    normalizeColor(value) {
+    normalizeColor (value) {
       const color = String(value || '').trim()
       if (/^#[0-9a-fA-F]{6}$/.test(color)) {
         return color.toUpperCase()
       }
       return ''
     },
-    async saveMaterial() {
+    async saveMaterial () {
       if (!this.form.category) {
         this.error = 'Выберите категорию'
         return
@@ -395,7 +395,7 @@ export default {
           color,
           price_per_mm3: price.toFixed(2),
           sort_order: Number(this.form.sort_order || 0),
-          is_active: !!this.form.is_active,
+          is_active: !!this.form.is_active
         }
         if (this.isEditing && this.currentId) {
           await updatePrintManagerMaterial(this.currentId, payload)
@@ -410,7 +410,7 @@ export default {
         this.saving = false
       }
     },
-    async removeMaterial(material) {
+    async removeMaterial (material) {
       if (!material || !material.id) {
         return
       }
@@ -424,7 +424,7 @@ export default {
       } catch (err) {
         this.error = err.userMessage || 'Не удалось удалить материал'
       }
-    },
-  },
+    }
+  }
 }
 </script>

@@ -6,7 +6,7 @@
       <h1 class="title">ИТ услуги</h1>
       <p class="innovation__text">Мы уже давно прошли век корпораций и крупных фабрик, владеющих всеми производственными ресурсами. Возможность купить 3D принтер позволяет нам с вами производить свои собственные изделия в любом количестве и в любом месте.</p>
     </div>
-    <div class="innovation__sliders"> 
+    <div class="innovation__sliders">
       <div id="sliderInnovation1">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
@@ -111,16 +111,16 @@
       </div>
     </div>
   </div>
-  <!--	/innovation-->
+  <!--  /innovation-->
   <!-- advantages-->
   <advantages-block />
-  <!--	/advantages-->
+  <!--  /advantages-->
   <!-- halfitems-->
   <div class="halfitems">
     <div class="container">
       <h2 class="halfitems__title1">Перспективные технологии, над которыми мы работаем</h2>
       <div class="row gy-4">
-        <div class="col-lg-6"><a class="halfitems__item" href="#"> 
+        <div class="col-lg-6"><a class="halfitems__item" href="#">
             <div class="halfitems__content">
               <div class="halfitems__title">Печать без подготовки в 1 клик</div>
               <div class="halfitems__text">Больше не нужно подготавливать модель вручную. Наша система позволит печатать модели в один клик вне зависимости от навыков и умений оператора.</div>
@@ -147,19 +147,19 @@
       </div>
     </div>
   </div>
-  <!--	/halfitems-->
+  <!--  /halfitems-->
   <!-- callback-->
   <callback-window />
-  <!--	/callback-->
+  <!--  /callback-->
 </div>
 </template>
 
 <script>
-import AdvantagesBlock from "./AdvantagesBlock.vue"
-import CallbackWindow from "./elements/CallbackWindow.vue"
+import AdvantagesBlock from './AdvantagesBlock.vue'
+import CallbackWindow from './elements/CallbackWindow.vue'
 
 export default {
   name: 'MainPage',
-  components: {AdvantagesBlock, CallbackWindow}
+  components: { AdvantagesBlock, CallbackWindow }
 }
 </script>

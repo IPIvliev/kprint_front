@@ -1,10 +1,10 @@
 <template>
     <!-- video-->
     <div class="white_block white_background">
-      <div class="container"> 
+      <div class="container">
         <h1 class="title">Как происходит заказ на 3Д печать</h1>
         <div class="row gy-1" style="margin-top: 30px;">
-          
+
           <div class="col-lg-3">
             <div class="print_order_step">
               <div class="step_window">
@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="row gy-1" style="margin-top: 30px;">
-          
+
           <div class="col-lg-3">
             <div class="print_order_step">
               <div class="step_window">
@@ -83,5 +83,5 @@
         </div>
       </div>
     </div>
-    <!--	/video-->
+    <!--  /video-->
 </template>

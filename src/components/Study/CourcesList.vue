@@ -1,10 +1,10 @@
 <template>
     <!-- video-->
     <div class="white_block gray_background cmp-components-study-courceslist">
-      <div class="container"> 
+      <div class="container">
         <h1 class="title">Список курсов</h1>
-        
-          <div class="cource" v-for="course in CoursesList">
+
+          <div class="cource" v-for="course in CoursesList" :key="course.id">
             <router-link :to="{path: '/study/course/' + course.id }">
               <div class="row">
                 <div class="col-lg-3">
@@ -21,12 +21,12 @@
                     <div class="col-lg-3">
                       <span class="period">{{ course.duration }}</span>
                     </div>
-                    
+
                     <div class="col-lg-9">
                       <p>
-                        {{ course.lessons_number }} уроков 
-                        <img class="icon-ellipse" src="@/assets/img/Ellipse.svg" /> 
-                        {{ course.teachers_number }} преподавателя 
+                        {{ course.lessons_number }} уроков
+                        <img class="icon-ellipse" src="@/assets/img/Ellipse.svg" />
+                        {{ course.teachers_number }} преподавателя
                         <img class="icon-ellipse" src="@/assets/img/Ellipse.svg" />
                         20 часов</p>
                     </div>
@@ -35,18 +35,17 @@
               </div>
             </router-link>
           </div>
-        
 
       </div>
     </div>
-    <!--	/video-->
+    <!--  /video-->
 </template>
 <script>
-  export default {
-    computed: {
-        CoursesList () {
-            return this.$store.state.study.courses
-        },  
-    }  
+export default {
+  computed: {
+    CoursesList () {
+      return this.$store.state.study.courses
+    }
   }
+}
 </script>
