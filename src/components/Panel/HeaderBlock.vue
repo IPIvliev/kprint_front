@@ -183,7 +183,7 @@
                   </button>
                 </div>
                 <ul v-if="panelModeSafe === 'user'" class="panel__menu">
-                  <li><router-link class="panel__menu-link" to="/panel" @click="closeMainMenu"><span class="panel__menu-icon">
+                  <li><router-link class="panel__menu-link" :to="isManager ? '/panel/user' : '/panel'" @click="closeMainMenu"><span class="panel__menu-icon">
                       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6.75 15.7501H11.25M6.75 15.7501H5.25C3.59314 15.7501 2.25 14.4069 2.25 12.7501V8.0308C2.25 6.98175 2.79796 6.00891 3.69509 5.46519L7.44509 3.19246C8.40083 2.61325 9.59918 2.61325 10.5549 3.19246L14.3049 5.46519C15.2021 6.00891 15.75 6.98175 15.75 8.0308V12.7501C15.75 14.4069 14.4068 15.7501 12.75 15.7501H11.25H6.75ZM6.75 15.7501V12.7501C6.75 11.5074 7.75732 10.5001 9 10.5001C10.2427 10.5001 11.25 11.5074 11.25 12.7501V15.7501H6.75Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                       </svg></span>&#1055;&#1072;&#1085;&#1077;&#1083;&#1100; &#1091;&#1087;&#1088;&#1072;&#1074;&#1083;&#1077;&#1085;&#1080;&#1103;</router-link></li>
@@ -198,6 +198,9 @@
                   </span>&#1042;&#1077;&#1088;&#1085;&#1091;&#1090;&#1100;&#1089;&#1103; &#1085;&#1072; &#1089;&#1072;&#1081;&#1090;</router-link></li>
                 </ul>
                 <ul v-else class="panel__menu">
+                  <li><router-link class="panel__menu-link" to="/panel/manager" @click="closeMainMenu"><span class="panel__menu-icon">
+                      <img src="@/assets/img/panel-icons/shop.svg" alt="">
+                  </span>&#1044;&#1072;&#1096;&#1073;&#1086;&#1088;&#1076; &#1084;&#1077;&#1085;&#1077;&#1076;&#1078;&#1077;&#1088;&#1072;</router-link></li>
                   <li><router-link class="panel__menu-link" to="/panel/news/articles" @click="closeMainMenu"><span class="panel__menu-icon">
                       <img src="@/assets/img/panel-icons/news.svg" alt="">
                   </span>&#1053;&#1086;&#1074;&#1086;&#1089;&#1090;&#1080;</router-link></li>
@@ -336,6 +339,13 @@ export default {
         return
       }
       this.panelMode = setStoredPanelMode(normalized)
+      const targetPath = normalized === 'manager'
+        ? '/panel/manager'
+        : (this.isManager ? '/panel/user' : '/panel')
+      const currentPath = this.$route && this.$route.path ? this.$route.path : ''
+      if (currentPath !== targetPath) {
+        this.$router.replace(targetPath)
+      }
     },
     syncPanelMode () {
       this.panelMode = getSafePanelMode(this.currentUser, getStoredPanelMode())

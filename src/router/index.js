@@ -154,6 +154,16 @@ const routes = [
         component: () => import('../views/Panel/Panel.vue')
       },
       {
+        path: 'user',
+        name: 'PanelUser',
+        component: () => import('../views/Panel/Panel.vue')
+      },
+      {
+        path: 'manager',
+        name: 'PanelManager',
+        component: () => import('../views/Panel/PanelManager.vue')
+      },
+      {
         path: 'edit',
         name: 'PanelEdit',
         component: () => import('../views/Panel/PanelEdit.vue')
