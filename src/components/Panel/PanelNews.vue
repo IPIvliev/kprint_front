@@ -32,6 +32,13 @@
                       <option value="ai">ИИ</option>
                     </select>
                   </div>
+                  <div class="panel__status-filter panel__status-filter--head">
+                    <select v-model="statusFilter" class="form-control">
+                      <option value="all">Все статусы</option>
+                      <option value="draft">Черновик</option>
+                      <option value="published">Опубликовано</option>
+                    </select>
+                  </div>
                 </div>
                 <div class="panel__add-btn panel__add-btn--stack">
                   <div class="btn btn--red btn--big" @click="openCreate">
@@ -69,6 +76,13 @@
                     <option value="ai">ИИ</option>
                   </select>
                 </div>
+                <div class="panel__status-filter d-block d-lg-none">
+                  <select v-model="statusFilter" class="form-control">
+                    <option value="all">Все статусы</option>
+                    <option value="draft">Черновик</option>
+                    <option value="published">Опубликовано</option>
+                  </select>
+                </div>
                 <div class="panel__table">
                   <table>
                     <tr v-for="article in filteredArticles" :key="articleKey(article)">
@@ -92,6 +106,10 @@
                         <span class="panel__table-subtitle">Источник:</span>
                         <span class="panel__status-badge" :class="sourceBadgeClass(article.source)">
                           {{ sourceLabel(article.source) }}
+                        </span>
+                        <span class="panel__table-subtitle">Статус:</span>
+                        <span class="panel__status-badge" :class="publicationBadgeClass(article.status)">
+                          {{ publicationStatusLabel(article.status) }}
                         </span>
                         <span
                           v-if="generationStatusLabel(article)"
@@ -200,6 +218,13 @@
               <select v-model="form.source" class="form-control" :disabled="isEditing">
                 <option value="human">Человек</option>
                 <option value="ai">ИИ</option>
+              </select>
+            </div>
+            <div class="panel__formrow">
+              <label>Статус публикации</label>
+              <select v-model="form.status" class="form-control">
+                <option value="draft">Черновик</option>
+                <option value="published">Опубликовано</option>
               </select>
             </div>
             <div v-if="normalizeArticleSource(form.source) === 'ai'" class="panel__formrow">
@@ -491,6 +516,7 @@ export default {
       articles: [],
       searchTerm: '',
       sourceFilter: 'all',
+      statusFilter: 'all',
       loading: false,
       error: '',
       showModal: false,
@@ -525,6 +551,7 @@ export default {
         body: '',
         category: null,
         source: 'human',
+        status: 'draft',
         ai_prompt: '',
         ai_notes_for_editor: '',
         tagIds: [],
@@ -539,14 +566,23 @@ export default {
     filteredArticles () {
       const term = this.searchTerm.trim().toLowerCase()
       const sourceFilter = this.sourceFilter === 'all' ? '' : this.normalizeArticleSource(this.sourceFilter, '')
+      const statusFilter = this.statusFilter === 'all' ? '' : this.normalizePublicationStatus(this.statusFilter, '')
       if (!term) {
-        if (!sourceFilter) {
-          return this.articles
-        }
-        return this.articles.filter((article) => this.normalizeArticleSource(article.source) === sourceFilter)
+        return this.articles.filter((article) => {
+          if (sourceFilter && this.normalizeArticleSource(article.source) !== sourceFilter) {
+            return false
+          }
+          if (statusFilter && this.normalizePublicationStatus(article.status) !== statusFilter) {
+            return false
+          }
+          return true
+        })
       }
       return this.articles.filter((a) => {
         if (sourceFilter && this.normalizeArticleSource(a.source) !== sourceFilter) {
+          return false
+        }
+        if (statusFilter && this.normalizePublicationStatus(a.status) !== statusFilter) {
           return false
         }
         const title = String(a.title || '').toLowerCase()
@@ -658,6 +694,26 @@ export default {
       return this.normalizeArticleSource(sourceValue) === 'ai'
         ? 'panel__status-badge--ai'
         : 'panel__status-badge--human'
+    },
+    normalizePublicationStatus (statusValue, fallback = 'draft') {
+      const normalized = String(statusValue || '').trim().toLowerCase()
+      if (normalized === 'published') {
+        return 'published'
+      }
+      if (normalized === 'draft') {
+        return 'draft'
+      }
+      return fallback
+    },
+    publicationStatusLabel (statusValue) {
+      return this.normalizePublicationStatus(statusValue) === 'published'
+        ? 'Опубликовано'
+        : 'Черновик'
+    },
+    publicationBadgeClass (statusValue) {
+      return this.normalizePublicationStatus(statusValue) === 'published'
+        ? 'panel__status-badge--published'
+        : 'panel__status-badge--draft'
     },
     isAiProcessing (article) {
       return (
@@ -831,6 +887,7 @@ export default {
         body: '',
         category: firstCategoryId,
         source: 'human',
+        status: 'draft',
         ai_prompt: '',
         ai_notes_for_editor: '',
         tagIds: [],
@@ -863,6 +920,7 @@ export default {
           body: fullArticle.body || '',
           category: rawCategory || null,
           source: this.normalizeArticleSource(fullArticle.source),
+          status: this.normalizePublicationStatus(fullArticle.status),
           ai_prompt: fullArticle.ai_prompt || '',
           ai_notes_for_editor: fullArticle.ai_notes_for_editor || '',
           tagIds,
@@ -1132,6 +1190,7 @@ export default {
         : ''
       const normalizedSlug = this.form.slug ? this.slugify(this.form.slug) : ''
       const normalizedSource = this.normalizeArticleSource(this.form.source)
+      const normalizedStatus = this.normalizePublicationStatus(this.form.status)
       const normalizedAiPrompt = String(this.form.ai_prompt || '').trim()
       const normalizedAiNotes = String(this.form.ai_notes_for_editor || '').trim()
       const normalizedTagIds = Array.isArray(this.form.tagIds)
@@ -1145,6 +1204,7 @@ export default {
           body,
           category,
           source: normalizedSource,
+          status: normalizedStatus,
           ai_prompt: normalizedSource === 'ai' ? normalizedAiPrompt : '',
           ai_notes_for_editor: normalizedSource === 'ai' ? normalizedAiNotes : ''
         }
@@ -1167,6 +1227,7 @@ export default {
       payload.append('body', body)
       payload.append('category', category)
       payload.append('source', normalizedSource)
+      payload.append('status', normalizedStatus)
       payload.append('ai_prompt', normalizedSource === 'ai' ? normalizedAiPrompt : '')
       payload.append('ai_notes_for_editor', normalizedSource === 'ai' ? normalizedAiNotes : '')
       if (normalizedSlug) {
@@ -1429,6 +1490,16 @@ export default {
 .panel__status-badge--ai {
   background: #d83a56;
   color: #fff;
+}
+
+.panel__status-badge--draft {
+  background: #f2f4f7;
+  color: #344054;
+}
+
+.panel__status-badge--published {
+  background: #ecfdf3;
+  color: #067647;
 }
 
 .panel__table-processing {

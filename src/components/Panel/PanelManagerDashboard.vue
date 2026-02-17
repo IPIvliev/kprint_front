@@ -15,7 +15,11 @@
                 </div>
                 <div class="row gy-1">
                   <div v-for="card in cards" :key="card.id" class="col-lg-6">
-                    <router-link class="panel__item" :to="card.to">
+                    <router-link
+                      class="panel__item"
+                      :class="{ 'panel__item--news': card.id === 'news-articles' }"
+                      :to="card.to"
+                    >
                       <div class="panel__item-img">
                         <img :src="card.image" :alt="card.title">
                       </div>
@@ -40,6 +44,7 @@ import MenuBlock from '../elements/Panel/MenuBlock.vue'
 import panelPrintImage from '@/assets/img/panel_1.webp'
 import panelShopImage from '@/assets/img/panel_2.webp'
 import panelStudyImage from '@/assets/img/study_courses.png'
+import panelNewsImage from '@/assets/img/news-business-text.png'
 import {
   fetchPanelArticles,
   fetchPrintJobs,
@@ -85,9 +90,9 @@ export default {
         {
           id: 'news-articles',
           to: '/panel/news/articles',
-          image: panelPrintImage,
+          image: panelNewsImage,
           value: this.stats.newsArticles,
-          title: 'новостей'
+          title: 'черновиков новостей'
         },
         {
           id: 'study-courses',
@@ -114,6 +119,16 @@ export default {
       const payload = result.value && result.value.data
       return Array.isArray(payload) ? payload.length : 0
     },
+    getDraftNewsCount (result) {
+      if (result.status !== 'fulfilled') {
+        return 0
+      }
+      const payload = result.value && result.value.data
+      if (!Array.isArray(payload)) {
+        return 0
+      }
+      return payload.filter((article) => String(article?.status || '').toLowerCase() === 'draft').length
+    },
     async fetchStats () {
       this.error = ''
       const results = await Promise.allSettled([
@@ -125,7 +140,7 @@ export default {
 
       this.stats.printOrders = this.getListLength(results[0])
       this.stats.shopOrders = this.getListLength(results[1])
-      this.stats.newsArticles = this.getListLength(results[2])
+      this.stats.newsArticles = this.getDraftNewsCount(results[2])
       this.stats.studyCourses = this.getListLength(results[3])
 
       const failed = results.some((item) => item.status === 'rejected')
@@ -142,3 +157,29 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.panel__item--news .panel__item-img {
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 16px;
+}
+
+.panel__item--news .panel__item-img img {
+  width: 72%;
+  max-width: 250px;
+  height: auto;
+  object-fit: contain;
+  transform: translate(-36px, -6px);
+}
+
+@media (max-width: 991.98px) {
+  .panel__item--news .panel__item-img img {
+    width: 68%;
+    max-width: 220px;
+    transform: translate(-24px, -2px);
+  }
+}
+</style>
