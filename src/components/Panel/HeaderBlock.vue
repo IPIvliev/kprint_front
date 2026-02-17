@@ -201,6 +201,9 @@
                   <li><router-link class="panel__menu-link" to="/panel/manager" @click="closeMainMenu"><span class="panel__menu-icon">
                       <img src="@/assets/img/panel-icons/shop.svg" alt="">
                   </span>&#1044;&#1072;&#1096;&#1073;&#1086;&#1088;&#1076; &#1084;&#1077;&#1085;&#1077;&#1076;&#1078;&#1077;&#1088;&#1072;</router-link></li>
+                  <li><router-link class="panel__menu-link" to="/panel/callback/requests" @click="closeMainMenu"><span class="panel__menu-icon">
+                      <img src="@/assets/img/panel-icons/feedback.svg" alt="">
+                  </span>Обращения</router-link></li>
                   <li><router-link class="panel__menu-link" to="/panel/news/articles" @click="closeMainMenu"><span class="panel__menu-icon">
                       <img src="@/assets/img/panel-icons/news.svg" alt="">
                   </span>&#1053;&#1086;&#1074;&#1086;&#1089;&#1090;&#1080;</router-link></li>

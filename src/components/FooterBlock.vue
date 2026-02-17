@@ -65,7 +65,7 @@
         <div class="footer__block">
           <div class="footer__title">Телефон:</div>
           <div class="footer__link"> <a href="tel:+79601863596">+7 960 186–35–96</a></div>
-          <div class="btn btn--red">Перезвоните мне</div>
+          <div class="btn btn--red modal-trigger" data-bs-toggle="modal" data-bs-target="#modalCallback">Перезвоните мне</div>
         </div>
       </div>
       <div id="socialTo"></div>

@@ -164,6 +164,11 @@ const routes = [
         component: () => import('../views/Panel/PanelManager.vue')
       },
       {
+        path: 'callback/requests',
+        name: 'PanelCallbackRequests',
+        component: () => import('../views/Panel/PanelCallbackRequests.vue')
+      },
+      {
         path: 'edit',
         name: 'PanelEdit',
         component: () => import('../views/Panel/PanelEdit.vue')

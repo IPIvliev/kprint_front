@@ -81,6 +81,14 @@
                         </router-link>
                       </li>
                       <li>
+                        <router-link class="panel__menu-link" to="/panel/callback/requests" active-class="panel__menu-link--active">
+                          <span class="panel__menu-icon">
+                            <img src="@/assets/img/panel-icons/feedback.svg" alt="">
+                          </span>
+                          Обращения
+                        </router-link>
+                      </li>
+                      <li>
                         <button
                           type="button"
                           class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"

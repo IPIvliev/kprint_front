@@ -14,22 +14,6 @@
       <CallbackWindow />
       <!--  /callback-->
     </div>
-    <!-- modal bootstrap-->
-    <div class="modal fade" id="modalCallback">
-      <div class="modal-dialog modal-dialog-centered">
-        <form class="modal-content" action="#">
-          <div class="modal__title">Обратный звонок</div>
-          <div class="modal__text">Укажите ваш номер и наш менеджер свяжется с вами для консультации</div>
-          <div class="input input--label">
-            <input type="text" name="tel">
-            <div class="input__label">Ваш номер</div>
-          </div>
-          <button class="btn btn--red btn--big" type="submit">Отправить заявку</button>
-          <div class="modal_close" data-bs-dismiss="modal"></div>
-        </form>
-      </div>
-    </div>
-    <!-- /modal bootstrap-->
 
     <FooterBlock/>
   </div>

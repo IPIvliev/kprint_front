@@ -351,3 +351,19 @@ export function updateStudyManagerFeedback (feedbackId, payload) {
 export function deleteStudyManagerFeedback (feedbackId) {
   return api.delete(`/api/study/manager/feedbacks/${feedbackId}`)
 }
+
+export function fetchCallbackCaptcha () {
+  return publicApi.get('/api/callback/captcha')
+}
+
+export function createCallbackRequest (payload) {
+  return publicApi.post('/api/callback/requests', payload)
+}
+
+export function fetchManagerCallbackRequests (params = {}) {
+  return api.get('/api/callback/manager/requests', { params })
+}
+
+export function updateManagerCallbackRequest (requestId, payload) {
+  return api.patch(`/api/callback/manager/requests/${requestId}`, payload)
+}
