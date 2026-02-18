@@ -72,6 +72,74 @@ export function deletePanelArticleTag (tagId) {
   return api.delete(`/api/article-tags/${tagId}/`)
 }
 
+export function fetchGalleryManagerPages () {
+  return api.get('/api/gallery/manager/pages/')
+}
+
+export function fetchGalleryManagerCategories () {
+  return api.get('/api/gallery/manager/categories/')
+}
+
+export function createGalleryManagerCategory (payload) {
+  return api.post('/api/gallery/manager/categories/', payload)
+}
+
+export function updateGalleryManagerCategory (categoryId, payload) {
+  return api.patch(`/api/gallery/manager/categories/${categoryId}/`, payload)
+}
+
+export function deleteGalleryManagerCategory (categoryId) {
+  return api.delete(`/api/gallery/manager/categories/${categoryId}/`)
+}
+
+export function fetchGalleryManagerItems (params = {}) {
+  return api.get('/api/gallery/manager/items/', { params })
+}
+
+export function createGalleryManagerItem (payload) {
+  return api.post('/api/gallery/manager/items/', payload)
+}
+
+export function updateGalleryManagerItem (itemId, payload) {
+  return api.patch(`/api/gallery/manager/items/${itemId}/`, payload)
+}
+
+export function deleteGalleryManagerItem (itemId) {
+  return api.delete(`/api/gallery/manager/items/${itemId}/`)
+}
+
+export function fetchCompanyManagerCategories () {
+  return api.get('/api/companies/manager/categories/')
+}
+
+export function createCompanyManagerCategory (payload) {
+  return api.post('/api/companies/manager/categories/', payload)
+}
+
+export function updateCompanyManagerCategory (categoryId, payload) {
+  return api.patch(`/api/companies/manager/categories/${categoryId}/`, payload)
+}
+
+export function deleteCompanyManagerCategory (categoryId) {
+  return api.delete(`/api/companies/manager/categories/${categoryId}/`)
+}
+
+export function fetchCompanyManagerCompanies (params = {}) {
+  return api.get('/api/companies/manager/companies/', { params })
+}
+
+export function createCompanyManagerCompany (payload) {
+  return api.post('/api/companies/manager/companies/', payload)
+}
+
+export function updateCompanyManagerCompany (companyId, payload) {
+  return api.patch(`/api/companies/manager/companies/${companyId}/`, payload)
+}
+
+export function deleteCompanyManagerCompany (companyId) {
+  return api.delete(`/api/companies/manager/companies/${companyId}/`)
+}
+
 export function fetchShopManagerCategories () {
   return api.get('/api/shop/manager/categories')
 }

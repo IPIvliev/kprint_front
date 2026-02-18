@@ -207,6 +207,12 @@
                   <li><router-link class="panel__menu-link" to="/panel/news/articles" @click="closeMainMenu"><span class="panel__menu-icon">
                       <img src="@/assets/img/panel-icons/news.svg" alt="">
                   </span>&#1053;&#1086;&#1074;&#1086;&#1089;&#1090;&#1080;</router-link></li>
+                  <li><router-link class="panel__menu-link" to="/panel/companies/categories" @click="closeMainMenu"><span class="panel__menu-icon">
+                      <img src="@/assets/img/panel-icons/categories.svg" alt="">
+                  </span>&#1050;&#1072;&#1090;&#1077;&#1075;&#1086;&#1088;&#1080;&#1080; &#1082;&#1086;&#1084;&#1087;&#1072;&#1085;&#1080;&#1081;</router-link></li>
+                  <li><router-link class="panel__menu-link" to="/panel/companies/list" @click="closeMainMenu"><span class="panel__menu-icon">
+                      <img src="@/assets/img/panel-icons/products.svg" alt="">
+                  </span>&#1050;&#1086;&#1084;&#1087;&#1072;&#1085;&#1080;&#1080;</router-link></li>
                   <li><router-link class="panel__menu-link" to="/panel/shop/orders" @click="closeMainMenu"><span class="panel__menu-icon">
                       <img src="@/assets/img/panel-icons/orders.svg" alt="">
                   </span>&#1047;&#1072;&#1082;&#1072;&#1079;&#1099; &#1084;&#1072;&#1075;&#1072;&#1079;&#1080;&#1085;&#1072;</router-link></li>

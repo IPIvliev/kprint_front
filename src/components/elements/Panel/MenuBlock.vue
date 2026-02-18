@@ -1,6 +1,6 @@
 <template>
               <div class="col-xxl-3 col-xl-4 d-none d-xl-block">
-                <div class="panel__block panel__block--1" :class="{ 'panel__block--menu-open': newsOpen || studyOpen || shopOpen || filterOpen || deliveryOpen || printOpen }">
+                <div class="panel__block panel__block--1" :class="{ 'panel__block--menu-open': newsOpen || galleryOpen || companyOpen || studyOpen || shopOpen || filterOpen || deliveryOpen || printOpen }">
                   <div class="panel__head"><router-link class="panel__profile" to="/panel/edit">
                       <div class="panel__profile-img"> <img :src="profileAvatar" alt=""></div>
                       <div class="panel__profile-content">
@@ -87,6 +87,70 @@
                           </span>
                           Обращения
                         </router-link>
+                      </li>
+                      <li>
+                        <button
+                          type="button"
+                          class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"
+                          :class="{ 'panel__menu-link--open': galleryOpen }"
+                          @click="toggleGalleryMenu"
+                        >
+                          <span class="panel__menu-icon">
+                            <img src="@/assets/img/panel-icons/categories.svg" alt="">
+                          </span>
+                          Галерея
+                          <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': galleryOpen }">▼</span>
+                        </button>
+                        <ul v-if="galleryOpen" class="panel__menu-sub">
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/gallery/categories" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/panel-icons/categories.svg" alt="">
+                              </span>
+                              Категории
+                            </router-link>
+                          </li>
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/gallery/items" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/panel-icons/products.svg" alt="">
+                              </span>
+                              Изображения
+                            </router-link>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <button
+                          type="button"
+                          class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"
+                          :class="{ 'panel__menu-link--open': companyOpen }"
+                          @click="toggleCompanyMenu"
+                        >
+                          <span class="panel__menu-icon">
+                            <img src="@/assets/img/panel-icons/categories.svg" alt="">
+                          </span>
+                          Компании
+                          <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': companyOpen }">▼</span>
+                        </button>
+                        <ul v-if="companyOpen" class="panel__menu-sub">
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/companies/categories" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/panel-icons/categories.svg" alt="">
+                              </span>
+                              Категории
+                            </router-link>
+                          </li>
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/companies/list" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/panel-icons/products.svg" alt="">
+                              </span>
+                              Компании
+                            </router-link>
+                          </li>
+                        </ul>
                       </li>
                       <li>
                         <button
@@ -394,6 +458,8 @@ export default {
       panelMode: 'user',
       telegramBotUrl: process.env.VUE_APP_TELEGRAM_BOT_URL || '#',
       newsOpen: false,
+      galleryOpen: false,
+      companyOpen: false,
       studyOpen: false,
       shopOpen: false,
       deliveryOpen: false,
@@ -458,6 +524,12 @@ export default {
     toggleNewsMenu () {
       this.newsOpen = !this.newsOpen
     },
+    toggleGalleryMenu () {
+      this.galleryOpen = !this.galleryOpen
+    },
+    toggleCompanyMenu () {
+      this.companyOpen = !this.companyOpen
+    },
     toggleStudyMenu () {
       this.studyOpen = !this.studyOpen
     },
@@ -491,6 +563,12 @@ export default {
     }
     if (this.$route && this.$route.path && this.$route.path.includes('/panel/news')) {
       this.newsOpen = true
+    }
+    if (this.$route && this.$route.path && this.$route.path.includes('/panel/gallery')) {
+      this.galleryOpen = true
+    }
+    if (this.$route && this.$route.path && this.$route.path.includes('/panel/companies')) {
+      this.companyOpen = true
     }
     if (this.$route && this.$route.path && this.$route.path.includes('/panel/shop')) {
       this.shopOpen = true

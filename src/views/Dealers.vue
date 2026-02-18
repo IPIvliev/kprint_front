@@ -7,7 +7,7 @@
       <div class="container">
         <h1 class="title">Дилеры</h1>
         <p class="innovation__text">
-          Мы всегда рады навым знакомствам. Присоединяйтесь к команде дилеров фотополимерных материалов, образовательных услуг и 3Д-печати на заказ.
+          Мы всегда рады новым знакомствам. Присоединяйтесь к команде дилеров фотополимерных материалов, образовательных услуг и 3D-печати на заказ.
         </p>
       </div>
     </div>
@@ -28,8 +28,8 @@
               <div class="halfitems__img"> <img src="../assets/img/halfitems_3.webp" alt=""></div></a></div>
           <div class="col-lg-6"><a class="halfitems__item" href="#">
               <div class="halfitems__content">
-                <div class="halfitems__title">Cистема блокчейн-контрактов</div>
-                <div class="halfitems__text">Система для обмена, продажи, а также печати в один клик трехмерных моделей на платформе крипто токене Ethereum.</div>
+                <div class="halfitems__title">Система блокчейн-контрактов</div>
+                <div class="halfitems__text">Система для обмена, продажи, а также печати в один клик трехмерных моделей на платформе крипто токенов Ethereum.</div>
               </div>
               <div class="halfitems__img"> <img src="../assets/img/halfitems_4.webp" alt=""></div>
               <div class="halfitems__circle">
@@ -48,6 +48,12 @@
       </div>
     </div>
     <!--  /halfitems-->
+    <partners-block
+      title="Наши дилеры"
+      category="dealers"
+      fallback-category-title="Наши дилеры"
+      :fallback-to-all="true"
+    />
     <!-- callback-->
     <callback-window />
     <!--  /callback-->
@@ -62,6 +68,7 @@ import HeaderBlock from '../components/HeaderBlock.vue'
 import FooterBlock from '../components/FooterBlock.vue'
 import CallbackWindow from '../components/elements/CallbackWindow.vue'
 import AdvantagesBlock from '../components/AdvantagesBlock.vue'
+import PartnersBlock from '@/components/elements/PartnersBlock.vue'
 
 export default {
   name: 'DealersPageView',
@@ -69,7 +76,8 @@ export default {
     FooterBlock,
     HeaderBlock,
     CallbackWindow,
-    AdvantagesBlock
+    AdvantagesBlock,
+    PartnersBlock
   }
 }
 </script>

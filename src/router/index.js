@@ -263,6 +263,26 @@ const routes = [
         component: () => import('../views/Panel/PanelNewsTags.vue')
       },
       {
+        path: 'gallery/categories',
+        name: 'PanelGalleryCategories',
+        component: () => import('../views/Panel/PanelGalleryCategories.vue')
+      },
+      {
+        path: 'gallery/items',
+        name: 'PanelGalleryItems',
+        component: () => import('../views/Panel/PanelGalleryItems.vue')
+      },
+      {
+        path: 'companies/categories',
+        name: 'PanelCompanyCategories',
+        component: () => import('../views/Panel/PanelCompanyCategories.vue')
+      },
+      {
+        path: 'companies/list',
+        name: 'PanelCompanies',
+        component: () => import('../views/Panel/PanelCompanies.vue')
+      },
+      {
         path: 'study/categories',
         name: 'PanelStudyCategories',
         component: () => import('../views/Panel/PanelStudyCategories.vue')

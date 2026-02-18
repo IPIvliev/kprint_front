@@ -18,7 +18,7 @@
         <!-- halfitems-->
         <!--  /halfitems-->
         <!-- callback-->
-        <GalleryBlock />
+        <GalleryBlock page-key="study" />
         <AlreadyStudy />
         <!--  /callback-->
 
