@@ -201,27 +201,27 @@
                   <li><router-link class="panel__menu-link" to="/panel/manager" @click="closeMainMenu"><span class="panel__menu-icon">
                       <img src="@/assets/img/panel-icons/shop.svg" alt="">
                   </span>&#1044;&#1072;&#1096;&#1073;&#1086;&#1088;&#1076; &#1084;&#1077;&#1085;&#1077;&#1076;&#1078;&#1077;&#1088;&#1072;</router-link></li>
-                  <li><router-link class="panel__menu-link" to="/panel/callback/requests" @click="closeMainMenu"><span class="panel__menu-icon">
-                      <img src="@/assets/img/panel-icons/feedback.svg" alt="">
-                  </span>Обращения</router-link></li>
                   <li><router-link class="panel__menu-link" to="/panel/news/articles" @click="closeMainMenu"><span class="panel__menu-icon">
                       <img src="@/assets/img/panel-icons/news.svg" alt="">
                   </span>&#1053;&#1086;&#1074;&#1086;&#1089;&#1090;&#1080;</router-link></li>
-                  <li><router-link class="panel__menu-link" to="/panel/companies/categories" @click="closeMainMenu"><span class="panel__menu-icon">
-                      <img src="@/assets/img/panel-icons/categories.svg" alt="">
-                  </span>&#1050;&#1072;&#1090;&#1077;&#1075;&#1086;&#1088;&#1080;&#1080; &#1082;&#1086;&#1084;&#1087;&#1072;&#1085;&#1080;&#1081;</router-link></li>
-                  <li><router-link class="panel__menu-link" to="/panel/companies/list" @click="closeMainMenu"><span class="panel__menu-icon">
-                      <img src="@/assets/img/panel-icons/products.svg" alt="">
-                  </span>&#1050;&#1086;&#1084;&#1087;&#1072;&#1085;&#1080;&#1080;</router-link></li>
-                  <li><router-link class="panel__menu-link" to="/panel/shop/orders" @click="closeMainMenu"><span class="panel__menu-icon">
-                      <img src="@/assets/img/panel-icons/orders.svg" alt="">
-                  </span>&#1047;&#1072;&#1082;&#1072;&#1079;&#1099; &#1084;&#1072;&#1075;&#1072;&#1079;&#1080;&#1085;&#1072;</router-link></li>
+                  <li><router-link class="panel__menu-link" to="/panel/study/categories" @click="closeMainMenu"><span class="panel__menu-icon">
+                      <img src="@/assets/img/panel-icons/study.svg" alt="">
+                  </span>Обучение</router-link></li>
                   <li><router-link class="panel__menu-link" to="/panel/shop/categories" @click="closeMainMenu"><span class="panel__menu-icon">
                       <img src="@/assets/img/panel-icons/categories.svg" alt="">
-                  </span>&#1050;&#1072;&#1090;&#1077;&#1075;&#1086;&#1088;&#1080;&#1080; &#1084;&#1072;&#1075;&#1072;&#1079;&#1080;&#1085;&#1072;</router-link></li>
-                  <li><router-link class="panel__menu-link" to="/panel/models" @click="closeMainMenu"><span class="panel__menu-icon">
+                  </span>Магазин</router-link></li>
+                  <li><router-link class="panel__menu-link" to="/panel/print/orders" @click="closeMainMenu"><span class="panel__menu-icon">
                       <img src="@/assets/img/panel-icons/models.svg" alt="">
-                  </span>&#1047;&#1072;&#1082;&#1072;&#1079;&#1099; &#1085;&#1072; &#1087;&#1077;&#1095;&#1072;&#1090;&#1100;</router-link></li>
+                  </span>Заказы на печать</router-link></li>
+                  <li><router-link class="panel__menu-link" to="/panel/gallery/categories" @click="closeMainMenu"><span class="panel__menu-icon">
+                      <img src="@/assets/img/panel-icons/categories.svg" alt="">
+                  </span>Галерея</router-link></li>
+                  <li><router-link class="panel__menu-link" to="/panel/companies/list" @click="closeMainMenu"><span class="panel__menu-icon">
+                      <img src="@/assets/img/panel-icons/products.svg" alt="">
+                  </span>Компании</router-link></li>
+                  <li><router-link class="panel__menu-link" to="/panel/callback/requests" @click="closeMainMenu"><span class="panel__menu-icon">
+                      <img src="@/assets/img/panel-icons/feedback.svg" alt="">
+                  </span>Обращения</router-link></li>
                   <li><router-link class="panel__menu-link" to="/" @click="closeMainMenu"><span class="panel__menu-icon">
                       <img src="@/assets/img/panel-icons/news.svg" alt="">
                   </span>&#1042;&#1077;&#1088;&#1085;&#1091;&#1090;&#1100;&#1089;&#1103; &#1085;&#1072; &#1089;&#1072;&#1081;&#1090;</router-link></li>

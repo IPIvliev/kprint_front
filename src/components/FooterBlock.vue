@@ -50,11 +50,11 @@
         <div class="footer__line tablet-visible mb-2 mb-md-0"></div>
         <div class="footer__block">
           <div class="footer__title">Почта для связи с нами:</div>
-          <div class="footer__link"><a href="mailto:info@kprint.ru">info@kprint.ru</a></div>
+          <div class="footer__link"><a :href="mainOfficeEmailHref">{{ mainOfficeEmail }}</a></div>
         </div>
         <div class="footer__block">
           <div class="footer__title">Телефон:</div>
-          <div class="footer__link"> <a href="tel:+79601863596">+7 960 186–35–96</a></div>
+          <div class="footer__link"> <a :href="mainOfficePhoneHref">{{ mainOfficePhone }}</a></div>
           <div class="btn btn--red modal-trigger" data-bs-toggle="modal" data-bs-target="#modalCallback">Перезвоните мне</div>
         </div>
       </div>
@@ -71,13 +71,49 @@
 </template>
 
 <script>
+import {
+  DEFAULT_MAIN_OFFICE_EMAIL,
+  DEFAULT_MAIN_OFFICE_PHONE,
+  emailToMailtoHref,
+  getContactOfficesData,
+  phoneToTelHref
+} from '@/services/contact-office.service'
+
 export default {
+  created () {
+    this.loadMainOfficePhone()
+  },
   data () {
     return {
-      shopMenuIsOpen: false
+      shopMenuIsOpen: false,
+      mainOfficeEmail: DEFAULT_MAIN_OFFICE_EMAIL,
+      mainOfficePhone: DEFAULT_MAIN_OFFICE_PHONE
+    }
+  },
+  computed: {
+    mainOfficeEmailHref () {
+      return emailToMailtoHref(this.mainOfficeEmail)
+    },
+    mainOfficePhoneHref () {
+      return phoneToTelHref(this.mainOfficePhone)
     }
   },
   methods: {
+    async loadMainOfficePhone () {
+      try {
+        const payload = await getContactOfficesData()
+        const email = String(payload?.main_office_email || '').trim()
+        const phone = String(payload?.main_office_phone || '').trim()
+        if (email) {
+          this.mainOfficeEmail = email
+        }
+        if (phone) {
+          this.mainOfficePhone = phone
+        }
+      } catch (error) {
+        // keep default phone when contact offices API is unavailable
+      }
+    },
     openShopMenu () {
       this.shopMenuIsOpen = !this.shopMenuIsOpen
     }

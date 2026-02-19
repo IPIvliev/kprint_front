@@ -71,8 +71,8 @@
                         </router-link>
                     </li> -->
                     </ul>
-                    <ul v-else class="panel__menu">
-                      <li>
+                    <ul v-else class="panel__menu panel__menu--manager" style="display: flex; flex-direction: column;">
+                      <li style="order: 10;">
                         <router-link class="panel__menu-link" to="/panel/manager" active-class="panel__menu-link--active">
                           <span class="panel__menu-icon">
                             <img src="@/assets/img/panel-icons/shop.svg" alt="">
@@ -80,7 +80,7 @@
                           &#1044;&#1072;&#1096;&#1073;&#1086;&#1088;&#1076; &#1084;&#1077;&#1085;&#1077;&#1076;&#1078;&#1077;&#1088;&#1072;
                         </router-link>
                       </li>
-                      <li>
+                      <li style="order: 80;">
                         <router-link class="panel__menu-link" to="/panel/callback/requests" active-class="panel__menu-link--active">
                           <span class="panel__menu-icon">
                             <img src="@/assets/img/panel-icons/feedback.svg" alt="">
@@ -88,7 +88,7 @@
                           Обращения
                         </router-link>
                       </li>
-                      <li>
+                      <li style="order: 60;">
                         <button
                           type="button"
                           class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"
@@ -99,7 +99,7 @@
                             <img src="@/assets/img/panel-icons/categories.svg" alt="">
                           </span>
                           Галерея
-                          <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': galleryOpen }">▼</span>
+                          <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': galleryOpen }">▾</span>
                         </button>
                         <ul v-if="galleryOpen" class="panel__menu-sub">
                           <li>
@@ -120,7 +120,7 @@
                           </li>
                         </ul>
                       </li>
-                      <li>
+                      <li style="order: 70;">
                         <button
                           type="button"
                           class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"
@@ -131,7 +131,7 @@
                             <img src="@/assets/img/panel-icons/categories.svg" alt="">
                           </span>
                           Компании
-                          <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': companyOpen }">▼</span>
+                          <span class="panel__menu-caret" :class="{ 'panel__menu-caret--open': companyOpen }">▾</span>
                         </button>
                         <ul v-if="companyOpen" class="panel__menu-sub">
                           <li>
@@ -152,7 +152,7 @@
                           </li>
                         </ul>
                       </li>
-                      <li>
+                      <li style="order: 20;">
                         <button
                           type="button"
                           class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"
@@ -192,7 +192,7 @@
                           </li>
                         </ul>
                       </li>
-                      <li>
+                      <li style="order: 30;">
                         <button
                           type="button"
                           class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"
@@ -256,7 +256,7 @@
                           </li>
                         </ul>
                       </li>
-                      <li>
+                      <li style="order: 40;">
                         <button
                           type="button"
                           class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"
@@ -376,7 +376,7 @@
                           </li>
                         </ul>
                       </li>
-                      <li>
+                      <li style="order: 50;">
                         <button
                           type="button"
                           class="panel__menu-link panel__menu-link--toggle panel__menu-link--flat"
@@ -416,14 +416,6 @@
                           </li>
                         </ul>
                       </li>
-                      <li>
-                        <a class="panel__menu-link" :href="telegramBotUrl" target="_blank" rel="noopener">
-                          <span class="panel__menu-icon">
-                            <img src="@/assets/img/panel-icons/telegram.svg" alt="">
-                          </span>
-                          Телеграм бот
-                        </a>
-                      </li>
                     </ul>
                   </div>
 
@@ -456,7 +448,6 @@ export default {
   data () {
     return {
       panelMode: 'user',
-      telegramBotUrl: process.env.VUE_APP_TELEGRAM_BOT_URL || '#',
       newsOpen: false,
       galleryOpen: false,
       companyOpen: false,
@@ -599,3 +590,24 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.panel__block--1 {
+  height: auto;
+  max-height: none;
+  overflow: visible;
+}
+
+.panel__block--1.panel__block--menu-open {
+  max-height: none;
+}
+
+.panel__block--1 .panel__body {
+  overflow: visible;
+}
+
+.panel__block--1 .panel__footer {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+</style>

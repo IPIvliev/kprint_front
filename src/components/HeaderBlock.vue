@@ -148,7 +148,7 @@
           </div>
         </div>
         <div class="header__tel nout-hide">
-          <p> <a href="tel:+79601863596">+7 960 186–35–96</a></p>
+          <p> <a :href="mainOfficePhoneHref">{{ mainOfficePhone }}</a></p>
           <p><span class="header__telback modal-trigger" data-bs-toggle="modal" data-bs-target="#modalCallback">Обратный звонок  </span></p>
         </div>
         <router-link
@@ -229,7 +229,7 @@
             </div>
             <div class="menu__row">
               <div class="menu__title">Телефон:</div>
-              <div class="menu__tel"> <a href="tel:+79601863596">+7 960 186–35–96</a></div>
+              <div class="menu__tel"> <a :href="mainOfficePhoneHref">{{ mainOfficePhone }}</a></div>
               <div class="btn btn--red modal-trigger" data-bs-toggle="modal" data-bs-target="#modalCallback">Перезвоните мне</div>
             </div>
             <div class="menu__row">
@@ -320,13 +320,18 @@
 </template>
 
 <script>
+import { DEFAULT_MAIN_OFFICE_PHONE, getContactOfficesData, phoneToTelHref } from '@/services/contact-office.service'
 
 export default {
+  created () {
+    this.loadMainOfficePhone()
+  },
   data () {
     return {
       mainMenuIsOpen: false,
       catalogMenuIsOpen: false,
-      languageMenuIsOpen: false
+      languageMenuIsOpen: false,
+      mainOfficePhone: DEFAULT_MAIN_OFFICE_PHONE
     }
   },
   computed: {
@@ -336,9 +341,23 @@ export default {
     showMobileCartButton () {
       const hiddenRoutes = ['Cart', 'ShopOrder']
       return !hiddenRoutes.includes(this.$route?.name)
+    },
+    mainOfficePhoneHref () {
+      return phoneToTelHref(this.mainOfficePhone)
     }
   },
   methods: {
+    async loadMainOfficePhone () {
+      try {
+        const payload = await getContactOfficesData()
+        const phone = String(payload?.main_office_phone || '').trim()
+        if (phone) {
+          this.mainOfficePhone = phone
+        }
+      } catch (error) {
+        // keep default phone when contact offices API is unavailable
+      }
+    },
     openMainMenu () {
       this.mainMenuIsOpen = !this.mainMenuIsOpen
       this.catalogMenuIsOpen = false
