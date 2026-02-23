@@ -134,6 +134,7 @@
 <script>
 import ProductStock from '@/components/elements/Shop/ProductStock.vue'
 import ProductAmount from '@/components/elements/Shop/ProductAmount.vue'
+import { promptAuthForCart } from '@/services/cart-auth.service'
 
 export default {
   props: ['background', 'product'],
@@ -240,8 +241,11 @@ export default {
       price = price[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
       return price
     },
-    addProductToCart () {
-      this.$store.dispatch('shop/AddProductToCart', this.product)
+    async addProductToCart () {
+      const result = await this.$store.dispatch('shop/AddProductToCart', this.product)
+      if (result?.requiresAuth) {
+        promptAuthForCart({ router: this.$router, route: this.$route })
+      }
     },
     openGallery () {
       if (!this.GetPhotos.length) {

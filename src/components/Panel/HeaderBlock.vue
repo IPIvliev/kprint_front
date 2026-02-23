@@ -193,6 +193,9 @@
                   <li><router-link class="panel__menu-link" to="/panel/models" @click="closeMainMenu"><span class="panel__menu-icon">
                       <img src="@/assets/img/panel-icons/models.svg" alt="">
                   </span>&#1047;&#1072;&#1082;&#1072;&#1079;&#1099; &#1085;&#1072; 3D &#1087;&#1077;&#1095;&#1072;&#1090;&#1100;</router-link></li>
+                  <li><router-link class="panel__menu-link" to="/panel/study" @click="closeMainMenu"><span class="panel__menu-icon">
+                      <img src="@/assets/img/panel-icons/study.svg" alt="">
+                  </span>Обучение</router-link></li>
                   <li><router-link class="panel__menu-link" to="/" @click="closeMainMenu"><span class="panel__menu-icon">
                       <img src="@/assets/img/panel-icons/news.svg" alt="">
                   </span>&#1042;&#1077;&#1088;&#1085;&#1091;&#1090;&#1100;&#1089;&#1103; &#1085;&#1072; &#1089;&#1072;&#1081;&#1090;</router-link></li>

@@ -1,10 +1,10 @@
 <template>
   <yandex-map
-    v-if="location"
+    v-if="mapCenter"
     class="map cmp-components-shop-yandexmap"
     :settings="{
       location: {
-        center: [location.geo_lon, location.geo_lat],
+        center: mapCenter,
         zoom: 11,
       },
     }"
@@ -20,38 +20,18 @@
     </yandex-map-controls>
     <yandex-map-default-features-layer />
 
-    <template v-for="(office, index) in GetOffices">
+    <template v-for="(office, index) in offices">
       <yandex-map-marker
-        v-if="activeLink === 'pochta'"
-        :key="`pochta-${index}`"
-        :settings="{
-          coordinates: [office['longitude'], office['latitude']],
-          onClick: () => $emit('selectMarker', index, office['postal-code'])
-        }"
-      >
-        <div
-          class="circle"
-          :style="{
-            '--color': '#D83A56',
-            '--color': office['type-code'] === '袩袨效孝袨袦袗孝' ? '#4169E1' : 'var(--bs-primary)',
-          }"
-        >
-          <div class="circle_element" />
-        </div>
-      </yandex-map-marker>
-
-      <yandex-map-marker
-        v-else
+        v-if="hasCoordinates(office)"
         :key="`sdek-${index}`"
         :settings="{
-          coordinates: [office['location']['longitude'], office['location']['latitude']],
+          coordinates: [Number(office['location']['longitude']), Number(office['location']['latitude'])],
           onClick: () => $emit('selectMarker', index)
         }"
       >
         <div
           class="circle"
           :style="{
-            '--color': '#D83A56',
             '--color': 'var(--bs-green)',
           }"
         >
@@ -81,7 +61,32 @@ createYmapsOptions({
 
 <script>
 export default {
-  props: ['location', 'GetOffices', 'activeLink'],
-  emits: ['selectMarker']
+  props: ['location', 'offices'],
+  emits: ['selectMarker'],
+  computed: {
+    mapCenter () {
+      const geoLon = Number(this.location?.geo_lon)
+      const geoLat = Number(this.location?.geo_lat)
+      if (Number.isFinite(geoLon) && Number.isFinite(geoLat)) {
+        return [geoLon, geoLat]
+      }
+
+      const firstOffice = Array.isArray(this.offices) ? this.offices[0] : null
+      const officeLon = Number(firstOffice?.location?.longitude)
+      const officeLat = Number(firstOffice?.location?.latitude)
+      if (Number.isFinite(officeLon) && Number.isFinite(officeLat)) {
+        return [officeLon, officeLat]
+      }
+
+      return null
+    }
+  },
+  methods: {
+    hasCoordinates (office) {
+      const longitude = Number(office?.location?.longitude)
+      const latitude = Number(office?.location?.latitude)
+      return Number.isFinite(longitude) && Number.isFinite(latitude)
+    }
+  }
 }
 </script>

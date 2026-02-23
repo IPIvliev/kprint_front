@@ -3,11 +3,11 @@
     <table class="table" v-if="getCartProducts.length > 0">
       <thead>
         <tr class="text-center text_gray">
-          <th scope="col">???????????? ??????</th>
-          <th scope="col">?????????</th>
-          <th scope="col">??????????</th>
-          <th scope="col">?????</th>
-          <th scope="col">???????</th>
+          <th scope="col">Наименование</th>
+          <th scope="col">Цена 1 ед.</th>
+          <th scope="col">Количество</th>
+          <th scope="col">Стоимость</th>
+          <th scope="col">...</th>
         </tr>
       </thead>
       <tbody>
@@ -18,11 +18,11 @@
             </router-link>
             <p class="product_name">{{ cartProduct.title }}</p>
           </td>
-          <td><div class="table_price">{{ cartProduct.price }} ???.</div></td>
+          <td><div class="table_price">{{ cartProduct.price }} руб.</div></td>
           <td>
             <ProductAmount :product="cartProduct" />
           </td>
-          <td><div class="table_price">{{ cartProductTotal(cartProduct) }} ???.</div></td>
+          <td><div class="table_price">{{ cartProductTotal(cartProduct) }} руб.</div></td>
           <td>
             <div class="table_trash" @click="deleteItemFromCart(cartProduct)">
               <img src="@/assets/img/trash.svg" />
@@ -31,30 +31,6 @@
         </tr>
       </tbody>
     </table>
-
-    <table class="table mt-2" v-if="getCartCourses.length > 0">
-      <thead>
-        <tr class="text-center text_gray">
-          <th scope="col">????</th>
-          <th scope="col">?????</th>
-          <th scope="col">???????</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="gray_background align-middle" v-for="courseItem in getCartCourses" :key="courseItem.course_id + '-' + courseItem.price_id">
-          <td class="">
-            <p class="product_name">{{ courseItem.course_name }} - {{ courseItem.price_name }}</p>
-          </td>
-          <td><div class="table_price">{{ courseItem.price * courseItem.quantity }} ???.</div></td>
-          <td>
-            <div class="table_trash" @click="deleteCourseFromCart(courseItem)">
-              <img src="@/assets/img/trash.svg" />
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
   </div>
 </template>
 
@@ -79,16 +55,12 @@ export default {
   computed: {
     ...mapGetters({
       getCartProducts: 'shop/cartProducts',
-      cartProductTotal: 'shop/cartProductTotal',
-      getCartCourses: 'shop/cartCourseItems'
+      cartProductTotal: 'shop/cartProductTotal'
     })
   },
   methods: {
     deleteItemFromCart (cartProduct) {
       this.$store.dispatch('shop/DeleteItemFromCart', cartProduct)
-    },
-    deleteCourseFromCart (courseItem) {
-      this.$store.dispatch('shop/DeleteCourseFromCart', courseItem)
     }
   }
 }

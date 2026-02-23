@@ -87,3 +87,11 @@ export function managerStartPrintOrderDelivery (orderId, payload) {
 export function managerMarkPrintOrderReceived (orderId) {
   return api.post(`/api/printjobs/${orderId}/manager_mark_received/`)
 }
+
+export function userMarkPrintOrderReceived (orderId) {
+  return api.post(`/api/printjobs/${orderId}/user_mark_received/`)
+}
+
+export function deletePrintOrder (orderId) {
+  return api.delete(`/api/printjobs/${orderId}/`)
+}

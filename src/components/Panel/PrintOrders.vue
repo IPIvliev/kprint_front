@@ -316,6 +316,12 @@
               </button>
             </div>
 
+            <div v-if="!isManagerMode && canUserMarkReceived" class="print-order-action-row">
+              <button type="button" class="btn btn--red" :disabled="actionLoading" @click="onUserMarkReceived">
+                Отметить как полученный
+              </button>
+            </div>
+
             <div v-if="isManagerMode && canManagerSetPrice" class="print-order-action-row">
               <input
                 v-model="managerPrice"
@@ -379,6 +385,12 @@
               </button>
             </div>
 
+            <div v-if="canDeleteOrder" class="print-order-action-row">
+              <button type="button" class="btn btn--grayborder" :disabled="actionLoading" @click="onDeleteOrder">
+                Удалить заказ
+              </button>
+            </div>
+
             <div v-if="actionError" class="panel__table-text" style="color: #c13333;">{{ actionError }}</div>
             <div v-if="actionSuccess" class="panel__table-text" style="color: #198754;">{{ actionSuccess }}</div>
           </div>
@@ -394,6 +406,7 @@ import MenuBlock from '../elements/Panel/MenuBlock.vue'
 import {
   acceptPrintOrderPrice,
   acceptPrintOrderResult,
+  deletePrintOrder,
   fetchPrintOrder,
   fetchPrintOrders,
   managerMarkPrintOrderReceived,
@@ -405,7 +418,8 @@ import {
   rejectPrintOrderPrice,
   repeatPrintOrder,
   requestPrintOrderPriceReview,
-  requestPrintOrderRework
+  requestPrintOrderRework,
+  userMarkPrintOrderReceived
 } from '@/services/print.service'
 import {
   getSafePanelMode,
@@ -602,6 +616,9 @@ export default {
     canRepeatOrder () {
       return this.selectedOrder && ['ACCEPTED_BY_CUSTOMER', 'CANCELLED', 'IN_DELIVERY', 'RECEIVED'].includes(this.selectedOrder.status)
     },
+    canUserMarkReceived () {
+      return this.selectedOrder && this.selectedOrder.status === 'IN_DELIVERY'
+    },
     canManagerSetPrice () {
       return this.selectedOrder && ['NEW', 'PRICE_REVIEW_REQUIRED', 'REWORK'].includes(this.selectedOrder.status)
     },
@@ -616,6 +633,9 @@ export default {
     },
     canManagerMarkReceived () {
       return this.selectedOrder && this.selectedOrder.status === 'IN_DELIVERY'
+    },
+    canDeleteOrder () {
+      return Boolean(this.selectedOrder?.id)
     },
     reviewParsedDimensionsCm () {
       return {
@@ -928,11 +948,45 @@ export default {
         'Заказ передан в доставку.'
       )
     },
+    async onUserMarkReceived () {
+      await this.performAction(
+        () => userMarkPrintOrderReceived(this.selectedOrder.id),
+        'Заказ отмечен как полученный.'
+      )
+    },
     async onManagerMarkReceived () {
       await this.performAction(
         () => managerMarkPrintOrderReceived(this.selectedOrder.id),
         'Заказ отмечен как полученный.'
       )
+    },
+    async onDeleteOrder () {
+      if (!this.selectedOrder?.id) {
+        return
+      }
+      const isConfirmed = typeof window === 'undefined'
+        ? true
+        : window.confirm(`Удалить заказ #${this.selectedOrder.id}? Это действие нельзя отменить.`)
+      if (!isConfirmed) {
+        return
+      }
+
+      this.actionLoading = true
+      this.actionError = ''
+      this.actionSuccess = ''
+
+      const orderId = this.selectedOrder.id
+      try {
+        await deletePrintOrder(orderId)
+        this.orders = this.orders.filter(order => order.id !== orderId)
+        this.closeDetailModal()
+        this.selectedOrder = null
+        await this.fetchOrders()
+      } catch (err) {
+        this.actionError = err.userMessage || 'Не удалось удалить заказ'
+      } finally {
+        this.actionLoading = false
+      }
     },
     goToPrintCalculator () {
       this.$router.push({

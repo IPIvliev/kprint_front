@@ -268,6 +268,14 @@ export function updateShopOrder (orderId, payload) {
   return api.patch(`/api/shop/orders/${orderId}`, payload)
 }
 
+export function fetchUserShopOrders () {
+  return api.get('/api/shop/my/orders')
+}
+
+export function fetchUserShopOrder (orderId) {
+  return api.get(`/api/shop/my/orders/${orderId}`)
+}
+
 export function fetchPrintManagerMaterialCategories () {
   return api.get('/api/print/manager/material-categories/')
 }

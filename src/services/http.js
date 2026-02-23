@@ -1,8 +1,12 @@
 import axios from 'axios'
 import { normalizeApiError } from './api-error'
 
-const API_BASE = process.env.VUE_APP_API_BASE
-const USER_API_BASE = process.env.VUE_APP_USER_API_BASE
+function normalizeBaseUrl (value) {
+  return String(value || '').trim().replace(/\/+$/, '')
+}
+
+const API_BASE = normalizeBaseUrl(process.env.VUE_APP_API_BASE)
+const USER_API_BASE = normalizeBaseUrl(process.env.VUE_APP_USER_API_BASE || API_BASE)
 
 function getStoredUser () {
   try {

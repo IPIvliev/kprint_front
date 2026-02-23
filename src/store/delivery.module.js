@@ -18,8 +18,8 @@ export const delivery = {
     setPochtaOffices (state, pochtaOffices) {
       state.pochta_offices = pochtaOffices
     },
-    setSdekOffices (state, pochtaOffices) {
-      state.sdek_offices = pochtaOffices
+    setSdekOffices (state, sdekOffices) {
+      state.sdek_offices = sdekOffices
     },
     setPrice (state, DeliveryPrice) {
       state.delivery_price = DeliveryPrice
@@ -44,12 +44,33 @@ export const delivery = {
           commit('setPochtaOffices', response.data)
         })
     },
-    fetchSdekOffices ({ commit }, postalCode) {
-      return fetchSdekOffices({
-        postal_code: postalCode
-      })
+    fetchSdekOffices ({ commit }, payload) {
+      const params = {}
+      if (payload && typeof payload === 'object' && !Array.isArray(payload)) {
+        if (payload.postal_code) {
+          params.postal_code = payload.postal_code
+        }
+        if (payload.lat !== undefined && payload.lat !== null && payload.lat !== '') {
+          params.lat = payload.lat
+        }
+        if (payload.lon !== undefined && payload.lon !== null && payload.lon !== '') {
+          params.lon = payload.lon
+        }
+      } else if (payload !== undefined && payload !== null && payload !== '') {
+        params.postal_code = payload
+      }
+
+      return fetchSdekOffices(params)
         .then(response => {
-          commit('setSdekOffices', response.data)
+          const payload = response?.data
+          const offices = Array.isArray(payload)
+            ? payload
+            : (Array.isArray(payload?.offices) ? payload.offices : [])
+          commit('setSdekOffices', offices)
+        })
+        .catch(error => {
+          commit('setSdekOffices', [])
+          throw error
         })
     },
     fetchPochtaPrice ({ commit }, data) {

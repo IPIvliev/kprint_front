@@ -5,16 +5,23 @@ export const shop = {
   namespaced: true,
   state: {
     cart: [],
-    course_cart: [],
     discount_amount: 0,
-    new_order: ''
+    new_order: '',
+    active_order_id: null
   },
   // computed
   getters: {
     cartProducts (state, getters, rootState, rootGetters) {
-      return state.cart.map(cartItem => {
-        const product = rootState.catalog.products.find(product => product.id === cartItem.id)
-        return {
+      const catalogProducts = Array.isArray(rootState?.catalog?.products)
+        ? rootState.catalog.products
+        : []
+
+      return state.cart.reduce((items, cartItem) => {
+        const product = catalogProducts.find(product => product.id === cartItem.id)
+        if (!product) {
+          return items
+        }
+        items.push({
           id: product.id,
           category: product.category,
           title: product.name,
@@ -22,18 +29,9 @@ export const shop = {
           photo: product.photo,
           mass: product.mass,
           quantity: cartItem.quantity
-        }
-      })
-    },
-    cartCourseItems (state) {
-      return state.course_cart
-    },
-    cartCoursesTotal (state) {
-      let total = 0
-      state.course_cart.forEach(course => {
-        total += course.price * course.quantity
-      })
-      return total
+        })
+        return items
+      }, [])
     },
     getDeliveryPrice (state, getters, rootState, rootGetters) {
       if (state.cart.length === 0) {
@@ -51,6 +49,9 @@ export const shop = {
     cartProductTotal (state, getters) {
       return (thisproduct) => {
         const cartProduct = getters.cartProducts.find(product => product.id === thisproduct.id)
+        if (!cartProduct) {
+          return 0
+        }
         return cartProduct.price * cartProduct.quantity
       }
     },
@@ -59,10 +60,6 @@ export const shop = {
 
       getters.cartProducts.forEach(product => {
         total += product.price * product.quantity
-      })
-
-      getters.cartCourseItems.forEach(course => {
-        total += course.price * course.quantity
       })
 
       return total
@@ -81,10 +78,6 @@ export const shop = {
 
       getters.cartProducts.forEach(product => {
         total += product.price * product.quantity
-      })
-
-      getters.cartCourseItems.forEach(course => {
-        total += course.price * course.quantity
       })
 
       if (state.discount_amount > 0) {
@@ -119,9 +112,6 @@ export const shop = {
     },
     cartHasProducts (state) {
       return state.cart.length > 0
-    },
-    cartHasCourses (state) {
-      return state.course_cart.length > 0
     }
   },
   // methods
@@ -132,9 +122,10 @@ export const shop = {
       if (localStorage.getItem('cart')) {
         state.cart = JSON.parse(localStorage.getItem('cart')) || []
       }
-      if (localStorage.getItem('course_cart')) {
-        state.course_cart = JSON.parse(localStorage.getItem('course_cart')) || []
-      }
+      localStorage.removeItem('course_cart')
+      const rawOrderId = localStorage.getItem('shop_active_order_id')
+      const parsedOrderId = Number(rawOrderId)
+      state.active_order_id = Number.isFinite(parsedOrderId) && parsedOrderId > 0 ? parsedOrderId : null
     },
     pushProductToCart (state, productId) {
       // const item = {
@@ -164,24 +155,30 @@ export const shop = {
       state.cart.splice(index, 1)
       localStorage.setItem('cart', JSON.stringify(state.cart))
     },
-    pushCourseToCart (state, courseItem) {
-      state.course_cart.push(courseItem)
-      localStorage.setItem('course_cart', JSON.stringify(state.course_cart))
-    },
-    deleteCourseFromCart (state, courseItem) {
-      const index = state.course_cart.indexOf(courseItem)
-      state.course_cart.splice(index, 1)
-      localStorage.setItem('course_cart', JSON.stringify(state.course_cart))
-    },
-    incrementCourseQuantity (state, courseItem) {
-      courseItem.quantity++
-      localStorage.setItem('course_cart', JSON.stringify(state.course_cart))
-    },
     setDiscountAmount (state, discountAmount) {
       state.discount_amount = discountAmount
     },
     setNewOrder (state, newOrder) {
       state.new_order = newOrder
+    },
+    setActiveOrderId (state, orderId) {
+      const parsed = Number(orderId)
+      const normalized = Number.isFinite(parsed) && parsed > 0 ? parsed : null
+      state.active_order_id = normalized
+      if (normalized) {
+        localStorage.setItem('shop_active_order_id', String(normalized))
+      } else {
+        localStorage.removeItem('shop_active_order_id')
+      }
+    },
+    clearCartState (state) {
+      state.cart = []
+      state.discount_amount = 0
+      state.new_order = ''
+      state.active_order_id = null
+      localStorage.removeItem('cart')
+      localStorage.removeItem('course_cart')
+      localStorage.removeItem('shop_active_order_id')
     }
   }
 }

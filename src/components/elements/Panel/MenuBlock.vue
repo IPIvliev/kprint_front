@@ -43,7 +43,7 @@
                           <span class="panel__menu-icon">
                 <img src="@/assets/img/panel-icons/cart.svg" alt="">
                             </span>
-                            Заказы в магазине<span class="panel__menu-num">2</span>
+                            Заказы в магазине<span v-if="unpaidShopOrdersCount > 0" class="panel__menu-num">{{ unpaidShopOrdersCount }}</span>
                         </router-link>
                       </li>
                       <li>
@@ -51,7 +51,7 @@
                           <span class="panel__menu-icon">
               <img src="@/assets/img/panel-icons/models.svg" alt="">
                           </span>
-                          Заказы на 3Д печать<span class="panel__menu-num">46</span>
+                          Заказы на 3Д печать<span v-if="pendingPrintOrdersCount > 0" class="panel__menu-num">{{ pendingPrintOrdersCount }}</span>
                         </router-link>
                       </li>
           <li>
@@ -59,7 +59,7 @@
                             <span class="panel__menu-icon">
                 <img src="@/assets/img/panel-icons/study.svg" alt="">
                             </span>
-                            Обучение<span class="panel__menu-num">46</span>
+                            Обучение
                         </router-link>
                     </li>
           <!-- <li>
@@ -436,6 +436,8 @@
 
 <script>
 import { defaultAvatarPlaceholder } from '@/constants/avatarPlaceholders'
+import { fetchUserShopOrders } from '@/services/panel.service'
+import { fetchPrintOrders } from '@/services/print.service'
 import {
   getSafePanelMode,
   getStoredPanelMode,
@@ -455,7 +457,9 @@ export default {
       shopOpen: false,
       deliveryOpen: false,
       filterOpen: false,
-      printOpen: false
+      printOpen: false,
+      unpaidShopOrdersCount: 0,
+      pendingPrintOrdersCount: 0
     }
   },
   computed: {
@@ -541,10 +545,38 @@ export default {
     },
     togglePrintMenu () {
       this.printOpen = !this.printOpen
+    },
+    async loadUnpaidShopOrdersCount () {
+      if (!this.currentUser) {
+        this.unpaidShopOrdersCount = 0
+        return
+      }
+      try {
+        const response = await fetchUserShopOrders()
+        const orders = Array.isArray(response.data) ? response.data : []
+        this.unpaidShopOrdersCount = orders.filter(order => !order.is_paid).length
+      } catch (error) {
+        this.unpaidShopOrdersCount = 0
+      }
+    },
+    async loadPendingPrintOrdersCount () {
+      if (!this.currentUser) {
+        this.pendingPrintOrdersCount = 0
+        return
+      }
+      try {
+        const response = await fetchPrintOrders({ my: 1 })
+        const orders = Array.isArray(response.data) ? response.data : []
+        this.pendingPrintOrdersCount = orders.filter(order => order.status !== 'RECEIVED').length
+      } catch (error) {
+        this.pendingPrintOrdersCount = 0
+      }
     }
   },
   mounted () {
     this.syncPanelMode()
+    this.loadUnpaidShopOrdersCount()
+    this.loadPendingPrintOrdersCount()
     if (typeof window !== 'undefined') {
       window.addEventListener(PANEL_MODE_EVENT, this.syncPanelMode)
       window.addEventListener('storage', this.syncPanelMode)
@@ -586,6 +618,8 @@ export default {
   watch: {
     currentUser () {
       this.syncPanelMode()
+      this.loadUnpaidShopOrdersCount()
+      this.loadPendingPrintOrdersCount()
     }
   }
 }

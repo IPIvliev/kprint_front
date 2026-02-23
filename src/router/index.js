@@ -159,6 +159,11 @@ const routes = [
         component: () => import('../views/Panel/Panel.vue')
       },
       {
+        path: 'study',
+        name: 'PanelStudy',
+        component: () => import('../views/Panel/Panel.vue')
+      },
+      {
         path: 'manager',
         name: 'PanelManager',
         component: () => import('../views/Panel/PanelManager.vue')

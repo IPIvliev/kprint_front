@@ -1,173 +1,551 @@
 <template>
-      <div class="content content--pbn">
-        <!-- panel-->
-        <div class="panel">
-          <div class="container">
-            <div class="row">
-              <menu-block/>
-              <div class="col-xxl-9 col-xl-8">
-                <div class="panel__block">
-                  <div class="panel__head">
-                    <div class="panel__title">Принтеры<span>2</span></div>
-                    <div class="panel__search d-none d-lg-block">
-                      <div class="input">
-                        <input id="search" type="text" placeholder="Поиск по названию модели или принтера">
-                        <label class="panel__search-icon" for="search">
-                          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7.5 12.75C10.3995 12.75 12.75 10.3995 12.75 7.5C12.75 4.60051 10.3995 2.25 7.5 2.25C4.60051 2.25 2.25 4.60051 2.25 7.5C2.25 10.3995 4.60051 12.75 7.5 12.75Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path d="M15.75 15.75L11.25 11.25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                          </svg>
-                        </label>
-                      </div>
-                    </div>
-                    <div class="panel__add-btn">
-                      <div class="btn btn--red btn--big modal-trigger" data-bs-toggle="modal" data-bs-target="#modalAdd">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99961 14.4001C9.69699 14.4001 11.3249 13.7258 12.5251 12.5256C13.7253 11.3253 14.3996 9.69748 14.3996 8.0001C14.3996 6.30271 13.7253 4.67485 12.5251 3.47461C11.3249 2.27438 9.69699 1.6001 7.99961 1.6001C6.30222 1.6001 4.67436 2.27438 3.47413 3.47461C2.27389 4.67485 1.59961 6.30271 1.59961 8.0001C1.59961 9.69748 2.27389 11.3253 3.47413 12.5256C4.67436 13.7258 6.30222 14.4001 7.99961 14.4001ZM8.79961 5.6001C8.79961 5.38792 8.71532 5.18444 8.56529 5.03441C8.41527 4.88438 8.21178 4.8001 7.99961 4.8001C7.78744 4.8001 7.58395 4.88438 7.43392 5.03441C7.28389 5.18444 7.19961 5.38792 7.19961 5.6001V7.2001H5.59961C5.38744 7.2001 5.18395 7.28438 5.03392 7.43441C4.88389 7.58444 4.79961 7.78792 4.79961 8.0001C4.79961 8.21227 4.88389 8.41575 5.03392 8.56578C5.18395 8.71581 5.38744 8.8001 5.59961 8.8001H7.19961V10.4001C7.19961 10.6123 7.28389 10.8158 7.43392 10.9658C7.58395 11.1158 7.78744 11.2001 7.99961 11.2001C8.21178 11.2001 8.41527 11.1158 8.56529 10.9658C8.71532 10.8158 8.79961 10.6123 8.79961 10.4001V8.8001H10.3996C10.6118 8.8001 10.8153 8.71581 10.9653 8.56578C11.1153 8.41575 11.1996 8.21227 11.1996 8.0001C11.1996 7.78792 11.1153 7.58444 10.9653 7.43441C10.8153 7.28438 10.6118 7.2001 10.3996 7.2001H8.79961V5.6001Z" fill="white"></path>
-                        </svg>
-                        <div class="d-none d-md-block">Добавить  принтер</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="panel__body">
-                    <div class="panel__search d-block d-lg-none">
-                      <div class="input">
-                        <input id="searchMob" type="text" placeholder="Поиск по названию модели или принтера">
-                        <label class="panel__search-icon" for="searchMob">
-                          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7.5 12.75C10.3995 12.75 12.75 10.3995 12.75 7.5C12.75 4.60051 10.3995 2.25 7.5 2.25C4.60051 2.25 2.25 4.60051 2.25 7.5C2.25 10.3995 4.60051 12.75 7.5 12.75Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path d="M15.75 15.75L11.25 11.25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                          </svg>
-                        </label>
-                      </div>
-                    </div>
-                    <div class="panel__table">
-                      <table>
-                        <tr>
-                          <td> <img src="@/assets/img/gallery_1.webp" alt=""></td>
-                          <td> <span class="panel__table-title">Kulibin Print PRO1</span><span class="panel__table-sn panel__table-sn--success panel__table-sn--ttu">S/N: KP0010245087</span></td>
-                          <td> <span class="panel__table-subtitle">Время работы:</span><span class="panel__table-text">80 ч. 46 мин.</span></td>
-                          <td> <span class="panel__table-subtitle">Напечатано:</span><span class="panel__table-text">28 моделей</span></td>
-                          <td> <span class="panel__table-link modal-trigger" data-bs-toggle="modal" data-bs-target="#modalInfo">
-                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M14.3996 8.0001C14.3996 9.69748 13.7253 11.3253 12.5251 12.5256C11.3249 13.7258 9.69699 14.4001 7.99961 14.4001C6.30222 14.4001 4.67436 13.7258 3.47413 12.5256C2.27389 11.3253 1.59961 9.69748 1.59961 8.0001C1.59961 6.30271 2.27389 4.67485 3.47413 3.47461C4.67436 2.27438 6.30222 1.6001 7.99961 1.6001C9.69699 1.6001 11.3249 2.27438 12.5251 3.47461C13.7253 4.67485 14.3996 6.30271 14.3996 8.0001ZM8.79961 4.8001C8.79961 5.01227 8.71532 5.21575 8.56529 5.36578C8.41527 5.51581 8.21178 5.6001 7.99961 5.6001C7.78744 5.6001 7.58395 5.51581 7.43392 5.36578C7.28389 5.21575 7.19961 5.01227 7.19961 4.8001C7.19961 4.58792 7.28389 4.38444 7.43392 4.23441C7.58395 4.08438 7.78744 4.0001 7.99961 4.0001C8.21178 4.0001 8.41527 4.08438 8.56529 4.23441C8.71532 4.38444 8.79961 4.58792 8.79961 4.8001ZM7.19961 7.2001C6.98744 7.2001 6.78395 7.28438 6.63392 7.43441C6.48389 7.58444 6.39961 7.78792 6.39961 8.0001C6.39961 8.21227 6.48389 8.41575 6.63392 8.56578C6.78395 8.71581 6.98744 8.8001 7.19961 8.8001V11.2001C7.19961 11.4123 7.28389 11.6158 7.43392 11.7658C7.58395 11.9158 7.78744 12.0001 7.99961 12.0001H8.79961C9.01178 12.0001 9.21527 11.9158 9.36529 11.7658C9.51532 11.6158 9.59961 11.4123 9.59961 11.2001C9.59961 10.9879 9.51532 10.7844 9.36529 10.6344C9.21527 10.4844 9.01178 10.4001 8.79961 10.4001V8.0001C8.79961 7.78792 8.71532 7.58444 8.56529 7.43441C8.41527 7.28438 8.21178 7.2001 7.99961 7.2001H7.19961Z" fill="#D83A56"></path>
-                              </svg>узнать Подробнее</span></td>
-                          <td> <span class="panel__table-icon">
-                              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 15H6L13.875 7.12498C14.2728 6.72716 14.4963 6.18759 14.4963 5.62498C14.4963 5.06237 14.2728 4.52281 13.875 4.12498C13.4772 3.72716 12.9376 3.50366 12.375 3.50366C11.8124 3.50366 11.2728 3.72716 10.875 4.12498L3 12V15Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M10.125 4.875L13.125 7.875" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                              </svg></span><span class="panel__table-icon">
-                              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 5.25H15" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M7.5 8.25V12.75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M10.5 8.25V12.75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M3.75 5.25L4.5 14.25C4.5 14.6478 4.65804 15.0294 4.93934 15.3107C5.22064 15.592 5.60218 15.75 6 15.75H12C12.3978 15.75 12.7794 15.592 13.0607 15.3107C13.342 15.0294 13.5 14.6478 13.5 14.25L14.25 5.25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M6.75 5.25V3C6.75 2.80109 6.82902 2.61032 6.96967 2.46967C7.11032 2.32902 7.30109 2.25 7.5 2.25H10.5C10.6989 2.25 10.8897 2.32902 11.0303 2.46967C11.171 2.61032 11.25 2.80109 11.25 3V5.25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                              </svg></span></td>
-                        </tr>
-                        <tr>
-                          <td> <img src="@/assets/img/welcome_sm.webp" alt=""></td>
-                          <td> <span class="panel__table-title">Kulibin Print Dental</span><span class="panel__table-sn panel__table-sn--success panel__table-sn--ttu">S/N: KP008676008</span></td>
-                          <td> <span class="panel__table-subtitle">Время работы:</span><span class="panel__table-text">36 ч. 20 мин.</span></td>
-                          <td> <span class="panel__table-subtitle">Напечатано:</span><span class="panel__table-text">7 моделей</span></td>
-                          <td> <span class="panel__table-link modal-trigger" data-bs-toggle="modal" data-bs-target="#modalInfo">
-                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M14.3996 8.0001C14.3996 9.69748 13.7253 11.3253 12.5251 12.5256C11.3249 13.7258 9.69699 14.4001 7.99961 14.4001C6.30222 14.4001 4.67436 13.7258 3.47413 12.5256C2.27389 11.3253 1.59961 9.69748 1.59961 8.0001C1.59961 6.30271 2.27389 4.67485 3.47413 3.47461C4.67436 2.27438 6.30222 1.6001 7.99961 1.6001C9.69699 1.6001 11.3249 2.27438 12.5251 3.47461C13.7253 4.67485 14.3996 6.30271 14.3996 8.0001ZM8.79961 4.8001C8.79961 5.01227 8.71532 5.21575 8.56529 5.36578C8.41527 5.51581 8.21178 5.6001 7.99961 5.6001C7.78744 5.6001 7.58395 5.51581 7.43392 5.36578C7.28389 5.21575 7.19961 5.01227 7.19961 4.8001C7.19961 4.58792 7.28389 4.38444 7.43392 4.23441C7.58395 4.08438 7.78744 4.0001 7.99961 4.0001C8.21178 4.0001 8.41527 4.08438 8.56529 4.23441C8.71532 4.38444 8.79961 4.58792 8.79961 4.8001ZM7.19961 7.2001C6.98744 7.2001 6.78395 7.28438 6.63392 7.43441C6.48389 7.58444 6.39961 7.78792 6.39961 8.0001C6.39961 8.21227 6.48389 8.41575 6.63392 8.56578C6.78395 8.71581 6.98744 8.8001 7.19961 8.8001V11.2001C7.19961 11.4123 7.28389 11.6158 7.43392 11.7658C7.58395 11.9158 7.78744 12.0001 7.99961 12.0001H8.79961C9.01178 12.0001 9.21527 11.9158 9.36529 11.7658C9.51532 11.6158 9.59961 11.4123 9.59961 11.2001C9.59961 10.9879 9.51532 10.7844 9.36529 10.6344C9.21527 10.4844 9.01178 10.4001 8.79961 10.4001V8.0001C8.79961 7.78792 8.71532 7.58444 8.56529 7.43441C8.41527 7.28438 8.21178 7.2001 7.99961 7.2001H7.19961Z" fill="#D83A56"></path>
-                              </svg>узнать Подробнее</span></td>
-                          <td> <span class="panel__table-icon">
-                              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 15H6L13.875 7.12498C14.2728 6.72716 14.4963 6.18759 14.4963 5.62498C14.4963 5.06237 14.2728 4.52281 13.875 4.12498C13.4772 3.72716 12.9376 3.50366 12.375 3.50366C11.8124 3.50366 11.2728 3.72716 10.875 4.12498L3 12V15Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M10.125 4.875L13.125 7.875" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                              </svg></span><span class="panel__table-icon">
-                              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 5.25H15" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M7.5 8.25V12.75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M10.5 8.25V12.75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M3.75 5.25L4.5 14.25C4.5 14.6478 4.65804 15.0294 4.93934 15.3107C5.22064 15.592 5.60218 15.75 6 15.75H12C12.3978 15.75 12.7794 15.592 13.0607 15.3107C13.342 15.0294 13.5 14.6478 13.5 14.25L14.25 5.25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M6.75 5.25V3C6.75 2.80109 6.82902 2.61032 6.96967 2.46967C7.11032 2.32902 7.30109 2.25 7.5 2.25H10.5C10.6989 2.25 10.8897 2.32902 11.0303 2.46967C11.171 2.61032 11.25 2.80109 11.25 3V5.25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                              </svg></span></td>
-                        </tr>
-                      </table>
-                    </div>
+  <div class="content content--pbn">
+    <div class="panel">
+      <div class="container">
+        <div class="row">
+          <menu-block />
+          <div class="col-xxl-9 col-xl-8">
+            <div class="panel__block">
+              <div class="panel__head">
+                <div class="panel__title">Заказы в магазине<span>{{ filteredOrders.length }}</span></div>
+                <div class="panel__search d-none d-lg-block">
+                  <div class="input">
+                    <input
+                      id="searchShopUserOrders"
+                      v-model.trim="searchTerm"
+                      type="text"
+                      placeholder="Поиск по ID заказа"
+                    >
+                    <label class="panel__search-icon" for="searchShopUserOrders">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 12.75C10.3995 12.75 12.75 10.3995 12.75 7.5C12.75 4.60051 10.3995 2.25 7.5 2.25C4.60051 2.25 2.25 4.60051 2.25 7.5C2.25 10.3995 4.60051 12.75 7.5 12.75Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M15.75 15.75L11.25 11.25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </svg>
+                    </label>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="panel__bottom"> <a class="panel__back" href="#">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_78_6362)">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.334 7.99992C15.334 12.0499 12.0507 15.3333 8.00065 15.3333C3.95065 15.3333 0.667318 12.0499 0.667318 7.99992C0.667318 3.94992 3.95065 0.666584 8.00065 0.666585C12.0507 0.666585 15.334 3.94992 15.334 7.99992ZM9.50049 10.1333C9.50158 10.2279 9.47776 10.3211 9.43142 10.4036C9.38508 10.4861 9.31785 10.555 9.23649 10.6033C9.15745 10.6487 9.06695 10.6704 8.97589 10.6657C8.88482 10.6609 8.79706 10.63 8.72315 10.5766L5.72315 8.44325C5.65351 8.39234 5.59699 8.32557 5.55827 8.24848C5.51955 8.17139 5.49974 8.08619 5.50049 7.99992C5.49964 7.91354 5.51939 7.8282 5.55812 7.75098C5.59684 7.67377 5.65342 7.6069 5.72315 7.55592L8.72315 5.42258C8.79706 5.36916 8.88482 5.33823 8.97589 5.3335C9.06695 5.32877 9.15745 5.35044 9.23649 5.39592C9.31795 5.44427 9.38524 5.51323 9.43159 5.59586C9.47793 5.67848 9.5017 5.77186 9.50049 5.86658L9.50049 10.1333Z" fill="#D83A56"></path>
-                  </g>
-                  <defs>
-                    <clipPath>
-                      <rect width="16" height="16" fill="white" transform="matrix(4.37114e-08 -1 -1 -4.37114e-08 16 16)"></rect>
-                    </clipPath>
-                  </defs>
-                </svg>вернуться на сайт</a>
-              <div class="header__lang">
-                <div class="header__langbtn js-drop-btn" data-drop="langPanel">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clip-path="url(#clip0_78_1856)">
-                      <path d="M9 18C4.02944 18 0 13.9706 0 9C0 4.02944 4.02944 0 9 0C13.9706 0 18 4.02944 18 9C18 13.9706 13.9706 18 9 18Z" fill="#F0F0F0"></path>
-                      <path d="M0.559793 12.1305C0.198 11.1555 0 10.1009 0 9.00005C0 7.89916 0.198 6.84462 0.559793 5.86963H17.4402C17.802 6.84462 18 7.89916 18 9.00005C18 10.1009 17.802 11.1555 17.4402 12.1305L9 12.9131L0.559793 12.1305Z" fill="#0052B4"></path>
-                      <path d="M8.99973 18C5.13005 18 1.83116 15.5576 0.559528 12.1304H17.4399C16.1683 15.5576 12.8694 18 8.99973 18Z" fill="#D80027"></path>
-                    </g>
-                    <defs>
-                      <clipPath>
-                        <rect width="18" height="18" fill="white" transform="matrix(-1 0 0 1 18 0)"></rect>
-                      </clipPath>
-                    </defs>
-                  </svg>RU
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00033 0.666748C3.95033 0.666748 0.666992 3.95008 0.666992 8.00008C0.666992 12.0501 3.95033 15.3334 8.00033 15.3334C12.0503 15.3334 15.3337 12.0501 15.3337 8.00008C15.3337 3.95008 12.0503 0.666748 8.00033 0.666748ZM5.86699 6.50024C5.77238 6.49915 5.67914 6.52297 5.59664 6.56931C5.51415 6.61565 5.44529 6.68288 5.39699 6.76424C5.35152 6.84329 5.32984 6.93378 5.33457 7.02485C5.3393 7.11591 5.37024 7.20367 5.42366 7.27758L7.55699 10.2776C7.6079 10.3472 7.67467 10.4037 7.75176 10.4425C7.82885 10.4812 7.91406 10.501 8.00033 10.5002C8.0867 10.5011 8.17204 10.4813 8.24926 10.4426C8.32648 10.4039 8.39335 10.3473 8.44433 10.2776L10.5777 7.27758C10.6311 7.20367 10.662 7.11591 10.6667 7.02485C10.6715 6.93378 10.6498 6.84329 10.6043 6.76424C10.556 6.68278 10.487 6.61549 10.4044 6.56914C10.3218 6.5228 10.2284 6.49904 10.1337 6.50024H5.86699Z"></path>
-                  </svg>
+              <div class="panel__body">
+                <div class="panel__search d-block d-lg-none">
+                  <div class="input">
+                    <input
+                      id="searchShopUserOrdersMob"
+                      v-model.trim="searchTerm"
+                      type="text"
+                      placeholder="Поиск по ID заказа"
+                    >
+                    <label class="panel__search-icon" for="searchShopUserOrdersMob">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 12.75C10.3995 12.75 12.75 10.3995 12.75 7.5C12.75 4.60051 10.3995 2.25 7.5 2.25C4.60051 2.25 2.25 4.60051 2.25 7.5C2.25 10.3995 4.60051 12.75 7.5 12.75Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M15.75 15.75L11.25 11.25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </svg>
+                    </label>
+                  </div>
                 </div>
-                <div class="header__langdrop" id="langPanel">
-                  <ul class="header__langlist">
-                    <li> <a href="#">
-                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g clip-path="url(#clip0_78_1856)">
-                            <path d="M9 18C4.02944 18 0 13.9706 0 9C0 4.02944 4.02944 0 9 0C13.9706 0 18 4.02944 18 9C18 13.9706 13.9706 18 9 18Z" fill="#F0F0F0"></path>
-                            <path d="M0.559793 12.1305C0.198 11.1555 0 10.1009 0 9.00005C0 7.89916 0.198 6.84462 0.559793 5.86963H17.4402C17.802 6.84462 18 7.89916 18 9.00005C18 10.1009 17.802 11.1555 17.4402 12.1305L9 12.9131L0.559793 12.1305Z" fill="#0052B4"></path>
-                            <path d="M8.99973 18C5.13005 18 1.83116 15.5576 0.559528 12.1304H17.4399C16.1683 15.5576 12.8694 18 8.99973 18Z" fill="#D80027"></path>
-                          </g>
-                          <defs>
-                            <clipPath>
-                              <rect width="18" height="18" fill="white" transform="matrix(-1 0 0 1 18 0)"></rect>
-                            </clipPath>
-                          </defs>
-                        </svg>Русский</a></li>
-                    <li> <a href="#">
-                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g clip-path="url(#clip0_78_1898)">
-                            <path d="M9 18C13.9706 18 18 13.9706 18 9C18 4.02944 13.9706 0 9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18Z" fill="#F0F0F0"></path>
-                            <path d="M8.60889 9.00018H18.0002C18.0002 8.18786 17.8919 7.40092 17.6901 6.65234H8.60889V9.00018Z" fill="#D80027"></path>
-                            <path d="M8.60889 4.30438H16.6792C16.1283 3.40537 15.4239 2.61073 14.6025 1.95654H8.60889V4.30438Z" fill="#D80027"></path>
-                            <path d="M9.00031 18C11.1184 18 13.0653 17.2679 14.6027 16.0435H3.39795C4.93533 17.2679 6.88218 18 9.00031 18Z" fill="#D80027"></path>
-                            <path d="M1.32147 13.696H16.6795C17.1218 12.9743 17.4649 12.1854 17.6905 11.3481H0.310547C0.536145 12.1854 0.879164 12.9743 1.32147 13.696Z" fill="#D80027"></path>
-                            <path d="M4.16897 1.40548H4.98913L4.22624 1.95971L4.51765 2.85652L3.75479 2.30228L2.99194 2.85652L3.24366 2.08178C2.57196 2.64129 1.98323 3.29681 1.49808 4.02722H1.76087L1.27526 4.38001C1.1996 4.50622 1.12704 4.63444 1.0575 4.76455L1.28939 5.47826L0.856758 5.16393C0.749215 5.39177 0.650848 5.62475 0.56243 5.86259L0.81791 6.64896H1.76087L0.99798 7.2032L1.28939 8.1L0.526535 7.54576L0.0695742 7.87778C0.0238359 8.24544 0 8.61993 0 9H9C9 4.02947 9 3.44348 9 0C7.22208 0 5.56471 0.515742 4.16897 1.40548ZM4.51765 8.1L3.75479 7.54576L2.99194 8.1L3.28335 7.2032L2.52046 6.64896H3.46342L3.75479 5.75216L4.04617 6.64896H4.98913L4.22624 7.2032L4.51765 8.1ZM4.22624 4.58146L4.51765 5.47826L3.75479 4.92402L2.99194 5.47826L3.28335 4.58146L2.52046 4.02722H3.46342L3.75479 3.13042L4.04617 4.02722H4.98913L4.22624 4.58146ZM7.74591 8.1L6.98305 7.54576L6.22019 8.1L6.51161 7.2032L5.74871 6.64896H6.69168L6.98305 5.75216L7.27443 6.64896H8.21739L7.4545 7.2032L7.74591 8.1ZM7.4545 4.58146L7.74591 5.47826L6.98305 4.92402L6.22019 5.47826L6.51161 4.58146L5.74871 4.02722H6.69168L6.98305 3.13042L7.27443 4.02722H8.21739L7.4545 4.58146ZM7.4545 1.95971L7.74591 2.85652L6.98305 2.30228L6.22019 2.85652L6.51161 1.95971L5.74871 1.40548H6.69168L6.98305 0.508676L7.27443 1.40548H8.21739L7.4545 1.95971Z" fill="#0052B4"></path>
-                          </g>
-                          <defs>
-                            <clipPath>
-                              <rect width="18" height="18" fill="white"></rect>
-                            </clipPath>
-                          </defs>
-                        </svg>English</a></li>
-                  </ul>
+
+                <div class="panel__table">
+                  <table>
+                    <tr
+                      v-for="order in filteredOrders"
+                      :key="order.id"
+                      class="shop-user-orders-row"
+                    >
+                      <td>
+                        <span class="panel__table-title">Заказ #{{ order.id }}</span>
+                        <span class="panel__table-sn panel__table-sn--detail">{{ formatDate(order.created_at) }}</span>
+                      </td>
+                      <td>
+                        <span class="panel__table-subtitle">Сумма:</span>
+                        <span class="panel__table-text">{{ formatMoney(order.total_price) }}</span>
+                      </td>
+                      <td>
+                        <span class="panel__table-subtitle">Статус:</span>
+                        <span class="panel__table-text">{{ statusName(order) }}</span>
+                      </td>
+                      <td>
+                        <span class="panel__table-subtitle">Оплата:</span>
+                        <span class="panel__table-text">{{ order.is_paid ? 'Оплачен' : 'Не оплачен' }}</span>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn--grayborder btn-sm" @click="openOrder(order.id)">
+                          Подробнее
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                  <div v-if="loading" class="panel__table-text">Загрузка...</div>
+                  <div v-if="error" class="panel__table-text">{{ error }}</div>
+                  <div v-if="!loading && !error && !filteredOrders.length" class="panel__table-text">
+                    Заказов пока нет
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!--  /panel-->
       </div>
+    </div>
+
+    <teleport to="body">
+      <div v-if="showModal" class="shop-user-order-modal-overlay" @click.self="closeModal">
+        <div class="shop-user-order-modal">
+          <button type="button" class="shop-user-order-modal__close" @click="closeModal">x</button>
+
+          <div class="shop-user-order-modal__head">
+            <div class="shop-user-order-modal__head-main">
+              <h3>Заказ #{{ currentOrder ? currentOrder.id : '' }}</h3>
+              <div class="shop-user-order-modal__created-at">
+                {{ currentOrder ? formatDate(currentOrder.created_at) : '' }}
+              </div>
+            </div>
+            <div v-if="currentOrder" class="shop-user-order-modal__badges">
+              <span
+                class="shop-user-order-modal__badge"
+                :class="currentOrder.is_paid ? 'shop-user-order-modal__badge--paid' : 'shop-user-order-modal__badge--unpaid'"
+              >
+                {{ currentOrder.is_paid ? 'Оплачен' : 'Не оплачен' }}
+              </span>
+            </div>
+          </div>
+
+          <div v-if="modalLoading" class="panel__table-text">Загрузка деталей заказа...</div>
+          <div v-else-if="modalError" class="panel__table-text">{{ modalError }}</div>
+
+          <div v-else-if="currentOrder" class="shop-user-order-modal__body">
+            <div class="shop-user-order-modal__summary-grid">
+              <div class="shop-user-order-modal__summary-card">
+                <span class="shop-user-order-modal__summary-label">Сумма заказа</span>
+                <span class="shop-user-order-modal__summary-value">{{ formatMoney(currentOrder.total_price) }}</span>
+              </div>
+              <div class="shop-user-order-modal__summary-card">
+                <span class="shop-user-order-modal__summary-label">Сумма товаров</span>
+                <span class="shop-user-order-modal__summary-value">{{ formatMoney(currentOrder.products_price) }}</span>
+              </div>
+            </div>
+
+            <div class="shop-user-order-modal__section">
+              <div class="shop-user-order-modal__section-title">Состав заказа</div>
+              <div v-if="!normalizeOrderItems(currentOrder.order_items).length" class="panel__table-text">
+                Товары не найдены
+              </div>
+              <div v-else class="shop-user-order-modal__items">
+                <div
+                  v-for="item in normalizeOrderItems(currentOrder.order_items)"
+                  :key="orderItemKey(item)"
+                  class="shop-user-order-modal__item"
+                >
+                  <span class="shop-user-order-modal__item-name">{{ item.product_name || `Товар #${item.product}` }}</span>
+                  <span class="shop-user-order-modal__item-qty">x {{ item.quantity }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="shop-user-order-modal__section">
+              <div class="shop-user-order-modal__section-title">Доставка</div>
+              <div v-if="!primaryDelivery" class="panel__table-text">Данные о доставке отсутствуют</div>
+              <div v-else class="shop-user-order-modal__delivery-grid">
+                <div class="shop-user-order-modal__delivery-item">
+                  <span class="shop-user-order-modal__delivery-label">Компания</span>
+                  <span class="shop-user-order-modal__delivery-value">{{ primaryDelivery.company || '—' }}</span>
+                </div>
+                <div class="shop-user-order-modal__delivery-item">
+                  <span class="shop-user-order-modal__delivery-label">Адрес</span>
+                  <span class="shop-user-order-modal__delivery-value">{{ primaryDelivery.destination || '—' }}</span>
+                </div>
+                <div class="shop-user-order-modal__delivery-item">
+                  <span class="shop-user-order-modal__delivery-label">Получатель</span>
+                  <span class="shop-user-order-modal__delivery-value">{{ primaryDelivery.fio || '—' }}</span>
+                </div>
+                <div class="shop-user-order-modal__delivery-item">
+                  <span class="shop-user-order-modal__delivery-label">Телефон</span>
+                  <span class="shop-user-order-modal__delivery-value">{{ primaryDelivery.phone || '—' }}</span>
+                </div>
+                <div class="shop-user-order-modal__delivery-item shop-user-order-modal__delivery-item--full">
+                  <span class="shop-user-order-modal__delivery-label">Email</span>
+                  <span class="shop-user-order-modal__delivery-value">{{ primaryDelivery.email || '—' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="shop-user-order-modal__actions">
+            <button type="button" class="btn btn--grayborder" @click="closeModal">Закрыть</button>
+            <button
+              v-if="currentOrder && !currentOrder.is_paid"
+              type="button"
+              class="btn btn--red"
+              @click="goToCartForPayment"
+            >
+              Оплатить в корзине
+            </button>
+          </div>
+        </div>
+      </div>
+    </teleport>
+  </div>
 </template>
 
 <script>
 import MenuBlock from '../elements/Panel/MenuBlock.vue'
+import {
+  fetchShopOrderStatuses,
+  fetchUserShopOrder,
+  fetchUserShopOrders
+} from '@/services/panel.service'
 
 export default {
-  name: 'MainPanel',
-  components: { MenuBlock }
+  name: 'PanelShopUserOrders',
+  components: { MenuBlock },
+  data () {
+    return {
+      orders: [],
+      statuses: [],
+      searchTerm: '',
+      loading: false,
+      error: '',
+      showModal: false,
+      modalLoading: false,
+      modalError: '',
+      currentOrder: null
+    }
+  },
+  computed: {
+    filteredOrders () {
+      const term = String(this.searchTerm || '').trim().toLowerCase()
+      return this.orders
+        .filter((order) => {
+          if (!term) {
+            return true
+          }
+          return String(order.id || '').toLowerCase().includes(term)
+        })
+        .sort((a, b) => {
+          const aTime = a.created_at ? new Date(a.created_at).getTime() : 0
+          const bTime = b.created_at ? new Date(b.created_at).getTime() : 0
+          return bTime - aTime
+        })
+    },
+    primaryDelivery () {
+      if (!this.currentOrder || !Array.isArray(this.currentOrder.delivery)) {
+        return null
+      }
+      return this.currentOrder.delivery[0] || null
+    }
+  },
+  mounted () {
+    this.loadOrders()
+    this.loadStatuses()
+  },
+  methods: {
+    async loadOrders () {
+      this.loading = true
+      this.error = ''
+      try {
+        const response = await fetchUserShopOrders()
+        this.orders = Array.isArray(response.data) ? response.data : []
+      } catch (err) {
+        this.error = err.userMessage || 'Не удалось загрузить заказы'
+      } finally {
+        this.loading = false
+      }
+    },
+    async loadStatuses () {
+      try {
+        const response = await fetchShopOrderStatuses()
+        this.statuses = Array.isArray(response.data) ? response.data : []
+      } catch (err) {
+        this.statuses = []
+      }
+    },
+    async openOrder (orderId) {
+      this.showModal = true
+      this.modalLoading = true
+      this.modalError = ''
+      this.currentOrder = null
+      try {
+        const response = await fetchUserShopOrder(orderId)
+        this.currentOrder = response && response.data ? response.data : null
+      } catch (err) {
+        this.modalError = err.userMessage || 'Не удалось загрузить детали заказа'
+      } finally {
+        this.modalLoading = false
+      }
+    },
+    closeModal () {
+      this.showModal = false
+      this.modalLoading = false
+      this.modalError = ''
+      this.currentOrder = null
+    },
+    goToCartForPayment () {
+      this.closeModal()
+      this.$router.push('/shop/cart')
+    },
+    formatDate (value) {
+      if (!value) {
+        return '—'
+      }
+      const date = new Date(value)
+      if (Number.isNaN(date.getTime())) {
+        return String(value)
+      }
+      return date.toLocaleString('ru-RU', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    },
+    formatMoney (value) {
+      if (value === null || value === undefined || value === '') {
+        return '—'
+      }
+      return `${value} Р`
+    },
+    statusName (order) {
+      if (!order) {
+        return '—'
+      }
+      if (order.status_name) {
+        return order.status_name
+      }
+      const match = this.statuses.find((status) => Number(status.id) === Number(order.status))
+      return match ? match.name : '—'
+    },
+    normalizeOrderItems (items) {
+      if (!items) {
+        return []
+      }
+      if (Array.isArray(items)) {
+        return items
+      }
+      if (typeof items === 'object') {
+        return [items]
+      }
+      return []
+    },
+    orderItemKey (item) {
+      return item.id || `${item.product || 'product'}-${item.quantity || 0}`
+    }
+  }
 }
 </script>
+
+<style scoped>
+.shop-user-orders-row td {
+  vertical-align: middle;
+}
+
+.shop-user-order-modal-overlay {
+  position: fixed;
+  z-index: 1200;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 20px;
+}
+
+.shop-user-order-modal {
+  width: min(980px, 100%);
+  max-height: 85vh;
+  overflow: auto;
+  background: linear-gradient(180deg, #ffffff 0%, #fafbff 100%);
+  border-radius: 18px;
+  position: relative;
+  padding: 28px;
+  box-shadow: 0 20px 50px rgba(17, 24, 39, 0.3);
+}
+
+.shop-user-order-modal__close {
+  border: 0;
+  background: #eef1f8;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 1;
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  transition: background 0.2s ease;
+}
+
+.shop-user-order-modal__close:hover {
+  background: #dfe5f2;
+}
+
+.shop-user-order-modal__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 18px;
+  padding-right: 44px;
+}
+
+.shop-user-order-modal__head-main h3 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.shop-user-order-modal__created-at {
+  margin-top: 6px;
+  color: #6a7180;
+  font-size: 14px;
+}
+
+.shop-user-order-modal__badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.shop-user-order-modal__badge {
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.shop-user-order-modal__badge--paid {
+  background: #e7f8ed;
+  color: #1d7a3a;
+}
+
+.shop-user-order-modal__badge--unpaid {
+  background: #fff0f1;
+  color: #b33948;
+}
+
+.shop-user-order-modal__body {
+  display: grid;
+  gap: 14px;
+}
+
+.shop-user-order-modal__summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.shop-user-order-modal__summary-card {
+  background: #ffffff;
+  border: 1px solid #e4e8f2;
+  border-radius: 12px;
+  padding: 14px;
+  display: grid;
+  gap: 6px;
+}
+
+.shop-user-order-modal__summary-label {
+  color: #687085;
+  font-size: 13px;
+}
+
+.shop-user-order-modal__summary-value {
+  color: #121826;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.shop-user-order-modal__section {
+  margin-top: 2px;
+  background: #ffffff;
+  border: 1px solid #e4e8f2;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.shop-user-order-modal__section-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #21293a;
+}
+
+.shop-user-order-modal__items {
+  display: grid;
+  gap: 8px;
+}
+
+.shop-user-order-modal__item {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  border-radius: 10px;
+  background: #f5f7fc;
+  padding: 9px 10px;
+}
+
+.shop-user-order-modal__item-name {
+  color: #1c2435;
+  font-size: 14px;
+}
+
+.shop-user-order-modal__item-qty {
+  color: #4f5a73;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.shop-user-order-modal__delivery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.shop-user-order-modal__delivery-item {
+  background: #f5f7fc;
+  border-radius: 10px;
+  padding: 10px;
+  display: grid;
+  gap: 4px;
+}
+
+.shop-user-order-modal__delivery-item--full {
+  grid-column: 1 / -1;
+}
+
+.shop-user-order-modal__delivery-label {
+  color: #6c7282;
+  font-size: 12px;
+}
+
+.shop-user-order-modal__delivery-value {
+  color: #151a2b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.shop-user-order-modal__actions {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #e4e8f2;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+@media (max-width: 767px) {
+  .shop-user-order-modal {
+    padding: 20px;
+    border-radius: 14px;
+  }
+
+  .shop-user-order-modal__head-main h3 {
+    font-size: 22px;
+  }
+
+  .shop-user-order-modal__summary-grid,
+  .shop-user-order-modal__delivery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

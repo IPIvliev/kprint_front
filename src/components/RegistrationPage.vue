@@ -129,7 +129,12 @@ export default {
       this.message = ''
       try {
         await this.$store.dispatch('auth/register', user)
-        this.$router.push('/login')
+        const nextPath = this.$route?.query?.next
+        if (typeof nextPath === 'string' && nextPath.startsWith('/')) {
+          this.$router.push({ path: '/login', query: { next: nextPath } })
+        } else {
+          this.$router.push('/login')
+        }
       } catch (error) {
         this.message =
           error?.userMessage ||

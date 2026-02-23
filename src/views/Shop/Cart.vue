@@ -16,45 +16,22 @@
                             <h3>Доставка</h3>
                         </div>
 
-                        <div class="row gy-1" v-if="showDelivery && GetPochtaOffices.length > 0">
+                        <div class="row gy-1" v-if="showDelivery">
                             <div class="col-3">
-                                <div class="btn btn--white col-12" @click="activate('main', 'pochta')" :class="{ active : activeLink == 'pochta' }">Почта России</div>
+                                <div class="btn btn--white col-12 active">СДЭК</div>
                             </div>
-                            <div class="col-3">
-                                <div class="btn btn--white col-12" @click="activate('main', 'sdek')" :class="{ active : activeLink == 'sdek' }">СДЭК</div>
-                            </div>
-                            <!-- <div class="col-3">
-                                <div class="btn btn--white col-12" @click="activate('main', 'self')" :class="{ active : activeLink == 'self' }">Самовывоз</div>
-                            </div> -->
                         </div>
-                        <!-- <div class="row gy-1" v-if="activeLink == 'pochta' && GetPochtaOffices.length > 0">
+                        <div class="row gy-1" v-if="showDelivery && GetSdekOffices.length > 0">
                             <div class="col-6">
-                                <div class="btn btn--white col-12"
-
-                                    @click="activate('pochta', 'pochta_gosp', 'ГОПС')"
-                                    :class="{ active : pochtaLink == 'pochta_gosp' }">
-                                    Почтовое отделение
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="btn btn--white col-12"
-
-                                    @click="activate('pochta', 'pochta_postomat', 'ПОЧТОМАТ')"
-                                    :class="{ active : pochtaLink == 'pochta_postomat' }">
-                                    Почтомат
-                                </div>
-                            </div>
-                        </div> -->
-                        <div class="row gy-1" v-if="showDelivery && GetPochtaOffices.length > 0">
-                            <div class="col-6">
-                                <YandexMap :activeLink = activeLink :GetOffices = "activeLink == 'pochta' ? GetPochtaOffices : GetSdekOffices" :location = "location" @selectMarker="selectMarker"/>
+                                <YandexMap :offices="GetSdekOffices" :location="location" @selectMarker="selectMarker" />
                             </div>
                             <div class="col-6 ">
                                 <DeliveryDescription :office = "office" />
                             </div>
                         </div>
-                        <div class="row gy-1" v-else>
-                            <p>Доставка не доступна по техническим причинам. Обратитесь по телефону компании.</p>
+                        <div class="row gy-1" v-else-if="showDelivery">
+                            <p v-if="gettingLocation">Загружаем пункты выдачи СДЭК...</p>
+                            <p v-else>Пункты выдачи СДЭК временно недоступны. Обратитесь по телефону компании.</p>
                         </div>
                         <div class="row gy-1">
                             <div class="col-6">
@@ -111,7 +88,7 @@
                                     <OrderForm
                                         :showDelivery="showDelivery"
                                         :office="office"
-                                        :deliveryCompany="activeLink"
+                                        deliveryCompany="sdek"
                                     />
                                 </div>
 
@@ -141,7 +118,7 @@ import DeliveryDescription from '@/components/Shop/DeliveryDescription.vue'
 import DeliveryPrice from '@/components/elements/Shop/DeliveryPrice.vue'
 import OrderForm from '@/components/elements/Shop/OrderForm.vue'
 import FooterBlock from '@/components/FooterBlock.vue'
-import { fetchIp, fetchLocationByDadata } from '@/services/external.service'
+import { fetchLocationByAbstract, fetchPublicIp } from '@/services/external.service'
 export default {
   name: 'ShopCartView',
   components: { HeaderBlock, CartProducts, YandexMap, DeliveryDescription, DeliveryPrice, OrderForm, WhiteWelcome, FooterBlock },
@@ -151,11 +128,6 @@ export default {
       location: null,
       gettingLocation: null,
       selectedMarker: 0,
-      activeLink: 'pochta',
-      pochtaLink: 'pochta_gosp',
-      pochtaFilter: 'ГОПС',
-      postPrice: 0,
-      sdekFilter: '',
       office: {},
       productsGot: false
     }
@@ -168,29 +140,53 @@ export default {
 
   },
   async created () {
+    this.$store.commit('shop/initialiseCart')
     await this.$store.dispatch('catalog/fetchProducts').then(() => {
       this.productsGot = true
     })
+    if (this.$store?.state?.auth?.status?.loggedIn) {
+      try {
+        await this.$store.dispatch('shop/syncCartOrderAfterLogin')
+      } catch (error) {
+        console.log(error)
+      }
+    }
 
     this.gettingLocation = true
 
-    // Запрос ip
-    fetchIp().then(response => {
-      this.ip = response.data.ip
-    })
-      .catch(error => {
+    // Получаем публичный IP пользователя через внешний сервис.
+    await fetchPublicIp()
+      .then((publicIp) => {
+        this.ip = publicIp
+      })
+      .catch((error) => {
         console.log(error)
+        this.ip = null
       })
 
-    // Запрос координат через backend endpoint.
-    await fetchLocationByDadata().then(response => {
-      this.gettingLocation = false
-      this.location = response.data.location.data
-      this.$store.dispatch('delivery/fetchPochtaOffices', { lat: response.data.location.data.geo_lat, lon: response.data.location.data.geo_lon })
-      this.$store.dispatch('delivery/fetchSdekOffices', response.data.location.data.postal_code)
-    })
-      .catch(e => {
+    // Геолокация по IP через backend endpoint.
+    await fetchLocationByAbstract(this.ip ? { ip: this.ip } : {})
+      .then(async (response) => {
+        this.location = response?.data?.location?.data || null
+        const postalCode = String(this.location?.postal_code || '').trim()
+        const geoLat = Number(this.location?.geo_lat)
+        const geoLon = Number(this.location?.geo_lon)
+        if (postalCode) {
+          await this.$store.dispatch('delivery/fetchSdekOffices', { postal_code: postalCode })
+        } else if (Number.isFinite(geoLat) && Number.isFinite(geoLon)) {
+          await this.$store.dispatch('delivery/fetchSdekOffices', { lat: geoLat, lon: geoLon })
+        } else {
+          this.$store.commit('delivery/setSdekOffices', [])
+        }
+        if (this.GetSdekOffices.length > 0) {
+          this.selectMarker(0)
+        }
+      })
+      .catch((e) => {
         console.log(e)
+      })
+      .finally(() => {
+        this.gettingLocation = false
       })
 
     // Бесплатный запрос координат. Не точный
@@ -206,18 +202,17 @@ export default {
     // })
   },
   computed: {
-    GetPochtaOffices () {
-      try {
-        // console.log('Запрос на вывод списка офисов')
-        return this.$store.state.delivery.pochta_offices.filter((office) => office['type-code'] === this.pochtaFilter)
-      } catch (error) {
-        return []
-      }
-    },
     GetSdekOffices () {
       try {
-        // console.log('Запрос на вывод списка офисов')
-        return this.$store.state.delivery.sdek_offices.filter((office) => office.type === 'PVZ')
+        const officesPayload = this.$store.state.delivery.sdek_offices
+        const offices = Array.isArray(officesPayload)
+          ? officesPayload
+          : (Array.isArray(officesPayload?.offices) ? officesPayload.offices : [])
+        return offices.filter((office) => {
+          const hasCoordinates = Boolean(office?.location?.longitude) && Boolean(office?.location?.latitude)
+          const isPickpoint = !office?.type || office.type === 'PVZ'
+          return hasCoordinates && isPickpoint
+        })
       } catch (error) {
         return []
       }
@@ -244,23 +239,15 @@ export default {
   methods: {
     selectMarker (index) {
       this.selectedMarker = index
-      console.log('this.getTotalWeight ', this.getTotalWeight)
-
-      if (this.activeLink === 'pochta') {
-        this.office = this.GetPochtaOffices[index]
-        this.$store.dispatch('delivery/fetchPochtaPrice', { destination: this.office['postal-code'], products_mass: this.getTotalWeight * 1000 })
-      } else {
-        this.office = this.GetSdekOffices[index]
-        this.$store.dispatch('delivery/fetchSdekPrice', { destination: this.office.location.postal_code, products_mass: this.getTotalWeight * 1000 })
+      this.office = this.GetSdekOffices[index] || {}
+      const destination = this.office?.location?.postal_code || this.office?.postal_code
+      if (!destination) {
+        return
       }
-    },
-    activate (parent, position, type = 'ГОПС') {
-      if (parent === 'main') {
-        this.activeLink = position
-      } else {
-        this.pochtaLink = position
-        this.pochtaFilter = type
-      }
+      this.$store.dispatch('delivery/fetchSdekPrice', {
+        destination,
+        products_mass: this.getTotalWeight * 1000
+      })
     },
     fetchDiscount (e) {
       // console.log(e.target.value)

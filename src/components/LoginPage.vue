@@ -163,6 +163,7 @@ export default {
     },
     async redirectAuthorizedUser () {
       try {
+        await this.$store.dispatch('shop/syncCartOrderAfterLogin')
         let createdOrderId = null
         if (getPendingPrintOrderDraft()) {
           createdOrderId = await this.finalizePendingPrintOrder()

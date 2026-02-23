@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import { promptAuthForCart } from '@/services/cart-auth.service'
+
 export default {
   props: ['product'],
   computed: {
@@ -18,11 +20,14 @@ export default {
     }
   },
   methods: {
-    increment () {
-      this.$store.dispatch('shop/AddProductToCart', this.product)
+    async increment () {
+      const result = await this.$store.dispatch('shop/AddProductToCart', this.product)
+      if (result?.requiresAuth) {
+        promptAuthForCart({ router: this.$router, route: this.$route })
+      }
     },
-    decrement () {
-      this.$store.dispatch('shop/DecrementProductFromCart', this.product)
+    async decrement () {
+      await this.$store.dispatch('shop/DecrementProductFromCart', this.product)
     }
   }
 }

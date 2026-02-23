@@ -17,6 +17,14 @@ export function createOrder (payload, idempotencyKey) {
   })
 }
 
+export function syncUserCartOrder (payload) {
+  return api.post('/api/shop/my/cart-order/sync', payload)
+}
+
+export function fetchUserCartOrder (orderId) {
+  return api.get(`/api/shop/my/orders/${orderId}`)
+}
+
 /**
  * @param {DiscountQueryParams} params
  */
