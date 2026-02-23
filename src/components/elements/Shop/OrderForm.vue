@@ -41,6 +41,7 @@
     </div>
     <div class="mb-2" v-if="showDelivery">
       <label class="form-label">Доставка:</label>
+      <div>{{ formErrors.delivery_destination }}</div>
     </div>
     <div class="form-check">
       <input id="sign" v-model="agree" class="form-check-input" type="checkbox" name="sign" />
@@ -60,6 +61,7 @@
 <script>
 import { IMaskDirective } from 'vue-imask'
 import { createShopPayment } from '@/services/shop.service'
+import { fetchUserProfile } from '@/services/panel.service'
 
 export default {
   directives: {
@@ -92,10 +94,18 @@ export default {
         fio: '',
         phone: '',
         email: '',
-        sign: ''
+        sign: '',
+        delivery_destination: ''
       },
       phoneNumberMask: {
         mask: '+{7} (000) 000-00-00'
+      }
+    }
+  },
+  watch: {
+    '$store.state.shop.new_order': {
+      handler () {
+        this.applyRecipientFromActiveOrder()
       }
     }
   },
@@ -156,7 +166,7 @@ export default {
       }
     },
     validateForm () {
-      this.formErrors = { fio: '', phone: '', email: '', sign: '' }
+      this.formErrors = { fio: '', phone: '', email: '', sign: '', delivery_destination: '' }
 
       if (!this.fio) {
         this.formErrors.fio = 'Введите ФИО'
@@ -170,8 +180,48 @@ export default {
       if (!this.agree) {
         this.formErrors.sign = 'Требуется согласие'
       }
+      if (this.showDelivery && !this.resolveDeliveryDestination()) {
+        this.formErrors.delivery_destination = 'Выберите пункт выдачи СДЭК'
+      }
 
       return !Object.values(this.formErrors).some(Boolean)
+    },
+    setFieldIfEmpty (field, value) {
+      const nextValue = String(value || '').trim()
+      if (!nextValue) {
+        return
+      }
+      if (!String(this[field] || '').trim()) {
+        this[field] = nextValue
+      }
+    },
+    applyRecipientFromObject (payload = {}) {
+      this.setFieldIfEmpty('fio', payload.fio || payload.full_name || payload.username)
+      this.setFieldIfEmpty('phone', payload.phone)
+      this.setFieldIfEmpty('email', payload.email)
+    },
+    applyRecipientFromActiveOrder () {
+      const order = this.$store?.state?.shop?.new_order
+      if (!order || typeof order !== 'object') {
+        return
+      }
+      const deliveries = Array.isArray(order.delivery) ? order.delivery : []
+      const delivery = deliveries[0] || {}
+      this.applyRecipientFromObject({
+        fio: delivery?.fio,
+        phone: delivery?.phone,
+        email: delivery?.email
+      })
+    },
+    async hydrateRecipientFields () {
+      this.applyRecipientFromObject(this.$store?.state?.auth?.user || {})
+      this.applyRecipientFromActiveOrder()
+      try {
+        const response = await fetchUserProfile()
+        this.applyRecipientFromObject(response?.data || {})
+      } catch {
+        // keep checkout usable even if profile request fails
+      }
     },
     async onSubmit () {
       if (!this.validateForm() || this.submitting) {
@@ -222,6 +272,7 @@ export default {
   },
   created () {
     this.idempotencyKey = this.buildIdempotencyKey()
+    this.hydrateRecipientFields()
   }
 }
 </script>

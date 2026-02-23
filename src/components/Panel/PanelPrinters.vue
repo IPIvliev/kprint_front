@@ -326,6 +326,35 @@ export default {
       this.paymentStatusMessage = String(message || '')
       this.paymentStatusType = ['success', 'error', 'info'].includes(type) ? type : 'info'
     },
+    normalizeTextValue (value) {
+      return String(value || '').trim()
+    },
+    resolveOrderDelivery (order) {
+      if (!order || !Array.isArray(order.delivery)) {
+        return null
+      }
+      return order.delivery[0] || null
+    },
+    canPayOrderFromPanel (order) {
+      const delivery = this.resolveOrderDelivery(order)
+      if (!delivery) {
+        return false
+      }
+      const destination = this.normalizeTextValue(delivery.destination)
+      const fio = this.normalizeTextValue(delivery.fio)
+      const phone = this.normalizeTextValue(delivery.phone)
+      const email = this.normalizeTextValue(delivery.email)
+      return Boolean(destination && fio && phone && email)
+    },
+    redirectToCartForOrderData (orderId) {
+      this.$router.push({
+        path: '/shop/cart',
+        query: {
+          from: 'panel_payment',
+          order_id: String(orderId || '')
+        }
+      }).catch(() => {})
+    },
     clearPaymentReturnQuery () {
       const query = { ...(this.$route?.query || {}) }
       delete query.payment
@@ -412,6 +441,15 @@ export default {
       const orderId = Number(this.currentOrder.id || 0)
       if (!orderId) {
         this.setPaymentStatus(null, 'Не удалось определить заказ для оплаты.', 'error')
+        return
+      }
+      if (!this.canPayOrderFromPanel(this.currentOrder)) {
+        this.setPaymentStatus(
+          orderId,
+          'Для оплаты заполните адрес доставки, ФИО, телефон и email в корзине.',
+          'info'
+        )
+        this.redirectToCartForOrderData(orderId)
         return
       }
 
