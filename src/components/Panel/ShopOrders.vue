@@ -84,11 +84,11 @@
                       </td>
                       <td>
                         <span class="panel__table-subtitle">Оплата:</span>
-                        <span class="panel__table-text">{{ order.is_paid ? 'Оплачен' : 'Не оплачен' }}</span>
+                        <span class="panel__table-text">{{ paymentLabel(order) }}</span>
                       </td>
                       <td>
-                        <span class="panel__table-subtitle">Статус:</span>
-                        <span class="panel__table-text">{{ statusName(order.status) }}</span>
+                        <span class="panel__table-subtitle">Статус заказа:</span>
+                        <span class="panel__table-text">{{ orderStatusLabel(order) }}</span>
                       </td>
                       <td>
                         <span class="panel__table-icon" @click="openEdit(order)">
@@ -249,11 +249,55 @@ export default {
       })
     }
   },
+  watch: {
+    'form.status': function () {
+      this.alignFormPaymentWithStatus()
+    }
+  },
   mounted () {
     this.fetchStatuses()
     this.fetchOrders()
   },
   methods: {
+    paymentLabel (order) {
+      return order && order.is_paid ? 'Оплачен' : 'Не оплачен'
+    },
+    normalizeStatusToken (value) {
+      return String(value || '')
+        .toLowerCase()
+        .replace(/ё/g, 'е')
+        .replace(/\s+/g, '')
+    },
+    isPaidStatusToken (token) {
+      return ['оплачен', 'оплачено', 'paid'].includes(token)
+    },
+    isUnpaidStatusToken (token) {
+      return ['неоплачен', 'неоплачено', 'unpaid'].includes(token)
+    },
+    resolvedStatusNameById (statusId) {
+      const status = this.statuses.find((item) => Number(item.id) === Number(statusId))
+      return status ? status.name : ''
+    },
+    orderStatusLabel (order) {
+      if (!order) {
+        return '—'
+      }
+      const rawStatusName = this.resolvedStatusNameById(order.status) || order.status_name || ''
+      const token = this.normalizeStatusToken(rawStatusName)
+      if (this.isPaidStatusToken(token) || this.isUnpaidStatusToken(token)) {
+        return this.paymentLabel(order)
+      }
+      return rawStatusName || '—'
+    },
+    alignFormPaymentWithStatus () {
+      const rawStatusName = this.resolvedStatusNameById(this.form.status)
+      const token = this.normalizeStatusToken(rawStatusName)
+      if (this.isPaidStatusToken(token)) {
+        this.form.is_paid = true
+      } else if (this.isUnpaidStatusToken(token)) {
+        this.form.is_paid = false
+      }
+    },
     async fetchStatuses () {
       try {
         const response = await fetchShopOrderStatuses()
@@ -315,6 +359,7 @@ export default {
         status: order.status || '',
         is_paid: !!order.is_paid
       }
+      this.alignFormPaymentWithStatus()
       this.error = ''
       this.orderDetail = null
       this.showModal = true
@@ -341,6 +386,7 @@ export default {
       this.saving = true
       this.error = ''
       try {
+        this.alignFormPaymentWithStatus()
         const payload = {
           status: this.form.status,
           is_paid: this.form.is_paid

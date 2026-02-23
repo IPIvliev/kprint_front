@@ -59,6 +59,7 @@
 
 <script>
 import { IMaskDirective } from 'vue-imask'
+import { createShopPayment } from '@/services/shop.service'
 
 export default {
   directives: {
@@ -121,6 +122,26 @@ export default {
       }
       return office['address-source'] || office['postal-code'] || office?.address || ''
     },
+    buildReturnUrl (orderId) {
+      const origin = typeof window !== 'undefined' && window.location ? window.location.origin : ''
+      if (!origin) {
+        return ''
+      }
+      const url = new URL('/shop/cart', origin)
+      url.searchParams.set('payment', 'return')
+      if (orderId) {
+        url.searchParams.set('shop_order_id', String(orderId))
+      }
+      return url.toString()
+    },
+    storePendingPayment (payment, orderId) {
+      const paymentId = String(payment?.payment_id || '').trim()
+      if (!paymentId) {
+        return
+      }
+      localStorage.setItem('shop_last_payment_id', paymentId)
+      localStorage.setItem('shop_last_payment_order_id', String(orderId || ''))
+    },
     onAccept (e) {
       const maskRef = e.detail
       this.phone = maskRef.value
@@ -160,7 +181,7 @@ export default {
       this.submitting = true
       this.submitError = ''
       try {
-        await this.$store.dispatch('shop/fetchCreateOrder', {
+        const order = await this.$store.dispatch('shop/fetchCreateOrder', {
           fio: this.fio,
           phone: this.phone,
           email: this.email,
@@ -169,9 +190,31 @@ export default {
           delivery_time: this.$store.state.delivery?.delivery_price?.delivery_time || '',
           idempotency_key: this.idempotencyKey || this.buildIdempotencyKey()
         })
+        const orderId = Number(order?.id || 0)
+        if (!orderId) {
+          throw new Error('ORDER_CREATE_FAILED')
+        }
+
+        const paymentResponse = await createShopPayment({
+          order_id: orderId,
+          return_url: this.buildReturnUrl(orderId)
+        })
+        const payment = paymentResponse?.data || {}
+        if (payment?.is_paid) {
+          await this.$store.dispatch('shop/refreshActiveOrderState')
+          this.idempotencyKey = this.buildIdempotencyKey()
+          return
+        }
+        const confirmationUrl = String(payment?.confirmation_url || '').trim()
+        if (!confirmationUrl) {
+          throw new Error('PAYMENT_URL_MISSING')
+        }
+
+        this.storePendingPayment(payment, orderId)
         this.idempotencyKey = this.buildIdempotencyKey()
+        window.location.href = confirmationUrl
       } catch (e) {
-        this.submitError = 'Не удалось оформить заказ. Попробуйте позже.'
+        this.submitError = e?.response?.data?.detail || 'Не удалось создать платёж. Попробуйте позже.'
       } finally {
         this.submitting = false
       }

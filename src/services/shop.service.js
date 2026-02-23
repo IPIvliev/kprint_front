@@ -25,6 +25,14 @@ export function fetchUserCartOrder (orderId) {
   return api.get(`/api/shop/my/orders/${orderId}`)
 }
 
+export function createShopPayment (payload) {
+  return api.post('/api/shop/create-payment-intent', payload)
+}
+
+export function syncShopPaymentStatus (payload) {
+  return api.post('/api/shop/payments/sync', payload)
+}
+
 /**
  * @param {DiscountQueryParams} params
  */

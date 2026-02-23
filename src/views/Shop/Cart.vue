@@ -119,6 +119,7 @@ import DeliveryPrice from '@/components/elements/Shop/DeliveryPrice.vue'
 import OrderForm from '@/components/elements/Shop/OrderForm.vue'
 import FooterBlock from '@/components/FooterBlock.vue'
 import { fetchLocationByAbstract, fetchPublicIp } from '@/services/external.service'
+import { syncShopPaymentStatus } from '@/services/shop.service'
 export default {
   name: 'ShopCartView',
   components: { HeaderBlock, CartProducts, YandexMap, DeliveryDescription, DeliveryPrice, OrderForm, WhiteWelcome, FooterBlock },
@@ -146,6 +147,7 @@ export default {
     })
     if (this.$store?.state?.auth?.status?.loggedIn) {
       try {
+        await this.syncReturnedPayment()
         await this.$store.dispatch('shop/syncCartOrderAfterLogin')
       } catch (error) {
         console.log(error)
@@ -237,6 +239,40 @@ export default {
 
   },
   methods: {
+    getPendingPaymentPayload () {
+      const paymentId = String(localStorage.getItem('shop_last_payment_id') || '').trim()
+      const orderIdRaw = String(localStorage.getItem('shop_last_payment_order_id') || '').trim()
+      const orderId = Number(orderIdRaw || this.$store?.state?.shop?.active_order_id || 0)
+      if (!paymentId || !Number.isFinite(orderId) || orderId <= 0) {
+        return null
+      }
+      return { payment_id: paymentId, order_id: orderId }
+    },
+    clearPendingPayment () {
+      localStorage.removeItem('shop_last_payment_id')
+      localStorage.removeItem('shop_last_payment_order_id')
+    },
+    async syncReturnedPayment () {
+      const payload = this.getPendingPaymentPayload()
+      if (!payload) {
+        return null
+      }
+      try {
+        const response = await syncShopPaymentStatus(payload)
+        const data = response?.data || {}
+        if (data?.is_paid) {
+          await this.$store.dispatch('shop/refreshActiveOrderState')
+          this.clearPendingPayment()
+        }
+        return data
+      } catch (error) {
+        const status = Number(error?.response?.status || 0)
+        if (status >= 400 && status < 500) {
+          this.clearPendingPayment()
+        }
+        return null
+      }
+    },
     selectMarker (index) {
       this.selectedMarker = index
       this.office = this.GetSdekOffices[index] || {}

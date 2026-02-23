@@ -59,12 +59,12 @@
                         <span class="panel__table-text">{{ formatMoney(order.total_price) }}</span>
                       </td>
                       <td>
-                        <span class="panel__table-subtitle">Статус:</span>
-                        <span class="panel__table-text">{{ statusName(order) }}</span>
+                        <span class="panel__table-subtitle">Статус заказа:</span>
+                        <span class="panel__table-text">{{ orderStatusLabel(order) }}</span>
                       </td>
                       <td>
                         <span class="panel__table-subtitle">Оплата:</span>
-                        <span class="panel__table-text">{{ order.is_paid ? 'Оплачен' : 'Не оплачен' }}</span>
+                        <span class="panel__table-text">{{ paymentLabel(order) }}</span>
                       </td>
                       <td>
                         <button type="button" class="btn btn--grayborder btn-sm" @click="openOrder(order.id)">
@@ -103,9 +103,17 @@
                 class="shop-user-order-modal__badge"
                 :class="currentOrder.is_paid ? 'shop-user-order-modal__badge--paid' : 'shop-user-order-modal__badge--unpaid'"
               >
-                {{ currentOrder.is_paid ? 'Оплачен' : 'Не оплачен' }}
+                {{ paymentLabel(currentOrder) }}
               </span>
             </div>
+          </div>
+
+          <div
+            v-if="paymentStatusForCurrentOrder"
+            class="shop-user-order-modal__payment-alert"
+            :class="`shop-user-order-modal__payment-alert--${paymentStatusType}`"
+          >
+            {{ paymentStatusMessage }}
           </div>
 
           <div v-if="modalLoading" class="panel__table-text">Загрузка деталей заказа...</div>
@@ -174,9 +182,10 @@
               v-if="currentOrder && !currentOrder.is_paid"
               type="button"
               class="btn btn--red"
-              @click="goToCartForPayment"
+              :disabled="paymentSubmitting"
+              @click="payCurrentOrder"
             >
-              Оплатить в корзине
+              {{ paymentSubmitting ? 'Переход к оплате...' : 'Оплатить заказ' }}
             </button>
           </div>
         </div>
@@ -192,6 +201,7 @@ import {
   fetchUserShopOrder,
   fetchUserShopOrders
 } from '@/services/panel.service'
+import { createShopPayment, syncShopPaymentStatus } from '@/services/shop.service'
 
 export default {
   name: 'PanelShopUserOrders',
@@ -206,7 +216,11 @@ export default {
       showModal: false,
       modalLoading: false,
       modalError: '',
-      currentOrder: null
+      currentOrder: null,
+      paymentSubmitting: false,
+      paymentStatusOrderId: null,
+      paymentStatusMessage: '',
+      paymentStatusType: 'info'
     }
   },
   computed: {
@@ -230,13 +244,63 @@ export default {
         return null
       }
       return this.currentOrder.delivery[0] || null
+    },
+    paymentStatusForCurrentOrder () {
+      if (!this.currentOrder) {
+        return false
+      }
+      return Number(this.paymentStatusOrderId) === Number(this.currentOrder.id) && Boolean(this.paymentStatusMessage)
     }
   },
-  mounted () {
-    this.loadOrders()
-    this.loadStatuses()
+  async mounted () {
+    await this.syncReturnedPayment()
+    await this.loadOrders()
+    await this.loadStatuses()
+    const returnOrderId = Number(this.$route?.query?.shop_order_id || 0)
+    if (returnOrderId > 0) {
+      await this.openOrder(returnOrderId)
+    }
   },
   methods: {
+    upsertOrderInList (order) {
+      if (!order || !order.id) {
+        return
+      }
+      const index = this.orders.findIndex((item) => Number(item.id) === Number(order.id))
+      if (index === -1) {
+        this.orders = [order, ...this.orders]
+        return
+      }
+      this.orders.splice(index, 1, {
+        ...this.orders[index],
+        ...order
+      })
+    },
+    async refreshOrderState (orderId, options = {}) {
+      const normalizedOrderId = Number(orderId || 0)
+      if (!Number.isFinite(normalizedOrderId) || normalizedOrderId <= 0) {
+        return null
+      }
+      const shouldRefreshModal = options.refreshModal !== false
+      try {
+        const response = await fetchUserShopOrder(normalizedOrderId)
+        const freshOrder = response?.data || null
+        if (!freshOrder) {
+          return null
+        }
+        this.upsertOrderInList(freshOrder)
+        if (
+          shouldRefreshModal &&
+          this.currentOrder &&
+          Number(this.currentOrder.id) === normalizedOrderId
+        ) {
+          this.currentOrder = freshOrder
+        }
+        return freshOrder
+      } catch (err) {
+        return null
+      }
+    },
     async loadOrders () {
       this.loading = true
       this.error = ''
@@ -257,6 +321,127 @@ export default {
         this.statuses = []
       }
     },
+    setPaymentStatus (orderId, message, type = 'info') {
+      this.paymentStatusOrderId = Number(orderId || 0) || null
+      this.paymentStatusMessage = String(message || '')
+      this.paymentStatusType = ['success', 'error', 'info'].includes(type) ? type : 'info'
+    },
+    clearPaymentReturnQuery () {
+      const query = { ...(this.$route?.query || {}) }
+      delete query.payment
+      delete query.shop_order_id
+      this.$router.replace({ path: this.$route.path, query }).catch(() => {})
+    },
+    getPendingPaymentPayload () {
+      const paymentId = String(localStorage.getItem('panel_shop_last_payment_id') || '').trim()
+      const queryOrderId = Number(this.$route?.query?.shop_order_id || 0)
+      const storedOrderId = Number(localStorage.getItem('panel_shop_last_payment_order_id') || 0)
+      const orderId = queryOrderId > 0 ? queryOrderId : storedOrderId
+      if (!paymentId || !Number.isFinite(orderId) || orderId <= 0) {
+        return null
+      }
+      return {
+        payment_id: paymentId,
+        order_id: orderId
+      }
+    },
+    storePendingPayment (payment, orderId) {
+      const paymentId = String(payment?.payment_id || '').trim()
+      if (!paymentId) {
+        return
+      }
+      localStorage.setItem('panel_shop_last_payment_id', paymentId)
+      localStorage.setItem('panel_shop_last_payment_order_id', String(orderId || ''))
+    },
+    clearPendingPayment () {
+      localStorage.removeItem('panel_shop_last_payment_id')
+      localStorage.removeItem('panel_shop_last_payment_order_id')
+    },
+    buildPaymentReturnUrl (orderId) {
+      if (typeof window === 'undefined' || !window.location) {
+        return ''
+      }
+      const url = new URL(this.$route?.path || '/panel/printers', window.location.origin)
+      url.searchParams.set('payment', 'return')
+      if (orderId) {
+        url.searchParams.set('shop_order_id', String(orderId))
+      }
+      return url.toString()
+    },
+    async syncReturnedPayment () {
+      const shouldSync = String(this.$route?.query?.payment || '') === 'return' || Boolean(localStorage.getItem('panel_shop_last_payment_id'))
+      if (!shouldSync) {
+        return null
+      }
+
+      const payload = this.getPendingPaymentPayload()
+      if (!payload) {
+        this.clearPaymentReturnQuery()
+        return null
+      }
+
+      try {
+        const response = await syncShopPaymentStatus(payload)
+        const data = response?.data || {}
+        if (data?.is_paid) {
+          this.setPaymentStatus(payload.order_id, 'Оплата прошла успешно. Заказ отмечен как оплаченный.', 'success')
+          await this.refreshOrderState(payload.order_id)
+          this.clearPendingPayment()
+        } else {
+          const statusValue = String(data?.status || '').trim() || 'pending'
+          this.setPaymentStatus(payload.order_id, `Статус платежа: ${statusValue}.`, 'info')
+          await this.refreshOrderState(payload.order_id)
+        }
+        return data
+      } catch (err) {
+        const status = Number(err?.response?.status || 0)
+        const message = err?.response?.data?.detail || 'Не удалось обновить статус оплаты.'
+        this.setPaymentStatus(payload.order_id, message, 'error')
+        if (status >= 400 && status < 500) {
+          this.clearPendingPayment()
+        }
+        return null
+      } finally {
+        this.clearPaymentReturnQuery()
+      }
+    },
+    async payCurrentOrder () {
+      if (!this.currentOrder || this.currentOrder.is_paid || this.paymentSubmitting) {
+        return
+      }
+      const orderId = Number(this.currentOrder.id || 0)
+      if (!orderId) {
+        this.setPaymentStatus(null, 'Не удалось определить заказ для оплаты.', 'error')
+        return
+      }
+
+      this.paymentSubmitting = true
+      this.setPaymentStatus(orderId, '', 'info')
+      try {
+        const response = await createShopPayment({
+          order_id: orderId,
+          return_url: this.buildPaymentReturnUrl(orderId)
+        })
+        const payment = response?.data || {}
+        if (payment?.is_paid) {
+          this.setPaymentStatus(orderId, 'Заказ уже оплачен.', 'success')
+          await this.refreshOrderState(orderId)
+          return
+        }
+        const confirmationUrl = String(payment?.confirmation_url || '').trim()
+        if (!confirmationUrl) {
+          this.setPaymentStatus(orderId, 'Не удалось получить ссылку на оплату.', 'error')
+          return
+        }
+        this.storePendingPayment(payment, orderId)
+        window.location.href = confirmationUrl
+      } catch (err) {
+        const message = err?.response?.data?.detail || 'Не удалось создать платёж.'
+        this.setPaymentStatus(orderId, message, 'error')
+      } finally {
+        this.paymentSubmitting = false
+      }
+    },
     async openOrder (orderId) {
       this.showModal = true
       this.modalLoading = true
@@ -271,15 +456,19 @@ export default {
         this.modalLoading = false
       }
     },
-    closeModal () {
+    async closeModal () {
+      const paidOrderId = this.paymentStatusType === 'success' ? Number(this.paymentStatusOrderId || 0) : 0
+      if (paidOrderId > 0) {
+        await this.refreshOrderState(paidOrderId, { refreshModal: false })
+      }
       this.showModal = false
       this.modalLoading = false
       this.modalError = ''
       this.currentOrder = null
-    },
-    goToCartForPayment () {
-      this.closeModal()
-      this.$router.push('/shop/cart')
+      this.paymentSubmitting = false
+      this.paymentStatusOrderId = null
+      this.paymentStatusMessage = ''
+      this.paymentStatusType = 'info'
     },
     formatDate (value) {
       if (!value) {
@@ -303,15 +492,31 @@ export default {
       }
       return `${value} Р`
     },
-    statusName (order) {
+    paymentLabel (order) {
+      return order && order.is_paid ? 'Оплачен' : 'Не оплачен'
+    },
+    normalizeStatusToken (value) {
+      return String(value || '')
+        .toLowerCase()
+        .replace(/ё/g, 'е')
+        .replace(/\s+/g, '')
+    },
+    isPaidStatusToken (token) {
+      return ['оплачен', 'оплачено', 'paid'].includes(token)
+    },
+    isUnpaidStatusToken (token) {
+      return ['неоплачен', 'неоплачено', 'unpaid'].includes(token)
+    },
+    orderStatusLabel (order) {
       if (!order) {
         return '—'
       }
-      if (order.status_name) {
-        return order.status_name
+      const rawStatusName = order.status_name || this.statuses.find((status) => Number(status.id) === Number(order.status))?.name || ''
+      const token = this.normalizeStatusToken(rawStatusName)
+      if (this.isPaidStatusToken(token) || this.isUnpaidStatusToken(token)) {
+        return this.paymentLabel(order)
       }
-      const match = this.statuses.find((status) => Number(status.id) === Number(order.status))
-      return match ? match.name : '—'
+      return rawStatusName || '—'
     },
     normalizeOrderItems (items) {
       if (!items) {
@@ -531,6 +736,28 @@ export default {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+}
+
+.shop-user-order-modal__payment-alert {
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.shop-user-order-modal__payment-alert--success {
+  background: #e9f8ee;
+  color: #1d7a3a;
+}
+
+.shop-user-order-modal__payment-alert--error {
+  background: #fff0f1;
+  color: #b33948;
+}
+
+.shop-user-order-modal__payment-alert--info {
+  background: #eef3ff;
+  color: #24428d;
 }
 
 @media (max-width: 767px) {
