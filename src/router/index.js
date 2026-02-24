@@ -161,7 +161,7 @@ const routes = [
       {
         path: 'study',
         name: 'PanelStudy',
-        component: () => import('../views/Panel/Panel.vue')
+        component: () => import('../views/Panel/PanelStudyUser.vue')
       },
       {
         path: 'manager',

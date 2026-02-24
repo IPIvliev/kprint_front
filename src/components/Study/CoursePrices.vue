@@ -30,10 +30,24 @@ export default {
       number = Math.trunc(number)
       return number.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + ' руб.'
     },
+    buildStudyPanelTarget (courseId, priceId) {
+      if (!courseId || !priceId) {
+        return '/panel/study'
+      }
+      const query = new URLSearchParams({
+        study_course_id: String(courseId),
+        study_price_id: String(priceId)
+      }).toString()
+      return `/panel/study?${query}`
+    },
     buyCourse (price) {
       if (!this.course || !price) {
         return
       }
+
+      const courseId = Number(this.course.id || 0)
+      const priceId = Number(price.id || 0)
+      const panelStudyTarget = this.buildStudyPanelTarget(courseId, priceId)
 
       const isLoggedIn = this.$store?.state?.auth?.status?.loggedIn === true
       if (!isLoggedIn) {
@@ -45,12 +59,18 @@ export default {
         const targetPath = goToLogin ? '/login' : '/registration'
         this.$router.push({
           path: targetPath,
-          query: { next: '/panel/study' }
+          query: { next: panelStudyTarget }
         })
         return
       }
 
-      this.$router.push('/panel/study')
+      this.$router.push({
+        path: '/panel/study',
+        query: {
+          study_course_id: String(courseId),
+          study_price_id: String(priceId)
+        }
+      })
     }
   }
 }
