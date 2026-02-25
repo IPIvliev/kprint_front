@@ -8,6 +8,9 @@
     "build:ci": "vue-cli-service build && npm run check:bundle-budget",
     "check:bundle-budget": "node scripts/check-bundle-budget.js",
     "lint": "vue-cli-service lint",
+    "test:unit": "node scripts/run-vitest.js run",
+    "test:unit:watch": "node scripts/run-vitest.js",
+    "test:unit:coverage": "node scripts/run-vitest.js run --coverage",
     "gen:api-types": "node scripts/generate-api-types.js",
     "check:api-types": "npm run gen:api-types && node scripts/check-api-types.js"
   },
@@ -41,6 +44,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.28.5",
+    "@vitest/coverage-v8": "0.34.6",
     "@vue/cli-plugin-babel": "^5.0.8",
     "@vue/cli-plugin-eslint": "^5.0.8",
     "@vue/cli-plugin-router": "^5.0.8",
@@ -54,10 +58,12 @@
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-promise": "^6.6.0",
     "eslint-plugin-vue": "^9.32.0",
+    "jsdom": "22.1.0",
     "openapi-typescript": "^7.13.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "0.34.6"
   },
   "eslintConfig": {
     "root": true,

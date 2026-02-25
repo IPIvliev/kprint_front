@@ -27,5 +27,8 @@ jobs:
       - name: Validate API contract types
         run: npm run check:api-types
 
+      - name: Run unit tests
+        run: npm run test:unit
+
       - name: Build and check bundle budget
         run: npm run build:ci
