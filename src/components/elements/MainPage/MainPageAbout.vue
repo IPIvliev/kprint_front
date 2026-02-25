@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="about about-company">
     <div class="container">
       <div class="row g-4">
@@ -42,22 +42,22 @@
           <div class="about__items">
             <div class="about__itemsrow">
               <div class="about__item">
-                <div class="about__icon"> <img src="img/tooth.svg" alt=""></div>
+                <div class="about__icon"><img src="img/tooth.svg" alt=""></div>
                 <div class="about__itemtitle">Разработка ПО для аддитивных технологий</div>
                 <div class="about__itemtext">ИТ-услуги и прикладные программные решения для оборудования, материалов и производственных процессов.</div>
               </div>
               <div class="about__item">
-                <div class="about__icon"> <img src="img/car.svg" alt=""></div>
-                <div class="about__itemtitle">Собственное производство фотополимеров</div>
+                <div class="about__icon"><img src="img/car.svg" alt=""></div>
+                <div class="about__itemtitle">Собственное производство фотополимерных материалов и филамента</div>
                 <div class="about__itemtext">Собственное производство фотополимерных материалов и филамента для 3D-печати.</div>
               </div>
               <div class="about__item">
-                <div class="about__icon"> <img src="img/box.svg" alt=""></div>
+                <div class="about__icon"><img src="img/box.svg" alt=""></div>
                 <div class="about__itemtitle">Ферма 3D-принтеров для изделий под заказ</div>
                 <div class="about__itemtext">Изготавливаем прототипы и функциональные изделия по требованиям заказчика.</div>
               </div>
               <div class="about__item">
-                <div class="about__icon"> <img src="img/design.svg" alt=""></div>
+                <div class="about__icon"><img src="img/design.svg" alt=""></div>
                 <div class="about__itemtitle">Обучение 3D-печати и 3D-сканированию</div>
                 <div class="about__itemtext">Проводим обучение для специалистов, производственных команд и образовательных программ.</div>
               </div>
@@ -66,7 +66,7 @@
         </div>
       </div>
 
-      <div class="about-company__cases">
+      <div v-if="showExtended" class="about-company__cases">
         <h3 class="about-company__cases-title">Ключевые программные разработки</h3>
         <div class="about-company__cases-grid">
           <article class="about-company__case">
@@ -84,38 +84,66 @@
         </div>
       </div>
 
-      <div class="about-company__timeline">
+      <div v-if="showExtended" class="about-company__timeline">
         <h3 class="about-company__timeline-title">Как мы развиваем направление с 2019 года</h3>
         <div class="about-company__timeline-list">
           <article class="about-company__timeline-item">
             <div class="about-company__timeline-year">2019</div>
-            <h4>Исследования и первые прикладные решения</h4>
-            <p>Старт прикладных исследований в области аддитивных технологий и запуск первых программных разработок.</p>
+            <h4>Создание компании и проведение исследований</h4>
+            <p>Запуск компании и старт прикладных исследований в области аддитивных технологий.</p>
           </article>
           <article class="about-company__timeline-item">
-            <div class="about-company__timeline-year">2020-2023</div>
-            <h4>Развитие продуктовой и производственной базы</h4>
-            <p>Разработка ПО для оборудования и прикладных задач, развитие материалов и производственных процессов.</p>
+            <div class="about-company__timeline-year">2020</div>
+            <h4>Старт производства фотополимерных смол</h4>
+            <p>Начато серийное производство более 20 видов фотополимерных смол.</p>
           </article>
           <article class="about-company__timeline-item">
-            <div class="about-company__timeline-year">Сегодня</div>
-            <h4>Собственная технологическая экосистема</h4>
-            <p>Интегрируем исследования, ПО, материалы, ферму 3D-принтеров и обучение в единый работающий контур.</p>
+            <div class="about-company__timeline-year">2021</div>
+            <h4>Товарный знак Gorky Liquid и стоматологические смолы</h4>
+            <p>Зарегистрирован товарный знак Gorky Liquid, начата разработка и производство стоматологических смол.</p>
+          </article>
+          <article class="about-company__timeline-item">
+            <div class="about-company__timeline-year">2022</div>
+            <h4>Принтер, программные продукты и статус ИТ-компании</h4>
+            <p>Разработан фотополимерный принтер, начата разработка программных продуктов, компания включена в реестр ИТ-компаний.</p>
+          </article>
+          <article class="about-company__timeline-item">
+            <div class="about-company__timeline-year">2023</div>
+            <h4>Сертификат российского происхождения продукции</h4>
+            <p>Получен сертификат о российском происхождении выпускаемой продукции.</p>
+          </article>
+          <article class="about-company__timeline-item">
+            <div class="about-company__timeline-year">2024</div>
+            <h4>Медицинское регистрационное удостоверение</h4>
+            <p>Получено медицинское регистрационное удостоверение на стоматологические материалы.</p>
+          </article>
+          <article class="about-company__timeline-item">
+            <div class="about-company__timeline-year">2025</div>
+            <h4>Развитие оборудования и запуск филамента</h4>
+            <p>Продолжена разработка фотополимерного принтера и запущено производство филамента.</p>
+          </article>
+          <article class="about-company__timeline-item">
+            <div class="about-company__timeline-year">2026</div>
+            <h4>Запуск виртуального портала</h4>
+            <p>Запущен виртуальный портал в области аддитивных технологий.</p>
           </article>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
-
 export default {
-  props: ['background'],
-  created () {
-
-  },
-  computed: {
-
+  props: {
+    background: {
+      type: String,
+      default: ''
+    },
+    showExtended: {
+      type: Boolean,
+      default: false
+    }
   }
 }
 </script>

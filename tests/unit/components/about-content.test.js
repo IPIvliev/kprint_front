@@ -1,4 +1,4 @@
-import fs from 'node:fs'
+﻿import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -16,9 +16,17 @@ describe('about page content', () => {
     expect(source).toContain('О компании')
   })
 
-  it('describes core directions and key software cases', () => {
+  it('describes core directions and keeps extended section only for about page', () => {
+    const aboutSource = fs.readFileSync(aboutViewPath, 'utf8')
+    const homeViewPath = path.resolve(__dirname, '../../../src/views/Home.vue')
+    const homeSource = fs.readFileSync(homeViewPath, 'utf8')
     const source = fs.readFileSync(aboutMainBlockPath, 'utf8')
 
+    expect(aboutSource).toContain('<MainPageAbout :show-extended="true" />')
+    expect(homeSource).toContain('<MainPageAbout/>')
+    expect(homeSource).not.toContain('show-extended')
+
+    expect(source).toContain('v-if="showExtended"')
     expect(source).toContain('ПО для высокоскоростного фотополимерного 3D-принтера')
     expect(source).toContain('ПО для подбора фотополимерных материалов по матрице цветов лица пациента')
     expect(source).toContain('Собственное производство фотополимерных материалов и филамента')
@@ -27,14 +35,28 @@ describe('about page content', () => {
     expect(source).toContain('Сертификаты на программное обеспечение и патенты')
   })
 
-  it('contains v2 trust and timeline sections', () => {
+  it('renders about gallery block and removes hero action buttons', () => {
     const aboutSource = fs.readFileSync(aboutViewPath, 'utf8')
-    const mainSource = fs.readFileSync(aboutMainBlockPath, 'utf8')
 
-    expect(aboutSource).toContain('Сертификаты и патенты')
-    expect(aboutSource).toContain('Подтверждённые результаты в ПО и материалах')
-    expect(mainSource).toContain('Как мы развиваем направление с 2019 года')
-    expect(mainSource).toContain('Исследования и первые прикладные решения')
-    expect(mainSource).toContain('Собственная технологическая экосистема')
+    expect(aboutSource).toContain('<GalleryBlock page-key="about-us"')
+    expect(aboutSource).not.toContain('btn btn--black" to="/contact"')
+    expect(aboutSource).not.toContain('btn btn--grayborder" to="/study"')
+  })
+
+  it('contains expanded timeline from 2019 to 2026', () => {
+    const mainSource = fs.readFileSync(aboutMainBlockPath, 'utf8')
+    const yearMarkers = mainSource.match(/<div class="about-company__timeline-year">/g) || []
+
+    expect(yearMarkers).toHaveLength(8)
+    expect(mainSource).toContain('about-company__timeline-year">2019<')
+    expect(mainSource).toContain('about-company__timeline-year">2020<')
+    expect(mainSource).toContain('about-company__timeline-year">2021<')
+    expect(mainSource).toContain('about-company__timeline-year">2022<')
+    expect(mainSource).toContain('about-company__timeline-year">2023<')
+    expect(mainSource).toContain('about-company__timeline-year">2024<')
+    expect(mainSource).toContain('about-company__timeline-year">2025<')
+    expect(mainSource).toContain('about-company__timeline-year">2026<')
+    expect(mainSource).toContain('Gorky Liquid')
   })
 })
+

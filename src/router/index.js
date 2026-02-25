@@ -40,9 +40,13 @@ const routes = [
     component: ResetPassword
   },
   {
-    path: '/innovations',
+    path: '/it-innovations',
     name: 'Innovations',
     component: Innovations
+  },
+  {
+    path: '/innovations',
+    redirect: '/it-innovations'
   },
   {
     path: '/news',

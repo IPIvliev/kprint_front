@@ -9,10 +9,16 @@ describe('router configuration', () => {
   it('contains critical public routes', () => {
     const byName = Object.fromEntries(router.getRoutes().map((route) => [route.name, route.path]))
     expect(byName.Home).toBe('/')
+    expect(byName.Innovations).toBe('/it-innovations')
     expect(byName.MainShop).toBe('/shop')
     expect(byName.MainStudy).toBe('/study')
     expect(byName.MainPrint).toBe('/print')
     expect(byName.PanelStudyUserCourses).toBe('/panel/study/my/courses')
+  })
+
+  it('redirects legacy innovations url to the new it-innovations route', () => {
+    const legacyRoute = router.getRoutes().find((route) => route.path === '/innovations')
+    expect(legacyRoute?.redirect).toBe('/it-innovations')
   })
 
   it('contains critical panel routes', () => {
