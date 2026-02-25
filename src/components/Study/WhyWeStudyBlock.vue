@@ -1,6 +1,6 @@
 <template>
     <!-- video-->
-    <div class="white_block" :class="background">
+    <div class="white_block cmp-components-study-whywestudyblock" :class="background">
       <div class="container">
         <div class="row gy-1">
           <div class="col-lg-4">
@@ -15,21 +15,35 @@
           </div>
         </div>
         <div class="row gy-1" style="margin-top: 30px;">
-          <div class="col-lg-3 whywe_card">
-            <h4 class="whywe_card_title">Богатый опыт</h4>
-            <p class="whywe_card_text">Мы занимаемся фотополимерной печатью с 2019 года.</p>
+          <div class="col-lg-3">
+            <article class="whywe_card whywe_card--highlight">
+              <h4 class="whywe_card_title">Богатый опыт</h4>
+              <p class="whywe_card_text">Мы занимаемся фотополимерной печатью с 2019 года.</p>
+            </article>
           </div>
-          <div class="col-lg-3 whywe_card">
-
-            <i class=""></i>sss
+          <div class="col-lg-3">
+            <article class="whywe_card whywe_card--highlight">
+              <h4 class="whywe_card_title">Практика на реальных задачах</h4>
+              <p class="whywe_card_text">
+                Учим работать с реальными кейсами по 3D-печати, постобработке и подготовке моделей к печати.
+              </p>
+            </article>
           </div>
-          <div class="col-lg-3 whywe_card">
-
-            <i class=""></i>sss
+          <div class="col-lg-3">
+            <article class="whywe_card whywe_card--highlight">
+              <h4 class="whywe_card_title">Онлайн и офлайн форматы</h4>
+              <p class="whywe_card_text">
+                Доступны дистанционные занятия и очные практикумы в учебном центре под ваши задачи и график.
+              </p>
+            </article>
           </div>
-          <div class="col-lg-3 whywe_card">
-
-            <i class=""></i>sss
+          <div class="col-lg-3">
+            <article class="whywe_card whywe_card--highlight">
+              <h4 class="whywe_card_title">Поддержка после обучения</h4>
+              <p class="whywe_card_text">
+                Помогаем с выбором материалов и оборудования, а также отвечаем на вопросы после прохождения курса.
+              </p>
+            </article>
           </div>
         </div>
       </div>
