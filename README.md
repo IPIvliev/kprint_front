@@ -37,6 +37,16 @@ npm run test:unit:watch
 npm run test:unit:coverage
 ```
 
+### Installs browser for e2e smoke tests
+```
+npm run test:e2e:install
+```
+
+### Runs e2e smoke tests
+```
+npm run test:e2e:smoke
+```
+
 ## Testing Strategy
 - `Unit`: utility functions and service-layer request wrappers.
 - `Smoke`: key routes and critical user flows surface checks (route map and endpoint contracts).

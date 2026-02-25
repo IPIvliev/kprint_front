@@ -20,12 +20,13 @@
 - On each PR:
   - `npm run check:api-types`
   - `npm run test:unit`
+  - `npm run test:e2e:smoke`
   - `npm run build:ci`
 
 ## Phase Plan
 1. Baseline unit/service smoke suite (implemented).
-2. Expand tests for store modules and critical panel components.
-3. Add E2E smoke tests for top business flows:
+2. Expand tests for store modules and critical panel components (implemented for `auth/catalog/study/delivery/shop` stores and `Panel.vue` manager redirect smoke).
+3. Add E2E smoke tests for top business flows (initial smoke implemented for authentication, shop, print, study user, study manager):
    - Authentication.
    - Shop checkout.
    - Print order lifecycle.
