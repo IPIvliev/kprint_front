@@ -83,27 +83,6 @@
           </article>
         </div>
       </div>
-
-      <div class="about-company__timeline">
-        <h3 class="about-company__timeline-title">Как мы развиваем направление с 2019 года</h3>
-        <div class="about-company__timeline-list">
-          <article class="about-company__timeline-item">
-            <div class="about-company__timeline-year">2019</div>
-            <h4>Исследования и первые прикладные решения</h4>
-            <p>Старт прикладных исследований в области аддитивных технологий и запуск первых программных разработок.</p>
-          </article>
-          <article class="about-company__timeline-item">
-            <div class="about-company__timeline-year">2020-2023</div>
-            <h4>Развитие продуктовой и производственной базы</h4>
-            <p>Разработка ПО для оборудования и прикладных задач, развитие материалов и производственных процессов.</p>
-          </article>
-          <article class="about-company__timeline-item">
-            <div class="about-company__timeline-year">Сегодня</div>
-            <h4>Собственная технологическая экосистема</h4>
-            <p>Интегрируем исследования, ПО, материалы, ферму 3D-принтеров и обучение в единый работающий контур.</p>
-          </article>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -164,55 +143,6 @@ export default {
   color: #56595a;
 }
 
-.about-company__timeline {
-  margin-top: 36px;
-}
-
-.about-company__timeline-title {
-  margin: 0 0 22px;
-  font-size: 30px;
-  line-height: 1.2;
-  font-weight: 700;
-}
-
-.about-company__timeline-list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.about-company__timeline-item {
-  border-radius: 16px;
-  background: #fafafa;
-  border: 1px solid #e3e6e6;
-  padding: 20px;
-}
-
-.about-company__timeline-year {
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: #d83a56;
-  color: #fff;
-  font-size: 13px;
-  line-height: 1;
-  font-weight: 700;
-}
-
-.about-company__timeline-item h4 {
-  margin: 14px 0 0;
-  font-size: 18px;
-  line-height: 1.35;
-  font-weight: 700;
-}
-
-.about-company__timeline-item p {
-  margin: 10px 0 0;
-  color: #595d60;
-  font-size: 15px;
-  line-height: 1.5;
-}
-
 @media (max-width: 1199.98px) {
   .about-company__cases-grid {
     grid-template-columns: 1fr 1fr;
@@ -220,14 +150,6 @@ export default {
 
   .about-company__cases-title {
     font-size: 27px;
-  }
-
-  .about-company__timeline-title {
-    font-size: 27px;
-  }
-
-  .about-company__timeline-list {
-    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -243,18 +165,6 @@ export default {
 
   .about-company__cases-title {
     font-size: 23px;
-  }
-
-  .about-company__timeline {
-    margin-top: 28px;
-  }
-
-  .about-company__timeline-title {
-    font-size: 23px;
-  }
-
-  .about-company__timeline-list {
-    grid-template-columns: 1fr;
   }
 }
 </style>

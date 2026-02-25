@@ -90,29 +90,6 @@
   </div>
   <!--  /halfitems-->
 
-  <section class="about-proof">
-    <div class="container">
-      <div class="about-proof__head">
-        <h2>Сертификаты и патенты</h2>
-        <p>Подтверждённые результаты в ПО и материалах</p>
-      </div>
-      <div class="about-proof__grid">
-        <article class="about-proof__card">
-          <h3>Сертификаты на программное обеспечение</h3>
-          <p>Оформленные результаты по ключевым цифровым продуктам компании в области аддитивных технологий.</p>
-        </article>
-        <article class="about-proof__card">
-          <h3>Патенты в области фотополимерных материалов</h3>
-          <p>Разработки в области рецептур, применимости и технологической стабильности материалов для 3D-печати.</p>
-        </article>
-        <article class="about-proof__card">
-          <h3>Практическая валидация на собственной ферме</h3>
-          <p>Проверяем решения в реальных производственных сценариях и используем результаты в серийной работе.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
   <PartnersBlock/>
   <!--  /callback-->
   <DarkWelcome/>
@@ -178,68 +155,10 @@ export default {
   height: 100%;
 }
 
-.about-proof {
-  padding: 84px 0 56px;
-}
-
-.about-proof__head h2 {
-  margin: 0;
-  font-size: 34px;
-  line-height: 1.2;
-  font-weight: 700;
-}
-
-.about-proof__head p {
-  margin: 10px 0 0;
-  font-size: 18px;
-  line-height: 1.45;
-  color: #5a5e60;
-}
-
-.about-proof__grid {
-  margin-top: 28px;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.about-proof__card {
-  min-height: 190px;
-  padding: 22px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #f4f5f5 0%, #ebeded 100%);
-}
-
-.about-proof__card h3 {
-  margin: 0;
-  font-size: 19px;
-  line-height: 1.32;
-  font-weight: 700;
-}
-
-.about-proof__card p {
-  margin: 12px 0 0;
-  font-size: 15px;
-  line-height: 1.52;
-  color: #55595b;
-}
-
 @media (max-width: 991.98px) {
   .welcomeabout__subtitle {
     font-size: 16px;
     line-height: 1.5;
-  }
-
-  .about-proof {
-    padding: 58px 0 34px;
-  }
-
-  .about-proof__head h2 {
-    font-size: 28px;
-  }
-
-  .about-proof__grid {
-    grid-template-columns: 1fr;
   }
 }
 </style>

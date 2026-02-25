@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="content content--pbn">
     <div class="panel">
       <div class="container">
@@ -299,7 +299,7 @@ export default {
           await createStudyManagerTeacher(payload)
         }
         this.closeModal()
-        await this.fetchTeachers()
+        await this.fetchData()
       } catch (err) {
         this.error = err.userMessage || 'Не удалось сохранить преподавателя'
       } finally {
@@ -317,7 +317,7 @@ export default {
       this.error = ''
       try {
         await deleteStudyManagerTeacher(id)
-        await this.fetchTeachers()
+        await this.fetchData()
       } catch (err) {
         this.error = err.userMessage || 'Не удалось удалить преподавателя'
       }
@@ -325,3 +325,4 @@ export default {
   }
 }
 </script>
+
