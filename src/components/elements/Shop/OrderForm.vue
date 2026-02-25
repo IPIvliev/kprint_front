@@ -43,15 +43,44 @@
       <label class="form-label">Доставка:</label>
       <div>{{ formErrors.delivery_destination }}</div>
     </div>
-    <div class="form-check">
-      <input id="sign" v-model="agree" class="form-check-input" type="checkbox" name="sign" />
-      <label class="form-check-label" for="sign">
-        Я даю согласие на обработку моих персональных данных и соглашаюсь с политикой обработки персональных данных
+    <div class="checkout-consents">
+      <p class="checkout-consents__title">
+        Для оформления заказа отметьте обязательные подтверждения:
+      </p>
+      <label class="checkout-consents__item">
+        <input v-model="termsOfferAccepted" class="form-check-input" type="checkbox" name="terms_offer_accepted">
+        <span>
+          <strong class="checkout-consents__badge">Обязательно</strong>
+          Принимаю
+          <router-link to="/legal/terms-offer" target="_blank" rel="noopener noreferrer">соглашение и оферту</router-link>
+        </span>
       </label>
-      <div>{{ formErrors.sign }}</div>
+      <div>{{ formErrors.terms_offer_accepted }}</div>
+
+      <label class="checkout-consents__item">
+        <input v-model="pdAccepted" class="form-check-input" type="checkbox" name="pd_accepted">
+        <span>
+          <strong class="checkout-consents__badge">Обязательно</strong>
+          Даю
+          <router-link to="/legal/pd-consent" target="_blank" rel="noopener noreferrer">согласие на ПДн</router-link>
+        </span>
+      </label>
+      <div>{{ formErrors.pd_accepted }}</div>
+
+      <label class="checkout-consents__item">
+        <input v-model="adsAccepted" class="form-check-input" type="checkbox" name="ads_accepted">
+        <span>
+          <strong class="checkout-consents__badge checkout-consents__badge--optional">Опционально</strong>
+          Хочу получать
+          <router-link to="/legal/ads-consent" target="_blank" rel="noopener noreferrer">новости и акции</router-link>
+        </span>
+      </label>
+      <p class="checkout-consents__status" :class="{ 'checkout-consents__status--ready': isCheckoutConsentsAccepted }">
+        {{ isCheckoutConsentsAccepted ? 'Обязательные пункты отмечены. Заказ можно отправить.' : 'Без 2 обязательных отметок отправка заказа недоступна.' }}
+      </p>
     </div>
     <hr />
-    <button class="btn btn--red col-12" type="submit" :disabled="submitting">
+    <button class="btn btn--red col-12" type="submit" :disabled="submitting || !isCheckoutConsentsAccepted">
       {{ submitting ? 'Отправка...' : 'Оплатить' }}
     </button>
     <div v-if="submitError" style="margin-top: 10px; color: #d83a56;">{{ submitError }}</div>
@@ -81,12 +110,19 @@ export default {
       default: ''
     }
   },
+  computed: {
+    isCheckoutConsentsAccepted () {
+      return this.termsOfferAccepted && this.pdAccepted
+    }
+  },
   data () {
     return {
       fio: '',
       phone: '',
       email: '',
-      agree: true,
+      termsOfferAccepted: false,
+      pdAccepted: false,
+      adsAccepted: false,
       idempotencyKey: '',
       submitting: false,
       submitError: '',
@@ -94,7 +130,8 @@ export default {
         fio: '',
         phone: '',
         email: '',
-        sign: '',
+        terms_offer_accepted: '',
+        pd_accepted: '',
         delivery_destination: ''
       },
       phoneNumberMask: {
@@ -166,7 +203,7 @@ export default {
       }
     },
     validateForm () {
-      this.formErrors = { fio: '', phone: '', email: '', sign: '', delivery_destination: '' }
+      this.formErrors = { fio: '', phone: '', email: '', terms_offer_accepted: '', pd_accepted: '', delivery_destination: '' }
 
       if (!this.fio) {
         this.formErrors.fio = 'Введите ФИО'
@@ -177,8 +214,11 @@ export default {
       if (!this.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) {
         this.formErrors.email = 'Введите корректный email'
       }
-      if (!this.agree) {
-        this.formErrors.sign = 'Требуется согласие'
+      if (!this.termsOfferAccepted) {
+        this.formErrors.terms_offer_accepted = 'Нужно принять соглашение и оферту'
+      }
+      if (!this.pdAccepted) {
+        this.formErrors.pd_accepted = 'Нужно согласиться на обработку ПДн'
       }
       if (this.showDelivery && !this.resolveDeliveryDestination()) {
         this.formErrors.delivery_destination = 'Выберите пункт выдачи СДЭК'
@@ -238,6 +278,9 @@ export default {
           delivery_company: this.normalizeDeliveryCompany(),
           delivery_destination: this.resolveDeliveryDestination(),
           delivery_time: this.$store.state.delivery?.delivery_price?.delivery_time || '',
+          terms_offer_accepted: this.termsOfferAccepted,
+          pd_accepted: this.pdAccepted,
+          ads_accepted: this.adsAccepted,
           idempotency_key: this.idempotencyKey || this.buildIdempotencyKey()
         })
         const orderId = Number(order?.id || 0)
@@ -276,3 +319,64 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.checkout-consents {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 10px 12px;
+  border: 1px solid #d9dee8;
+  border-radius: 8px;
+  background: #f7f9fc;
+}
+
+.checkout-consents__title {
+  margin: 0;
+  color: #232629;
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.checkout-consents__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: #5d636f;
+}
+
+.checkout-consents__item input {
+  margin-top: 3px;
+}
+
+.checkout-consents__badge {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #fde8ec;
+  color: #c9314f;
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.checkout-consents__badge--optional {
+  background: #ecf2ff;
+  color: #3c5fa8;
+}
+
+.checkout-consents__status {
+  margin: 0;
+  color: #a03d52;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.checkout-consents__status--ready {
+  color: #2f8f4e;
+}
+</style>

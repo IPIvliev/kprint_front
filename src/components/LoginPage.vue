@@ -82,7 +82,7 @@
     <div class="footer__line"></div>
     <div class="footer__bottom">
       <p>&#169; 2021, Kulibin Print. Все права защищены.</p>
-      <div class="footer__dgdgf d-flex flex-wrap"><a href="#">Политика конфиденциальности</a><a href="#">Условия обслуживания</a></div>
+      <LegalLinksRow />
     </div>
   </div>
 </footer>
@@ -92,6 +92,7 @@
 <script>
 import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
 import * as yup from 'yup'
+import LegalLinksRow from '@/components/elements/LegalLinksRow.vue'
 import { createPrintOrder } from '@/services/print.service'
 import {
   buildPrintOrderFormData,
@@ -104,7 +105,8 @@ export default {
   components: {
     VeeForm,
     Field,
-    ErrorMessage
+    ErrorMessage,
+    LegalLinksRow
   },
   data () {
     const schema = yup.object().shape({

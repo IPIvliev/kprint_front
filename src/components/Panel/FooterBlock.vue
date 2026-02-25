@@ -5,9 +5,17 @@
           <div class="footer__line"></div>
           <div class="footer__bottom">
             <p>&#169; 2026, Kulibin Print. Все права защищены.</p>
-            <div class="footer__dgdgf d-flex flex-wrap"><a href="#">Политика конфиденциальности</a><a href="#">Условия обслуживания</a></div>
+            <LegalLinksRow />
           </div>
         </div>
       </footer>
       <!-- /footer-->
 </template>
+
+<script>
+import LegalLinksRow from '@/components/elements/LegalLinksRow.vue'
+
+export default {
+  components: { LegalLinksRow }
+}
+</script>

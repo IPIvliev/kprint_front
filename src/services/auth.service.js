@@ -27,7 +27,10 @@ class AuthService {
     return api.post('/api/signup', {
       username: user.username,
       email: user.email,
-      password: user.password
+      password: user.password,
+      terms_offer_accepted: Boolean(user.terms_offer_accepted),
+      pd_accepted: Boolean(user.pd_accepted),
+      ads_accepted: Boolean(user.ads_accepted)
     })
   }
 

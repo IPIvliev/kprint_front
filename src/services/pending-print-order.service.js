@@ -72,5 +72,8 @@ export function buildPrintOrderFormData (draft) {
   if (draft.dimension_z_mm) {
     payload.append('dimension_z_mm', String(draft.dimension_z_mm))
   }
+  if (draft.ugc_rights_accepted !== undefined && draft.ugc_rights_accepted !== null) {
+    payload.append('ugc_rights_accepted', String(Boolean(draft.ugc_rights_accepted)))
+  }
   return payload
 }

@@ -4,6 +4,86 @@
  */
 
 export interface paths {
+    "/api/article-categories/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_article_categories_list"];
+        put?: never;
+        post: operations["api_article_categories_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/article-categories/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_article_categories_retrieve"];
+        put: operations["api_article_categories_update"];
+        post?: never;
+        delete: operations["api_article_categories_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["api_article_categories_partial_update"];
+        trace?: never;
+    };
+    "/api/article-media/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_article_media_retrieve"];
+        put?: never;
+        post: operations["api_article_media_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/article-tags/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_article_tags_list"];
+        put?: never;
+        post: operations["api_article_tags_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/article-tags/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_article_tags_retrieve"];
+        put: operations["api_article_tags_update"];
+        post?: never;
+        delete: operations["api_article_tags_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["api_article_tags_partial_update"];
+        trace?: never;
+    };
     "/api/articles/": {
         parameters: {
             query?: never;
@@ -36,6 +116,198 @@ export interface paths {
         patch: operations["api_articles_partial_update"];
         trace?: never;
     };
+    "/api/articles/generate-ai/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_articles_generate_ai_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/callback/captcha": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_callback_captcha_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/callback/manager/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_callback_manager_requests_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/callback/manager/requests/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_callback_manager_requests_retrieve"];
+        put: operations["api_callback_manager_requests_update"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["api_callback_manager_requests_partial_update"];
+        trace?: never;
+    };
+    "/api/callback/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_callback_requests_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/companies/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_companies_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/companies/manager/categories/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_companies_manager_categories_list"];
+        put?: never;
+        post: operations["api_companies_manager_categories_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/companies/manager/categories/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_companies_manager_categories_retrieve"];
+        put: operations["api_companies_manager_categories_update"];
+        post?: never;
+        delete: operations["api_companies_manager_categories_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["api_companies_manager_categories_partial_update"];
+        trace?: never;
+    };
+    "/api/companies/manager/companies/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_companies_manager_companies_list"];
+        put?: never;
+        post: operations["api_companies_manager_companies_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/companies/manager/companies/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_companies_manager_companies_retrieve"];
+        put: operations["api_companies_manager_companies_update"];
+        post?: never;
+        delete: operations["api_companies_manager_companies_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["api_companies_manager_companies_partial_update"];
+        trace?: never;
+    };
+    "/api/company-categories/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_company_categories_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/contact-offices/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_contact_offices_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/external/ip": {
         parameters: {
             query?: never;
@@ -66,6 +338,246 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/api/gallery-categories/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_gallery_categories_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/gallery/manager/categories/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_gallery_manager_categories_list"];
+        put?: never;
+        post: operations["api_gallery_manager_categories_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/gallery/manager/categories/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_gallery_manager_categories_retrieve"];
+        put: operations["api_gallery_manager_categories_update"];
+        post?: never;
+        delete: operations["api_gallery_manager_categories_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["api_gallery_manager_categories_partial_update"];
+        trace?: never;
+    };
+    "/api/gallery/manager/items/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_gallery_manager_items_list"];
+        put?: never;
+        post: operations["api_gallery_manager_items_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/gallery/manager/items/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_gallery_manager_items_retrieve"];
+        put: operations["api_gallery_manager_items_update"];
+        post?: never;
+        delete: operations["api_gallery_manager_items_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["api_gallery_manager_items_partial_update"];
+        trace?: never;
+    };
+    "/api/gallery/manager/pages/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_gallery_manager_pages_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/gallery/manager/pages/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_gallery_manager_pages_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/password-reset/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_password_reset_confirm_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/password-reset/request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_password_reset_request_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/print-material-categories/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_print_material_categories_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/print-material-categories/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_print_material_categories_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/print/manager/material-categories/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_print_manager_material_categories_list"];
+        put?: never;
+        post: operations["api_print_manager_material_categories_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/print/manager/material-categories/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_print_manager_material_categories_retrieve"];
+        put: operations["api_print_manager_material_categories_update"];
+        post?: never;
+        delete: operations["api_print_manager_material_categories_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["api_print_manager_material_categories_partial_update"];
+        trace?: never;
+    };
+    "/api/print/manager/materials/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_print_manager_materials_list"];
+        put?: never;
+        post: operations["api_print_manager_materials_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/print/manager/materials/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_print_manager_materials_retrieve"];
+        put: operations["api_print_manager_materials_update"];
+        post?: never;
+        delete: operations["api_print_manager_materials_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["api_print_manager_materials_partial_update"];
         trace?: never;
     };
     "/api/printjobs/": {
@@ -148,6 +660,134 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/printjobs/{id}/manager_mark_received/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_printjobs_manager_mark_received_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/printjobs/{id}/manager_send_for_customer_review/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_printjobs_manager_send_for_customer_review_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/printjobs/{id}/manager_set_price/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_printjobs_manager_set_price_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/printjobs/{id}/manager_start_delivery/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_printjobs_manager_start_delivery_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/printjobs/{id}/manager_start_printing/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_printjobs_manager_start_printing_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/printjobs/{id}/model_file/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_printjobs_model_file_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/printjobs/{id}/repeat_order/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_printjobs_repeat_order_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/printjobs/{id}/request_price_review/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_printjobs_request_price_review_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/printjobs/{id}/submit/": {
         parameters: {
             query?: never;
@@ -164,6 +804,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/printjobs/{id}/user_accept_price/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_printjobs_user_accept_price_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/printjobs/{id}/user_accept_result/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_printjobs_user_accept_result_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/printjobs/{id}/user_approve/": {
         parameters: {
             query?: never;
@@ -174,6 +846,70 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["api_printjobs_user_approve_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/printjobs/{id}/user_mark_paid/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_printjobs_user_mark_paid_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/printjobs/{id}/user_mark_received/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_printjobs_user_mark_received_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/printjobs/{id}/user_reject_price/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_printjobs_user_reject_price_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/printjobs/{id}/user_request_rework/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_printjobs_user_request_rework_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -570,6 +1306,54 @@ export interface paths {
         patch: operations["api_shop_manager_sdek_settings_partial_update"];
         trace?: never;
     };
+    "/api/shop/my/cart-order/sync": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_shop_my_cart_order_sync_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/shop/my/orders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_shop_my_orders_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/shop/my/orders/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_shop_my_orders_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/shop/order-statuses": {
         parameters: {
             query?: never;
@@ -632,6 +1416,22 @@ export interface paths {
         options?: never;
         head?: never;
         patch: operations["api_shop_orders_partial_update"];
+        trace?: never;
+    };
+    "/api/shop/payments/sync": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_shop_payments_sync_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/api/shop/pochta_rossii/offices": {
@@ -724,6 +1524,22 @@ export interface paths {
         get: operations["api_shop_sdek_price_retrieve"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/shop/yookassa/webhook": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_shop_yookassa_webhook_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -856,6 +1672,214 @@ export interface paths {
         options?: never;
         head?: never;
         patch: operations["api_study_manager_courses_partial_update"];
+        trace?: never;
+    };
+    "/api/study/manager/enrollments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_study_manager_enrollments_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/manager/enrollments/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_study_manager_enrollments_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/manager/enrollments/{id}/assign-curator": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_study_manager_enrollments_assign_curator_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/manager/enrollments/{id}/certificate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_study_manager_enrollments_certificate_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/manager/enrollments/{id}/certificate/template": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_study_manager_enrollments_certificate_template_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/manager/enrollments/{id}/final-exam/unlock": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_study_manager_enrollments_final_exam_unlock_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/manager/enrollments/{id}/lessons/{lesson_id}/unlock": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_study_manager_enrollments_lessons_unlock_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/manager/exam-options": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_study_manager_exam_options_list"];
+        put?: never;
+        post: operations["api_study_manager_exam_options_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/manager/exam-options/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_study_manager_exam_options_retrieve"];
+        put: operations["api_study_manager_exam_options_update"];
+        post?: never;
+        delete: operations["api_study_manager_exam_options_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["api_study_manager_exam_options_partial_update"];
+        trace?: never;
+    };
+    "/api/study/manager/exam-questions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_study_manager_exam_questions_list"];
+        put?: never;
+        post: operations["api_study_manager_exam_questions_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/manager/exam-questions/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_study_manager_exam_questions_retrieve"];
+        put: operations["api_study_manager_exam_questions_update"];
+        post?: never;
+        delete: operations["api_study_manager_exam_questions_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["api_study_manager_exam_questions_partial_update"];
+        trace?: never;
+    };
+    "/api/study/manager/exams": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_study_manager_exams_list"];
+        put?: never;
+        post: operations["api_study_manager_exams_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/manager/exams/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_study_manager_exams_retrieve"];
+        put: operations["api_study_manager_exams_update"];
+        post?: never;
+        delete: operations["api_study_manager_exams_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["api_study_manager_exams_partial_update"];
         trace?: never;
     };
     "/api/study/manager/feedbacks": {
@@ -1002,6 +2026,134 @@ export interface paths {
         patch: operations["api_study_manager_teachers_partial_update"];
         trace?: never;
     };
+    "/api/study/my/enrollments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_study_my_enrollments_list"];
+        put?: never;
+        post: operations["api_study_my_enrollments_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/my/enrollments/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_study_my_enrollments_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/my/enrollments/{id}/certificate/pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_study_my_enrollments_certificate_pdf_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/my/enrollments/{id}/exams": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_study_my_enrollments_exams_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/my/enrollments/{id}/exams/{exam_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_study_my_enrollments_exams_retrieve_2"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/my/enrollments/{id}/exams/{exam_id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_study_my_enrollments_exams_submit_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/study/my/enrollments/{id}/lessons/{lesson_id}/progress": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_study_my_enrollments_lessons_progress_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["api_study_my_enrollments_lessons_progress_partial_update"];
+        trace?: never;
+    };
+    "/api/study/my/enrollments/{id}/pay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_study_my_enrollments_pay_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/token/": {
         parameters: {
             query?: never;
@@ -1082,33 +2234,53 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        Article: {
+        /**
+         * @description * `processing` - В процессе
+         *     * `completed` - Готово
+         *     * `failed` - Ошибка
+         * @enum {string}
+         */
+        AiGenerationStatusEnum: "processing" | "completed" | "failed";
+        CallbackCaptchaPayload: {
+            token: string;
+            question: string;
+            expires_in: number;
+        };
+        CallbackRequestCreate: {
             readonly id: number;
-            /** Название статьи */
-            title: string;
-            /** Format: uri */
-            article_image?: string | null;
-            /** Текст статьи */
-            body?: string | null;
-            /**
-             * Дата публикации
-             * Format: date-time
-             */
-            publish?: string;
+            name: string;
+            phone: string;
+            readonly status: components["schemas"]["StatusD22Enum"];
+            /** Format: date-time */
+            readonly created: string;
+            captcha_token: string;
+            captcha_answer: string;
+            privacy_policy_accepted: boolean;
+        };
+        CallbackRequestManager: {
+            readonly id: number;
+            name: string;
+            phone: string;
+            status?: components["schemas"]["StatusD22Enum"];
+            readonly status_label: string;
+            /** Format: date-time */
+            readonly created: string;
+            /** Format: date-time */
+            readonly updated: string;
+        };
+        CallbackRequestStatusUpdate: {
+            status?: components["schemas"]["StatusD22Enum"];
         };
         Category: {
             readonly id: number;
-            /** Наименование категории */
+            /** Название категории */
             title: string;
-            readonly level: number;
-            /**
-             * Обложка Категории
-             * Format: uri
-             */
-            photo: string;
-            /** Родительская категория */
-            parent?: number | null;
-            readonly filter_attrs: components["schemas"]["FilterAttr"][];
+            /** SEO адрес */
+            slug?: string;
+            /** Цвет категории */
+            color?: string;
+            /** Описание категории */
+            description?: string;
         };
         CategoryProduct: {
             readonly id: number;
@@ -1138,6 +2310,64 @@ export interface components {
             readonly level: number;
             /** Родительская категория */
             parent?: number | null;
+        };
+        /**
+         * @description * `not_reviewed` - Не рассмотрен
+         *     * `issued` - Сертификат выдан
+         *     * `rejected` - Сертификат отклонен
+         * @enum {string}
+         */
+        CertificateStatusEnum: "not_reviewed" | "issued" | "rejected";
+        CompanyCategoryManager: {
+            readonly id: number;
+            title: string;
+            slug?: string;
+            description?: string | null;
+            sort_order?: number;
+            is_active?: boolean;
+            readonly companies_count: string;
+            /** Format: date-time */
+            readonly created: string;
+            /** Format: date-time */
+            readonly updated: string;
+        };
+        CompanyCategoryPublic: {
+            readonly id: number;
+            title: string;
+            slug?: string;
+            description?: string | null;
+        };
+        CompanyManager: {
+            readonly id: number;
+            name: string;
+            slug?: string;
+            description?: string | null;
+            location?: string;
+            /** Format: uri */
+            website?: string;
+            categories?: number[];
+            readonly category_titles: string;
+            /** Format: uri */
+            logo?: string | null;
+            logo_media_path?: string;
+            readonly logo_url: string;
+            sort_order?: number;
+            is_active?: boolean;
+            /** Format: date-time */
+            readonly created: string;
+            /** Format: date-time */
+            readonly updated: string;
+        };
+        CompanyPublic: {
+            readonly id: number;
+            name: string;
+            slug?: string;
+            description?: string | null;
+            location?: string;
+            /** Format: uri */
+            website?: string;
+            readonly logo_url: string;
+            readonly categories: components["schemas"]["CompanyCategoryPublic"][];
         };
         Course: {
             readonly id: number;
@@ -1172,6 +2402,86 @@ export interface components {
                 [key: string]: unknown;
             }[];
         };
+        CourseEnrollmentCreate: {
+            course: number;
+            price: number;
+        };
+        CourseEnrollmentDetail: {
+            readonly id: number;
+            /** Статус обучения */
+            status?: components["schemas"]["Status615Enum"];
+            /** Итоговый экзамен открыт */
+            is_final_exam_unlocked?: boolean;
+            /** Итоговый экзамен открыт вручную */
+            final_exam_unlocked_manually?: boolean;
+            /** Статус сертификата */
+            certificate_status?: components["schemas"]["CertificateStatusEnum"];
+            /** ID платежа */
+            payment_reference?: string;
+            /**
+             * Оплачен
+             * Format: date-time
+             */
+            paid_at?: string | null;
+            /**
+             * Доступ открыт
+             * Format: date-time
+             */
+            access_opened_at?: string | null;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+            readonly course: components["schemas"]["StudyCourseShort"];
+            readonly price: components["schemas"]["StudyPriceShort"];
+            readonly curator: components["schemas"]["StudyTeacherShort"];
+            readonly lessons_total: string;
+            readonly lessons_completed: string;
+            /** Комментарий к решению по сертификату */
+            certificate_decision_comment?: string;
+            /**
+             * Решение по сертификату
+             * Format: date-time
+             */
+            certificate_decision_at?: string | null;
+            readonly lesson_progress: components["schemas"]["LessonProgress"][];
+            readonly exams: string;
+        };
+        CourseEnrollmentList: {
+            readonly id: number;
+            /** Статус обучения */
+            status?: components["schemas"]["Status615Enum"];
+            /** Итоговый экзамен открыт */
+            is_final_exam_unlocked?: boolean;
+            /** Итоговый экзамен открыт вручную */
+            final_exam_unlocked_manually?: boolean;
+            /** Статус сертификата */
+            certificate_status?: components["schemas"]["CertificateStatusEnum"];
+            /** ID платежа */
+            payment_reference?: string;
+            /**
+             * Оплачен
+             * Format: date-time
+             */
+            paid_at?: string | null;
+            /**
+             * Доступ открыт
+             * Format: date-time
+             */
+            access_opened_at?: string | null;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+            readonly course: components["schemas"]["StudyCourseShort"];
+            readonly price: components["schemas"]["StudyPriceShort"];
+            readonly curator: components["schemas"]["StudyTeacherShort"];
+            readonly lessons_total: string;
+            readonly lessons_completed: string;
+        };
+        CourseEnrollmentPay: {
+            payment_reference?: string;
+        };
         CourseWrite: {
             readonly id: number;
             /** Категория курса */
@@ -1199,8 +2509,17 @@ export interface components {
         };
         CreatePaymentIntentRequest: {
             order_id: number;
+            /** Format: uri */
+            return_url?: string;
         };
         CreatePaymentIntentResponse: {
+            order_id: number;
+            payment_id: string;
+            status: string;
+            paid: boolean;
+            is_paid: boolean;
+            confirmation_url: string;
+            test_mode: boolean;
             client_secret: string;
         };
         Delivery: {
@@ -1244,6 +2563,75 @@ export interface components {
             /** Format: date-time */
             readonly updated_at: string;
         };
+        ExamManage: {
+            readonly id: number;
+            /** Курс */
+            course: number;
+            /** Урок */
+            lesson?: number | null;
+            /** Тема урока */
+            readonly lesson_title: string;
+            /** Порядок */
+            readonly lesson_order: number;
+            /** Название экзамена */
+            title: string;
+            /** Описание экзамена */
+            description?: string | null;
+            /**
+             * Тип экзамена
+             * @default lesson
+             */
+            exam_type: components["schemas"]["ExamTypeEnum"];
+            /** Порог прохождения (правильных ответов) */
+            passing_correct_answers?: number;
+            /** Активен */
+            is_active?: boolean;
+            readonly question_count: string;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        ExamQuestionManage: {
+            readonly id: number;
+            /** Экзамен */
+            exam: number;
+            /** Вопрос */
+            title: string;
+            /** Порядок */
+            sort_order?: number;
+            /** Активен */
+            is_active?: boolean;
+            readonly options_count: string;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        ExamQuestionOptionManage: {
+            readonly id: number;
+            /** Вопрос */
+            question: number;
+            /** Вариант ответа */
+            title: string;
+            /** Правильный */
+            is_correct?: boolean;
+            /** Порядок */
+            sort_order?: number;
+        };
+        ExamSubmit: {
+            answers: components["schemas"]["ExamSubmitAnswer"][];
+        };
+        ExamSubmitAnswer: {
+            question: number;
+            options: number[];
+        };
+        /**
+         * @description * `lesson` - Экзамен по уроку
+         *     * `final` - Итоговый экзамен
+         * @enum {string}
+         */
+        ExamTypeEnum: "lesson" | "final";
         ExternalIp: {
             ip: string;
         };
@@ -1328,12 +2716,69 @@ export interface components {
             /** Категория фильтра */
             category: number[];
         };
+        GalleryCategoryManager: {
+            readonly id: number;
+            title: string;
+            slug?: string;
+            description?: string | null;
+            sort_order?: number;
+            is_active?: boolean;
+            pages?: number[];
+            readonly items_count: string;
+            /** Format: date-time */
+            readonly created: string;
+            /** Format: date-time */
+            readonly updated: string;
+        };
+        GalleryCategoryPublic: {
+            readonly id: number;
+            title: string;
+            slug?: string;
+            description?: string | null;
+            readonly items: string;
+        };
+        GalleryItemManager: {
+            readonly id: number;
+            category: number;
+            readonly category_title: string;
+            title: string;
+            description?: string | null;
+            /** Format: uri */
+            image?: string | null;
+            media_path?: string;
+            readonly image_url: string;
+            sort_order?: number;
+            is_active?: boolean;
+            /** Format: date-time */
+            readonly created: string;
+            /** Format: date-time */
+            readonly updated: string;
+        };
+        GalleryPageManager: {
+            readonly id: number;
+            key: string;
+            title: string;
+            description?: string | null;
+            sort_order?: number;
+            is_active?: boolean;
+        };
         Lesson: {
             readonly id: number;
             /** Тема урока */
             title: string;
             /** Описание урока */
             description?: string | null;
+            /** Текст урока */
+            text_content?: string | null;
+            /**
+             * Ссылка на видео
+             * Format: uri
+             */
+            video_url?: string | null;
+            /** Длительность видео (сек) */
+            video_duration_seconds?: number;
+            /** Открыть урок через (дней после старта обучения) */
+            unlock_after_days?: number;
             /** Порядок */
             order?: number;
             /** Format: date-time */
@@ -1342,6 +2787,53 @@ export interface components {
             readonly updated_at: string;
             /** Урок курса */
             course: number;
+        };
+        LessonProgress: {
+            readonly id: number;
+            /** Урок */
+            lesson: number;
+            /** Тема урока */
+            readonly lesson_title: string;
+            /** Порядок */
+            readonly lesson_order: number;
+            /** Открыть урок через (дней после старта обучения) */
+            readonly lesson_unlock_after_days: number;
+            /** Описание урока */
+            readonly lesson_description: string | null;
+            /** Текст урока */
+            readonly lesson_text_content: string | null;
+            /**
+             * Ссылка на видео
+             * Format: uri
+             */
+            readonly lesson_video_url: string | null;
+            /** Длительность видео (сек) */
+            readonly lesson_video_duration_seconds: number;
+            /** Урок открыт */
+            is_lesson_unlocked?: boolean;
+            /** Урок открыт вручную */
+            lesson_unlocked_manually?: boolean;
+            /** Экзамен урока открыт */
+            is_exam_unlocked?: boolean;
+            /** Экзамен урока открыт вручную */
+            exam_unlocked_manually?: boolean;
+            /** Просмотрено секунд */
+            watched_seconds?: number;
+            /** Видео просмотрено полностью */
+            is_video_completed?: boolean;
+            /** Урок завершен */
+            is_completed?: boolean;
+            /**
+             * Завершен
+             * Format: date-time
+             */
+            completed_at?: string | null;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        LessonProgressUpdate: {
+            watched_seconds?: number;
+            is_video_completed?: boolean;
         };
         LessonWrite: {
             readonly id: number;
@@ -1349,6 +2841,17 @@ export interface components {
             title: string;
             /** Описание урока */
             description?: string | null;
+            /** Текст урока */
+            text_content?: string | null;
+            /**
+             * Ссылка на видео
+             * Format: uri
+             */
+            video_url?: string | null;
+            /** Длительность видео (сек) */
+            video_duration_seconds?: number;
+            /** Открыть урок через (дней после старта обучения) */
+            unlock_after_days?: number;
             /** Порядок */
             order?: number;
             /** Format: date-time */
@@ -1358,12 +2861,87 @@ export interface components {
             /** Урок курса */
             course: number;
         };
+        ManagerArticle: {
+            readonly id: number;
+            /** Название статьи */
+            title: string;
+            slug?: string;
+            /** Format: uri */
+            article_image?: string | null;
+            /** Источник статьи */
+            source?: components["schemas"]["SourceEnum"];
+            readonly source_display: string;
+            /** Статус публикации */
+            status?: components["schemas"]["Status776Enum"];
+            readonly status_display: string;
+            /** Промт для ИИ */
+            ai_prompt?: string | null;
+            /** Заметки редактору */
+            ai_notes_for_editor?: string | null;
+            /** Статус генерации ИИ */
+            ai_generation_status?: components["schemas"]["AiGenerationStatusEnum"];
+            readonly ai_generation_status_display: string;
+            /** Ошибка генерации ИИ */
+            ai_generation_error?: string | null;
+            /** Текст статьи */
+            body?: string | null;
+            /**
+             * Дата публикации
+             * Format: date-time
+             */
+            publish?: string;
+            /**
+             * Дата написания статьи
+             * Format: date-time
+             */
+            readonly created: string;
+            /**
+             * Дата изменения статьи
+             * Format: date-time
+             */
+            readonly updated: string;
+            category?: number;
+            readonly category_detail: components["schemas"]["Category"];
+            readonly tags: components["schemas"]["Tag"][];
+            tag_ids?: number[];
+        };
         MyTokenObtainPair: {
             username: string;
             password: string;
         };
-        /** @enum {unknown} */
-        NullEnum: null;
+        OfficeCityPublic: {
+            readonly id: number;
+            /** Город */
+            name: string;
+            slug?: string;
+            readonly emblem_url: string;
+            /** Адрес офиса */
+            address: string;
+            /**
+             * Ссылка на карту (embed)
+             * Format: uri
+             */
+            map_embed_url?: string;
+            /**
+             * Широта
+             * Format: decimal
+             */
+            latitude?: string | null;
+            /**
+             * Долгота
+             * Format: decimal
+             */
+            longitude?: string | null;
+            /** Телефон */
+            phone?: string;
+            /** Format: email */
+            email?: string;
+            /** Дополнительные контакты */
+            contacts_note?: string;
+            /** Главный офис */
+            is_head_office?: boolean;
+            readonly photos: string;
+        };
         Order: {
             readonly id: number;
             /** Format: decimal */
@@ -1373,6 +2951,8 @@ export interface components {
             readonly idempotency_key: string | null;
             is_paid?: boolean;
             status?: number | null;
+            /** Статус заказа */
+            readonly status_name: string;
             order_items?: components["schemas"]["OrderItem"][];
             readonly delivery: components["schemas"]["Delivery"][];
             fio?: string;
@@ -1385,12 +2965,18 @@ export interface components {
             /** Format: decimal */
             delivery_price?: string | null;
             delivery_status?: string;
+            terms_offer_accepted?: boolean;
+            pd_accepted?: boolean;
+            /** @default false */
+            ads_accepted: boolean;
             /** Format: date-time */
             readonly created_at: string;
         };
         OrderItem: {
             readonly id: number;
             product: number;
+            /** Наименование товара */
+            readonly product_name: string;
             /** Количество */
             quantity?: number;
         };
@@ -1405,19 +2991,28 @@ export interface components {
             status: number;
             is_paid?: boolean;
         };
-        PatchedArticle: {
+        PasswordResetConfirm: {
+            uid: string;
+            token: string;
+            new_password: string;
+        };
+        PasswordResetRequest: {
+            /** Format: email */
+            email: string;
+        };
+        PatchedCallbackRequestStatusUpdate: {
+            status?: components["schemas"]["StatusD22Enum"];
+        };
+        PatchedCategory: {
             readonly id?: number;
-            /** Название статьи */
+            /** Название категории */
             title?: string;
-            /** Format: uri */
-            article_image?: string | null;
-            /** Текст статьи */
-            body?: string | null;
-            /**
-             * Дата публикации
-             * Format: date-time
-             */
-            publish?: string;
+            /** SEO адрес */
+            slug?: string;
+            /** Цвет категории */
+            color?: string;
+            /** Описание категории */
+            description?: string;
         };
         PatchedCategoryWrite: {
             readonly id?: number;
@@ -1441,6 +3036,40 @@ export interface components {
             readonly level?: number;
             /** Родительская категория */
             parent?: number | null;
+        };
+        PatchedCompanyCategoryManager: {
+            readonly id?: number;
+            title?: string;
+            slug?: string;
+            description?: string | null;
+            sort_order?: number;
+            is_active?: boolean;
+            readonly companies_count?: string;
+            /** Format: date-time */
+            readonly created?: string;
+            /** Format: date-time */
+            readonly updated?: string;
+        };
+        PatchedCompanyManager: {
+            readonly id?: number;
+            name?: string;
+            slug?: string;
+            description?: string | null;
+            location?: string;
+            /** Format: uri */
+            website?: string;
+            categories?: number[];
+            readonly category_titles?: string;
+            /** Format: uri */
+            logo?: string | null;
+            logo_media_path?: string;
+            readonly logo_url?: string;
+            sort_order?: number;
+            is_active?: boolean;
+            /** Format: date-time */
+            readonly created?: string;
+            /** Format: date-time */
+            readonly updated?: string;
         };
         PatchedCourseWrite: {
             readonly id?: number;
@@ -1486,6 +3115,62 @@ export interface components {
             /** Format: date-time */
             readonly updated_at?: string;
         };
+        PatchedExamManage: {
+            readonly id?: number;
+            /** Курс */
+            course?: number;
+            /** Урок */
+            lesson?: number | null;
+            /** Тема урока */
+            readonly lesson_title?: string;
+            /** Порядок */
+            readonly lesson_order?: number;
+            /** Название экзамена */
+            title?: string;
+            /** Описание экзамена */
+            description?: string | null;
+            /**
+             * Тип экзамена
+             * @default lesson
+             */
+            exam_type: components["schemas"]["ExamTypeEnum"];
+            /** Порог прохождения (правильных ответов) */
+            passing_correct_answers?: number;
+            /** Активен */
+            is_active?: boolean;
+            readonly question_count?: string;
+            /** Format: date-time */
+            readonly created_at?: string;
+            /** Format: date-time */
+            readonly updated_at?: string;
+        };
+        PatchedExamQuestionManage: {
+            readonly id?: number;
+            /** Экзамен */
+            exam?: number;
+            /** Вопрос */
+            title?: string;
+            /** Порядок */
+            sort_order?: number;
+            /** Активен */
+            is_active?: boolean;
+            readonly options_count?: string;
+            /** Format: date-time */
+            readonly created_at?: string;
+            /** Format: date-time */
+            readonly updated_at?: string;
+        };
+        PatchedExamQuestionOptionManage: {
+            readonly id?: number;
+            /** Вопрос */
+            question?: number;
+            /** Вариант ответа */
+            title?: string;
+            /** Правильный */
+            is_correct?: boolean;
+            /** Порядок */
+            sort_order?: number;
+        };
         PatchedFeedback: {
             readonly id?: number;
             /** ФИО */
@@ -1527,12 +3212,58 @@ export interface components {
             /** Категория фильтра */
             category?: number[];
         };
+        PatchedGalleryCategoryManager: {
+            readonly id?: number;
+            title?: string;
+            slug?: string;
+            description?: string | null;
+            sort_order?: number;
+            is_active?: boolean;
+            pages?: number[];
+            readonly items_count?: string;
+            /** Format: date-time */
+            readonly created?: string;
+            /** Format: date-time */
+            readonly updated?: string;
+        };
+        PatchedGalleryItemManager: {
+            readonly id?: number;
+            category?: number;
+            readonly category_title?: string;
+            title?: string;
+            description?: string | null;
+            /** Format: uri */
+            image?: string | null;
+            media_path?: string;
+            readonly image_url?: string;
+            sort_order?: number;
+            is_active?: boolean;
+            /** Format: date-time */
+            readonly created?: string;
+            /** Format: date-time */
+            readonly updated?: string;
+        };
+        PatchedLessonProgressUpdate: {
+            watched_seconds?: number;
+            is_video_completed?: boolean;
+        };
         PatchedLessonWrite: {
             readonly id?: number;
             /** Тема урока */
             title?: string;
             /** Описание урока */
             description?: string | null;
+            /** Текст урока */
+            text_content?: string | null;
+            /**
+             * Ссылка на видео
+             * Format: uri
+             */
+            video_url?: string | null;
+            /** Длительность видео (сек) */
+            video_duration_seconds?: number;
+            /** Открыть урок через (дней после старта обучения) */
+            unlock_after_days?: number;
             /** Порядок */
             order?: number;
             /** Format: date-time */
@@ -1541,6 +3272,50 @@ export interface components {
             readonly updated_at?: string;
             /** Урок курса */
             course?: number;
+        };
+        PatchedManagerArticle: {
+            readonly id?: number;
+            /** Название статьи */
+            title?: string;
+            slug?: string;
+            /** Format: uri */
+            article_image?: string | null;
+            /** Источник статьи */
+            source?: components["schemas"]["SourceEnum"];
+            readonly source_display?: string;
+            /** Статус публикации */
+            status?: components["schemas"]["Status776Enum"];
+            readonly status_display?: string;
+            /** Промт для ИИ */
+            ai_prompt?: string | null;
+            /** Заметки редактору */
+            ai_notes_for_editor?: string | null;
+            /** Статус генерации ИИ */
+            ai_generation_status?: components["schemas"]["AiGenerationStatusEnum"];
+            readonly ai_generation_status_display?: string;
+            /** Ошибка генерации ИИ */
+            ai_generation_error?: string | null;
+            /** Текст статьи */
+            body?: string | null;
+            /**
+             * Дата публикации
+             * Format: date-time
+             */
+            publish?: string;
+            /**
+             * Дата написания статьи
+             * Format: date-time
+             */
+            readonly created?: string;
+            /**
+             * Дата изменения статьи
+             * Format: date-time
+             */
+            readonly updated?: string;
+            category?: number;
+            readonly category_detail?: components["schemas"]["Category"];
+            readonly tags?: components["schemas"]["Tag"][];
+            tag_ids?: number[];
         };
         PatchedOrderUpdate: {
             readonly id?: number;
@@ -1604,6 +3379,11 @@ export interface components {
             /** Format: uri */
             model_file?: string;
             /**
+             * Превью модели
+             * Format: uri
+             */
+            preview_image?: string | null;
+            /**
              * Стоимость (расчет клиента)
              * Format: decimal
              */
@@ -1614,14 +3394,48 @@ export interface components {
              */
             readonly price_admin?: string | null;
             /** Статус */
-            readonly status?: (components["schemas"]["PrintJobStatusEnum"] | components["schemas"]["NullEnum"]) | null;
+            status?: components["schemas"]["PrintJobStatusEnum"];
+            readonly status_label?: string;
             /** Количество */
-            quantity?: number | null;
+            quantity?: number;
             /**
-             * Фото результата
+             * Расчетный объем (мм3)
+             * Format: decimal
+             */
+            volume_mm3?: string | null;
+            /**
+             * Габарит X (мм)
+             * Format: decimal
+             */
+            dimension_x_mm?: string | null;
+            /**
+             * Габарит Y (мм)
+             * Format: decimal
+             */
+            dimension_y_mm?: string | null;
+            /**
+             * Габарит Z (мм)
+             * Format: decimal
+             */
+            dimension_z_mm?: string | null;
+            /** Материал */
+            material_name?: string | null;
+            /** Комментарий менеджера */
+            readonly manager_comment?: string | null;
+            /** Комментарий заказчика */
+            readonly customer_comment?: string | null;
+            /** Адрес доставки СДЭК */
+            readonly delivery_address?: string | null;
+            /** Трек-номер СДЭК */
+            readonly tracking_number?: string | null;
+            /** Повтор заказа */
+            readonly repeated_from?: number | null;
+            /**
+             * Фото результата (устаревшее поле)
              * Format: uri
              */
             readonly result_photo?: string | null;
+            readonly photos?: components["schemas"]["PrintJobPhoto"][];
             /** Отправлено на печать */
             readonly is_submitted?: boolean;
             /**
@@ -1641,6 +3455,60 @@ export interface components {
             readonly updated_at?: string;
             /** Пользователь */
             readonly user?: number | null;
+            ugc_rights_accepted?: boolean;
+        };
+        PatchedPrintManagerMaterial: {
+            readonly id?: number;
+            /** Категория материала */
+            category?: number;
+            readonly category_name?: string;
+            readonly category_full_name?: string;
+            /** Материал */
+            name?: string;
+            /** Цвет */
+            color?: string;
+            /**
+             * Цена, руб/см3
+             * Format: decimal
+             */
+            price_per_mm3?: string;
+            /** Порядок сортировки */
+            sort_order?: number;
+            /** Активен */
+            is_active?: boolean;
+            /**
+             * Дата создания
+             * Format: date-time
+             */
+            readonly created_at?: string;
+            /**
+             * Дата изменения
+             * Format: date-time
+             */
+            readonly updated_at?: string;
+        };
+        PatchedPrintManagerMaterialCategory: {
+            readonly id?: number;
+            /** Категория материала */
+            name?: string;
+            /** Родительская категория */
+            parent?: number | null;
+            readonly parent_name?: string;
+            readonly full_name?: string;
+            /** Порядок сортировки */
+            sort_order?: number;
+            /** Активна */
+            is_active?: boolean;
+            /**
+             * Дата создания
+             * Format: date-time
+             */
+            readonly created_at?: string;
+            /**
+             * Дата изменения
+             * Format: date-time
+             */
+            readonly updated_at?: string;
         };
         PatchedPrintModel: {
             readonly id?: number;
@@ -1690,6 +3558,16 @@ export interface components {
              * Format: uri
              */
             photo?: string | null;
+            /**
+             * Ссылка Ozon
+             * Format: uri
+             */
+            ozon_url?: string | null;
+            /**
+             * Ссылка Wildberries
+             * Format: uri
+             */
+            wb_url?: string | null;
             /** Format: date-time */
             readonly created_at?: string;
             /** Format: date-time */
@@ -1728,6 +3606,13 @@ export interface components {
             /** Родительская категория */
             parent?: number | null;
         };
+        PatchedTag: {
+            readonly id?: number;
+            /** Название тэга */
+            title?: string;
+            /** SEO адрес */
+            slug?: string;
+        };
         PatchedTeacherWrite: {
             readonly id?: number;
             /** ФИО */
@@ -1755,6 +3640,7 @@ export interface components {
             /** Format: email */
             email?: string | null;
             telegram?: string | null;
+            ads_consent?: boolean;
         };
         PochtaSettings: {
             readonly id: number;
@@ -1828,6 +3714,11 @@ export interface components {
             /** Format: uri */
             model_file: string;
             /**
+             * Превью модели
+             * Format: uri
+             */
+            preview_image?: string | null;
+            /**
              * Стоимость (расчет клиента)
              * Format: decimal
              */
@@ -1838,14 +3729,48 @@ export interface components {
              */
             readonly price_admin: string | null;
             /** Статус */
-            readonly status: (components["schemas"]["PrintJobStatusEnum"] | components["schemas"]["NullEnum"]) | null;
+            status?: components["schemas"]["PrintJobStatusEnum"];
+            readonly status_label: string;
             /** Количество */
-            quantity?: number | null;
+            quantity?: number;
             /**
-             * Фото результата
+             * Расчетный объем (мм3)
+             * Format: decimal
+             */
+            volume_mm3?: string | null;
+            /**
+             * Габарит X (мм)
+             * Format: decimal
+             */
+            dimension_x_mm?: string | null;
+            /**
+             * Габарит Y (мм)
+             * Format: decimal
+             */
+            dimension_y_mm?: string | null;
+            /**
+             * Габарит Z (мм)
+             * Format: decimal
+             */
+            dimension_z_mm?: string | null;
+            /** Материал */
+            material_name?: string | null;
+            /** Комментарий менеджера */
+            readonly manager_comment: string | null;
+            /** Комментарий заказчика */
+            readonly customer_comment: string | null;
+            /** Адрес доставки СДЭК */
+            readonly delivery_address: string | null;
+            /** Трек-номер СДЭК */
+            readonly tracking_number: string | null;
+            /** Повтор заказа */
+            readonly repeated_from: number | null;
+            /**
+             * Фото результата (устаревшее поле)
              * Format: uri
              */
             readonly result_photo: string | null;
+            readonly photos: components["schemas"]["PrintJobPhoto"][];
             /** Отправлено на печать */
             readonly is_submitted: boolean;
             /**
@@ -1865,19 +3790,110 @@ export interface components {
             readonly updated_at: string;
             /** Пользователь */
             readonly user: number | null;
+            ugc_rights_accepted?: boolean;
+        };
+        PrintJobPhoto: {
+            readonly id: number;
+            /**
+             * Фотография результата
+             * Format: uri
+             */
+            image: string;
+            /**
+             * Дата загрузки
+             * Format: date-time
+             */
+            readonly created_at: string;
         };
         /**
-         * @description * `READY` - Готова к заказу
+         * @description * `NEW` - Новый заказ
+         *     * `PRICE_REVIEW_REQUIRED` - Требуется проверка стоимости
+         *     * `PRICE_VERIFIED` - Стоимость проверена
+         *     * `CANCELLED` - Отменен
+         *     * `IN_PAYMENT` - В оплате
+         *     * `PAID` - Оплачен
          *     * `PRINTING` - В печати
-         *     * `DONE` - Готово
-         *     * `REVIEW` - На проверке
-         *     * `APPROVED` - Согласовано
-         *     * `DELIVERY` - В доставке
-         *     * `AT_PICKUP` - В пункте выдачи
-         *     * `RECEIVED` - Получено
+         *     * `CUSTOMER_REVIEW` - На проверке заказчиком
+         *     * `ACCEPTED_BY_CUSTOMER` - Принят заказчиком
+         *     * `REWORK` - На доработку
+         *     * `IN_DELIVERY` - В доставке
+         *     * `RECEIVED` - Получен
          * @enum {string}
          */
-        PrintJobStatusEnum: "READY" | "PRINTING" | "DONE" | "REVIEW" | "APPROVED" | "DELIVERY" | "AT_PICKUP" | "RECEIVED";
+        PrintJobStatusEnum: "NEW" | "PRICE_REVIEW_REQUIRED" | "PRICE_VERIFIED" | "CANCELLED" | "IN_PAYMENT" | "PAID" | "PRINTING" | "CUSTOMER_REVIEW" | "ACCEPTED_BY_CUSTOMER" | "REWORK" | "IN_DELIVERY" | "RECEIVED";
+        PrintManagerMaterial: {
+            readonly id: number;
+            /** Категория материала */
+            category: number;
+            readonly category_name: string;
+            readonly category_full_name: string;
+            /** Материал */
+            name: string;
+            /** Цвет */
+            color?: string;
+            /**
+             * Цена, руб/см3
+             * Format: decimal
+             */
+            price_per_mm3: string;
+            /** Порядок сортировки */
+            sort_order?: number;
+            /** Активен */
+            is_active?: boolean;
+            /**
+             * Дата создания
+             * Format: date-time
+             */
+            readonly created_at: string;
+            /**
+             * Дата изменения
+             * Format: date-time
+             */
+            readonly updated_at: string;
+        };
+        PrintManagerMaterialCategory: {
+            readonly id: number;
+            /** Категория материала */
+            name: string;
+            /** Родительская категория */
+            parent?: number | null;
+            readonly parent_name: string;
+            readonly full_name: string;
+            /** Порядок сортировки */
+            sort_order?: number;
+            /** Активна */
+            is_active?: boolean;
+            /**
+             * Дата создания
+             * Format: date-time
+             */
+            readonly created_at: string;
+            /**
+             * Дата изменения
+             * Format: date-time
+             */
+            readonly updated_at: string;
+        };
+        PrintMaterial: {
+            readonly id: number;
+            /** Материал */
+            name: string;
+            /** Цвет */
+            color?: string;
+            /**
+             * Цена, руб/см3
+             * Format: decimal
+             */
+            price_per_mm3: string;
+        };
+        PrintMaterialCategory: {
+            readonly id: number;
+            /** Категория материала */
+            name: string;
+            readonly parent: number;
+            readonly full_name: string;
+            readonly materials: components["schemas"]["PrintMaterial"][];
+        };
         PrintModel: {
             readonly id: number;
             /** Название модели */
@@ -1916,6 +3932,16 @@ export interface components {
              * Format: uri
              */
             photo?: string | null;
+            /**
+             * Ссылка Ozon
+             * Format: uri
+             */
+            ozon_url?: string | null;
+            /**
+             * Ссылка Wildberries
+             * Format: uri
+             */
+            wb_url?: string | null;
             /** Format: date-time */
             readonly created_at: string;
             /** Категория */
@@ -1962,6 +3988,16 @@ export interface components {
              * Format: uri
              */
             photo?: string | null;
+            /**
+             * Ссылка Ozon
+             * Format: uri
+             */
+            ozon_url?: string | null;
+            /**
+             * Ссылка Wildberries
+             * Format: uri
+             */
+            wb_url?: string | null;
             readonly product_images: components["schemas"]["ProductImage"][];
             /** Format: date-time */
             readonly created_at: string;
@@ -1993,12 +4029,78 @@ export interface components {
              * Format: uri
              */
             photo?: string | null;
+            /**
+             * Ссылка Ozon
+             * Format: uri
+             */
+            ozon_url?: string | null;
+            /**
+             * Ссылка Wildberries
+             * Format: uri
+             */
+            wb_url?: string | null;
             /** Format: date-time */
             readonly created_at: string;
             /** Format: date-time */
             readonly updated_at: string;
             /** Категория */
             category: number;
+        };
+        PublicArticle: {
+            readonly id: number;
+            /** Название статьи */
+            title: string;
+            /** SEO адрес */
+            slug?: string;
+            /** Format: uri */
+            article_image?: string | null;
+            /** Текст статьи */
+            body?: string | null;
+            /**
+             * Дата публикации
+             * Format: date-time
+             */
+            publish?: string;
+            /** Категория */
+            category?: number;
+            readonly category_title: string;
+            readonly category_slug: string;
+            readonly category_color: string;
+            /** Источник статьи */
+            source?: components["schemas"]["SourceEnum"];
+            readonly source_display: string;
+            /** Статус генерации ИИ */
+            ai_generation_status?: components["schemas"]["AiGenerationStatusEnum"];
+            readonly ai_generation_status_display: string;
+            readonly tags: components["schemas"]["Tag"][];
+        };
+        PublicArticleList: {
+            readonly id: number;
+            /** Название статьи */
+            title: string;
+            /** SEO адрес */
+            slug?: string;
+            /** Format: uri */
+            article_image?: string | null;
+            /** Текст статьи */
+            body?: string | null;
+            /**
+             * Дата публикации
+             * Format: date-time
+             */
+            publish?: string;
+            /** Категория */
+            category?: number;
+            readonly category_title: string;
+            readonly category_slug: string;
+            readonly category_color: string;
+            /** Источник статьи */
+            source?: components["schemas"]["SourceEnum"];
+            readonly source_display: string;
+            /** Статус генерации ИИ */
+            ai_generation_status?: components["schemas"]["AiGenerationStatusEnum"];
+            readonly ai_generation_status_display: string;
+            readonly tags: components["schemas"]["Tag"][];
         };
         RelatedCourse: {
             readonly id: number;
@@ -2048,13 +4150,38 @@ export interface components {
              */
             email?: string;
             password: string;
+            terms_offer_accepted: boolean;
+            pd_accepted: boolean;
+            /** @default false */
+            ads_accepted: boolean;
         };
+        /**
+         * @description * `human` - Человек
+         *     * `ai` - ИИ
+         * @enum {string}
+         */
+        SourceEnum: "human" | "ai";
+        /**
+         * @description * `pending_payment` - Ожидает оплаты
+         *     * `active` - Активен
+         *     * `completed` - Завершен
+         *     * `cancelled` - Отменен
+         * @enum {string}
+         */
+        Status615Enum: "pending_payment" | "active" | "completed" | "cancelled";
         /**
          * @description * `draft` - Черновик
          *     * `published` - Опубликовано
          * @enum {string}
          */
         Status776Enum: "draft" | "published";
+        /**
+         * @description * `new` - Новое обращение
+         *     * `contacted` - Связался
+         *     * `no_answer` - Не отвечает
+         * @enum {string}
+         */
+        StatusD22Enum: "new" | "contacted" | "no_answer";
         StudyCategory: {
             readonly id: number;
             /** Наименование категории */
@@ -2088,6 +4215,208 @@ export interface components {
             readonly level: number;
             /** Родительская категория */
             parent?: number | null;
+        };
+        StudyCourseShort: {
+            readonly id: number;
+            /** Наименование курса */
+            name: string;
+            /** Описание курса */
+            description?: string | null;
+            /**
+             * Обложка курса
+             * Format: uri
+             */
+            photo?: string | null;
+            /** Продолжительность курса */
+            duration: string;
+            readonly lessons_number: number;
+            readonly teachers_number: number;
+        };
+        StudyManagerAssignCurator: {
+            curator: number | null;
+        };
+        StudyManagerCertificateDecision: {
+            status: components["schemas"]["StudyManagerCertificateDecisionStatusEnum"];
+            comment?: string;
+        };
+        /**
+         * @description * `issued` - issued
+         *     * `rejected` - rejected
+         * @enum {string}
+         */
+        StudyManagerCertificateDecisionStatusEnum: "issued" | "rejected";
+        StudyManagerEnrollment: {
+            readonly id: number;
+            readonly user_id: number;
+            readonly user_full_name: string;
+            /**
+             * Имя пользователя
+             * @description Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
+             */
+            readonly username: string;
+            /**
+             * Адрес электронной почты
+             * Format: email
+             */
+            readonly user_email: string;
+            /** Курс */
+            course: number;
+            /** Наименование курса */
+            readonly course_name: string;
+            /** Тариф */
+            price: number;
+            /** Наименование варианта обучения */
+            readonly price_name: string;
+            /** Куратор */
+            curator?: number | null;
+            /** ФИО */
+            readonly curator_name: string;
+            /** Статус обучения */
+            status?: components["schemas"]["Status615Enum"];
+            /** Итоговый экзамен открыт */
+            is_final_exam_unlocked?: boolean;
+            /** Итоговый экзамен открыт вручную */
+            final_exam_unlocked_manually?: boolean;
+            /** Статус сертификата */
+            certificate_status?: components["schemas"]["CertificateStatusEnum"];
+            /** Комментарий к решению по сертификату */
+            certificate_decision_comment?: string;
+            /**
+             * Решение по сертификату
+             * Format: date-time
+             */
+            certificate_decision_at?: string | null;
+            /**
+             * Оплачен
+             * Format: date-time
+             */
+            paid_at?: string | null;
+            /**
+             * Доступ открыт
+             * Format: date-time
+             */
+            access_opened_at?: string | null;
+            readonly lessons_total: string;
+            readonly lessons_completed: string;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        StudyManagerEnrollmentDetail: {
+            readonly id: number;
+            readonly user_id: number;
+            readonly user_full_name: string;
+            /**
+             * Имя пользователя
+             * @description Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
+             */
+            readonly username: string;
+            /**
+             * Адрес электронной почты
+             * Format: email
+             */
+            readonly user_email: string;
+            /** Курс */
+            course: number;
+            /** Наименование курса */
+            readonly course_name: string;
+            /** Тариф */
+            price: number;
+            /** Наименование варианта обучения */
+            readonly price_name: string;
+            /** Куратор */
+            curator?: number | null;
+            /** ФИО */
+            readonly curator_name: string;
+            /** Статус обучения */
+            status?: components["schemas"]["Status615Enum"];
+            /** Итоговый экзамен открыт */
+            is_final_exam_unlocked?: boolean;
+            /** Итоговый экзамен открыт вручную */
+            final_exam_unlocked_manually?: boolean;
+            /** Статус сертификата */
+            certificate_status?: components["schemas"]["CertificateStatusEnum"];
+            /** Комментарий к решению по сертификату */
+            certificate_decision_comment?: string;
+            /**
+             * Решение по сертификату
+             * Format: date-time
+             */
+            certificate_decision_at?: string | null;
+            /**
+             * Оплачен
+             * Format: date-time
+             */
+            paid_at?: string | null;
+            /**
+             * Доступ открыт
+             * Format: date-time
+             */
+            access_opened_at?: string | null;
+            readonly lessons_total: string;
+            readonly lessons_completed: string;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+            /** ID платежа */
+            payment_reference?: string;
+            readonly lesson_progress: components["schemas"]["LessonProgress"][];
+            readonly exams: string;
+        };
+        StudyManagerLessonAccess: {
+            /** @default true */
+            open_lesson: boolean;
+            /** @default true */
+            open_exam: boolean;
+        };
+        StudyPriceShort: {
+            readonly id: number;
+            /** Наименование варианта обучения */
+            name: string;
+            /** Краткое описание варианта обучения */
+            short_description?: string | null;
+            /** Описание варианта обучения */
+            description?: string | null;
+            /**
+             * Стоимость варианта обучения
+             * Format: decimal
+             */
+            price: string;
+        };
+        StudyTeacherShort: {
+            readonly id: number;
+            /** ФИО */
+            name: string;
+            /** Краткое описание */
+            short_description?: string | null;
+            /**
+             * Фотография
+             * Format: uri
+             */
+            photo?: string | null;
+        };
+        SyncShopPaymentRequest: {
+            order_id: number;
+            payment_id: string;
+        };
+        SyncShopPaymentResponse: {
+            order_id: number;
+            payment_id: string;
+            status: string;
+            paid: boolean;
+            is_paid: boolean;
+            confirmation_url: string;
+            test_mode: boolean;
+            client_secret: string;
+        };
+        Tag: {
+            readonly id: number;
+            /** Название тэга */
+            title: string;
+            /** SEO адрес */
+            slug?: string;
         };
         Teacher: {
             readonly id: number;
@@ -2141,6 +4470,13 @@ export interface components {
             /** Format: email */
             email?: string | null;
             telegram?: string | null;
+            ads_consent?: boolean;
+        };
+        YooKassaWebhookRequest: {
+            event: string;
+            object: {
+                [key: string]: unknown;
+            };
         };
     };
     responses: never;
@@ -2151,6 +4487,328 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    api_article_categories_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Category"][];
+                };
+            };
+        };
+    };
+    api_article_categories_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Category"];
+                "application/x-www-form-urlencoded": components["schemas"]["Category"];
+                "multipart/form-data": components["schemas"]["Category"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Category"];
+                };
+            };
+        };
+    };
+    api_article_categories_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Категория. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Category"];
+                };
+            };
+        };
+    };
+    api_article_categories_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Категория. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Category"];
+                "application/x-www-form-urlencoded": components["schemas"]["Category"];
+                "multipart/form-data": components["schemas"]["Category"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Category"];
+                };
+            };
+        };
+    };
+    api_article_categories_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Категория. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_article_categories_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Категория. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedCategory"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedCategory"];
+                "multipart/form-data": components["schemas"]["PatchedCategory"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Category"];
+                };
+            };
+        };
+    };
+    api_article_media_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_article_media_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_article_tags_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Tag"][];
+                };
+            };
+        };
+    };
+    api_article_tags_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Tag"];
+                "application/x-www-form-urlencoded": components["schemas"]["Tag"];
+                "multipart/form-data": components["schemas"]["Tag"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Tag"];
+                };
+            };
+        };
+    };
+    api_article_tags_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Тэг. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Tag"];
+                };
+            };
+        };
+    };
+    api_article_tags_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Тэг. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Tag"];
+                "application/x-www-form-urlencoded": components["schemas"]["Tag"];
+                "multipart/form-data": components["schemas"]["Tag"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Tag"];
+                };
+            };
+        };
+    };
+    api_article_tags_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Тэг. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_article_tags_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Тэг. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedTag"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedTag"];
+                "multipart/form-data": components["schemas"]["PatchedTag"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Tag"];
+                };
+            };
+        };
+    };
     api_articles_list: {
         parameters: {
             query?: never;
@@ -2165,7 +4823,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Article"][];
+                    "application/json": components["schemas"]["PublicArticleList"][];
                 };
             };
         };
@@ -2179,9 +4837,9 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["Article"];
-                "application/x-www-form-urlencoded": components["schemas"]["Article"];
-                "multipart/form-data": components["schemas"]["Article"];
+                "application/json": components["schemas"]["ManagerArticle"];
+                "application/x-www-form-urlencoded": components["schemas"]["ManagerArticle"];
+                "multipart/form-data": components["schemas"]["ManagerArticle"];
             };
         };
         responses: {
@@ -2190,7 +4848,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Article"];
+                    "application/json": components["schemas"]["ManagerArticle"];
                 };
             };
         };
@@ -2212,7 +4870,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Article"];
+                    "application/json": components["schemas"]["PublicArticle"];
                 };
             };
         };
@@ -2229,9 +4887,9 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["Article"];
-                "application/x-www-form-urlencoded": components["schemas"]["Article"];
-                "multipart/form-data": components["schemas"]["Article"];
+                "application/json": components["schemas"]["ManagerArticle"];
+                "application/x-www-form-urlencoded": components["schemas"]["ManagerArticle"];
+                "multipart/form-data": components["schemas"]["ManagerArticle"];
             };
         };
         responses: {
@@ -2240,7 +4898,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Article"];
+                    "application/json": components["schemas"]["ManagerArticle"];
                 };
             };
         };
@@ -2278,9 +4936,9 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["PatchedArticle"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedArticle"];
-                "multipart/form-data": components["schemas"]["PatchedArticle"];
+                "application/json": components["schemas"]["PatchedManagerArticle"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedManagerArticle"];
+                "multipart/form-data": components["schemas"]["PatchedManagerArticle"];
             };
         };
         responses: {
@@ -2289,7 +4947,513 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Article"];
+                    "application/json": components["schemas"]["ManagerArticle"];
+                };
+            };
+        };
+    };
+    api_articles_generate_ai_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ManagerArticle"];
+                "application/x-www-form-urlencoded": components["schemas"]["ManagerArticle"];
+                "multipart/form-data": components["schemas"]["ManagerArticle"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerArticle"];
+                };
+            };
+        };
+    };
+    api_callback_captcha_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CallbackCaptchaPayload"];
+                };
+            };
+        };
+    };
+    api_callback_manager_requests_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CallbackRequestManager"][];
+                };
+            };
+        };
+    };
+    api_callback_manager_requests_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CallbackRequestManager"];
+                };
+            };
+        };
+    };
+    api_callback_manager_requests_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["CallbackRequestStatusUpdate"];
+                "application/x-www-form-urlencoded": components["schemas"]["CallbackRequestStatusUpdate"];
+                "multipart/form-data": components["schemas"]["CallbackRequestStatusUpdate"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CallbackRequestStatusUpdate"];
+                };
+            };
+        };
+    };
+    api_callback_manager_requests_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedCallbackRequestStatusUpdate"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedCallbackRequestStatusUpdate"];
+                "multipart/form-data": components["schemas"]["PatchedCallbackRequestStatusUpdate"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CallbackRequestStatusUpdate"];
+                };
+            };
+        };
+    };
+    api_callback_requests_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CallbackRequestCreate"];
+                "application/x-www-form-urlencoded": components["schemas"]["CallbackRequestCreate"];
+                "multipart/form-data": components["schemas"]["CallbackRequestCreate"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CallbackRequestCreate"];
+                };
+            };
+        };
+    };
+    api_companies_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompanyPublic"][];
+                };
+            };
+        };
+    };
+    api_companies_manager_categories_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompanyCategoryManager"][];
+                };
+            };
+        };
+    };
+    api_companies_manager_categories_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompanyCategoryManager"];
+                "application/x-www-form-urlencoded": components["schemas"]["CompanyCategoryManager"];
+                "multipart/form-data": components["schemas"]["CompanyCategoryManager"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompanyCategoryManager"];
+                };
+            };
+        };
+    };
+    api_companies_manager_categories_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this company category. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompanyCategoryManager"];
+                };
+            };
+        };
+    };
+    api_companies_manager_categories_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this company category. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompanyCategoryManager"];
+                "application/x-www-form-urlencoded": components["schemas"]["CompanyCategoryManager"];
+                "multipart/form-data": components["schemas"]["CompanyCategoryManager"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompanyCategoryManager"];
+                };
+            };
+        };
+    };
+    api_companies_manager_categories_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this company category. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_companies_manager_categories_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this company category. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedCompanyCategoryManager"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedCompanyCategoryManager"];
+                "multipart/form-data": components["schemas"]["PatchedCompanyCategoryManager"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompanyCategoryManager"];
+                };
+            };
+        };
+    };
+    api_companies_manager_companies_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompanyManager"][];
+                };
+            };
+        };
+    };
+    api_companies_manager_companies_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompanyManager"];
+                "application/x-www-form-urlencoded": components["schemas"]["CompanyManager"];
+                "multipart/form-data": components["schemas"]["CompanyManager"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompanyManager"];
+                };
+            };
+        };
+    };
+    api_companies_manager_companies_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this company. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompanyManager"];
+                };
+            };
+        };
+    };
+    api_companies_manager_companies_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this company. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompanyManager"];
+                "application/x-www-form-urlencoded": components["schemas"]["CompanyManager"];
+                "multipart/form-data": components["schemas"]["CompanyManager"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompanyManager"];
+                };
+            };
+        };
+    };
+    api_companies_manager_companies_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this company. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_companies_manager_companies_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this company. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedCompanyManager"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedCompanyManager"];
+                "multipart/form-data": components["schemas"]["PatchedCompanyManager"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompanyManager"];
+                };
+            };
+        };
+    };
+    api_company_categories_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompanyCategoryPublic"][];
+                };
+            };
+        };
+    };
+    api_contact_offices_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OfficeCityPublic"][];
                 };
             };
         };
@@ -2351,6 +5515,733 @@ export interface operations {
                     "application/json": {
                         [key: string]: unknown;
                     };
+                };
+            };
+        };
+    };
+    api_gallery_categories_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GalleryCategoryPublic"][];
+                };
+            };
+        };
+    };
+    api_gallery_manager_categories_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GalleryCategoryManager"][];
+                };
+            };
+        };
+    };
+    api_gallery_manager_categories_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GalleryCategoryManager"];
+                "application/x-www-form-urlencoded": components["schemas"]["GalleryCategoryManager"];
+                "multipart/form-data": components["schemas"]["GalleryCategoryManager"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GalleryCategoryManager"];
+                };
+            };
+        };
+    };
+    api_gallery_manager_categories_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this gallery category. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GalleryCategoryManager"];
+                };
+            };
+        };
+    };
+    api_gallery_manager_categories_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this gallery category. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GalleryCategoryManager"];
+                "application/x-www-form-urlencoded": components["schemas"]["GalleryCategoryManager"];
+                "multipart/form-data": components["schemas"]["GalleryCategoryManager"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GalleryCategoryManager"];
+                };
+            };
+        };
+    };
+    api_gallery_manager_categories_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this gallery category. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_gallery_manager_categories_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this gallery category. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedGalleryCategoryManager"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedGalleryCategoryManager"];
+                "multipart/form-data": components["schemas"]["PatchedGalleryCategoryManager"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GalleryCategoryManager"];
+                };
+            };
+        };
+    };
+    api_gallery_manager_items_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GalleryItemManager"][];
+                };
+            };
+        };
+    };
+    api_gallery_manager_items_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GalleryItemManager"];
+                "application/x-www-form-urlencoded": components["schemas"]["GalleryItemManager"];
+                "multipart/form-data": components["schemas"]["GalleryItemManager"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GalleryItemManager"];
+                };
+            };
+        };
+    };
+    api_gallery_manager_items_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this gallery item. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GalleryItemManager"];
+                };
+            };
+        };
+    };
+    api_gallery_manager_items_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this gallery item. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GalleryItemManager"];
+                "application/x-www-form-urlencoded": components["schemas"]["GalleryItemManager"];
+                "multipart/form-data": components["schemas"]["GalleryItemManager"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GalleryItemManager"];
+                };
+            };
+        };
+    };
+    api_gallery_manager_items_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this gallery item. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_gallery_manager_items_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this gallery item. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedGalleryItemManager"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedGalleryItemManager"];
+                "multipart/form-data": components["schemas"]["PatchedGalleryItemManager"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GalleryItemManager"];
+                };
+            };
+        };
+    };
+    api_gallery_manager_pages_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GalleryPageManager"][];
+                };
+            };
+        };
+    };
+    api_gallery_manager_pages_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this gallery page. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GalleryPageManager"];
+                };
+            };
+        };
+    };
+    api_password_reset_confirm_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PasswordResetConfirm"];
+                "application/x-www-form-urlencoded": components["schemas"]["PasswordResetConfirm"];
+                "multipart/form-data": components["schemas"]["PasswordResetConfirm"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    api_password_reset_request_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PasswordResetRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PasswordResetRequest"];
+                "multipart/form-data": components["schemas"]["PasswordResetRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    api_print_material_categories_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintMaterialCategory"][];
+                };
+            };
+        };
+    };
+    api_print_material_categories_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Категория материала печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintMaterialCategory"];
+                };
+            };
+        };
+    };
+    api_print_manager_material_categories_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintManagerMaterialCategory"][];
+                };
+            };
+        };
+    };
+    api_print_manager_material_categories_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintManagerMaterialCategory"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintManagerMaterialCategory"];
+                "multipart/form-data": components["schemas"]["PrintManagerMaterialCategory"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintManagerMaterialCategory"];
+                };
+            };
+        };
+    };
+    api_print_manager_material_categories_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Категория материала печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintManagerMaterialCategory"];
+                };
+            };
+        };
+    };
+    api_print_manager_material_categories_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Категория материала печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintManagerMaterialCategory"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintManagerMaterialCategory"];
+                "multipart/form-data": components["schemas"]["PrintManagerMaterialCategory"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintManagerMaterialCategory"];
+                };
+            };
+        };
+    };
+    api_print_manager_material_categories_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Категория материала печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_print_manager_material_categories_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Категория материала печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedPrintManagerMaterialCategory"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedPrintManagerMaterialCategory"];
+                "multipart/form-data": components["schemas"]["PatchedPrintManagerMaterialCategory"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintManagerMaterialCategory"];
+                };
+            };
+        };
+    };
+    api_print_manager_materials_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintManagerMaterial"][];
+                };
+            };
+        };
+    };
+    api_print_manager_materials_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintManagerMaterial"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintManagerMaterial"];
+                "multipart/form-data": components["schemas"]["PrintManagerMaterial"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintManagerMaterial"];
+                };
+            };
+        };
+    };
+    api_print_manager_materials_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Материал печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintManagerMaterial"];
+                };
+            };
+        };
+    };
+    api_print_manager_materials_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Материал печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintManagerMaterial"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintManagerMaterial"];
+                "multipart/form-data": components["schemas"]["PrintManagerMaterial"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintManagerMaterial"];
+                };
+            };
+        };
+    };
+    api_print_manager_materials_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Материал печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_print_manager_materials_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Материал печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedPrintManagerMaterial"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedPrintManagerMaterial"];
+                "multipart/form-data": components["schemas"]["PatchedPrintManagerMaterial"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintManagerMaterial"];
                 };
             };
         };
@@ -2582,6 +6473,224 @@ export interface operations {
             };
         };
     };
+    api_printjobs_manager_mark_received_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Модель для печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintJob"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintJob"];
+                "multipart/form-data": components["schemas"]["PrintJob"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintJob"];
+                };
+            };
+        };
+    };
+    api_printjobs_manager_send_for_customer_review_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Модель для печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintJob"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintJob"];
+                "multipart/form-data": components["schemas"]["PrintJob"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintJob"];
+                };
+            };
+        };
+    };
+    api_printjobs_manager_set_price_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Модель для печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintJob"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintJob"];
+                "multipart/form-data": components["schemas"]["PrintJob"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintJob"];
+                };
+            };
+        };
+    };
+    api_printjobs_manager_start_delivery_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Модель для печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintJob"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintJob"];
+                "multipart/form-data": components["schemas"]["PrintJob"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintJob"];
+                };
+            };
+        };
+    };
+    api_printjobs_manager_start_printing_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Модель для печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintJob"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintJob"];
+                "multipart/form-data": components["schemas"]["PrintJob"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintJob"];
+                };
+            };
+        };
+    };
+    api_printjobs_model_file_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Модель для печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintJob"];
+                };
+            };
+        };
+    };
+    api_printjobs_repeat_order_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Модель для печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintJob"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintJob"];
+                "multipart/form-data": components["schemas"]["PrintJob"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintJob"];
+                };
+            };
+        };
+    };
+    api_printjobs_request_price_review_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Модель для печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintJob"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintJob"];
+                "multipart/form-data": components["schemas"]["PrintJob"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintJob"];
+                };
+            };
+        };
+    };
     api_printjobs_submit_create: {
         parameters: {
             query?: never;
@@ -2610,7 +6719,175 @@ export interface operations {
             };
         };
     };
+    api_printjobs_user_accept_price_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Модель для печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintJob"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintJob"];
+                "multipart/form-data": components["schemas"]["PrintJob"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintJob"];
+                };
+            };
+        };
+    };
+    api_printjobs_user_accept_result_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Модель для печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintJob"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintJob"];
+                "multipart/form-data": components["schemas"]["PrintJob"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintJob"];
+                };
+            };
+        };
+    };
     api_printjobs_user_approve_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Модель для печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintJob"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintJob"];
+                "multipart/form-data": components["schemas"]["PrintJob"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintJob"];
+                };
+            };
+        };
+    };
+    api_printjobs_user_mark_paid_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Модель для печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintJob"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintJob"];
+                "multipart/form-data": components["schemas"]["PrintJob"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintJob"];
+                };
+            };
+        };
+    };
+    api_printjobs_user_mark_received_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Модель для печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintJob"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintJob"];
+                "multipart/form-data": components["schemas"]["PrintJob"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintJob"];
+                };
+            };
+        };
+    };
+    api_printjobs_user_reject_price_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Модель для печати. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrintJob"];
+                "application/x-www-form-urlencoded": components["schemas"]["PrintJob"];
+                "multipart/form-data": components["schemas"]["PrintJob"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrintJob"];
+                };
+            };
+        };
+    };
+    api_printjobs_user_request_rework_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -2916,6 +7193,26 @@ export interface operations {
                 };
             };
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -4087,6 +8384,64 @@ export interface operations {
             };
         };
     };
+    api_shop_my_cart_order_sync_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_shop_my_orders_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Order"][];
+                };
+            };
+        };
+    };
+    api_shop_my_orders_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Order"];
+                };
+            };
+        };
+    };
     api_shop_order_statuses_list: {
         parameters: {
             query?: never;
@@ -4245,6 +8600,71 @@ export interface operations {
             };
         };
     };
+    api_shop_payments_sync_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SyncShopPaymentRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["SyncShopPaymentRequest"];
+                "multipart/form-data": components["schemas"]["SyncShopPaymentRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SyncShopPaymentResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
     api_shop_pochta_rossii_offices_retrieve: {
         parameters: {
             query: {
@@ -4396,8 +8816,10 @@ export interface operations {
     };
     api_shop_sdek_offices_retrieve: {
         parameters: {
-            query: {
-                postal_code: string;
+            query?: {
+                lat?: string;
+                lon?: string;
+                postal_code?: string;
             };
             header?: never;
             path?: never;
@@ -4458,6 +8880,63 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    api_shop_yookassa_webhook_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["YooKassaWebhookRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["YooKassaWebhookRequest"];
+                "multipart/form-data": components["schemas"]["YooKassaWebhookRequest"];
+            };
+        };
         responses: {
             200: {
                 headers: {
@@ -4867,6 +9346,597 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CourseWrite"];
+                };
+            };
+        };
+    };
+    api_study_manager_enrollments_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudyManagerEnrollment"][];
+                };
+            };
+        };
+    };
+    api_study_manager_enrollments_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudyManagerEnrollmentDetail"];
+                };
+            };
+        };
+    };
+    api_study_manager_enrollments_assign_curator_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StudyManagerAssignCurator"];
+                "application/x-www-form-urlencoded": components["schemas"]["StudyManagerAssignCurator"];
+                "multipart/form-data": components["schemas"]["StudyManagerAssignCurator"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudyManagerAssignCurator"];
+                };
+            };
+        };
+    };
+    api_study_manager_enrollments_certificate_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StudyManagerCertificateDecision"];
+                "application/x-www-form-urlencoded": components["schemas"]["StudyManagerCertificateDecision"];
+                "multipart/form-data": components["schemas"]["StudyManagerCertificateDecision"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudyManagerCertificateDecision"];
+                };
+            };
+        };
+    };
+    api_study_manager_enrollments_certificate_template_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_study_manager_enrollments_final_exam_unlock_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_study_manager_enrollments_lessons_unlock_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+                lesson_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["StudyManagerLessonAccess"];
+                "application/x-www-form-urlencoded": components["schemas"]["StudyManagerLessonAccess"];
+                "multipart/form-data": components["schemas"]["StudyManagerLessonAccess"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudyManagerLessonAccess"];
+                };
+            };
+        };
+    };
+    api_study_manager_exam_options_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamQuestionOptionManage"][];
+                };
+            };
+        };
+    };
+    api_study_manager_exam_options_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExamQuestionOptionManage"];
+                "application/x-www-form-urlencoded": components["schemas"]["ExamQuestionOptionManage"];
+                "multipart/form-data": components["schemas"]["ExamQuestionOptionManage"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamQuestionOptionManage"];
+                };
+            };
+        };
+    };
+    api_study_manager_exam_options_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Вариант ответа. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamQuestionOptionManage"];
+                };
+            };
+        };
+    };
+    api_study_manager_exam_options_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Вариант ответа. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExamQuestionOptionManage"];
+                "application/x-www-form-urlencoded": components["schemas"]["ExamQuestionOptionManage"];
+                "multipart/form-data": components["schemas"]["ExamQuestionOptionManage"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamQuestionOptionManage"];
+                };
+            };
+        };
+    };
+    api_study_manager_exam_options_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Вариант ответа. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_study_manager_exam_options_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Вариант ответа. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedExamQuestionOptionManage"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedExamQuestionOptionManage"];
+                "multipart/form-data": components["schemas"]["PatchedExamQuestionOptionManage"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamQuestionOptionManage"];
+                };
+            };
+        };
+    };
+    api_study_manager_exam_questions_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamQuestionManage"][];
+                };
+            };
+        };
+    };
+    api_study_manager_exam_questions_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExamQuestionManage"];
+                "application/x-www-form-urlencoded": components["schemas"]["ExamQuestionManage"];
+                "multipart/form-data": components["schemas"]["ExamQuestionManage"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamQuestionManage"];
+                };
+            };
+        };
+    };
+    api_study_manager_exam_questions_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Вопрос экзамена. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamQuestionManage"];
+                };
+            };
+        };
+    };
+    api_study_manager_exam_questions_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Вопрос экзамена. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExamQuestionManage"];
+                "application/x-www-form-urlencoded": components["schemas"]["ExamQuestionManage"];
+                "multipart/form-data": components["schemas"]["ExamQuestionManage"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamQuestionManage"];
+                };
+            };
+        };
+    };
+    api_study_manager_exam_questions_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Вопрос экзамена. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_study_manager_exam_questions_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Вопрос экзамена. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedExamQuestionManage"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedExamQuestionManage"];
+                "multipart/form-data": components["schemas"]["PatchedExamQuestionManage"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamQuestionManage"];
+                };
+            };
+        };
+    };
+    api_study_manager_exams_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamManage"][];
+                };
+            };
+        };
+    };
+    api_study_manager_exams_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExamManage"];
+                "application/x-www-form-urlencoded": components["schemas"]["ExamManage"];
+                "multipart/form-data": components["schemas"]["ExamManage"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamManage"];
+                };
+            };
+        };
+    };
+    api_study_manager_exams_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Экзамен. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamManage"];
+                };
+            };
+        };
+    };
+    api_study_manager_exams_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Экзамен. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExamManage"];
+                "application/x-www-form-urlencoded": components["schemas"]["ExamManage"];
+                "multipart/form-data": components["schemas"]["ExamManage"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamManage"];
+                };
+            };
+        };
+    };
+    api_study_manager_exams_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Экзамен. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_study_manager_exams_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Экзамен. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedExamManage"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedExamManage"];
+                "multipart/form-data": components["schemas"]["PatchedExamManage"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamManage"];
                 };
             };
         };
@@ -5464,6 +10534,243 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TeacherWrite"];
+                };
+            };
+        };
+    };
+    api_study_my_enrollments_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseEnrollmentList"][];
+                };
+            };
+        };
+    };
+    api_study_my_enrollments_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CourseEnrollmentCreate"];
+                "application/x-www-form-urlencoded": components["schemas"]["CourseEnrollmentCreate"];
+                "multipart/form-data": components["schemas"]["CourseEnrollmentCreate"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseEnrollmentCreate"];
+                };
+            };
+        };
+    };
+    api_study_my_enrollments_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseEnrollmentDetail"];
+                };
+            };
+        };
+    };
+    api_study_my_enrollments_certificate_pdf_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_study_my_enrollments_exams_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_study_my_enrollments_exams_retrieve_2: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                exam_id: number;
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_study_my_enrollments_exams_submit_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                exam_id: number;
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExamSubmit"];
+                "application/x-www-form-urlencoded": components["schemas"]["ExamSubmit"];
+                "multipart/form-data": components["schemas"]["ExamSubmit"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamSubmit"];
+                };
+            };
+        };
+    };
+    api_study_my_enrollments_lessons_progress_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+                lesson_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["LessonProgressUpdate"];
+                "application/x-www-form-urlencoded": components["schemas"]["LessonProgressUpdate"];
+                "multipart/form-data": components["schemas"]["LessonProgressUpdate"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonProgressUpdate"];
+                };
+            };
+        };
+    };
+    api_study_my_enrollments_lessons_progress_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+                lesson_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedLessonProgressUpdate"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedLessonProgressUpdate"];
+                "multipart/form-data": components["schemas"]["PatchedLessonProgressUpdate"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonProgressUpdate"];
+                };
+            };
+        };
+    };
+    api_study_my_enrollments_pay_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["CourseEnrollmentPay"];
+                "application/x-www-form-urlencoded": components["schemas"]["CourseEnrollmentPay"];
+                "multipart/form-data": components["schemas"]["CourseEnrollmentPay"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseEnrollmentPay"];
                 };
             };
         };

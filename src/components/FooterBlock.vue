@@ -74,7 +74,7 @@
     <div class="footer__line"></div>
     <div class="footer__bottom">
       <p>&#169; 2026, ООО "НПП "3Д Аддитивные технологии". Все права защищены.</p>
-      <div class="footer__dgdgf d-flex flex-wrap"><a href="#">Политика конфиденциальности</a><a href="#">Условия обслуживания</a></div>
+      <LegalLinksRow />
     </div>
   </div>
 </footer>
@@ -89,8 +89,10 @@ import {
   getContactOfficesData,
   phoneToTelHref
 } from '@/services/contact-office.service'
+import LegalLinksRow from '@/components/elements/LegalLinksRow.vue'
 
 export default {
+  components: { LegalLinksRow },
   created () {
     this.loadMainOfficePhone()
   },

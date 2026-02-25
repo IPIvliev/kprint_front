@@ -42,7 +42,7 @@
           <input v-model="form.privacyPolicyAccepted" type="checkbox">
           <span>
             Я соглашаюсь с
-            <a href="#" target="_blank" rel="noopener">политикой конфиденциальности</a>
+            <router-link to="/legal/pd-consent" target="_blank" rel="noopener noreferrer">политикой конфиденциальности</router-link>
           </span>
         </label>
 

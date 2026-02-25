@@ -138,6 +138,22 @@
                   step="1"
                 >
               </label>
+              <div class="print_ugc_notice">
+                <p class="print_ugc_notice__title">Для отправки заказа печати подтвердите права на 3D-модель:</p>
+                <label class="print_ugc_consent">
+                  <input v-model="ugcRightsAccepted" type="checkbox">
+                  <span>
+                    <strong class="print_ugc_badge">Обязательно</strong>
+                    Подтверждаю права на контент
+                    <router-link to="/legal/terms-offer#10-пользовательский-контент-3d-модели-и-файлы" target="_blank" rel="noopener noreferrer">
+                      (UGC)
+                    </router-link>
+                  </span>
+                </label>
+                <p class="print_ugc_status" :class="{ 'print_ugc_status--ready': ugcRightsAccepted }">
+                  {{ ugcRightsAccepted ? 'Подтверждение получено. Можно отправлять заказ.' : 'Без подтверждения прав заказ на печать не отправляется.' }}
+                </p>
+              </div>
               <button
                 class="btn btn--red"
                 type="button"
@@ -187,6 +203,7 @@ export default {
       orderError: '',
       isCreatingOrder: false,
       orderQuantity: 1,
+      ugcRightsAccepted: false,
       isLoadingMaterials: false,
       materialCategories: [],
       selectedMaterialId: null,
@@ -275,7 +292,8 @@ export default {
         this.orderQuantityValue > 0 &&
         this.parsedTargetSizeCm.x &&
         this.parsedTargetSizeCm.y &&
-        this.parsedTargetSizeCm.z
+        this.parsedTargetSizeCm.z &&
+        this.ugcRightsAccepted
       )
     }
   },
@@ -305,6 +323,7 @@ export default {
       this.previewImageFile = null
       this.orderError = ''
       this.orderQuantity = 1
+      this.ugcRightsAccepted = false
       this.isModalOpen = true
 
       try {
@@ -583,7 +602,8 @@ export default {
         preview_image: this.previewImageFile,
         dimension_x_mm: String(dimensionXmm || ''),
         dimension_y_mm: String(dimensionYmm || ''),
-        dimension_z_mm: String(dimensionZmm || '')
+        dimension_z_mm: String(dimensionZmm || ''),
+        ugc_rights_accepted: this.ugcRightsAccepted
       }
     },
     maybeStartUploadFromRoute () {
@@ -829,6 +849,7 @@ export default {
       this.orderError = ''
       this.isCreatingOrder = false
       this.orderQuantity = 1
+      this.ugcRightsAccepted = false
       this.rawModelVolume = 0
       this.rawBoundsSize = { x: 0, y: 0, z: 0 }
       this.targetSizeCm = { x: '', y: '', z: '' }
@@ -875,3 +896,61 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.print_ugc_notice {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 420px;
+  padding: 10px 12px;
+  border: 1px solid #d9dee8;
+  border-radius: 8px;
+  background: #f7f9fc;
+}
+
+.print_ugc_notice__title {
+  margin: 0;
+  color: #232629;
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.print_ugc_consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 360px;
+  color: #5d636f;
+  font-size: 13px;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.print_ugc_consent input {
+  margin-top: 3px;
+}
+
+.print_ugc_badge {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #fde8ec;
+  color: #c9314f;
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.print_ugc_status {
+  margin: 0;
+  color: #a03d52;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.print_ugc_status--ready {
+  color: #2f8f4e;
+}
+</style>

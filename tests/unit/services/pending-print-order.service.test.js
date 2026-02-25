@@ -39,7 +39,8 @@ describe('pending-print-order service', () => {
       preview_image: previewFile,
       dimension_x_mm: 10,
       dimension_y_mm: 20,
-      dimension_z_mm: 30
+      dimension_z_mm: 30,
+      ugc_rights_accepted: true
     })
 
     const modelValue = formData.get('model_file')
@@ -55,5 +56,6 @@ describe('pending-print-order service', () => {
     expect(formData.get('dimension_x_mm')).toBe('10')
     expect(formData.get('dimension_y_mm')).toBe('20')
     expect(formData.get('dimension_z_mm')).toBe('30')
+    expect(formData.get('ugc_rights_accepted')).toBe('true')
   })
 })

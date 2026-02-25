@@ -130,6 +130,19 @@
                           </div>
                         </div>
                       </div>
+                      <div class="panel__formrow">
+                        <div class="row gy-1">
+                          <div class="col-md-8">
+                            <label class="panel-consent-toggle">
+                              <input v-model="profile.ads_consent" type="checkbox">
+                              <span>
+                                Получать новости и акции
+                                <router-link to="/legal/ads-consent" target="_blank" rel="noopener noreferrer">по отдельному согласию</router-link>
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
                       <div class="panel__formbtn">
                         <button class="btn btn--red btn--big" type="submit" :disabled="loading">Сохранить изменения</button>
                         <div v-if="errorMessage" style="margin-top:10px;color:#d83a56;">{{ errorMessage }}</div>
@@ -226,7 +239,8 @@ export default {
         full_name: '',
         phone: '',
         email: '',
-        telegram: ''
+        telegram: '',
+        ads_consent: false
       },
       avatarFile: null,
       removeAvatar: false,
@@ -258,7 +272,8 @@ export default {
         full_name: data.full_name || '',
         phone: data.phone || '',
         email: data.email || '',
-        telegram: data.telegram || ''
+        telegram: data.telegram || '',
+        ads_consent: Boolean(data.ads_consent)
       }
     },
     applyProfile (data = {}) {
@@ -349,6 +364,7 @@ export default {
       formData.append('phone', this.profile.phone || '')
       formData.append('email', this.profile.email || '')
       formData.append('telegram', this.profile.telegram || '')
+      formData.append('ads_consent', String(Boolean(this.profile.ads_consent)))
       if (this.avatarFile) {
         formData.append('avatar', this.avatarFile)
       } else if (this.removeAvatar) {
@@ -400,3 +416,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.panel-consent-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #5d636f;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.panel-consent-toggle input {
+  margin-top: 3px;
+}
+</style>

@@ -145,6 +145,66 @@ const routes = [
     component: About
   },
   {
+    path: '/legal/personal-data-policy',
+    name: 'LegalPersonalDataPolicy',
+    component: () => import('@/views/LegalDocument.vue'),
+    meta: {
+      legalDocKey: 'personalDataPolicy',
+      title: 'Политика обработки персональных данных | gorkyliquid.ru',
+      description: 'Политика ООО «НПП "3Д Аддитивные Технологии"» в отношении обработки персональных данных на gorkyliquid.ru.'
+    }
+  },
+  {
+    path: '/legal/pd-consent',
+    name: 'LegalPdConsent',
+    component: () => import('@/views/LegalDocument.vue'),
+    meta: {
+      legalDocKey: 'pdConsent',
+      title: 'Согласие на обработку ПДн | gorkyliquid.ru',
+      description: 'Согласие пользователя на обработку персональных данных для сервисов и заказов на gorkyliquid.ru.'
+    }
+  },
+  {
+    path: '/legal/ads-consent',
+    name: 'LegalAdsConsent',
+    component: () => import('@/views/LegalDocument.vue'),
+    meta: {
+      legalDocKey: 'adsConsent',
+      title: 'Согласие на рекламно-информационные сообщения | gorkyliquid.ru',
+      description: 'Добровольное согласие на получение новостей и акций от ООО «НПП "3Д Аддитивные Технологии"».'
+    }
+  },
+  {
+    path: '/legal/terms-offer',
+    name: 'LegalTermsOffer',
+    component: () => import('@/views/LegalDocument.vue'),
+    meta: {
+      legalDocKey: 'termsOffer',
+      title: 'Пользовательское соглашение и оферта | gorkyliquid.ru',
+      description: 'Публичная оферта и пользовательское соглашение для товаров и услуг gorkyliquid.ru.'
+    }
+  },
+  {
+    path: '/legal/delivery-payment',
+    name: 'LegalDeliveryPayment',
+    component: () => import('@/views/LegalDocument.vue'),
+    meta: {
+      legalDocKey: 'deliveryPayment',
+      title: 'Доставка и оплата | gorkyliquid.ru',
+      description: 'Способы оплаты через YooMoney, условия доставки, самовывоза и контакты поддержки.'
+    }
+  },
+  {
+    path: '/legal/returns',
+    name: 'LegalReturns',
+    component: () => import('@/views/LegalDocument.vue'),
+    meta: {
+      legalDocKey: 'returns',
+      title: 'Возвраты и отмены | gorkyliquid.ru',
+      description: 'Порядок возвратов, отмен и претензий по товарам и услугам на gorkyliquid.ru.'
+    }
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: NotFound
@@ -368,6 +428,34 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+function ensureDescriptionMetaTag () {
+  if (typeof document === 'undefined') {
+    return null
+  }
+  let meta = document.querySelector('meta[name="description"]')
+  if (!meta) {
+    meta = document.createElement('meta')
+    meta.setAttribute('name', 'description')
+    document.head.appendChild(meta)
+  }
+  return meta
+}
+
+router.afterEach((to) => {
+  if (typeof document === 'undefined') {
+    return
+  }
+  const defaultTitle = 'gorkyliquid.ru'
+  const defaultDescription = 'ООО «НПП "3Д Аддитивные Технологии"»: смолы, филамент, оборудование, 3D-печать и обучение.'
+  const title = (to.meta && to.meta.title) || defaultTitle
+  const description = (to.meta && to.meta.description) || defaultDescription
+  document.title = title
+  const descriptionMeta = ensureDescriptionMetaTag()
+  if (descriptionMeta) {
+    descriptionMeta.setAttribute('content', description)
+  }
 })
 
 export default router

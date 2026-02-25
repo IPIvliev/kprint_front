@@ -14,6 +14,12 @@ describe('router configuration', () => {
     expect(byName.MainStudy).toBe('/study')
     expect(byName.MainPrint).toBe('/print')
     expect(byName.PanelStudyUserCourses).toBe('/panel/study/my/courses')
+    expect(byName.LegalPersonalDataPolicy).toBe('/legal/personal-data-policy')
+    expect(byName.LegalPdConsent).toBe('/legal/pd-consent')
+    expect(byName.LegalAdsConsent).toBe('/legal/ads-consent')
+    expect(byName.LegalTermsOffer).toBe('/legal/terms-offer')
+    expect(byName.LegalDeliveryPayment).toBe('/legal/delivery-payment')
+    expect(byName.LegalReturns).toBe('/legal/returns')
   })
 
   it('redirects legacy innovations url to the new it-innovations route', () => {

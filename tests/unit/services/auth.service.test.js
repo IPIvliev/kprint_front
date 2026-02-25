@@ -31,11 +31,21 @@ describe('auth service', () => {
 
   it('registers user with expected payload', async () => {
     apiMock.post.mockResolvedValueOnce({ data: { ok: true } })
-    await authService.register({ username: 'u', email: 'x@y.z', password: 'secret' })
+    await authService.register({
+      username: 'u',
+      email: 'x@y.z',
+      password: 'secret',
+      terms_offer_accepted: true,
+      pd_accepted: true,
+      ads_accepted: false
+    })
     expect(apiMock.post).toHaveBeenCalledWith('/api/signup', {
       username: 'u',
       email: 'x@y.z',
-      password: 'secret'
+      password: 'secret',
+      terms_offer_accepted: true,
+      pd_accepted: true,
+      ads_accepted: false
     })
   })
 
