@@ -161,6 +161,31 @@ const routes = [
       {
         path: 'study',
         name: 'PanelStudy',
+        redirect: '/panel/study/my/courses'
+      },
+      {
+        path: 'study/my/courses',
+        name: 'PanelStudyUserCourses',
+        component: () => import('../views/Panel/PanelStudyUser.vue')
+      },
+      {
+        path: 'study/my/courses/:enrollmentId',
+        name: 'PanelStudyUserCourse',
+        component: () => import('../views/Panel/PanelStudyUser.vue')
+      },
+      {
+        path: 'study/my/courses/:enrollmentId/lessons',
+        name: 'PanelStudyUserLessons',
+        component: () => import('../views/Panel/PanelStudyUser.vue')
+      },
+      {
+        path: 'study/my/courses/:enrollmentId/lessons/:lessonId',
+        name: 'PanelStudyUserLesson',
+        component: () => import('../views/Panel/PanelStudyUser.vue')
+      },
+      {
+        path: 'study/my/courses/:enrollmentId/exams/:examId',
+        name: 'PanelStudyUserExam',
         component: () => import('../views/Panel/PanelStudyUser.vue')
       },
       {
@@ -288,6 +313,11 @@ const routes = [
         component: () => import('../views/Panel/PanelCompanies.vue')
       },
       {
+        path: 'study/enrollments',
+        name: 'PanelStudyEnrollments',
+        component: () => import('../views/Panel/PanelStudyEnrollments.vue')
+      },
+      {
         path: 'study/categories',
         name: 'PanelStudyCategories',
         component: () => import('../views/Panel/PanelStudyCategories.vue')
@@ -301,6 +331,11 @@ const routes = [
         path: 'study/lessons',
         name: 'PanelStudyLessons',
         component: () => import('../views/Panel/PanelStudyLessons.vue')
+      },
+      {
+        path: 'study/exams',
+        name: 'PanelStudyExams',
+        component: () => import('../views/Panel/PanelStudyExams.vue')
       },
       {
         path: 'study/teachers',

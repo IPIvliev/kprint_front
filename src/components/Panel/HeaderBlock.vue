@@ -210,6 +210,12 @@
                   <li><router-link class="panel__menu-link" to="/panel/study/categories" @click="closeMainMenu"><span class="panel__menu-icon">
                       <img src="@/assets/img/panel-icons/study.svg" alt="">
                   </span>Обучение</router-link></li>
+                  <li><router-link class="panel__menu-link" to="/panel/study/enrollments" @click="closeMainMenu"><span class="panel__menu-icon">
+                      <img src="@/assets/img/panel-icons/orders.svg" alt="">
+                  </span>Ученики обучения</router-link></li>
+                  <li><router-link class="panel__menu-link" to="/panel/study/exams" @click="closeMainMenu"><span class="panel__menu-icon">
+                      <img src="@/assets/img/panel-icons/filter-list.svg" alt="">
+                  </span>Экзамены</router-link></li>
                   <li><router-link class="panel__menu-link" to="/panel/shop/categories" @click="closeMainMenu"><span class="panel__menu-icon">
                       <img src="@/assets/img/panel-icons/categories.svg" alt="">
                   </span>Магазин</router-link></li>

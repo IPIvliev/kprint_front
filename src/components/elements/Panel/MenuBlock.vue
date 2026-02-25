@@ -207,6 +207,14 @@
                         </button>
                         <ul v-show="studyOpen" class="panel__menu" style="padding-left: 18px; margin-top: 8px;">
                           <li>
+                            <router-link class="panel__menu-link" to="/panel/study/enrollments" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/panel-icons/orders.svg" alt="">
+                              </span>
+                              Ученики
+                            </router-link>
+                          </li>
+                          <li>
                             <router-link class="panel__menu-link" to="/panel/study/categories" active-class="panel__menu-link--active">
                               <span class="panel__menu-icon">
                                 <img src="@/assets/img/panel-icons/categories.svg" alt="">
@@ -228,6 +236,14 @@
                                 <img src="@/assets/img/panel-icons/lessons.svg" alt="">
                               </span>
                               Уроки
+                            </router-link>
+                          </li>
+                          <li>
+                            <router-link class="panel__menu-link" to="/panel/study/exams" active-class="panel__menu-link--active">
+                              <span class="panel__menu-icon">
+                                <img src="@/assets/img/panel-icons/filter-list.svg" alt="">
+                              </span>
+                              Экзамены
                             </router-link>
                           </li>
                           <li>

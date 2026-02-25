@@ -380,8 +380,8 @@ export function reorderStudyManagerLessons (payload) {
   return api.post('/api/study/manager/lessons/reorder', payload)
 }
 
-export function fetchStudyManagerTeachers () {
-  return api.get('/api/study/manager/teachers')
+export function fetchStudyManagerTeachers (params = {}) {
+  return api.get('/api/study/manager/teachers', { params })
 }
 
 export function createStudyManagerTeacher (payload) {
@@ -426,6 +426,54 @@ export function updateStudyManagerFeedback (feedbackId, payload) {
 
 export function deleteStudyManagerFeedback (feedbackId) {
   return api.delete(`/api/study/manager/feedbacks/${feedbackId}`)
+}
+
+export function fetchStudyManagerExams (params = {}) {
+  return api.get('/api/study/manager/exams', { params })
+}
+
+export function createStudyManagerExam (payload) {
+  return api.post('/api/study/manager/exams', payload)
+}
+
+export function updateStudyManagerExam (examId, payload) {
+  return api.patch(`/api/study/manager/exams/${examId}`, payload)
+}
+
+export function deleteStudyManagerExam (examId) {
+  return api.delete(`/api/study/manager/exams/${examId}`)
+}
+
+export function fetchStudyManagerExamQuestions (params = {}) {
+  return api.get('/api/study/manager/exam-questions', { params })
+}
+
+export function createStudyManagerExamQuestion (payload) {
+  return api.post('/api/study/manager/exam-questions', payload)
+}
+
+export function updateStudyManagerExamQuestion (questionId, payload) {
+  return api.patch(`/api/study/manager/exam-questions/${questionId}`, payload)
+}
+
+export function deleteStudyManagerExamQuestion (questionId) {
+  return api.delete(`/api/study/manager/exam-questions/${questionId}`)
+}
+
+export function fetchStudyManagerExamOptions (params = {}) {
+  return api.get('/api/study/manager/exam-options', { params })
+}
+
+export function createStudyManagerExamOption (payload) {
+  return api.post('/api/study/manager/exam-options', payload)
+}
+
+export function updateStudyManagerExamOption (optionId, payload) {
+  return api.patch(`/api/study/manager/exam-options/${optionId}`, payload)
+}
+
+export function deleteStudyManagerExamOption (optionId) {
+  return api.delete(`/api/study/manager/exam-options/${optionId}`)
 }
 
 export function fetchCallbackCaptcha () {

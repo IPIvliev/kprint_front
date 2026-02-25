@@ -90,6 +90,12 @@
                         <span class="panel__table-text">{{ lesson.order || index + 1 }}</span>
                       </td>
                       <td>
+                        <span class="panel__table-subtitle">Открыть:</span>
+                        <span class="panel__table-text">
+                          {{ Number(lesson.unlock_after_days || 0) > 0 ? `на ${Number(lesson.unlock_after_days)} день` : 'сразу' }}
+                        </span>
+                      </td>
+                      <td>
                         <span class="panel__table-icon" @click="openEdit(lesson)">
                           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M3 15H6L13.875 7.12498C14.2728 6.72716 14.4963 6.18759 14.4963 5.62498C14.4963 5.06237 14.2728 4.52281 13.875 4.12498C13.4772 3.72716 12.9376 3.50366 12.375 3.50366C11.8124 3.50366 11.2728 3.72716 10.875 4.12498L3 12V15Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -146,6 +152,49 @@
               <label>Описание</label>
               <textarea v-model="form.description" class="form-control" rows="6" placeholder="Описание урока"></textarea>
             </div>
+            <div class="panel__formrow">
+              <label>Текст урока</label>
+              <textarea
+                v-model="form.text_content"
+                class="form-control"
+                rows="8"
+                placeholder="Текст урока (будет доступен ученику)"
+              ></textarea>
+            </div>
+            <div class="panel__formrow">
+              <label>Ссылка на видео</label>
+              <input
+                type="url"
+                v-model="form.video_url"
+                class="form-control"
+                placeholder="https://..."
+              >
+            </div>
+            <div class="panel__formrow">
+              <label>Длительность видео (сек.)</label>
+              <input
+                type="number"
+                min="0"
+                step="1"
+                v-model.number="form.video_duration_seconds"
+                class="form-control"
+                placeholder="0"
+              >
+            </div>
+            <div class="panel__formrow">
+              <label>Открывать после старта обучения (дней)</label>
+              <input
+                type="number"
+                min="0"
+                step="1"
+                v-model.number="form.unlock_after_days"
+                class="form-control"
+                placeholder="0"
+              >
+              <small class="panel__table-sn panel__table-sn--detail">
+                0 - сразу после выполнения условий по предыдущему уроку. Для первого урока: сразу после оплаты.
+              </small>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn--grayborder" @click="closeModal">Отмена</button>
@@ -191,7 +240,11 @@ export default {
       form: {
         title: '',
         description: '',
-        course: ''
+        text_content: '',
+        video_url: '',
+        video_duration_seconds: 0,
+        course: '',
+        unlock_after_days: 0
       }
     }
   },
@@ -262,7 +315,11 @@ export default {
       this.form = {
         title: '',
         description: '',
-        course: this.selectedCourse || ''
+        text_content: '',
+        video_url: '',
+        video_duration_seconds: 0,
+        course: this.selectedCourse || '',
+        unlock_after_days: 0
       }
       this.showModal = true
     },
@@ -272,7 +329,11 @@ export default {
       this.form = {
         title: lesson.title || '',
         description: lesson.description || '',
-        course: lesson.course || ''
+        text_content: lesson.text_content || '',
+        video_url: lesson.video_url || '',
+        video_duration_seconds: Number(lesson.video_duration_seconds || 0),
+        course: lesson.course || '',
+        unlock_after_days: Number(lesson.unlock_after_days || 0)
       }
       this.showModal = true
     },
@@ -290,7 +351,11 @@ export default {
         const payload = {
           title: this.form.title,
           description: this.form.description || '',
-          course: this.form.course
+          text_content: this.form.text_content || '',
+          video_url: this.form.video_url || '',
+          video_duration_seconds: Math.max(0, Number(this.form.video_duration_seconds || 0)),
+          course: this.form.course,
+          unlock_after_days: Math.max(0, Number(this.form.unlock_after_days || 0))
         }
         if (this.isEditing && this.currentId) {
           await updateStudyManagerLesson(this.currentId, payload)
