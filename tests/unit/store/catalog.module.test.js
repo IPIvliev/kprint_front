@@ -78,7 +78,7 @@ describe('store/catalog.module', () => {
     fetchShopCategoryProductsMock.mockResolvedValueOnce({ data: { products: [{ id: 1, name: 'P' }] } })
     const commit = vi.fn()
     await catalog.actions.fetchCategoryProducts({ commit }, 5)
-    expect(fetchShopCategoryProductsMock).toHaveBeenCalledWith(5)
+    expect(fetchShopCategoryProductsMock).toHaveBeenCalledWith(5, {})
     expect(commit).toHaveBeenCalledWith('setProductsData', [{ id: 1, name: 'P' }])
   })
 })

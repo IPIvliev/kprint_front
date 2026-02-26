@@ -40,7 +40,7 @@
           </div>
         </div> -->
         <div class="row gy-1">
-          <article-card v-for="article in paginatedArticles" :key="article.id" v-bind:article="article" :class="'col-xxl-3 col-lg-4 col-md-6'">
+          <article-card v-for="article in articles" :key="article.id" v-bind:article="article" :class="'col-xxl-3 col-lg-4 col-md-6'">
           </article-card>
         </div>
         <div v-if="totalPages > 1" class="news__pagination">
@@ -76,17 +76,23 @@
 <script>
 import CallbackWindow from './elements/CallbackWindow.vue'
 import ArticleCard from './News/ArticleCard.vue'
-import { publicApi } from '@/services/http'
 export default {
   name: 'NewsPage',
   data () {
     return {
-      articles: [],
-      categories: [],
       pageSize: 12
     }
   },
   computed: {
+    categories () {
+      return this.$store.state.news.categories
+    },
+    articles () {
+      return this.$store.state.news.articles
+    },
+    articlesMeta () {
+      return this.$store.state.news.articles_meta || {}
+    },
     activeTagSlug () {
       return String(this.$route.params.tagSlug || '').trim()
     },
@@ -119,13 +125,8 @@ export default {
       return Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : 1
     },
     totalPages () {
-      const total = Math.ceil(this.articles.length / this.pageSize)
+      const total = Number(this.articlesMeta.total_pages || 1)
       return total > 0 ? total : 1
-    },
-    paginatedArticles () {
-      const current = Math.min(this.currentPage, this.totalPages)
-      const start = (current - 1) * this.pageSize
-      return this.articles.slice(start, start + this.pageSize)
     },
     visiblePages () {
       const total = this.totalPages
@@ -140,11 +141,8 @@ export default {
     }
   },
   watch: {
-    '$route.path' () {
+    '$route.fullPath' () {
       this.fetchArticles()
-    },
-    '$route.query.page' () {
-      this.ensurePageIsValid()
     }
   },
   components: { CallbackWindow, ArticleCard },
@@ -157,22 +155,15 @@ export default {
       return `/news/category/${slug}`
     },
     async fetchCategories () {
-      const response = await publicApi.get('/api/article-categories/')
-      this.categories = Array.isArray(response.data) ? response.data : []
+      await this.$store.dispatch('news/fetchCategories')
     },
     async fetchArticles () {
-      const params = {}
-      if (this.activeTagSlug) {
-        params.tag = this.activeTagSlug
-      }
-      if (this.activeCategorySlug) {
-        params.category = this.activeCategorySlug
-      }
-      const response = await publicApi.get('/api/articles/', { params })
-      const payload = response && response.data ? response.data : []
-      this.articles = Array.isArray(payload)
-        ? payload
-        : (Array.isArray(payload.results) ? payload.results : [])
+      await this.$store.dispatch('news/fetchArticles', {
+        page: this.currentPage,
+        pageSize: this.pageSize,
+        tag: this.activeTagSlug,
+        category: this.activeCategorySlug
+      })
       this.ensurePageIsValid()
     },
     ensurePageIsValid () {

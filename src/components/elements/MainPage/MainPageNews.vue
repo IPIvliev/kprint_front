@@ -30,7 +30,6 @@
 <script>
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import { Pagination } from 'swiper'
-import { publicApi } from '@/services/http'
 import ArticleCard from '@/components/News/ArticleCard.vue'
 
 import 'swiper/css'
@@ -75,8 +74,11 @@ export default {
     async fetchArticles () {
       this.loading = true
       try {
-        const response = await publicApi.get('/api/articles/')
-        const items = this.extractArticles(response && response.data)
+        const payload = await this.$store.dispatch('news/fetchArticles', {
+          page: 1,
+          pageSize: 8
+        })
+        const items = this.extractArticles(payload && payload.items)
         this.articles = this.sortByDate(items).slice(0, 8)
       } catch (error) {
         this.articles = []

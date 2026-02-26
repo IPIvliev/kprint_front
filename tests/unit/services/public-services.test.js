@@ -47,7 +47,7 @@ describe('public and delivery services', () => {
 
     expect(publicApiMock.get).toHaveBeenCalledWith('/api/shop/categories')
     expect(publicApiMock.get).toHaveBeenCalledWith('/api/shop/products')
-    expect(publicApiMock.get).toHaveBeenCalledWith('/api/shop/categories/12')
+    expect(publicApiMock.get).toHaveBeenCalledWith('/api/shop/categories/12', { params: {} })
     expect(publicApiMock.get).toHaveBeenCalledWith('/api/shop/products/17')
     expect(publicApiMock.get).toHaveBeenCalledWith('/api/study/courses')
     expect(publicApiMock.get).toHaveBeenCalledWith('/api/study/course/4')

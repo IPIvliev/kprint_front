@@ -4,6 +4,7 @@ import { shop } from './shop/index.js'
 import { catalog } from './catalog.module'
 import { study } from './study.module'
 import { delivery } from './delivery.module'
+import { news } from './news.module'
 
 const store = createStore({
   modules: {
@@ -11,7 +12,8 @@ const store = createStore({
     shop,
     catalog,
     study,
-    delivery
+    delivery,
+    news
   }
 })
 

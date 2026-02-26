@@ -195,7 +195,6 @@
 </template>
 
 <script>
-import { publicApi } from '@/services/http'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import { Pagination } from 'swiper'
 import ArticleCard from '@/components/News/ArticleCard.vue'
@@ -275,37 +274,24 @@ export default {
         return
       }
       try {
-        const response = await publicApi.get(`/api/articles/${this.id}/`)
-        this.article = response.data || {}
+        const article = await this.$store.dispatch('news/fetchArticle', { id: this.id })
+        this.article = article || {}
         this.ensureCanonicalArticleUrl()
         await this.fetchRelatedArticles()
       } catch (error) {
         this.$router.replace('/news')
       }
     },
-    extractArticles (payload) {
-      if (Array.isArray(payload)) {
-        return payload
-      }
-      if (payload && Array.isArray(payload.results)) {
-        return payload.results
-      }
-      return []
-    },
     async fetchRelatedArticles () {
       this.loadingRelated = true
       try {
-        const response = await publicApi.get('/api/articles/')
-        const source = this.extractArticles(response && response.data)
         const currentId = Number(this.article && this.article.id)
-        const sorted = source
-          .filter((item) => item && item.id && Number(item.id) !== currentId)
-          .sort((left, right) => {
-            const leftDate = new Date(left.publish_iso || left.publish || left.created || left.updated || 0).getTime()
-            const rightDate = new Date(right.publish_iso || right.publish || right.created || right.updated || 0).getTime()
-            return rightDate - leftDate
-          })
-        this.relatedArticles = sorted.slice(0, 8)
+        const payload = await this.$store.dispatch('news/fetchArticles', {
+          page: 1,
+          pageSize: 8,
+          excludeId: currentId
+        })
+        this.relatedArticles = Array.isArray(payload?.items) ? payload.items : []
       } catch (error) {
         this.relatedArticles = []
       } finally {
