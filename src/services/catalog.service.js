@@ -19,10 +19,11 @@ export function fetchShopProducts () {
 
 /**
  * @param {number|string} categoryId
+ * @param {Record<string, any>} params
  * @returns {Promise<import('axios').AxiosResponse<ShopCategoryProductsResponse>>}
  */
-export function fetchShopCategoryProducts (categoryId) {
-  return publicApi.get(`/api/shop/categories/${Number(categoryId)}`)
+export function fetchShopCategoryProducts (categoryId, params = {}) {
+  return publicApi.get(`/api/shop/categories/${Number(categoryId)}`, { params })
 }
 
 /**

@@ -62,16 +62,16 @@
                       <td>
                         <span class="panel__table-title">{{ product.name || 'Без названия' }}</span>
                         <span class="panel__table-sn panel__table-sn--detail">
-                          Артикул: {{ product.article || '—' }}
+                          Артикул: {{ product.article || '-' }}
                         </span>
                       </td>
                       <td>
                         <span class="panel__table-subtitle">Цена:</span>
-                        <span class="panel__table-text">{{ product.price || '—' }}</span>
+                        <span class="panel__table-text">{{ product.price || '-' }}</span>
                       </td>
                       <td>
                         <span class="panel__table-subtitle">Остаток:</span>
-                        <span class="panel__table-text">{{ product.stock ?? '—' }}</span>
+                        <span class="panel__table-text">{{ product.stock ?? '-' }}</span>
                       </td>
                       <td>
                         <span class="panel__table-subtitle">Категория:</span>
@@ -208,6 +208,61 @@
                 </div>
               </div>
             </div>
+            <div class="panel__formrow" v-if="isEditing && currentId">
+              <label>Характеристики товара</label>
+              <div style="display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap; margin-bottom:12px;">
+                <div style="min-width:220px;">
+                  <select v-model="newProductAttr.filter_attr" class="form-control">
+                    <option disabled value="">Выберите фильтр</option>
+                    <option v-for="option in filterAttrs" :key="option.id" :value="option.id">
+                      {{ option.title }}
+                    </option>
+                  </select>
+                </div>
+                <div style="min-width:220px;">
+                  <select v-model="newProductAttr.value" class="form-control">
+                    <option disabled value="">Выберите значение</option>
+                    <option
+                      v-for="option in attrValueOptions(newProductAttr.filter_attr)"
+                      :key="option.id"
+                      :value="option.id"
+                    >
+                      {{ option.value }}
+                    </option>
+                  </select>
+                </div>
+                <button type="button" class="btn btn--grayborder" @click="addProductAttrValue" :disabled="attrSaving">
+                  Добавить
+                </button>
+              </div>
+              <div
+                v-for="item in productAttrValues"
+                :key="item.id"
+                style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:8px;"
+              >
+                <div style="min-width:220px;">
+                  <select v-model="item.filter_attr" class="form-control" @change="updateProductAttrValue(item)">
+                    <option v-for="option in filterAttrs" :key="option.id" :value="option.id">
+                      {{ option.title }}
+                    </option>
+                  </select>
+                </div>
+                <div style="min-width:220px;">
+                  <select v-model="item.value" class="form-control" @change="updateProductAttrValue(item)">
+                    <option
+                      v-for="option in attrValueOptions(item.filter_attr)"
+                      :key="option.id"
+                      :value="option.id"
+                    >
+                      {{ option.value }}
+                    </option>
+                  </select>
+                </div>
+                <button type="button" class="btn btn--grayborder" @click="removeProductAttrValue(item)" :disabled="attrSaving">
+                  Удалить
+                </button>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn--grayborder" @click="closeModal">Отмена</button>
@@ -225,14 +280,18 @@
 <script>
 import MenuBlock from '../elements/Panel/MenuBlock.vue'
 import {
+  createShopManagerFilterAttrValue,
   createShopManagerProduct,
   createShopManagerProductImage,
+  deleteShopManagerFilterAttrValue,
   deleteShopManagerProduct,
   deleteShopManagerProductImage,
   fetchShopManagerCategories,
+  fetchShopManagerFilterAttrs,
   fetchShopManagerProduct,
   fetchShopManagerProducts,
   fetchShopPublicProduct,
+  updateShopManagerFilterAttrValue,
   updateShopManagerProduct
 } from '@/services/panel.service'
 
@@ -256,6 +315,13 @@ export default {
       galleryFiles: [],
       galleryPreviews: [],
       uploadingGallery: false,
+      filterAttrs: [],
+      productAttrValues: [],
+      attrSaving: false,
+      newProductAttr: {
+        filter_attr: '',
+        value: ''
+      },
       form: {
         name: '',
         description: '',
@@ -307,10 +373,10 @@ export default {
     },
     categoryTitle (categoryId) {
       if (categoryId && typeof categoryId === 'object') {
-        return categoryId.title || categoryId.name || '—'
+        return categoryId.title || categoryId.name || '-'
       }
       const option = this.categories.find((item) => Number(item.id) === Number(categoryId))
-      return option ? option.title : '—'
+      return option ? option.title : '-'
     },
     resolveMediaUrl (path) {
       if (!path) {
@@ -327,6 +393,111 @@ export default {
         return `${base}${path}`
       }
       return `${base}/${path}`
+    },
+    normalizeId (raw) {
+      if (raw && typeof raw === 'object') {
+        return raw.id || raw.pk || ''
+      }
+      return raw
+    },
+    attrValueOptions (filterAttrId) {
+      const id = Number(filterAttrId || 0)
+      if (!id) {
+        return []
+      }
+      const selectedAttr = this.filterAttrs.find((item) => Number(item.id) === id)
+      return Array.isArray(selectedAttr?.filter_attrs_list_values) ? selectedAttr.filter_attrs_list_values : []
+    },
+    async loadProductAttrMeta () {
+      const response = await fetchShopManagerFilterAttrs()
+      this.filterAttrs = Array.isArray(response?.data) ? response.data : []
+    },
+    async fetchProductAttrValues () {
+      if (!this.currentId) {
+        this.productAttrValues = []
+        return
+      }
+      const response = await fetchShopManagerProduct(this.currentId)
+      const rawValues = Array.isArray(response?.data?.product_attrs_values) ? response.data.product_attrs_values : []
+      this.productAttrValues = rawValues
+        .map((item) => {
+          const filterTitle = String(item?.filter_attr || '').trim()
+          const valueTitle = String(item?.value || '').trim()
+          const attr = this.filterAttrs.find((option) => String(option?.title || '').trim() === filterTitle)
+          const filterAttrId = Number(attr?.id || 0) || ''
+          const listValues = Array.isArray(attr?.filter_attrs_list_values) ? attr.filter_attrs_list_values : []
+          const value = listValues.find((option) => String(option?.value || '').trim() === valueTitle)
+          const valueId = Number(value?.id || 0) || ''
+          return {
+            id: item?.id,
+            filter_attr: filterAttrId,
+            value: valueId
+          }
+        })
+        .filter((item) => item.id && item.filter_attr && item.value)
+    },
+    resetProductAttrEditor () {
+      this.productAttrValues = []
+      this.newProductAttr = {
+        filter_attr: '',
+        value: ''
+      }
+    },
+    async addProductAttrValue () {
+      const filterAttrId = Number(this.newProductAttr.filter_attr || 0)
+      const valueId = Number(this.newProductAttr.value || 0)
+      if (!this.currentId || !filterAttrId || !valueId) {
+        return
+      }
+      this.attrSaving = true
+      try {
+        await createShopManagerFilterAttrValue({
+          filter_attr: filterAttrId,
+          product: Number(this.currentId),
+          value: valueId
+        })
+        this.newProductAttr.value = ''
+        await this.fetchProductAttrValues()
+      } catch (err) {
+        this.error = err.userMessage || 'Не удалось добавить характеристику'
+      } finally {
+        this.attrSaving = false
+      }
+    },
+    async updateProductAttrValue (item) {
+      const id = Number(item?.id || 0)
+      const filterAttrId = Number(item?.filter_attr || 0)
+      const valueId = Number(item?.value || 0)
+      if (!id || !filterAttrId || !valueId || !this.currentId) {
+        return
+      }
+      this.attrSaving = true
+      try {
+        await updateShopManagerFilterAttrValue(id, {
+          filter_attr: filterAttrId,
+          product: Number(this.currentId),
+          value: valueId
+        })
+      } catch (err) {
+        this.error = err.userMessage || 'Не удалось обновить характеристику'
+      } finally {
+        this.attrSaving = false
+      }
+    },
+    async removeProductAttrValue (item) {
+      const id = Number(item?.id || 0)
+      if (!id) {
+        return
+      }
+      this.attrSaving = true
+      try {
+        await deleteShopManagerFilterAttrValue(id)
+        await this.fetchProductAttrValues()
+      } catch (err) {
+        this.error = err.userMessage || 'Не удалось удалить характеристику'
+      } finally {
+        this.attrSaving = false
+      }
     },
     openCreate () {
       this.isEditing = false
@@ -347,9 +518,10 @@ export default {
       this.imagePreview = ''
       this.productImages = []
       this.galleryPreviews = []
+      this.resetProductAttrEditor()
       this.showModal = true
     },
-    openEdit (product) {
+    async openEdit (product) {
       this.isEditing = true
       this.currentId = product.id || product.pk
       this.error = ''
@@ -376,11 +548,19 @@ export default {
       this.imagePreview = product.photo ? this.resolveMediaUrl(product.photo) : ''
       this.productImages = []
       this.galleryPreviews = []
+      this.resetProductAttrEditor()
       this.fetchProductImages()
+      try {
+        await this.loadProductAttrMeta()
+        await this.fetchProductAttrValues()
+      } catch (err) {
+        this.error = err.userMessage || 'Не удалось загрузить характеристики товара'
+      }
       this.showModal = true
     },
     closeModal () {
       this.showModal = false
+      this.resetProductAttrEditor()
     },
     triggerFileSelect () {
       if (this.$refs.imageInput) {
@@ -537,3 +717,4 @@ export default {
   }
 }
 </script>
+

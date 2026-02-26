@@ -2,7 +2,10 @@
   <router-link :to="{path: '/shop/categories/' + product.category + '/' + product.id }" class="cmp-components-elements-shop-showcase-productcard">
       <div class="item-card-shop">
         <div class="div-shop-item">
-          <div class="img-shop-item"><img class="img-2-shop-item" :src="product.photo" height="262"/></div>
+          <div class="img-shop-item">
+            <img v-if="product.photo" class="img-2-shop-item" :src="resolveMediaUrl(product.photo)" height="262"/>
+            <img v-else class="img-2-shop-item" src="@/assets/img/model_1.webp" height="262"/>
+          </div>
           <div class="div-shop-item">
             <div class="rating-stock-m-shop-item">
               <div class="rating-shop-item">
@@ -62,6 +65,19 @@ export default {
 
   },
   methods: {
+    resolveMediaUrl (path) {
+      if (!path) {
+        return ''
+      }
+      if (path.startsWith('http://') || path.startsWith('https://')) {
+        return path
+      }
+      const base = (process.env.VUE_APP_API_BASE || '').replace(/\/+$/, '')
+      if (!base) {
+        return path
+      }
+      return path.startsWith('/') ? `${base}${path}` : `${base}/${path}`
+    },
     getPrice (price) {
       price = String(price).split('.')
       price = price[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')

@@ -20,73 +20,42 @@
         <div class="header__dropmenu nout-hide" :class="{open: catalogMenuIsOpen}" id="headerDropmenu">
           <div class="header__dropmenu-row">
             <div class="header__dropmenu-col">
-              <div class="header__dropmenu-title">Принтеры</div><a class="header__dropmenu-item" href="#">
-                <div class="header__dropmenu-img"> <img src="../assets/img/printer_1.png" alt=""></div>
-                <div class="header__dropmenu-subtitle">Kulibin Print<span>Pro1</span></div>
-                <div class="header__dropmenu-text">Универсальная модель отличающаяся простой сборкой с помощью модульной конструкции</div></a><a class="header__dropmenu-item" href="#">
-                <div class="header__dropmenu-img"> <img src="../assets/img/printer_2.png" alt=""></div>
-                <div class="header__dropmenu-subtitle">Kulibin Print<span>Dental</span></div>
-                <div class="header__dropmenu-text">Для применения в медицине, стоматологии и множестве других сфер.</div></a>
+              <div class="header__dropmenu-title">Категории магазина</div>
+              <router-link
+                v-for="(category, index) in catalogDropdownCategories"
+                :key="`catalog-category-${category.id || index}`"
+                class="header__dropmenu-item"
+                :to="shopCategoryRoute(category)"
+              >
+                <div class="header__dropmenu-img"> <img :src="categoryCardImage(category, index)" :alt="category.title || 'Категория магазина'"></div>
+                <div class="header__dropmenu-subtitle">{{ category.title || 'Категория' }}<span>Shop</span></div>
+                <div class="header__dropmenu-text">{{ categoryCardDescription(category, index) }}</div>
+              </router-link>
             </div>
             <div class="header__dropmenu-col">
-              <div class="header__dropmenu-title">Фотополимеры</div>
-              <div class="header__dropmenu-block">
-                <div class="header__dropmenu-name">Для Стоматологии</div><a class="header__dropmenu-item2" href="#">
-                  <div class="header__dropmenu-img2"> <img src="../assets/img/polymer.png" alt=""></div>
+              <div class="header__dropmenu-title">Товары</div>
+              <div
+                v-for="(group, groupIndex) in catalogDropdownProductGroups"
+                :key="`catalog-products-group-${groupIndex}`"
+                class="header__dropmenu-block"
+              >
+                <div class="header__dropmenu-name">{{ productGroupTitle(groupIndex) }}</div>
+                <router-link
+                  v-for="product in group"
+                  :key="`catalog-product-${product.id}`"
+                  class="header__dropmenu-item2"
+                  :to="shopProductRoute(product)"
+                >
+                  <div class="header__dropmenu-img2"> <img :src="productCardImage(product)" :alt="product.name || 'Товар магазина'"></div>
                   <div class="header__dropmenu-content">
-                    <div class="header__dropmenu-subtitle2">«Dental FL»</div>
-                    <div class="header__dropmenu-text2">Фотополимерная смола  ·  1 кг.</div>
+                    <div class="header__dropmenu-subtitle2">{{ product.name || 'Товар' }}</div>
+                    <div class="header__dropmenu-text2">{{ productCardMeta(product) }}</div>
                   </div>
                   <div class="header__dropmenu-colors">
                     <div class="header__dropmenu-color header__dropmenu-color--grey"></div>
                     <div class="header__dropmenu-color header__dropmenu-color--red"></div>
-                  </div></a><a class="header__dropmenu-item2" href="#">
-                  <div class="header__dropmenu-img2"> <img src="../assets/img/polymer.png" alt=""></div>
-                  <div class="header__dropmenu-content">
-                    <div class="header__dropmenu-subtitle2">«Flex LCD»</div>
-                    <div class="header__dropmenu-text2">Фотополимерная смола  ·  1 кг.</div>
                   </div>
-                  <div class="header__dropmenu-colors">
-                    <div class="header__dropmenu-color header__dropmenu-color--grey"></div>
-                    <div class="header__dropmenu-color header__dropmenu-color--red"></div>
-                    <div class="header__dropmenu-color header__dropmenu-color--blue"></div>
-                    <div class="header__dropmenu-color header__dropmenu-color--black"></div>
-                  </div></a>
-              </div>
-              <div class="header__dropmenu-block">
-                <div class="header__dropmenu-name">Конструкторская</div><a class="header__dropmenu-item2" href="#">
-                  <div class="header__dropmenu-img2"> <img src="../assets/img/polymer.png" alt=""></div>
-                  <div class="header__dropmenu-content">
-                    <div class="header__dropmenu-subtitle2">«Reactive»</div>
-                    <div class="header__dropmenu-text2">Фотополимерная смола  ·  1 кг.</div>
-                  </div>
-                  <div class="header__dropmenu-colors">
-                    <div class="header__dropmenu-color header__dropmenu-color--grey"></div>
-                    <div class="header__dropmenu-color header__dropmenu-color--green"></div>
-                    <div class="header__dropmenu-color header__dropmenu-color--violet"></div>
-                    <div class="header__dropmenu-color">+5</div>
-                  </div></a>
-              </div>
-              <div class="header__dropmenu-block">
-                <div class="header__dropmenu-name">Специальная</div><a class="header__dropmenu-item2" href="#">
-                  <div class="header__dropmenu-img2"> <img src="../assets/img/polymer.png" alt=""></div>
-                  <div class="header__dropmenu-content">
-                    <div class="header__dropmenu-subtitle2">«Castable LCD»</div>
-                    <div class="header__dropmenu-text2">Фотополимерная смола  ·  1 кг.</div>
-                  </div>
-                  <div class="header__dropmenu-colors">
-                    <div class="header__dropmenu-color header__dropmenu-color--brown"></div>
-                    <div class="header__dropmenu-color header__dropmenu-color--black"></div>
-                  </div></a><a class="header__dropmenu-item2" href="#">
-                  <div class="header__dropmenu-img2"> <img src="../assets/img/polymer.png" alt=""></div>
-                  <div class="header__dropmenu-content">
-                    <div class="header__dropmenu-subtitle2">«Model FL»</div>
-                    <div class="header__dropmenu-text2">Фотополимерная смола  ·  1 кг.</div>
-                  </div>
-                  <div class="header__dropmenu-colors">
-                    <div class="header__dropmenu-color header__dropmenu-color--grey"></div>
-                    <div class="header__dropmenu-color header__dropmenu-color--brown"></div>
-                  </div></a>
+                </router-link>
               </div>
             </div>
           </div>
@@ -207,7 +176,7 @@
           </div>
           <div class="col-md-7 offset-md-1">
             <div class="menu__row">
-              <div class="menu__buttons"> <a class="menu__btn" href="#">
+              <div class="menu__buttons"> <router-link class="menu__btn" to="/contact">
                   <div class="menu__btn-icon">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M2.4001 0.800049C2.18792 0.800049 1.98444 0.884334 1.83441 1.03436C1.68438 1.18439 1.6001 1.38788 1.6001 1.60005C1.6001 1.81222 1.68438 2.01571 1.83441 2.16573C1.98444 2.31576 2.18792 2.40005 2.4001 2.40005H3.3761L3.6201 3.37765C3.62252 3.38891 3.62519 3.40011 3.6281 3.41125L4.7145 7.75525L4.0001 8.46885C2.9921 9.47685 3.7057 11.2 5.1313 11.2H12.0001C12.2123 11.2 12.4158 11.1158 12.5658 10.9657C12.7158 10.8157 12.8001 10.6122 12.8001 10.4C12.8001 10.1879 12.7158 9.98439 12.5658 9.83436C12.4158 9.68433 12.2123 9.60005 12.0001 9.60005H5.1313L5.9313 8.80005H11.2001C11.3486 8.79997 11.4942 8.75854 11.6205 8.68041C11.7468 8.60227 11.8489 8.49051 11.9153 8.35765L14.3153 3.55765C14.3762 3.43571 14.405 3.30023 14.3989 3.16405C14.3927 3.02788 14.3519 2.89553 14.2803 2.77956C14.2086 2.6636 14.1085 2.56786 13.9895 2.50144C13.8704 2.43502 13.7364 2.40012 13.6001 2.40005H5.0241L4.7761 1.40565C4.73276 1.23265 4.63286 1.0791 4.49226 0.969373C4.35167 0.859651 4.17844 0.800054 4.0001 0.800049H2.4001ZM12.8001 13.2C12.8001 13.5183 12.6737 13.8235 12.4486 14.0486C12.2236 14.2736 11.9184 14.4 11.6001 14.4C11.2818 14.4 10.9766 14.2736 10.7516 14.0486C10.5265 13.8235 10.4001 13.5183 10.4001 13.2C10.4001 12.8818 10.5265 12.5766 10.7516 12.3515C10.9766 12.1265 11.2818 12 11.6001 12C11.9184 12 12.2236 12.1265 12.4486 12.3515C12.6737 12.5766 12.8001 12.8818 12.8001 13.2ZM5.2001 14.4C5.51836 14.4 5.82358 14.2736 6.04863 14.0486C6.27367 13.8235 6.4001 13.5183 6.4001 13.2C6.4001 12.8818 6.27367 12.5766 6.04863 12.3515C5.82358 12.1265 5.51836 12 5.2001 12C4.88184 12 4.57661 12.1265 4.35157 12.3515C4.12653 12.5766 4.0001 12.8818 4.0001 13.2C4.0001 13.5183 4.12653 13.8235 4.35157 14.0486C4.57661 14.2736 4.88184 14.4 5.2001 14.4Z"></path>
@@ -216,7 +185,7 @@
                   <div class="menu__btn-content">
                     <div class="menu__btn-title">Где купить?</div>
                     <div class="menu__btn-text">Места продаж нашей продукции</div>
-                  </div></a><a class="menu__btn" href="#">
+                  </div></router-link><router-link class="menu__btn" to="/dealers">
                   <div class="menu__btn-icon">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M10.3998 4.7999C10.3998 5.43642 10.1469 6.04687 9.69686 6.49696C9.24677 6.94705 8.63632 7.1999 7.9998 7.1999C7.36329 7.1999 6.75284 6.94705 6.30275 6.49696C5.85266 6.04687 5.5998 5.43642 5.5998 4.7999C5.5998 4.16338 5.85266 3.55293 6.30275 3.10285C6.75284 2.65276 7.36329 2.3999 7.9998 2.3999C8.63632 2.3999 9.24677 2.65276 9.69686 3.10285C10.1469 3.55293 10.3998 4.16338 10.3998 4.7999ZM14.3998 6.3999C14.3998 6.82425 14.2312 7.23121 13.9312 7.53127C13.6311 7.83133 13.2241 7.9999 12.7998 7.9999C12.3755 7.9999 11.9685 7.83133 11.6684 7.53127C11.3684 7.23121 11.1998 6.82425 11.1998 6.3999C11.1998 5.97556 11.3684 5.56859 11.6684 5.26853C11.9685 4.96847 12.3755 4.7999 12.7998 4.7999C13.2241 4.7999 13.6311 4.96847 13.9312 5.26853C14.2312 5.56859 14.3998 5.97556 14.3998 6.3999ZM11.1998 11.9999C11.1998 11.1512 10.8627 10.3373 10.2625 9.73716C9.66243 9.13704 8.8485 8.7999 7.9998 8.7999C7.15111 8.7999 6.33718 9.13704 5.73706 9.73716C5.13695 10.3373 4.7998 11.1512 4.7998 11.9999V13.3999C4.7998 13.9522 5.24752 14.3999 5.7998 14.3999H10.1998C10.7521 14.3999 11.1998 13.9522 11.1998 13.3999V11.9999ZM4.7998 6.3999C4.7998 6.82425 4.63123 7.23121 4.33118 7.53127C4.03112 7.83133 3.62415 7.9999 3.1998 7.9999C2.77546 7.9999 2.36849 7.83133 2.06843 7.53127C1.76838 7.23121 1.5998 6.82425 1.5998 6.3999C1.5998 5.97556 1.76838 5.56859 2.06843 5.26853C2.36849 4.96847 2.77546 4.7999 3.1998 4.7999C3.62415 4.7999 4.03112 4.96847 4.33118 5.26853C4.63123 5.56859 4.7998 5.97556 4.7998 6.3999ZM13.7998 14.3999C13.2475 14.3999 12.7998 13.9522 12.7998 13.3999V11.9999C12.801 11.1865 12.5944 10.3863 12.1998 9.6751C12.5545 9.58434 12.9252 9.57578 13.2837 9.65008C13.6422 9.72438 13.979 9.87958 14.2684 10.1038C14.5577 10.3281 14.7921 10.6155 14.9535 10.9441C15.1149 11.2727 15.1992 11.6338 15.1998 11.9999V13.3999C15.1998 13.9522 14.7521 14.3999 14.1998 14.3999H13.7998ZM3.7998 9.6751C3.4052 10.3863 3.19868 11.1865 3.1998 11.9999V13.3999C3.1998 13.9522 2.75209 14.3999 2.1998 14.3999H1.7998C1.24752 14.3999 0.799805 13.9522 0.799805 13.3999V11.9999C0.799651 11.6335 0.883375 11.272 1.04456 10.943C1.20575 10.614 1.44012 10.3262 1.72971 10.1018C2.0193 9.87742 2.35643 9.72228 2.71525 9.64832C3.07408 9.57435 3.44507 9.58351 3.7998 9.6751Z"></path>
@@ -225,7 +194,7 @@
                   <div class="menu__btn-content">
                     <div class="menu__btn-title">Стать дилером</div>
                     <div class="menu__btn-text">Присоединяйтесь к нам</div>
-                  </div></a></div>
+                  </div></router-link></div>
             </div>
             <div class="menu__row">
               <div class="menu__title">Телефон:</div>
@@ -329,18 +298,45 @@
 </template>
 
 <script>
+import { fetchShopCategories, fetchShopProducts } from '@/services/catalog.service'
 import { DEFAULT_MAIN_OFFICE_PHONE, getContactOfficesData, phoneToTelHref } from '@/services/contact-office.service'
+import printerFallbackOne from '@/assets/img/printer_1.png'
+import printerFallbackTwo from '@/assets/img/printer_2.png'
+import productFallbackImage from '@/assets/img/polymer.png'
 
 export default {
   created () {
     this.loadMainOfficePhone()
+    this.loadCatalogDropdownData()
   },
   data () {
     return {
       mainMenuIsOpen: false,
       catalogMenuIsOpen: false,
       languageMenuIsOpen: false,
-      mainOfficePhone: DEFAULT_MAIN_OFFICE_PHONE
+      mainOfficePhone: DEFAULT_MAIN_OFFICE_PHONE,
+      catalogCategories: [],
+      catalogProducts: [],
+      catalogFallbackCategories: [
+        {
+          id: null,
+          title: 'Материалы для печати',
+          description: 'Подбор ассортимента материалов для производственных и лабораторных задач.'
+        },
+        {
+          id: null,
+          title: 'Оборудование и комплектующие',
+          description: 'Позиции каталога для запуска и развития аддитивного производства.'
+        }
+      ],
+      catalogFallbackProducts: [
+        { id: 9001, name: 'Товар каталога', article: '', price: '', category: null, photo: null },
+        { id: 9002, name: 'Позиция магазина', article: '', price: '', category: null, photo: null },
+        { id: 9003, name: 'Рекомендованный товар', article: '', price: '', category: null, photo: null },
+        { id: 9004, name: 'Материал для печати', article: '', price: '', category: null, photo: null },
+        { id: 9005, name: 'Сервисная позиция', article: '', price: '', category: null, photo: null },
+        { id: 9006, name: 'Новая позиция', article: '', price: '', category: null, photo: null }
+      ]
     }
   },
   computed: {
@@ -353,6 +349,20 @@ export default {
     },
     mainOfficePhoneHref () {
       return phoneToTelHref(this.mainOfficePhone)
+    },
+    catalogDropdownCategories () {
+      return this.catalogCategories.length ? this.catalogCategories : this.catalogFallbackCategories
+    },
+    catalogDropdownProducts () {
+      return this.catalogProducts.length ? this.catalogProducts : this.catalogFallbackProducts
+    },
+    catalogDropdownProductGroups () {
+      const items = this.catalogDropdownProducts
+      const groups = []
+      for (let index = 0; index < items.length; index += 2) {
+        groups.push(items.slice(index, index + 2))
+      }
+      return groups
     }
   },
   methods: {
@@ -366,6 +376,108 @@ export default {
       } catch (error) {
         // keep default phone when contact offices API is unavailable
       }
+    },
+    async loadCatalogDropdownData () {
+      try {
+        const [categoriesResponse, productsResponse] = await Promise.all([
+          fetchShopCategories(),
+          fetchShopProducts()
+        ])
+
+        const categories = Array.isArray(categoriesResponse?.data)
+          ? categoriesResponse.data.filter((item) => item && item.id && item.title)
+          : []
+        const products = Array.isArray(productsResponse?.data)
+          ? productsResponse.data.filter((item) => item && item.id && item.name)
+          : []
+
+        this.catalogCategories = this.sampleItems(categories, 2)
+        this.catalogProducts = this.sampleItems(products, 6)
+      } catch (error) {
+        this.catalogCategories = []
+        this.catalogProducts = []
+      }
+    },
+    sampleItems (items, count) {
+      const list = Array.isArray(items) ? [...items] : []
+      for (let index = list.length - 1; index > 0; index -= 1) {
+        const swapIndex = Math.floor(Math.random() * (index + 1))
+        const temporary = list[index]
+        list[index] = list[swapIndex]
+        list[swapIndex] = temporary
+      }
+      return list.slice(0, Math.min(count, list.length))
+    },
+    resolveMediaUrl (path, fallback = '') {
+      const raw = String(path || '').trim()
+      if (!raw) {
+        return fallback
+      }
+      if (raw.startsWith('http://') || raw.startsWith('https://')) {
+        return raw
+      }
+      const base = String(process.env.VUE_APP_API_BASE || '').trim().replace(/\/+$/, '')
+      if (!base) {
+        return raw.startsWith('/') ? raw : `/${raw}`
+      }
+      return raw.startsWith('/') ? `${base}${raw}` : `${base}/${raw}`
+    },
+    shopCategoryRoute (category) {
+      const categoryId = Number(category?.id || 0)
+      if (!categoryId) {
+        return '/shop'
+      }
+      return `/shop/categories/${categoryId}/showcase`
+    },
+    shopProductRoute (product) {
+      const productId = Number(product?.id || 0)
+      const categoryId = Number(product?.category || 0)
+      if (!productId || !categoryId) {
+        return '/shop'
+      }
+      return `/shop/categories/${categoryId}/${productId}`
+    },
+    categoryCardImage (category, index) {
+      const fallback = index % 2 === 0 ? printerFallbackOne : printerFallbackTwo
+      return this.resolveMediaUrl(category?.photo, fallback)
+    },
+    productCardImage (product) {
+      return this.resolveMediaUrl(product?.photo, productFallbackImage)
+    },
+    categoryCardDescription (category, index) {
+      const description = String(category?.description || '').trim()
+      if (description) {
+        return description.length > 110 ? `${description.slice(0, 107)}...` : description
+      }
+      if (index === 0) {
+        return 'Подбор решений и материалов для производственных задач.'
+      }
+      return 'Позиции каталога для поставок и комплексного сопровождения.'
+    },
+    productCardMeta (product) {
+      const article = String(product?.article || '').trim()
+      const price = this.productPrice(product?.price)
+      if (article && price) {
+        return `Артикул ${article} · ${price}`
+      }
+      if (article) {
+        return `Артикул ${article}`
+      }
+      if (price) {
+        return price
+      }
+      return 'Товар из каталога магазина'
+    },
+    productPrice (raw) {
+      const value = Number(raw)
+      if (!Number.isFinite(value)) {
+        return ''
+      }
+      return `${value.toLocaleString('ru-RU')} руб.`
+    },
+    productGroupTitle (groupIndex) {
+      const titles = ['Рекомендованные товары', 'Популярные позиции', 'Новые поступления']
+      return titles[groupIndex] || 'Позиции каталога'
     },
     openMainMenu () {
       this.mainMenuIsOpen = !this.mainMenuIsOpen

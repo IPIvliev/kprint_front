@@ -10,7 +10,8 @@ export const catalog = {
   state: {
     categories: [],
     products: [],
-    product: []
+    product: [],
+    facets: null
   },
   mutations: {
     setCategoriesData (state, categoriesData) {
@@ -31,6 +32,9 @@ export const catalog = {
         }
       })
     },
+    setFacetsData (state, facetsData) {
+      state.facets = facetsData
+    },
     setProductData (state, productData) {
       state.product = productData
     }
@@ -44,9 +48,12 @@ export const catalog = {
       const response = await fetchShopProducts()
       commit('setProductsData', response.data)
     },
-    async fetchCategoryProducts ({ commit }, id) {
-      const response = await fetchShopCategoryProducts(id)
-      commit('setProductsData', response.data.products)
+    async fetchCategoryProducts ({ commit }, payload) {
+      const categoryId = typeof payload === 'object' && payload !== null ? payload.id : payload
+      const params = typeof payload === 'object' && payload !== null ? (payload.params || {}) : {}
+      const response = await fetchShopCategoryProducts(categoryId, params)
+      commit('setProductsData', response.data.products || [])
+      commit('setFacetsData', response.data.facets || null)
     },
     async fetchProduct ({ commit }, id) {
       const response = await fetchShopProduct(id)
