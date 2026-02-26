@@ -11,9 +11,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["article_categories_list"];
+        get: operations["api_article_categories_list"];
         put?: never;
-        post: operations["article_categories_create"];
+        post: operations["api_article_categories_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -27,13 +27,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["article_categories_retrieve"];
-        put: operations["article_categories_update"];
+        get: operations["api_article_categories_retrieve"];
+        put: operations["api_article_categories_update"];
         post?: never;
-        delete: operations["article_categories_destroy"];
+        delete: operations["api_article_categories_destroy"];
         options?: never;
         head?: never;
-        patch: operations["article_categories_partial_update"];
+        patch: operations["api_article_categories_partial_update"];
         trace?: never;
     };
     "/api/article-media/": {
@@ -43,9 +43,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["article_media_retrieve"];
+        get: operations["api_article_media_retrieve"];
         put?: never;
-        post: operations["article_media_create"];
+        post: operations["api_article_media_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -59,9 +59,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["article_tags_list"];
+        get: operations["api_article_tags_list"];
         put?: never;
-        post: operations["article_tags_create"];
+        post: operations["api_article_tags_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -75,13 +75,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["article_tags_retrieve"];
-        put: operations["article_tags_update"];
+        get: operations["api_article_tags_retrieve"];
+        put: operations["api_article_tags_update"];
         post?: never;
-        delete: operations["article_tags_destroy"];
+        delete: operations["api_article_tags_destroy"];
         options?: never;
         head?: never;
-        patch: operations["article_tags_partial_update"];
+        patch: operations["api_article_tags_partial_update"];
         trace?: never;
     };
     "/api/articles/": {
@@ -91,9 +91,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["articles_list"];
+        get: operations["api_articles_list"];
         put?: never;
-        post: operations["articles_create"];
+        post: operations["api_articles_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -107,13 +107,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["articles_retrieve"];
-        put: operations["articles_update"];
+        get: operations["api_articles_retrieve"];
+        put: operations["api_articles_update"];
         post?: never;
-        delete: operations["articles_destroy"];
+        delete: operations["api_articles_destroy"];
         options?: never;
         head?: never;
-        patch: operations["articles_partial_update"];
+        patch: operations["api_articles_partial_update"];
         trace?: never;
     };
     "/api/articles/generate-ai/": {
@@ -125,7 +125,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["articles_generate_ai_create"];
+        post: operations["api_articles_generate_ai_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -139,7 +139,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["callback_captcha_retrieve"];
+        get: operations["api_callback_captcha_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -155,7 +155,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["callback_manager_requests_list"];
+        get: operations["api_callback_manager_requests_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -171,13 +171,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["callback_manager_requests_retrieve"];
-        put: operations["callback_manager_requests_update"];
+        get: operations["api_callback_manager_requests_retrieve"];
+        put: operations["api_callback_manager_requests_update"];
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
-        patch: operations["callback_manager_requests_partial_update"];
+        patch: operations["api_callback_manager_requests_partial_update"];
         trace?: never;
     };
     "/api/callback/requests": {
@@ -189,7 +189,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["callback_requests_create"];
+        post: operations["api_callback_requests_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -203,7 +203,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["companies_list"];
+        get: operations["api_companies_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -219,9 +219,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["companies_manager_categories_list"];
+        get: operations["api_companies_manager_categories_list"];
         put?: never;
-        post: operations["companies_manager_categories_create"];
+        post: operations["api_companies_manager_categories_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -235,13 +235,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["companies_manager_categories_retrieve"];
-        put: operations["companies_manager_categories_update"];
+        get: operations["api_companies_manager_categories_retrieve"];
+        put: operations["api_companies_manager_categories_update"];
         post?: never;
-        delete: operations["companies_manager_categories_destroy"];
+        delete: operations["api_companies_manager_categories_destroy"];
         options?: never;
         head?: never;
-        patch: operations["companies_manager_categories_partial_update"];
+        patch: operations["api_companies_manager_categories_partial_update"];
         trace?: never;
     };
     "/api/companies/manager/companies/": {
@@ -251,9 +251,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["companies_manager_companies_list"];
+        get: operations["api_companies_manager_companies_list"];
         put?: never;
-        post: operations["companies_manager_companies_create"];
+        post: operations["api_companies_manager_companies_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -267,13 +267,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["companies_manager_companies_retrieve"];
-        put: operations["companies_manager_companies_update"];
+        get: operations["api_companies_manager_companies_retrieve"];
+        put: operations["api_companies_manager_companies_update"];
         post?: never;
-        delete: operations["companies_manager_companies_destroy"];
+        delete: operations["api_companies_manager_companies_destroy"];
         options?: never;
         head?: never;
-        patch: operations["companies_manager_companies_partial_update"];
+        patch: operations["api_companies_manager_companies_partial_update"];
         trace?: never;
     };
     "/api/company-categories/": {
@@ -283,7 +283,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["company_categories_list"];
+        get: operations["api_company_categories_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -299,7 +299,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["contact_offices_list"];
+        get: operations["api_contact_offices_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -315,7 +315,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["external_ip_retrieve"];
+        get: operations["api_external_ip_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -331,7 +331,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["external_location_retrieve"];
+        get: operations["api_external_location_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -347,7 +347,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["gallery_categories_list"];
+        get: operations["api_gallery_categories_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -363,9 +363,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["gallery_manager_categories_list"];
+        get: operations["api_gallery_manager_categories_list"];
         put?: never;
-        post: operations["gallery_manager_categories_create"];
+        post: operations["api_gallery_manager_categories_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -379,13 +379,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["gallery_manager_categories_retrieve"];
-        put: operations["gallery_manager_categories_update"];
+        get: operations["api_gallery_manager_categories_retrieve"];
+        put: operations["api_gallery_manager_categories_update"];
         post?: never;
-        delete: operations["gallery_manager_categories_destroy"];
+        delete: operations["api_gallery_manager_categories_destroy"];
         options?: never;
         head?: never;
-        patch: operations["gallery_manager_categories_partial_update"];
+        patch: operations["api_gallery_manager_categories_partial_update"];
         trace?: never;
     };
     "/api/gallery/manager/items/": {
@@ -395,9 +395,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["gallery_manager_items_list"];
+        get: operations["api_gallery_manager_items_list"];
         put?: never;
-        post: operations["gallery_manager_items_create"];
+        post: operations["api_gallery_manager_items_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -411,13 +411,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["gallery_manager_items_retrieve"];
-        put: operations["gallery_manager_items_update"];
+        get: operations["api_gallery_manager_items_retrieve"];
+        put: operations["api_gallery_manager_items_update"];
         post?: never;
-        delete: operations["gallery_manager_items_destroy"];
+        delete: operations["api_gallery_manager_items_destroy"];
         options?: never;
         head?: never;
-        patch: operations["gallery_manager_items_partial_update"];
+        patch: operations["api_gallery_manager_items_partial_update"];
         trace?: never;
     };
     "/api/gallery/manager/pages/": {
@@ -427,7 +427,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["gallery_manager_pages_list"];
+        get: operations["api_gallery_manager_pages_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -443,7 +443,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["gallery_manager_pages_retrieve"];
+        get: operations["api_gallery_manager_pages_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -461,7 +461,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["password_reset_confirm_create"];
+        post: operations["api_password_reset_confirm_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -477,7 +477,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["password_reset_request_create"];
+        post: operations["api_password_reset_request_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -491,7 +491,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["print_material_categories_list"];
+        get: operations["api_print_material_categories_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -507,7 +507,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["print_material_categories_retrieve"];
+        get: operations["api_print_material_categories_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -523,9 +523,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["print_manager_material_categories_list"];
+        get: operations["api_print_manager_material_categories_list"];
         put?: never;
-        post: operations["print_manager_material_categories_create"];
+        post: operations["api_print_manager_material_categories_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -539,13 +539,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["print_manager_material_categories_retrieve"];
-        put: operations["print_manager_material_categories_update"];
+        get: operations["api_print_manager_material_categories_retrieve"];
+        put: operations["api_print_manager_material_categories_update"];
         post?: never;
-        delete: operations["print_manager_material_categories_destroy"];
+        delete: operations["api_print_manager_material_categories_destroy"];
         options?: never;
         head?: never;
-        patch: operations["print_manager_material_categories_partial_update"];
+        patch: operations["api_print_manager_material_categories_partial_update"];
         trace?: never;
     };
     "/api/print/manager/materials/": {
@@ -555,9 +555,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["print_manager_materials_list"];
+        get: operations["api_print_manager_materials_list"];
         put?: never;
-        post: operations["print_manager_materials_create"];
+        post: operations["api_print_manager_materials_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -571,13 +571,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["print_manager_materials_retrieve"];
-        put: operations["print_manager_materials_update"];
+        get: operations["api_print_manager_materials_retrieve"];
+        put: operations["api_print_manager_materials_update"];
         post?: never;
-        delete: operations["print_manager_materials_destroy"];
+        delete: operations["api_print_manager_materials_destroy"];
         options?: never;
         head?: never;
-        patch: operations["print_manager_materials_partial_update"];
+        patch: operations["api_print_manager_materials_partial_update"];
         trace?: never;
     };
     "/api/printjobs/": {
@@ -587,9 +587,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["printjobs_list"];
+        get: operations["api_printjobs_list"];
         put?: never;
-        post: operations["printjobs_create"];
+        post: operations["api_printjobs_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -603,13 +603,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["printjobs_retrieve"];
-        put: operations["printjobs_update"];
+        get: operations["api_printjobs_retrieve"];
+        put: operations["api_printjobs_update"];
         post?: never;
-        delete: operations["printjobs_destroy"];
+        delete: operations["api_printjobs_destroy"];
         options?: never;
         head?: never;
-        patch: operations["printjobs_partial_update"];
+        patch: operations["api_printjobs_partial_update"];
         trace?: never;
     };
     "/api/printjobs/{id}/admin_update_price/": {
@@ -621,7 +621,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_admin_update_price_create"];
+        post: operations["api_printjobs_admin_update_price_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -637,7 +637,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_admin_update_status_create"];
+        post: operations["api_printjobs_admin_update_status_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -653,7 +653,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_admin_upload_result_create"];
+        post: operations["api_printjobs_admin_upload_result_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -669,7 +669,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_manager_mark_received_create"];
+        post: operations["api_printjobs_manager_mark_received_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -685,7 +685,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_manager_send_for_customer_review_create"];
+        post: operations["api_printjobs_manager_send_for_customer_review_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -701,7 +701,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_manager_set_price_create"];
+        post: operations["api_printjobs_manager_set_price_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -717,7 +717,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_manager_start_delivery_create"];
+        post: operations["api_printjobs_manager_start_delivery_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -733,7 +733,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_manager_start_printing_create"];
+        post: operations["api_printjobs_manager_start_printing_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -747,7 +747,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["printjobs_model_file_retrieve"];
+        get: operations["api_printjobs_model_file_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -765,7 +765,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_repeat_order_create"];
+        post: operations["api_printjobs_repeat_order_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -781,7 +781,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_request_price_review_create"];
+        post: operations["api_printjobs_request_price_review_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -797,7 +797,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_submit_create"];
+        post: operations["api_printjobs_submit_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -813,7 +813,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_user_accept_price_create"];
+        post: operations["api_printjobs_user_accept_price_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -829,7 +829,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_user_accept_result_create"];
+        post: operations["api_printjobs_user_accept_result_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -845,7 +845,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_user_approve_create"];
+        post: operations["api_printjobs_user_approve_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -861,7 +861,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_user_mark_paid_create"];
+        post: operations["api_printjobs_user_mark_paid_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -877,7 +877,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_user_mark_received_create"];
+        post: operations["api_printjobs_user_mark_received_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -893,7 +893,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_user_reject_price_create"];
+        post: operations["api_printjobs_user_reject_price_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -909,7 +909,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_user_request_rework_create"];
+        post: operations["api_printjobs_user_request_rework_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -925,7 +925,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["printjobs_user_set_printing_create"];
+        post: operations["api_printjobs_user_set_printing_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -939,9 +939,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["printmodels_list"];
+        get: operations["api_printmodels_list"];
         put?: never;
-        post: operations["printmodels_create"];
+        post: operations["api_printmodels_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -955,13 +955,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["printmodels_retrieve"];
-        put: operations["printmodels_update"];
+        get: operations["api_printmodels_retrieve"];
+        put: operations["api_printmodels_update"];
         post?: never;
-        delete: operations["printmodels_destroy"];
+        delete: operations["api_printmodels_destroy"];
         options?: never;
         head?: never;
-        patch: operations["printmodels_partial_update"];
+        patch: operations["api_printmodels_partial_update"];
         trace?: never;
     };
     "/api/schema/": {
@@ -977,7 +977,7 @@ export interface paths {
          *     - YAML: application/vnd.oai.openapi
          *     - JSON: application/vnd.oai.openapi+json
          */
-        get: operations["schema_retrieve"];
+        get: operations["api_schema_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -993,7 +993,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_categories_list"];
+        get: operations["api_shop_categories_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1009,7 +1009,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_categories_retrieve"];
+        get: operations["api_shop_categories_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1027,7 +1027,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["shop_create_payment_intent_create"];
+        post: operations["api_shop_create_payment_intent_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1041,7 +1041,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_discounts_retrieve"];
+        get: operations["api_shop_discounts_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1057,9 +1057,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_categories_list"];
+        get: operations["api_shop_manager_categories_list"];
         put?: never;
-        post: operations["shop_manager_categories_create"];
+        post: operations["api_shop_manager_categories_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1073,13 +1073,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_categories_retrieve"];
-        put: operations["shop_manager_categories_update"];
+        get: operations["api_shop_manager_categories_retrieve"];
+        put: operations["api_shop_manager_categories_update"];
         post?: never;
-        delete: operations["shop_manager_categories_destroy"];
+        delete: operations["api_shop_manager_categories_destroy"];
         options?: never;
         head?: never;
-        patch: operations["shop_manager_categories_partial_update"];
+        patch: operations["api_shop_manager_categories_partial_update"];
         trace?: never;
     };
     "/api/shop/manager/discounts": {
@@ -1089,9 +1089,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_discounts_list"];
+        get: operations["api_shop_manager_discounts_list"];
         put?: never;
-        post: operations["shop_manager_discounts_create"];
+        post: operations["api_shop_manager_discounts_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1105,13 +1105,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_discounts_retrieve"];
-        put: operations["shop_manager_discounts_update"];
+        get: operations["api_shop_manager_discounts_retrieve"];
+        put: operations["api_shop_manager_discounts_update"];
         post?: never;
-        delete: operations["shop_manager_discounts_destroy"];
+        delete: operations["api_shop_manager_discounts_destroy"];
         options?: never;
         head?: never;
-        patch: operations["shop_manager_discounts_partial_update"];
+        patch: operations["api_shop_manager_discounts_partial_update"];
         trace?: never;
     };
     "/api/shop/manager/filter-attr-list-values": {
@@ -1121,9 +1121,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_filter_attr_list_values_list"];
+        get: operations["api_shop_manager_filter_attr_list_values_list"];
         put?: never;
-        post: operations["shop_manager_filter_attr_list_values_create"];
+        post: operations["api_shop_manager_filter_attr_list_values_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1137,13 +1137,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_filter_attr_list_values_retrieve"];
-        put: operations["shop_manager_filter_attr_list_values_update"];
+        get: operations["api_shop_manager_filter_attr_list_values_retrieve"];
+        put: operations["api_shop_manager_filter_attr_list_values_update"];
         post?: never;
-        delete: operations["shop_manager_filter_attr_list_values_destroy"];
+        delete: operations["api_shop_manager_filter_attr_list_values_destroy"];
         options?: never;
         head?: never;
-        patch: operations["shop_manager_filter_attr_list_values_partial_update"];
+        patch: operations["api_shop_manager_filter_attr_list_values_partial_update"];
         trace?: never;
     };
     "/api/shop/manager/filter-attr-values": {
@@ -1153,9 +1153,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_filter_attr_values_list"];
+        get: operations["api_shop_manager_filter_attr_values_list"];
         put?: never;
-        post: operations["shop_manager_filter_attr_values_create"];
+        post: operations["api_shop_manager_filter_attr_values_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1169,13 +1169,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_filter_attr_values_retrieve"];
-        put: operations["shop_manager_filter_attr_values_update"];
+        get: operations["api_shop_manager_filter_attr_values_retrieve"];
+        put: operations["api_shop_manager_filter_attr_values_update"];
         post?: never;
-        delete: operations["shop_manager_filter_attr_values_destroy"];
+        delete: operations["api_shop_manager_filter_attr_values_destroy"];
         options?: never;
         head?: never;
-        patch: operations["shop_manager_filter_attr_values_partial_update"];
+        patch: operations["api_shop_manager_filter_attr_values_partial_update"];
         trace?: never;
     };
     "/api/shop/manager/filter-attrs": {
@@ -1185,9 +1185,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_filter_attrs_list"];
+        get: operations["api_shop_manager_filter_attrs_list"];
         put?: never;
-        post: operations["shop_manager_filter_attrs_create"];
+        post: operations["api_shop_manager_filter_attrs_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1201,13 +1201,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_filter_attrs_retrieve"];
-        put: operations["shop_manager_filter_attrs_update"];
+        get: operations["api_shop_manager_filter_attrs_retrieve"];
+        put: operations["api_shop_manager_filter_attrs_update"];
         post?: never;
-        delete: operations["shop_manager_filter_attrs_destroy"];
+        delete: operations["api_shop_manager_filter_attrs_destroy"];
         options?: never;
         head?: never;
-        patch: operations["shop_manager_filter_attrs_partial_update"];
+        patch: operations["api_shop_manager_filter_attrs_partial_update"];
         trace?: never;
     };
     "/api/shop/manager/pochta-settings": {
@@ -1217,13 +1217,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_pochta_settings_retrieve"];
-        put: operations["shop_manager_pochta_settings_update"];
+        get: operations["api_shop_manager_pochta_settings_retrieve"];
+        put: operations["api_shop_manager_pochta_settings_update"];
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
-        patch: operations["shop_manager_pochta_settings_partial_update"];
+        patch: operations["api_shop_manager_pochta_settings_partial_update"];
         trace?: never;
     };
     "/api/shop/manager/product-images": {
@@ -1233,9 +1233,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_product_images_list"];
+        get: operations["api_shop_manager_product_images_list"];
         put?: never;
-        post: operations["shop_manager_product_images_create"];
+        post: operations["api_shop_manager_product_images_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1249,13 +1249,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_product_images_retrieve"];
-        put: operations["shop_manager_product_images_update"];
+        get: operations["api_shop_manager_product_images_retrieve"];
+        put: operations["api_shop_manager_product_images_update"];
         post?: never;
-        delete: operations["shop_manager_product_images_destroy"];
+        delete: operations["api_shop_manager_product_images_destroy"];
         options?: never;
         head?: never;
-        patch: operations["shop_manager_product_images_partial_update"];
+        patch: operations["api_shop_manager_product_images_partial_update"];
         trace?: never;
     };
     "/api/shop/manager/products": {
@@ -1265,9 +1265,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_products_list"];
+        get: operations["api_shop_manager_products_list"];
         put?: never;
-        post: operations["shop_manager_products_create"];
+        post: operations["api_shop_manager_products_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1281,13 +1281,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_products_retrieve"];
-        put: operations["shop_manager_products_update"];
+        get: operations["api_shop_manager_products_retrieve"];
+        put: operations["api_shop_manager_products_update"];
         post?: never;
-        delete: operations["shop_manager_products_destroy"];
+        delete: operations["api_shop_manager_products_destroy"];
         options?: never;
         head?: never;
-        patch: operations["shop_manager_products_partial_update"];
+        patch: operations["api_shop_manager_products_partial_update"];
         trace?: never;
     };
     "/api/shop/manager/sdek-settings": {
@@ -1297,13 +1297,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_manager_sdek_settings_retrieve"];
-        put: operations["shop_manager_sdek_settings_update"];
+        get: operations["api_shop_manager_sdek_settings_retrieve"];
+        put: operations["api_shop_manager_sdek_settings_update"];
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
-        patch: operations["shop_manager_sdek_settings_partial_update"];
+        patch: operations["api_shop_manager_sdek_settings_partial_update"];
         trace?: never;
     };
     "/api/shop/my/cart-order/sync": {
@@ -1315,7 +1315,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["shop_my_cart_order_sync_create"];
+        post: operations["api_shop_my_cart_order_sync_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1329,7 +1329,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_my_orders_list"];
+        get: operations["api_shop_my_orders_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1345,7 +1345,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_my_orders_retrieve"];
+        get: operations["api_shop_my_orders_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1361,7 +1361,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_order_statuses_list"];
+        get: operations["api_shop_order_statuses_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1379,7 +1379,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["shop_order_create_create"];
+        post: operations["api_shop_order_create_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1393,7 +1393,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_orders_list"];
+        get: operations["api_shop_orders_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1409,13 +1409,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_orders_retrieve"];
-        put: operations["shop_orders_update"];
+        get: operations["api_shop_orders_retrieve"];
+        put: operations["api_shop_orders_update"];
         post?: never;
-        delete: operations["shop_orders_destroy"];
+        delete: operations["api_shop_orders_destroy"];
         options?: never;
         head?: never;
-        patch: operations["shop_orders_partial_update"];
+        patch: operations["api_shop_orders_partial_update"];
         trace?: never;
     };
     "/api/shop/payments/sync": {
@@ -1427,7 +1427,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["shop_payments_sync_create"];
+        post: operations["api_shop_payments_sync_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1441,7 +1441,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_pochta_rossii_offices_retrieve"];
+        get: operations["api_shop_pochta_rossii_offices_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1457,7 +1457,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_pochta_rossii_price_retrieve"];
+        get: operations["api_shop_pochta_rossii_price_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1473,7 +1473,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_products_list"];
+        get: operations["api_shop_products_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1489,7 +1489,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_products_retrieve"];
+        get: operations["api_shop_products_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1505,7 +1505,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_sdek_offices_retrieve"];
+        get: operations["api_shop_sdek_offices_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1521,7 +1521,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["shop_sdek_price_retrieve"];
+        get: operations["api_shop_sdek_price_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1539,7 +1539,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["shop_yookassa_webhook_create"];
+        post: operations["api_shop_yookassa_webhook_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1555,7 +1555,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["signup_create"];
+        post: operations["api_signup_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1569,7 +1569,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_categories_list"];
+        get: operations["api_study_categories_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1585,7 +1585,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_course_retrieve"];
+        get: operations["api_study_course_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1601,7 +1601,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_courses_list"];
+        get: operations["api_study_courses_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1617,9 +1617,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_categories_list"];
+        get: operations["api_study_manager_categories_list"];
         put?: never;
-        post: operations["study_manager_categories_create"];
+        post: operations["api_study_manager_categories_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1633,13 +1633,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_categories_retrieve"];
-        put: operations["study_manager_categories_update"];
+        get: operations["api_study_manager_categories_retrieve"];
+        put: operations["api_study_manager_categories_update"];
         post?: never;
-        delete: operations["study_manager_categories_destroy"];
+        delete: operations["api_study_manager_categories_destroy"];
         options?: never;
         head?: never;
-        patch: operations["study_manager_categories_partial_update"];
+        patch: operations["api_study_manager_categories_partial_update"];
         trace?: never;
     };
     "/api/study/manager/courses": {
@@ -1649,9 +1649,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_courses_list"];
+        get: operations["api_study_manager_courses_list"];
         put?: never;
-        post: operations["study_manager_courses_create"];
+        post: operations["api_study_manager_courses_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1665,13 +1665,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_courses_retrieve"];
-        put: operations["study_manager_courses_update"];
+        get: operations["api_study_manager_courses_retrieve"];
+        put: operations["api_study_manager_courses_update"];
         post?: never;
-        delete: operations["study_manager_courses_destroy"];
+        delete: operations["api_study_manager_courses_destroy"];
         options?: never;
         head?: never;
-        patch: operations["study_manager_courses_partial_update"];
+        patch: operations["api_study_manager_courses_partial_update"];
         trace?: never;
     };
     "/api/study/manager/enrollments": {
@@ -1681,7 +1681,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_enrollments_list"];
+        get: operations["api_study_manager_enrollments_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1697,7 +1697,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_enrollments_retrieve"];
+        get: operations["api_study_manager_enrollments_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1715,7 +1715,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["study_manager_enrollments_assign_curator_create"];
+        post: operations["api_study_manager_enrollments_assign_curator_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1731,7 +1731,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["study_manager_enrollments_certificate_create"];
+        post: operations["api_study_manager_enrollments_certificate_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1745,7 +1745,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_enrollments_certificate_template_retrieve"];
+        get: operations["api_study_manager_enrollments_certificate_template_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1763,7 +1763,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["study_manager_enrollments_final_exam_unlock_create"];
+        post: operations["api_study_manager_enrollments_final_exam_unlock_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1779,7 +1779,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["study_manager_enrollments_lessons_unlock_create"];
+        post: operations["api_study_manager_enrollments_lessons_unlock_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1793,9 +1793,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_exam_options_list"];
+        get: operations["api_study_manager_exam_options_list"];
         put?: never;
-        post: operations["study_manager_exam_options_create"];
+        post: operations["api_study_manager_exam_options_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1809,13 +1809,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_exam_options_retrieve"];
-        put: operations["study_manager_exam_options_update"];
+        get: operations["api_study_manager_exam_options_retrieve"];
+        put: operations["api_study_manager_exam_options_update"];
         post?: never;
-        delete: operations["study_manager_exam_options_destroy"];
+        delete: operations["api_study_manager_exam_options_destroy"];
         options?: never;
         head?: never;
-        patch: operations["study_manager_exam_options_partial_update"];
+        patch: operations["api_study_manager_exam_options_partial_update"];
         trace?: never;
     };
     "/api/study/manager/exam-questions": {
@@ -1825,9 +1825,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_exam_questions_list"];
+        get: operations["api_study_manager_exam_questions_list"];
         put?: never;
-        post: operations["study_manager_exam_questions_create"];
+        post: operations["api_study_manager_exam_questions_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1841,13 +1841,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_exam_questions_retrieve"];
-        put: operations["study_manager_exam_questions_update"];
+        get: operations["api_study_manager_exam_questions_retrieve"];
+        put: operations["api_study_manager_exam_questions_update"];
         post?: never;
-        delete: operations["study_manager_exam_questions_destroy"];
+        delete: operations["api_study_manager_exam_questions_destroy"];
         options?: never;
         head?: never;
-        patch: operations["study_manager_exam_questions_partial_update"];
+        patch: operations["api_study_manager_exam_questions_partial_update"];
         trace?: never;
     };
     "/api/study/manager/exams": {
@@ -1857,9 +1857,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_exams_list"];
+        get: operations["api_study_manager_exams_list"];
         put?: never;
-        post: operations["study_manager_exams_create"];
+        post: operations["api_study_manager_exams_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1873,13 +1873,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_exams_retrieve"];
-        put: operations["study_manager_exams_update"];
+        get: operations["api_study_manager_exams_retrieve"];
+        put: operations["api_study_manager_exams_update"];
         post?: never;
-        delete: operations["study_manager_exams_destroy"];
+        delete: operations["api_study_manager_exams_destroy"];
         options?: never;
         head?: never;
-        patch: operations["study_manager_exams_partial_update"];
+        patch: operations["api_study_manager_exams_partial_update"];
         trace?: never;
     };
     "/api/study/manager/feedbacks": {
@@ -1889,9 +1889,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_feedbacks_list"];
+        get: operations["api_study_manager_feedbacks_list"];
         put?: never;
-        post: operations["study_manager_feedbacks_create"];
+        post: operations["api_study_manager_feedbacks_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1905,13 +1905,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_feedbacks_retrieve"];
-        put: operations["study_manager_feedbacks_update"];
+        get: operations["api_study_manager_feedbacks_retrieve"];
+        put: operations["api_study_manager_feedbacks_update"];
         post?: never;
-        delete: operations["study_manager_feedbacks_destroy"];
+        delete: operations["api_study_manager_feedbacks_destroy"];
         options?: never;
         head?: never;
-        patch: operations["study_manager_feedbacks_partial_update"];
+        patch: operations["api_study_manager_feedbacks_partial_update"];
         trace?: never;
     };
     "/api/study/manager/lessons": {
@@ -1921,9 +1921,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_lessons_list"];
+        get: operations["api_study_manager_lessons_list"];
         put?: never;
-        post: operations["study_manager_lessons_create"];
+        post: operations["api_study_manager_lessons_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1937,13 +1937,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_lessons_retrieve"];
-        put: operations["study_manager_lessons_update"];
+        get: operations["api_study_manager_lessons_retrieve"];
+        put: operations["api_study_manager_lessons_update"];
         post?: never;
-        delete: operations["study_manager_lessons_destroy"];
+        delete: operations["api_study_manager_lessons_destroy"];
         options?: never;
         head?: never;
-        patch: operations["study_manager_lessons_partial_update"];
+        patch: operations["api_study_manager_lessons_partial_update"];
         trace?: never;
     };
     "/api/study/manager/lessons/reorder": {
@@ -1955,7 +1955,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["study_manager_lessons_reorder_create"];
+        post: operations["api_study_manager_lessons_reorder_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1969,9 +1969,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_prices_list"];
+        get: operations["api_study_manager_prices_list"];
         put?: never;
-        post: operations["study_manager_prices_create"];
+        post: operations["api_study_manager_prices_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1985,13 +1985,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_prices_retrieve"];
-        put: operations["study_manager_prices_update"];
+        get: operations["api_study_manager_prices_retrieve"];
+        put: operations["api_study_manager_prices_update"];
         post?: never;
-        delete: operations["study_manager_prices_destroy"];
+        delete: operations["api_study_manager_prices_destroy"];
         options?: never;
         head?: never;
-        patch: operations["study_manager_prices_partial_update"];
+        patch: operations["api_study_manager_prices_partial_update"];
         trace?: never;
     };
     "/api/study/manager/teachers": {
@@ -2001,9 +2001,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_teachers_list"];
+        get: operations["api_study_manager_teachers_list"];
         put?: never;
-        post: operations["study_manager_teachers_create"];
+        post: operations["api_study_manager_teachers_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2017,13 +2017,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_manager_teachers_retrieve"];
-        put: operations["study_manager_teachers_update"];
+        get: operations["api_study_manager_teachers_retrieve"];
+        put: operations["api_study_manager_teachers_update"];
         post?: never;
-        delete: operations["study_manager_teachers_destroy"];
+        delete: operations["api_study_manager_teachers_destroy"];
         options?: never;
         head?: never;
-        patch: operations["study_manager_teachers_partial_update"];
+        patch: operations["api_study_manager_teachers_partial_update"];
         trace?: never;
     };
     "/api/study/my/enrollments": {
@@ -2033,9 +2033,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_my_enrollments_list"];
+        get: operations["api_study_my_enrollments_list"];
         put?: never;
-        post: operations["study_my_enrollments_create"];
+        post: operations["api_study_my_enrollments_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2049,7 +2049,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_my_enrollments_retrieve"];
+        get: operations["api_study_my_enrollments_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2065,7 +2065,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_my_enrollments_certificate_pdf_retrieve"];
+        get: operations["api_study_my_enrollments_certificate_pdf_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2081,7 +2081,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_my_enrollments_exams_retrieve"];
+        get: operations["api_study_my_enrollments_exams_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2097,7 +2097,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["study_my_enrollments_exams_retrieve_2"];
+        get: operations["api_study_my_enrollments_exams_retrieve_2"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2115,7 +2115,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["study_my_enrollments_exams_submit_create"];
+        post: operations["api_study_my_enrollments_exams_submit_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2131,11 +2131,11 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["study_my_enrollments_lessons_progress_create"];
+        post: operations["api_study_my_enrollments_lessons_progress_create"];
         delete?: never;
         options?: never;
         head?: never;
-        patch: operations["study_my_enrollments_lessons_progress_partial_update"];
+        patch: operations["api_study_my_enrollments_lessons_progress_partial_update"];
         trace?: never;
     };
     "/api/study/my/enrollments/{id}/pay": {
@@ -2147,7 +2147,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["study_my_enrollments_pay_create"];
+        post: operations["api_study_my_enrollments_pay_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2167,7 +2167,7 @@ export interface paths {
          * @description Takes a set of user credentials and returns an access and refresh JSON web
          *     token pair to prove the authentication of those credentials.
          */
-        post: operations["token_create"];
+        post: operations["api_token_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2187,7 +2187,7 @@ export interface paths {
          * @description Takes a refresh type JSON web token and returns an access type JSON web
          *     token if the refresh token is valid.
          */
-        post: operations["token_refresh_create"];
+        post: operations["api_token_refresh_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2207,7 +2207,7 @@ export interface paths {
          * @description Takes a token and indicates if it is valid.  This view provides no
          *     information about a token's fitness for a particular use.
          */
-        post: operations["token_verify_create"];
+        post: operations["api_token_verify_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2221,13 +2221,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["user_profile_retrieve"];
-        put: operations["user_profile_update"];
+        get: operations["api_user_profile_retrieve"];
+        put: operations["api_user_profile_update"];
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
-        patch: operations["user_profile_partial_update"];
+        patch: operations["api_user_profile_partial_update"];
         trace?: never;
     };
 }
@@ -2250,7 +2250,7 @@ export interface components {
             readonly id: number;
             name: string;
             phone: string;
-            readonly status: components["schemas"]["StatusA59Enum"];
+            readonly status: components["schemas"]["StatusD22Enum"];
             /** Format: date-time */
             readonly created: string;
             captcha_token: string;
@@ -2261,7 +2261,7 @@ export interface components {
             readonly id: number;
             name: string;
             phone: string;
-            status?: components["schemas"]["StatusA59Enum"];
+            status?: components["schemas"]["StatusD22Enum"];
             readonly status_label: string;
             /** Format: date-time */
             readonly created: string;
@@ -2269,7 +2269,7 @@ export interface components {
             readonly updated: string;
         };
         CallbackRequestStatusUpdate: {
-            status?: components["schemas"]["StatusA59Enum"];
+            status?: components["schemas"]["StatusD22Enum"];
         };
         Category: {
             readonly id: number;
@@ -2409,7 +2409,7 @@ export interface components {
         CourseEnrollmentDetail: {
             readonly id: number;
             /** Статус обучения */
-            status?: components["schemas"]["Status034Enum"];
+            status?: components["schemas"]["Status615Enum"];
             /** Итоговый экзамен открыт */
             is_final_exam_unlocked?: boolean;
             /** Итоговый экзамен открыт вручную */
@@ -2450,7 +2450,7 @@ export interface components {
         CourseEnrollmentList: {
             readonly id: number;
             /** Статус обучения */
-            status?: components["schemas"]["Status034Enum"];
+            status?: components["schemas"]["Status615Enum"];
             /** Итоговый экзамен открыт */
             is_final_exam_unlocked?: boolean;
             /** Итоговый экзамен открыт вручную */
@@ -3001,7 +3001,7 @@ export interface components {
             email: string;
         };
         PatchedCallbackRequestStatusUpdate: {
-            status?: components["schemas"]["StatusA59Enum"];
+            status?: components["schemas"]["StatusD22Enum"];
         };
         PatchedCategory: {
             readonly id?: number;
@@ -4168,7 +4168,7 @@ export interface components {
          *     * `cancelled` - Отменен
          * @enum {string}
          */
-        Status034Enum: "pending_payment" | "active" | "completed" | "cancelled";
+        Status615Enum: "pending_payment" | "active" | "completed" | "cancelled";
         /**
          * @description * `draft` - Черновик
          *     * `published` - Опубликовано
@@ -4181,7 +4181,7 @@ export interface components {
          *     * `no_answer` - Не отвечает
          * @enum {string}
          */
-        StatusA59Enum: "new" | "contacted" | "no_answer";
+        StatusD22Enum: "new" | "contacted" | "no_answer";
         StudyCategory: {
             readonly id: number;
             /** Наименование категории */
@@ -4272,7 +4272,7 @@ export interface components {
             /** ФИО */
             readonly curator_name: string;
             /** Статус обучения */
-            status?: components["schemas"]["Status034Enum"];
+            status?: components["schemas"]["Status615Enum"];
             /** Итоговый экзамен открыт */
             is_final_exam_unlocked?: boolean;
             /** Итоговый экзамен открыт вручную */
@@ -4330,7 +4330,7 @@ export interface components {
             /** ФИО */
             readonly curator_name: string;
             /** Статус обучения */
-            status?: components["schemas"]["Status034Enum"];
+            status?: components["schemas"]["Status615Enum"];
             /** Итоговый экзамен открыт */
             is_final_exam_unlocked?: boolean;
             /** Итоговый экзамен открыт вручную */
@@ -4487,7 +4487,7 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    article_categories_list: {
+    api_article_categories_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -4506,7 +4506,7 @@ export interface operations {
             };
         };
     };
-    article_categories_create: {
+    api_article_categories_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -4531,7 +4531,7 @@ export interface operations {
             };
         };
     };
-    article_categories_retrieve: {
+    api_article_categories_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -4553,7 +4553,7 @@ export interface operations {
             };
         };
     };
-    article_categories_update: {
+    api_article_categories_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -4581,7 +4581,7 @@ export interface operations {
             };
         };
     };
-    article_categories_destroy: {
+    api_article_categories_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -4602,7 +4602,7 @@ export interface operations {
             };
         };
     };
-    article_categories_partial_update: {
+    api_article_categories_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -4630,7 +4630,7 @@ export interface operations {
             };
         };
     };
-    article_media_retrieve: {
+    api_article_media_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -4648,7 +4648,7 @@ export interface operations {
             };
         };
     };
-    article_media_create: {
+    api_article_media_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -4666,7 +4666,7 @@ export interface operations {
             };
         };
     };
-    article_tags_list: {
+    api_article_tags_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -4685,7 +4685,7 @@ export interface operations {
             };
         };
     };
-    article_tags_create: {
+    api_article_tags_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -4710,7 +4710,7 @@ export interface operations {
             };
         };
     };
-    article_tags_retrieve: {
+    api_article_tags_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -4732,7 +4732,7 @@ export interface operations {
             };
         };
     };
-    article_tags_update: {
+    api_article_tags_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -4760,7 +4760,7 @@ export interface operations {
             };
         };
     };
-    article_tags_destroy: {
+    api_article_tags_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -4781,7 +4781,7 @@ export interface operations {
             };
         };
     };
-    article_tags_partial_update: {
+    api_article_tags_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -4809,7 +4809,7 @@ export interface operations {
             };
         };
     };
-    articles_list: {
+    api_articles_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -4828,7 +4828,7 @@ export interface operations {
             };
         };
     };
-    articles_create: {
+    api_articles_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -4853,7 +4853,7 @@ export interface operations {
             };
         };
     };
-    articles_retrieve: {
+    api_articles_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -4875,7 +4875,7 @@ export interface operations {
             };
         };
     };
-    articles_update: {
+    api_articles_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -4903,7 +4903,7 @@ export interface operations {
             };
         };
     };
-    articles_destroy: {
+    api_articles_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -4924,7 +4924,7 @@ export interface operations {
             };
         };
     };
-    articles_partial_update: {
+    api_articles_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -4952,7 +4952,7 @@ export interface operations {
             };
         };
     };
-    articles_generate_ai_create: {
+    api_articles_generate_ai_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -4977,7 +4977,7 @@ export interface operations {
             };
         };
     };
-    callback_captcha_retrieve: {
+    api_callback_captcha_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -4996,7 +4996,7 @@ export interface operations {
             };
         };
     };
-    callback_manager_requests_list: {
+    api_callback_manager_requests_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -5015,7 +5015,7 @@ export interface operations {
             };
         };
     };
-    callback_manager_requests_retrieve: {
+    api_callback_manager_requests_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -5036,7 +5036,7 @@ export interface operations {
             };
         };
     };
-    callback_manager_requests_update: {
+    api_callback_manager_requests_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -5063,7 +5063,7 @@ export interface operations {
             };
         };
     };
-    callback_manager_requests_partial_update: {
+    api_callback_manager_requests_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -5090,7 +5090,7 @@ export interface operations {
             };
         };
     };
-    callback_requests_create: {
+    api_callback_requests_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -5115,7 +5115,7 @@ export interface operations {
             };
         };
     };
-    companies_list: {
+    api_companies_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -5134,7 +5134,7 @@ export interface operations {
             };
         };
     };
-    companies_manager_categories_list: {
+    api_companies_manager_categories_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -5153,7 +5153,7 @@ export interface operations {
             };
         };
     };
-    companies_manager_categories_create: {
+    api_companies_manager_categories_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -5178,7 +5178,7 @@ export interface operations {
             };
         };
     };
-    companies_manager_categories_retrieve: {
+    api_companies_manager_categories_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -5200,7 +5200,7 @@ export interface operations {
             };
         };
     };
-    companies_manager_categories_update: {
+    api_companies_manager_categories_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -5228,7 +5228,7 @@ export interface operations {
             };
         };
     };
-    companies_manager_categories_destroy: {
+    api_companies_manager_categories_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -5249,7 +5249,7 @@ export interface operations {
             };
         };
     };
-    companies_manager_categories_partial_update: {
+    api_companies_manager_categories_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -5277,7 +5277,7 @@ export interface operations {
             };
         };
     };
-    companies_manager_companies_list: {
+    api_companies_manager_companies_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -5296,7 +5296,7 @@ export interface operations {
             };
         };
     };
-    companies_manager_companies_create: {
+    api_companies_manager_companies_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -5321,7 +5321,7 @@ export interface operations {
             };
         };
     };
-    companies_manager_companies_retrieve: {
+    api_companies_manager_companies_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -5343,7 +5343,7 @@ export interface operations {
             };
         };
     };
-    companies_manager_companies_update: {
+    api_companies_manager_companies_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -5371,7 +5371,7 @@ export interface operations {
             };
         };
     };
-    companies_manager_companies_destroy: {
+    api_companies_manager_companies_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -5392,7 +5392,7 @@ export interface operations {
             };
         };
     };
-    companies_manager_companies_partial_update: {
+    api_companies_manager_companies_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -5420,7 +5420,7 @@ export interface operations {
             };
         };
     };
-    company_categories_list: {
+    api_company_categories_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -5439,7 +5439,7 @@ export interface operations {
             };
         };
     };
-    contact_offices_list: {
+    api_contact_offices_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -5458,7 +5458,7 @@ export interface operations {
             };
         };
     };
-    external_ip_retrieve: {
+    api_external_ip_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -5477,7 +5477,7 @@ export interface operations {
             };
         };
     };
-    external_location_retrieve: {
+    api_external_location_retrieve: {
         parameters: {
             query?: {
                 /** @description Client IP to geolocate. Falls back to request IP. */
@@ -5519,7 +5519,7 @@ export interface operations {
             };
         };
     };
-    gallery_categories_list: {
+    api_gallery_categories_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -5538,7 +5538,7 @@ export interface operations {
             };
         };
     };
-    gallery_manager_categories_list: {
+    api_gallery_manager_categories_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -5557,7 +5557,7 @@ export interface operations {
             };
         };
     };
-    gallery_manager_categories_create: {
+    api_gallery_manager_categories_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -5582,7 +5582,7 @@ export interface operations {
             };
         };
     };
-    gallery_manager_categories_retrieve: {
+    api_gallery_manager_categories_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -5604,7 +5604,7 @@ export interface operations {
             };
         };
     };
-    gallery_manager_categories_update: {
+    api_gallery_manager_categories_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -5632,7 +5632,7 @@ export interface operations {
             };
         };
     };
-    gallery_manager_categories_destroy: {
+    api_gallery_manager_categories_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -5653,7 +5653,7 @@ export interface operations {
             };
         };
     };
-    gallery_manager_categories_partial_update: {
+    api_gallery_manager_categories_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -5681,7 +5681,7 @@ export interface operations {
             };
         };
     };
-    gallery_manager_items_list: {
+    api_gallery_manager_items_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -5700,7 +5700,7 @@ export interface operations {
             };
         };
     };
-    gallery_manager_items_create: {
+    api_gallery_manager_items_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -5725,7 +5725,7 @@ export interface operations {
             };
         };
     };
-    gallery_manager_items_retrieve: {
+    api_gallery_manager_items_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -5747,7 +5747,7 @@ export interface operations {
             };
         };
     };
-    gallery_manager_items_update: {
+    api_gallery_manager_items_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -5775,7 +5775,7 @@ export interface operations {
             };
         };
     };
-    gallery_manager_items_destroy: {
+    api_gallery_manager_items_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -5796,7 +5796,7 @@ export interface operations {
             };
         };
     };
-    gallery_manager_items_partial_update: {
+    api_gallery_manager_items_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -5824,7 +5824,7 @@ export interface operations {
             };
         };
     };
-    gallery_manager_pages_list: {
+    api_gallery_manager_pages_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -5843,7 +5843,7 @@ export interface operations {
             };
         };
     };
-    gallery_manager_pages_retrieve: {
+    api_gallery_manager_pages_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -5865,7 +5865,7 @@ export interface operations {
             };
         };
     };
-    password_reset_confirm_create: {
+    api_password_reset_confirm_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -5892,7 +5892,7 @@ export interface operations {
             };
         };
     };
-    password_reset_request_create: {
+    api_password_reset_request_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -5919,7 +5919,7 @@ export interface operations {
             };
         };
     };
-    print_material_categories_list: {
+    api_print_material_categories_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -5938,7 +5938,7 @@ export interface operations {
             };
         };
     };
-    print_material_categories_retrieve: {
+    api_print_material_categories_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -5960,7 +5960,7 @@ export interface operations {
             };
         };
     };
-    print_manager_material_categories_list: {
+    api_print_manager_material_categories_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -5979,7 +5979,7 @@ export interface operations {
             };
         };
     };
-    print_manager_material_categories_create: {
+    api_print_manager_material_categories_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6004,7 +6004,7 @@ export interface operations {
             };
         };
     };
-    print_manager_material_categories_retrieve: {
+    api_print_manager_material_categories_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -6026,7 +6026,7 @@ export interface operations {
             };
         };
     };
-    print_manager_material_categories_update: {
+    api_print_manager_material_categories_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -6054,7 +6054,7 @@ export interface operations {
             };
         };
     };
-    print_manager_material_categories_destroy: {
+    api_print_manager_material_categories_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -6075,7 +6075,7 @@ export interface operations {
             };
         };
     };
-    print_manager_material_categories_partial_update: {
+    api_print_manager_material_categories_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -6103,7 +6103,7 @@ export interface operations {
             };
         };
     };
-    print_manager_materials_list: {
+    api_print_manager_materials_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -6122,7 +6122,7 @@ export interface operations {
             };
         };
     };
-    print_manager_materials_create: {
+    api_print_manager_materials_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6147,7 +6147,7 @@ export interface operations {
             };
         };
     };
-    print_manager_materials_retrieve: {
+    api_print_manager_materials_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -6169,7 +6169,7 @@ export interface operations {
             };
         };
     };
-    print_manager_materials_update: {
+    api_print_manager_materials_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -6197,7 +6197,7 @@ export interface operations {
             };
         };
     };
-    print_manager_materials_destroy: {
+    api_print_manager_materials_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -6218,7 +6218,7 @@ export interface operations {
             };
         };
     };
-    print_manager_materials_partial_update: {
+    api_print_manager_materials_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -6246,7 +6246,7 @@ export interface operations {
             };
         };
     };
-    printjobs_list: {
+    api_printjobs_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -6265,7 +6265,7 @@ export interface operations {
             };
         };
     };
-    printjobs_create: {
+    api_printjobs_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6290,7 +6290,7 @@ export interface operations {
             };
         };
     };
-    printjobs_retrieve: {
+    api_printjobs_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -6312,7 +6312,7 @@ export interface operations {
             };
         };
     };
-    printjobs_update: {
+    api_printjobs_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -6340,7 +6340,7 @@ export interface operations {
             };
         };
     };
-    printjobs_destroy: {
+    api_printjobs_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -6361,7 +6361,7 @@ export interface operations {
             };
         };
     };
-    printjobs_partial_update: {
+    api_printjobs_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -6389,7 +6389,7 @@ export interface operations {
             };
         };
     };
-    printjobs_admin_update_price_create: {
+    api_printjobs_admin_update_price_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6417,7 +6417,7 @@ export interface operations {
             };
         };
     };
-    printjobs_admin_update_status_create: {
+    api_printjobs_admin_update_status_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6445,7 +6445,7 @@ export interface operations {
             };
         };
     };
-    printjobs_admin_upload_result_create: {
+    api_printjobs_admin_upload_result_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6473,7 +6473,7 @@ export interface operations {
             };
         };
     };
-    printjobs_manager_mark_received_create: {
+    api_printjobs_manager_mark_received_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6501,7 +6501,7 @@ export interface operations {
             };
         };
     };
-    printjobs_manager_send_for_customer_review_create: {
+    api_printjobs_manager_send_for_customer_review_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6529,7 +6529,7 @@ export interface operations {
             };
         };
     };
-    printjobs_manager_set_price_create: {
+    api_printjobs_manager_set_price_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6557,7 +6557,7 @@ export interface operations {
             };
         };
     };
-    printjobs_manager_start_delivery_create: {
+    api_printjobs_manager_start_delivery_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6585,7 +6585,7 @@ export interface operations {
             };
         };
     };
-    printjobs_manager_start_printing_create: {
+    api_printjobs_manager_start_printing_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6613,7 +6613,7 @@ export interface operations {
             };
         };
     };
-    printjobs_model_file_retrieve: {
+    api_printjobs_model_file_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -6635,7 +6635,7 @@ export interface operations {
             };
         };
     };
-    printjobs_repeat_order_create: {
+    api_printjobs_repeat_order_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6663,7 +6663,7 @@ export interface operations {
             };
         };
     };
-    printjobs_request_price_review_create: {
+    api_printjobs_request_price_review_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6691,7 +6691,7 @@ export interface operations {
             };
         };
     };
-    printjobs_submit_create: {
+    api_printjobs_submit_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6719,7 +6719,7 @@ export interface operations {
             };
         };
     };
-    printjobs_user_accept_price_create: {
+    api_printjobs_user_accept_price_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6747,7 +6747,7 @@ export interface operations {
             };
         };
     };
-    printjobs_user_accept_result_create: {
+    api_printjobs_user_accept_result_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6775,7 +6775,7 @@ export interface operations {
             };
         };
     };
-    printjobs_user_approve_create: {
+    api_printjobs_user_approve_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6803,7 +6803,7 @@ export interface operations {
             };
         };
     };
-    printjobs_user_mark_paid_create: {
+    api_printjobs_user_mark_paid_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6831,7 +6831,7 @@ export interface operations {
             };
         };
     };
-    printjobs_user_mark_received_create: {
+    api_printjobs_user_mark_received_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6859,7 +6859,7 @@ export interface operations {
             };
         };
     };
-    printjobs_user_reject_price_create: {
+    api_printjobs_user_reject_price_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6887,7 +6887,7 @@ export interface operations {
             };
         };
     };
-    printjobs_user_request_rework_create: {
+    api_printjobs_user_request_rework_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6915,7 +6915,7 @@ export interface operations {
             };
         };
     };
-    printjobs_user_set_printing_create: {
+    api_printjobs_user_set_printing_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6943,7 +6943,7 @@ export interface operations {
             };
         };
     };
-    printmodels_list: {
+    api_printmodels_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -6962,7 +6962,7 @@ export interface operations {
             };
         };
     };
-    printmodels_create: {
+    api_printmodels_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -6987,7 +6987,7 @@ export interface operations {
             };
         };
     };
-    printmodels_retrieve: {
+    api_printmodels_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -7009,7 +7009,7 @@ export interface operations {
             };
         };
     };
-    printmodels_update: {
+    api_printmodels_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -7037,7 +7037,7 @@ export interface operations {
             };
         };
     };
-    printmodels_destroy: {
+    api_printmodels_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -7058,7 +7058,7 @@ export interface operations {
             };
         };
     };
-    printmodels_partial_update: {
+    api_printmodels_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -7086,7 +7086,7 @@ export interface operations {
             };
         };
     };
-    schema_retrieve: {
+    api_schema_retrieve: {
         parameters: {
             query?: {
                 format?: "json" | "yaml";
@@ -7119,7 +7119,7 @@ export interface operations {
             };
         };
     };
-    shop_categories_list: {
+    api_shop_categories_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -7138,7 +7138,7 @@ export interface operations {
             };
         };
     };
-    shop_categories_retrieve: {
+    api_shop_categories_retrieve: {
         parameters: {
             query?: {
                 /** @description Repeated filter selector in format '<filter_attr_id>:<value_id>'. */
@@ -7165,7 +7165,7 @@ export interface operations {
             };
         };
     };
-    shop_create_payment_intent_create: {
+    api_shop_create_payment_intent_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -7230,7 +7230,7 @@ export interface operations {
             };
         };
     };
-    shop_discounts_retrieve: {
+    api_shop_discounts_retrieve: {
         parameters: {
             query?: {
                 promocode?: string;
@@ -7251,7 +7251,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_categories_list: {
+    api_shop_manager_categories_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -7270,7 +7270,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_categories_create: {
+    api_shop_manager_categories_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -7295,7 +7295,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_categories_retrieve: {
+    api_shop_manager_categories_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -7317,7 +7317,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_categories_update: {
+    api_shop_manager_categories_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -7345,7 +7345,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_categories_destroy: {
+    api_shop_manager_categories_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -7366,7 +7366,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_categories_partial_update: {
+    api_shop_manager_categories_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -7394,7 +7394,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_discounts_list: {
+    api_shop_manager_discounts_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -7413,7 +7413,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_discounts_create: {
+    api_shop_manager_discounts_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -7438,7 +7438,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_discounts_retrieve: {
+    api_shop_manager_discounts_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -7460,7 +7460,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_discounts_update: {
+    api_shop_manager_discounts_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -7488,7 +7488,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_discounts_destroy: {
+    api_shop_manager_discounts_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -7509,7 +7509,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_discounts_partial_update: {
+    api_shop_manager_discounts_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -7537,7 +7537,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attr_list_values_list: {
+    api_shop_manager_filter_attr_list_values_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -7556,7 +7556,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attr_list_values_create: {
+    api_shop_manager_filter_attr_list_values_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -7581,7 +7581,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attr_list_values_retrieve: {
+    api_shop_manager_filter_attr_list_values_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -7603,7 +7603,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attr_list_values_update: {
+    api_shop_manager_filter_attr_list_values_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -7631,7 +7631,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attr_list_values_destroy: {
+    api_shop_manager_filter_attr_list_values_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -7652,7 +7652,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attr_list_values_partial_update: {
+    api_shop_manager_filter_attr_list_values_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -7680,7 +7680,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attr_values_list: {
+    api_shop_manager_filter_attr_values_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -7699,7 +7699,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attr_values_create: {
+    api_shop_manager_filter_attr_values_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -7724,7 +7724,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attr_values_retrieve: {
+    api_shop_manager_filter_attr_values_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -7746,7 +7746,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attr_values_update: {
+    api_shop_manager_filter_attr_values_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -7774,7 +7774,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attr_values_destroy: {
+    api_shop_manager_filter_attr_values_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -7795,7 +7795,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attr_values_partial_update: {
+    api_shop_manager_filter_attr_values_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -7823,7 +7823,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attrs_list: {
+    api_shop_manager_filter_attrs_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -7842,7 +7842,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attrs_create: {
+    api_shop_manager_filter_attrs_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -7867,7 +7867,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attrs_retrieve: {
+    api_shop_manager_filter_attrs_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -7889,7 +7889,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attrs_update: {
+    api_shop_manager_filter_attrs_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -7917,7 +7917,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attrs_destroy: {
+    api_shop_manager_filter_attrs_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -7938,7 +7938,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_filter_attrs_partial_update: {
+    api_shop_manager_filter_attrs_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -7966,7 +7966,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_pochta_settings_retrieve: {
+    api_shop_manager_pochta_settings_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -7985,7 +7985,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_pochta_settings_update: {
+    api_shop_manager_pochta_settings_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -8010,7 +8010,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_pochta_settings_partial_update: {
+    api_shop_manager_pochta_settings_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -8035,7 +8035,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_product_images_list: {
+    api_shop_manager_product_images_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -8054,7 +8054,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_product_images_create: {
+    api_shop_manager_product_images_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -8079,7 +8079,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_product_images_retrieve: {
+    api_shop_manager_product_images_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -8101,7 +8101,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_product_images_update: {
+    api_shop_manager_product_images_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -8129,7 +8129,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_product_images_destroy: {
+    api_shop_manager_product_images_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -8150,7 +8150,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_product_images_partial_update: {
+    api_shop_manager_product_images_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -8178,7 +8178,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_products_list: {
+    api_shop_manager_products_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -8197,7 +8197,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_products_create: {
+    api_shop_manager_products_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -8222,7 +8222,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_products_retrieve: {
+    api_shop_manager_products_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -8244,7 +8244,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_products_update: {
+    api_shop_manager_products_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -8272,7 +8272,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_products_destroy: {
+    api_shop_manager_products_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -8293,7 +8293,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_products_partial_update: {
+    api_shop_manager_products_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -8321,7 +8321,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_sdek_settings_retrieve: {
+    api_shop_manager_sdek_settings_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -8340,7 +8340,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_sdek_settings_update: {
+    api_shop_manager_sdek_settings_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -8365,7 +8365,7 @@ export interface operations {
             };
         };
     };
-    shop_manager_sdek_settings_partial_update: {
+    api_shop_manager_sdek_settings_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -8390,7 +8390,7 @@ export interface operations {
             };
         };
     };
-    shop_my_cart_order_sync_create: {
+    api_shop_my_cart_order_sync_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -8408,7 +8408,7 @@ export interface operations {
             };
         };
     };
-    shop_my_orders_list: {
+    api_shop_my_orders_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -8427,7 +8427,7 @@ export interface operations {
             };
         };
     };
-    shop_my_orders_retrieve: {
+    api_shop_my_orders_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -8448,7 +8448,7 @@ export interface operations {
             };
         };
     };
-    shop_order_statuses_list: {
+    api_shop_order_statuses_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -8467,7 +8467,7 @@ export interface operations {
             };
         };
     };
-    shop_order_create_create: {
+    api_shop_order_create_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -8492,7 +8492,7 @@ export interface operations {
             };
         };
     };
-    shop_orders_list: {
+    api_shop_orders_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -8511,7 +8511,7 @@ export interface operations {
             };
         };
     };
-    shop_orders_retrieve: {
+    api_shop_orders_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -8532,7 +8532,7 @@ export interface operations {
             };
         };
     };
-    shop_orders_update: {
+    api_shop_orders_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -8559,7 +8559,7 @@ export interface operations {
             };
         };
     };
-    shop_orders_destroy: {
+    api_shop_orders_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -8579,7 +8579,7 @@ export interface operations {
             };
         };
     };
-    shop_orders_partial_update: {
+    api_shop_orders_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -8606,7 +8606,7 @@ export interface operations {
             };
         };
     };
-    shop_payments_sync_create: {
+    api_shop_payments_sync_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -8671,7 +8671,7 @@ export interface operations {
             };
         };
     };
-    shop_pochta_rossii_offices_retrieve: {
+    api_shop_pochta_rossii_offices_retrieve: {
         parameters: {
             query: {
                 lat: string;
@@ -8725,7 +8725,7 @@ export interface operations {
             };
         };
     };
-    shop_pochta_rossii_price_retrieve: {
+    api_shop_pochta_rossii_price_retrieve: {
         parameters: {
             query: {
                 destination: string;
@@ -8780,7 +8780,7 @@ export interface operations {
             };
         };
     };
-    shop_products_list: {
+    api_shop_products_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -8799,7 +8799,7 @@ export interface operations {
             };
         };
     };
-    shop_products_retrieve: {
+    api_shop_products_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -8820,7 +8820,7 @@ export interface operations {
             };
         };
     };
-    shop_sdek_offices_retrieve: {
+    api_shop_sdek_offices_retrieve: {
         parameters: {
             query?: {
                 lat?: string;
@@ -8875,7 +8875,7 @@ export interface operations {
             };
         };
     };
-    shop_sdek_price_retrieve: {
+    api_shop_sdek_price_retrieve: {
         parameters: {
             query: {
                 destination: string;
@@ -8929,7 +8929,7 @@ export interface operations {
             };
         };
     };
-    shop_yookassa_webhook_create: {
+    api_shop_yookassa_webhook_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -8986,7 +8986,7 @@ export interface operations {
             };
         };
     };
-    signup_create: {
+    api_signup_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -9011,7 +9011,7 @@ export interface operations {
             };
         };
     };
-    study_categories_list: {
+    api_study_categories_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -9030,7 +9030,7 @@ export interface operations {
             };
         };
     };
-    study_course_retrieve: {
+    api_study_course_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -9051,7 +9051,7 @@ export interface operations {
             };
         };
     };
-    study_courses_list: {
+    api_study_courses_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -9070,7 +9070,7 @@ export interface operations {
             };
         };
     };
-    study_manager_categories_list: {
+    api_study_manager_categories_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -9089,7 +9089,7 @@ export interface operations {
             };
         };
     };
-    study_manager_categories_create: {
+    api_study_manager_categories_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -9114,7 +9114,7 @@ export interface operations {
             };
         };
     };
-    study_manager_categories_retrieve: {
+    api_study_manager_categories_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -9136,7 +9136,7 @@ export interface operations {
             };
         };
     };
-    study_manager_categories_update: {
+    api_study_manager_categories_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -9164,7 +9164,7 @@ export interface operations {
             };
         };
     };
-    study_manager_categories_destroy: {
+    api_study_manager_categories_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -9185,7 +9185,7 @@ export interface operations {
             };
         };
     };
-    study_manager_categories_partial_update: {
+    api_study_manager_categories_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -9213,7 +9213,7 @@ export interface operations {
             };
         };
     };
-    study_manager_courses_list: {
+    api_study_manager_courses_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -9232,7 +9232,7 @@ export interface operations {
             };
         };
     };
-    study_manager_courses_create: {
+    api_study_manager_courses_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -9257,7 +9257,7 @@ export interface operations {
             };
         };
     };
-    study_manager_courses_retrieve: {
+    api_study_manager_courses_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -9279,7 +9279,7 @@ export interface operations {
             };
         };
     };
-    study_manager_courses_update: {
+    api_study_manager_courses_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -9307,7 +9307,7 @@ export interface operations {
             };
         };
     };
-    study_manager_courses_destroy: {
+    api_study_manager_courses_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -9328,7 +9328,7 @@ export interface operations {
             };
         };
     };
-    study_manager_courses_partial_update: {
+    api_study_manager_courses_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -9356,7 +9356,7 @@ export interface operations {
             };
         };
     };
-    study_manager_enrollments_list: {
+    api_study_manager_enrollments_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -9375,7 +9375,7 @@ export interface operations {
             };
         };
     };
-    study_manager_enrollments_retrieve: {
+    api_study_manager_enrollments_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -9396,7 +9396,7 @@ export interface operations {
             };
         };
     };
-    study_manager_enrollments_assign_curator_create: {
+    api_study_manager_enrollments_assign_curator_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -9423,7 +9423,7 @@ export interface operations {
             };
         };
     };
-    study_manager_enrollments_certificate_create: {
+    api_study_manager_enrollments_certificate_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -9450,7 +9450,7 @@ export interface operations {
             };
         };
     };
-    study_manager_enrollments_certificate_template_retrieve: {
+    api_study_manager_enrollments_certificate_template_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -9470,7 +9470,7 @@ export interface operations {
             };
         };
     };
-    study_manager_enrollments_final_exam_unlock_create: {
+    api_study_manager_enrollments_final_exam_unlock_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -9490,7 +9490,7 @@ export interface operations {
             };
         };
     };
-    study_manager_enrollments_lessons_unlock_create: {
+    api_study_manager_enrollments_lessons_unlock_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -9518,7 +9518,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exam_options_list: {
+    api_study_manager_exam_options_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -9537,7 +9537,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exam_options_create: {
+    api_study_manager_exam_options_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -9562,7 +9562,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exam_options_retrieve: {
+    api_study_manager_exam_options_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -9584,7 +9584,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exam_options_update: {
+    api_study_manager_exam_options_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -9612,7 +9612,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exam_options_destroy: {
+    api_study_manager_exam_options_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -9633,7 +9633,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exam_options_partial_update: {
+    api_study_manager_exam_options_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -9661,7 +9661,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exam_questions_list: {
+    api_study_manager_exam_questions_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -9680,7 +9680,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exam_questions_create: {
+    api_study_manager_exam_questions_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -9705,7 +9705,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exam_questions_retrieve: {
+    api_study_manager_exam_questions_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -9727,7 +9727,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exam_questions_update: {
+    api_study_manager_exam_questions_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -9755,7 +9755,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exam_questions_destroy: {
+    api_study_manager_exam_questions_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -9776,7 +9776,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exam_questions_partial_update: {
+    api_study_manager_exam_questions_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -9804,7 +9804,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exams_list: {
+    api_study_manager_exams_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -9823,7 +9823,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exams_create: {
+    api_study_manager_exams_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -9848,7 +9848,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exams_retrieve: {
+    api_study_manager_exams_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -9870,7 +9870,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exams_update: {
+    api_study_manager_exams_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -9898,7 +9898,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exams_destroy: {
+    api_study_manager_exams_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -9919,7 +9919,7 @@ export interface operations {
             };
         };
     };
-    study_manager_exams_partial_update: {
+    api_study_manager_exams_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -9947,7 +9947,7 @@ export interface operations {
             };
         };
     };
-    study_manager_feedbacks_list: {
+    api_study_manager_feedbacks_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -9966,7 +9966,7 @@ export interface operations {
             };
         };
     };
-    study_manager_feedbacks_create: {
+    api_study_manager_feedbacks_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -9991,7 +9991,7 @@ export interface operations {
             };
         };
     };
-    study_manager_feedbacks_retrieve: {
+    api_study_manager_feedbacks_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -10013,7 +10013,7 @@ export interface operations {
             };
         };
     };
-    study_manager_feedbacks_update: {
+    api_study_manager_feedbacks_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -10041,7 +10041,7 @@ export interface operations {
             };
         };
     };
-    study_manager_feedbacks_destroy: {
+    api_study_manager_feedbacks_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -10062,7 +10062,7 @@ export interface operations {
             };
         };
     };
-    study_manager_feedbacks_partial_update: {
+    api_study_manager_feedbacks_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -10090,7 +10090,7 @@ export interface operations {
             };
         };
     };
-    study_manager_lessons_list: {
+    api_study_manager_lessons_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -10109,7 +10109,7 @@ export interface operations {
             };
         };
     };
-    study_manager_lessons_create: {
+    api_study_manager_lessons_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -10134,7 +10134,7 @@ export interface operations {
             };
         };
     };
-    study_manager_lessons_retrieve: {
+    api_study_manager_lessons_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -10156,7 +10156,7 @@ export interface operations {
             };
         };
     };
-    study_manager_lessons_update: {
+    api_study_manager_lessons_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -10184,7 +10184,7 @@ export interface operations {
             };
         };
     };
-    study_manager_lessons_destroy: {
+    api_study_manager_lessons_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -10205,7 +10205,7 @@ export interface operations {
             };
         };
     };
-    study_manager_lessons_partial_update: {
+    api_study_manager_lessons_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -10233,7 +10233,7 @@ export interface operations {
             };
         };
     };
-    study_manager_lessons_reorder_create: {
+    api_study_manager_lessons_reorder_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -10258,7 +10258,7 @@ export interface operations {
             };
         };
     };
-    study_manager_prices_list: {
+    api_study_manager_prices_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -10277,7 +10277,7 @@ export interface operations {
             };
         };
     };
-    study_manager_prices_create: {
+    api_study_manager_prices_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -10302,7 +10302,7 @@ export interface operations {
             };
         };
     };
-    study_manager_prices_retrieve: {
+    api_study_manager_prices_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -10324,7 +10324,7 @@ export interface operations {
             };
         };
     };
-    study_manager_prices_update: {
+    api_study_manager_prices_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -10352,7 +10352,7 @@ export interface operations {
             };
         };
     };
-    study_manager_prices_destroy: {
+    api_study_manager_prices_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -10373,7 +10373,7 @@ export interface operations {
             };
         };
     };
-    study_manager_prices_partial_update: {
+    api_study_manager_prices_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -10401,7 +10401,7 @@ export interface operations {
             };
         };
     };
-    study_manager_teachers_list: {
+    api_study_manager_teachers_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -10420,7 +10420,7 @@ export interface operations {
             };
         };
     };
-    study_manager_teachers_create: {
+    api_study_manager_teachers_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -10445,7 +10445,7 @@ export interface operations {
             };
         };
     };
-    study_manager_teachers_retrieve: {
+    api_study_manager_teachers_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -10467,7 +10467,7 @@ export interface operations {
             };
         };
     };
-    study_manager_teachers_update: {
+    api_study_manager_teachers_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -10495,7 +10495,7 @@ export interface operations {
             };
         };
     };
-    study_manager_teachers_destroy: {
+    api_study_manager_teachers_destroy: {
         parameters: {
             query?: never;
             header?: never;
@@ -10516,7 +10516,7 @@ export interface operations {
             };
         };
     };
-    study_manager_teachers_partial_update: {
+    api_study_manager_teachers_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -10544,7 +10544,7 @@ export interface operations {
             };
         };
     };
-    study_my_enrollments_list: {
+    api_study_my_enrollments_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -10563,7 +10563,7 @@ export interface operations {
             };
         };
     };
-    study_my_enrollments_create: {
+    api_study_my_enrollments_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -10588,7 +10588,7 @@ export interface operations {
             };
         };
     };
-    study_my_enrollments_retrieve: {
+    api_study_my_enrollments_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -10609,7 +10609,7 @@ export interface operations {
             };
         };
     };
-    study_my_enrollments_certificate_pdf_retrieve: {
+    api_study_my_enrollments_certificate_pdf_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -10629,7 +10629,7 @@ export interface operations {
             };
         };
     };
-    study_my_enrollments_exams_retrieve: {
+    api_study_my_enrollments_exams_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -10649,7 +10649,7 @@ export interface operations {
             };
         };
     };
-    study_my_enrollments_exams_retrieve_2: {
+    api_study_my_enrollments_exams_retrieve_2: {
         parameters: {
             query?: never;
             header?: never;
@@ -10670,7 +10670,7 @@ export interface operations {
             };
         };
     };
-    study_my_enrollments_exams_submit_create: {
+    api_study_my_enrollments_exams_submit_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -10698,7 +10698,7 @@ export interface operations {
             };
         };
     };
-    study_my_enrollments_lessons_progress_create: {
+    api_study_my_enrollments_lessons_progress_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -10726,7 +10726,7 @@ export interface operations {
             };
         };
     };
-    study_my_enrollments_lessons_progress_partial_update: {
+    api_study_my_enrollments_lessons_progress_partial_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -10754,7 +10754,7 @@ export interface operations {
             };
         };
     };
-    study_my_enrollments_pay_create: {
+    api_study_my_enrollments_pay_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -10781,7 +10781,7 @@ export interface operations {
             };
         };
     };
-    token_create: {
+    api_token_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -10806,7 +10806,7 @@ export interface operations {
             };
         };
     };
-    token_refresh_create: {
+    api_token_refresh_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -10831,7 +10831,7 @@ export interface operations {
             };
         };
     };
-    token_verify_create: {
+    api_token_verify_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -10856,7 +10856,7 @@ export interface operations {
             };
         };
     };
-    user_profile_retrieve: {
+    api_user_profile_retrieve: {
         parameters: {
             query?: never;
             header?: never;
@@ -10875,7 +10875,7 @@ export interface operations {
             };
         };
     };
-    user_profile_update: {
+    api_user_profile_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -10900,7 +10900,7 @@ export interface operations {
             };
         };
     };
-    user_profile_partial_update: {
+    api_user_profile_partial_update: {
         parameters: {
             query?: never;
             header?: never;
