@@ -1,17 +1,44 @@
 const fs = require('node:fs')
 const path = require('node:path')
+const https = require('node:https')
 const axios = require('axios')
 
 const DEFAULT_SITE_URL = 'https://gorkyliquid.ru'
 const CACHE_DIR = path.resolve(__dirname, '..', '.cache')
 const CACHE_FILE = path.join(CACHE_DIR, 'seo-routes.json')
+const ENV_FILE = path.resolve(__dirname, '..', '.env')
 
-function normalizeBaseUrl(value, fallback = '') {
+function loadDotEnvConfig () {
+  if (!fs.existsSync(ENV_FILE)) {
+    return
+  }
+  const source = fs.readFileSync(ENV_FILE, 'utf8')
+  source
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith('#') && line.includes('='))
+    .forEach((line) => {
+      const separatorIndex = line.indexOf('=')
+      const key = line.slice(0, separatorIndex).trim()
+      const rawValue = line.slice(separatorIndex + 1).trim()
+      if (!key || Object.prototype.hasOwnProperty.call(process.env, key)) {
+        return
+      }
+      const unquoted = rawValue
+        .replace(/^"(.*)"$/, '$1')
+        .replace(/^'(.*)'$/, '$1')
+      process.env[key] = unquoted
+    })
+}
+
+loadDotEnvConfig()
+
+function normalizeBaseUrl (value, fallback = '') {
   const raw = String(value || fallback || '').trim()
   return raw.replace(/\/+$/, '')
 }
 
-function normalizePath(routePath) {
+function normalizePath (routePath) {
   const raw = String(routePath || '').trim()
   if (!raw) {
     return '/'
@@ -24,12 +51,12 @@ function normalizePath(routePath) {
   return normalized
 }
 
-function asId(value) {
+function asId (value) {
   const id = Number(value)
   return Number.isFinite(id) && id > 0 ? id : null
 }
 
-function extractList(payload) {
+function extractList (payload) {
   if (Array.isArray(payload)) {
     return payload
   }
@@ -42,7 +69,17 @@ function extractList(payload) {
   return []
 }
 
-function uniqueRoutes(routes) {
+function isListPayload (payload) {
+  if (Array.isArray(payload)) {
+    return true
+  }
+  if (!payload || typeof payload !== 'object') {
+    return false
+  }
+  return Array.isArray(payload.results) || Array.isArray(payload.items)
+}
+
+function uniqueRoutes (routes) {
   const unique = new Set()
   routes
     .map((item) => normalizePath(item))
@@ -51,18 +88,55 @@ function uniqueRoutes(routes) {
   return Array.from(unique)
 }
 
-function getSiteUrl() {
+function uniqueBaseUrls (candidates) {
+  const unique = new Set()
+  candidates
+    .map((value) => normalizeBaseUrl(value))
+    .filter(Boolean)
+    .forEach((value) => unique.add(value))
+  return Array.from(unique)
+}
+
+function getSiteUrl () {
   return normalizeBaseUrl(process.env.VUE_APP_SITE_URL, DEFAULT_SITE_URL)
 }
 
-function getApiBaseUrl() {
-  return normalizeBaseUrl(
-    process.env.SEO_API_BASE || process.env.VUE_APP_API_BASE,
-    getSiteUrl()
-  )
+function getApiBaseCandidates () {
+  const envCandidates = String(process.env.SEO_API_BASE_CANDIDATES || '')
+    .split(',')
+    .map((value) => value.trim())
+    .filter(Boolean)
+
+  const explicitBase = normalizeBaseUrl(process.env.SEO_API_BASE)
+  const frontendApiBase = normalizeBaseUrl(process.env.VUE_APP_API_BASE)
+  const siteUrl = getSiteUrl()
+
+  const httpVariants = [explicitBase, frontendApiBase, siteUrl]
+    .filter(Boolean)
+    .map((value) => value.replace(/^https:/i, 'http:'))
+
+  const localDefaults = [
+    'http://127.0.0.1:8000',
+    'http://localhost:8000',
+    'http://127.0.0.1:8080',
+    'http://localhost:8080'
+  ]
+
+  return uniqueBaseUrls([
+    ...envCandidates,
+    explicitBase,
+    frontendApiBase,
+    siteUrl,
+    ...httpVariants,
+    ...localDefaults
+  ])
 }
 
-function getStaticPublicRoutes() {
+function getApiBaseUrl () {
+  return getApiBaseCandidates()[0] || getSiteUrl()
+}
+
+function getStaticPublicRoutes () {
   return uniqueRoutes([
     '/',
     '/about',
@@ -83,24 +157,64 @@ function getStaticPublicRoutes() {
   ])
 }
 
-async function requestList(client, url, params = null) {
-  try {
-    const response = await client.get(url, params ? { params } : undefined)
-    return extractList(response.data)
-  } catch (error) {
-    process.stdout.write(`[seo] route discovery skipped for ${url}: ${error.message}\n`)
-    return []
-  }
+function createApiClient (baseURL) {
+  const allowInsecureTls = String(process.env.SEO_ALLOW_INSECURE_TLS || '1') !== '0'
+  const timeout = Number(process.env.SEO_FETCH_TIMEOUT_MS || 6000)
+  const tlsConfig = allowInsecureTls && /^https:/i.test(baseURL)
+    ? { httpsAgent: new https.Agent({ rejectUnauthorized: false }) }
+    : {}
+
+  return axios.create({
+    baseURL,
+    timeout,
+    ...tlsConfig
+  })
 }
 
-async function collectDynamicRoutes() {
-  const client = axios.create({
-    baseURL: getApiBaseUrl(),
-    timeout: Number(process.env.SEO_FETCH_TIMEOUT_MS || 6000)
-  })
+function getCachedClient (context, baseURL) {
+  if (!context.clientCache.has(baseURL)) {
+    context.clientCache.set(baseURL, createApiClient(baseURL))
+  }
+  return context.clientCache.get(baseURL)
+}
+
+async function requestListWithFallback (apiBases, url, params, context) {
+  if (!apiBases.length) {
+    return []
+  }
+
+  const preferredBase = context.preferredBase
+  const orderedBases = preferredBase
+    ? [preferredBase, ...apiBases.filter((baseURL) => baseURL !== preferredBase)]
+    : apiBases
+
+  for (const baseURL of orderedBases) {
+    const client = getCachedClient(context, baseURL)
+    try {
+      const response = await client.get(url, params ? { params } : undefined)
+      if (!isListPayload(response.data)) {
+        throw new Error('unexpected payload shape')
+      }
+      context.preferredBase = baseURL
+      return extractList(response.data)
+    } catch (error) {
+      process.stdout.write(`[seo] route discovery failed for ${url} via ${baseURL}: ${error.message}\n`)
+    }
+  }
+
+  process.stdout.write(`[seo] route discovery skipped for ${url}: all API bases failed\n`)
+  return []
+}
+
+async function collectDynamicRoutes () {
+  const apiBases = getApiBaseCandidates()
+  const requestContext = {
+    preferredBase: null,
+    clientCache: new Map()
+  }
   const dynamicRoutes = []
 
-  const categories = await requestList(client, '/api/shop/categories')
+  const categories = await requestListWithFallback(apiBases, '/api/shop/categories', null, requestContext)
   categories.forEach((category) => {
     const categoryId = asId(category && category.id)
     if (!categoryId) {
@@ -110,7 +224,7 @@ async function collectDynamicRoutes() {
     dynamicRoutes.push(`/shop/categories/${categoryId}/showcase`)
   })
 
-  const products = await requestList(client, '/api/shop/products')
+  const products = await requestListWithFallback(apiBases, '/api/shop/products', null, requestContext)
   products.forEach((product) => {
     const productId = asId(product && product.id)
     const categorySource = product && product.category
@@ -125,7 +239,7 @@ async function collectDynamicRoutes() {
     dynamicRoutes.push(`/shop/categories/${categoryId}/${productId}`)
   })
 
-  const articleCategories = await requestList(client, '/api/article-categories/')
+  const articleCategories = await requestListWithFallback(apiBases, '/api/article-categories/', null, requestContext)
   articleCategories.forEach((category) => {
     const slug = String(category && category.slug ? category.slug : '').trim()
     if (!slug) {
@@ -134,7 +248,7 @@ async function collectDynamicRoutes() {
     dynamicRoutes.push(`/news/category/${slug}`)
   })
 
-  const articles = await requestList(client, '/api/articles/')
+  const articles = await requestListWithFallback(apiBases, '/api/articles/', null, requestContext)
   articles.forEach((article) => {
     const articleId = asId(article && article.id)
     if (!articleId) {
@@ -155,7 +269,7 @@ async function collectDynamicRoutes() {
     })
   })
 
-  const studyCourses = await requestList(client, '/api/study/courses')
+  const studyCourses = await requestListWithFallback(apiBases, '/api/study/courses', null, requestContext)
   studyCourses.forEach((course) => {
     const courseId = asId(course && course.id)
     if (!courseId) {
@@ -167,33 +281,56 @@ async function collectDynamicRoutes() {
   return uniqueRoutes(dynamicRoutes)
 }
 
-async function collectSeoRoutes() {
-  const staticRoutes = getStaticPublicRoutes()
-  const dynamicRoutes = await collectDynamicRoutes()
-  return uniqueRoutes([...staticRoutes, ...dynamicRoutes])
-}
-
-function getPrerenderRoutes() {
-  const staticRoutes = getStaticPublicRoutes()
+function readCachedPayload () {
   if (!fs.existsSync(CACHE_FILE)) {
-    return staticRoutes
+    return null
   }
   try {
-    const payload = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf8'))
-    const routes = Array.isArray(payload && payload.prerenderRoutes)
-      ? payload.prerenderRoutes
-      : []
-    return uniqueRoutes([...staticRoutes, ...routes])
+    return JSON.parse(fs.readFileSync(CACHE_FILE, 'utf8'))
   } catch (error) {
     process.stdout.write(`[seo] failed to parse ${CACHE_FILE}: ${error.message}\n`)
-    return staticRoutes
+    return null
   }
+}
+
+function getCachedDynamicRoutes (staticRoutes) {
+  const payload = readCachedPayload()
+  const cachedRoutes = Array.isArray(payload && payload.routes) ? payload.routes : []
+  if (!cachedRoutes.length) {
+    return []
+  }
+  const staticSet = new Set(staticRoutes.map((routePath) => normalizePath(routePath)))
+  return uniqueRoutes(cachedRoutes.filter((routePath) => !staticSet.has(normalizePath(routePath))))
+}
+
+async function collectSeoRoutes () {
+  const staticRoutes = getStaticPublicRoutes()
+  const dynamicRoutes = await collectDynamicRoutes()
+  if (dynamicRoutes.length) {
+    return uniqueRoutes([...staticRoutes, ...dynamicRoutes])
+  }
+  const cachedDynamicRoutes = getCachedDynamicRoutes(staticRoutes)
+  if (cachedDynamicRoutes.length) {
+    process.stdout.write(`[seo] using ${cachedDynamicRoutes.length} cached dynamic routes\n`)
+    return uniqueRoutes([...staticRoutes, ...cachedDynamicRoutes])
+  }
+  return staticRoutes
+}
+
+function getPrerenderRoutes () {
+  const staticRoutes = getStaticPublicRoutes()
+  const payload = readCachedPayload()
+  const routes = Array.isArray(payload && payload.prerenderRoutes)
+    ? payload.prerenderRoutes
+    : []
+  return uniqueRoutes([...staticRoutes, ...routes])
 }
 
 module.exports = {
   CACHE_DIR,
   CACHE_FILE,
   collectSeoRoutes,
+  getApiBaseCandidates,
   getApiBaseUrl,
   getPrerenderRoutes,
   getSiteUrl,

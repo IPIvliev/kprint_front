@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { publicApi } from '@/services/http'
 
 const Home = () => import('../views/Home.vue')
 const Registration = () => import('../views/Registration.vue')
@@ -149,9 +150,7 @@ const routes = [
     name: 'LegalPersonalDataPolicy',
     component: () => import('@/views/LegalDocument.vue'),
     meta: {
-      legalDocKey: 'personalDataPolicy',
-      title: '琚╄姱璋㈡噲瑜屾噲娉婚偑 鑺枩瑜夐偑鏂滆姱瑜屾郴鎳?閿屾瑜夎鑺柂閭阿瑜滆柂瑜樿 鍐欓偑钖柂瑜樿 | gorkyliquid.ru',
-      description: '琚╄姱璋㈡噲瑜屾噲娉婚偑 琚ㄨⅷ琚?鑺﹁ⅶ琚╄ⅸ "3琚?琚楀啓鍐欐噲瑜屾噲鑳佽柂瑜樻 瀛濇瑜忚柂鑺阿鑺皭鎳堟噲"绂?鑳?鑺钖姱瑜曟钖噲鎳?鑺枩瑜夐偑鏂滆姱瑜屾郴鎳?閿屾瑜夎鑺柂閭阿瑜滆柂瑜樿 鍐欓偑钖柂瑜樿 钖偑 gorkyliquid.ru.'
+      legalDocKey: 'personalDataPolicy'
     }
   },
   {
@@ -159,9 +158,7 @@ const routes = [
     name: 'LegalPdConsent',
     component: () => import('@/views/LegalDocument.vue'),
     meta: {
-      legalDocKey: 'pdConsent',
-      title: '灏忚姱璋愯阿閭鎳堟 钖偑 鑺枩瑜夐偑鏂滆姱瑜屾郴瑜?琚╄钖?| gorkyliquid.ru',
-      description: '灏忚姱璋愯阿閭鎳堟 閿岃姱璋㈣锜硅姱鑳侀偑瑜屾璋㈣ 钖偑 鑺枩瑜夐偑鏂滆姱瑜屾郴瑜?閿屾瑜夎鑺柂閭阿瑜滆柂瑜樿 鍐欓偑钖柂瑜樿 鍐欒阿瑜?瑜嬫瑜夎儊鎳堣鑺儊 鎳?锜归偑娉婚偑锜硅姱鑳?钖偑 gorkyliquid.ru.'
+      legalDocKey: 'pdConsent'
     }
   },
   {
@@ -169,9 +166,7 @@ const routes = [
     name: 'LegalAdsConsent',
     component: () => import('@/views/LegalDocument.vue'),
     meta: {
-      legalDocKey: 'adsConsent',
-      title: '灏忚姱璋愯阿閭鎳堟 钖偑 瑜夋娉昏阿閭睉钖姱-鎳堣柂瑜庤姱瑜夊睉閭鎳堣姱钖柂瑜樻 瑜嬭姱鑺枩瑜栨钖噲瑜?| gorkyliquid.ru',
-      description: '琚涜姱鏂滆鑺儊鑺阿瑜滆柂鑺 瑜嬭姱璋愯阿閭鎳堟 钖偑 閿岃姱璋㈣瑜旀钖噲姊?钖姱鑳佽姱瑜嬭姊版硠 鎳?閭郴瑜戞噲娉?鑺 琚ㄨⅷ琚?鑺﹁ⅶ琚╄ⅸ "3琚?琚楀啓鍐欐噲瑜屾噲鑳佽柂瑜樻 瀛濇瑜忚柂鑺阿鑺皭鎳堟噲"绂?'
+      legalDocKey: 'adsConsent'
     }
   },
   {
@@ -179,9 +174,7 @@ const routes = [
     name: 'LegalTermsOffer',
     component: () => import('@/views/LegalDocument.vue'),
     meta: {
-      legalDocKey: 'termsOffer',
-      title: '琚╄姱璋㈣锜硅姱鑳侀偑瑜屾璋㈣瑜嬫郴鑺 瑜嬭姱璋愯阿閭姊拌柂鎳堟 鎳?鑺姊拌瑜岄偑 | gorkyliquid.ru',
-      description: '琚╄鏂滆阿鎳堣钖偑瑜?鑺姊拌瑜岄偑 鎳?閿岃姱璋㈣锜硅姱鑳侀偑瑜屾璋㈣瑜嬫郴鑺 瑜嬭姱璋愯阿閭姊拌柂鎳堟 鍐欒阿瑜?瑜岃姱鑳侀偑瑜夎姱鑳?鎳?瑜嶈璋㈣璋?gorkyliquid.ru.'
+      legalDocKey: 'termsOffer'
     }
   },
   {
@@ -189,9 +182,7 @@ const routes = [
     name: 'LegalDeliveryPayment',
     component: () => import('@/views/LegalDocument.vue'),
     meta: {
-      legalDocKey: 'deliveryPayment',
-      title: '琚涜姱瑜嬭閭儊娉婚偑 鎳?鑺攲璋㈤偑瑜岄偑 | gorkyliquid.ru',
-      description: '灏忛攲鑺鑺枩瑜?鑺攲璋㈤偑瑜岃 瑜旀瑜夋锜?YooMoney, 瑜嶈璋㈣姱鑳佹噲瑜?鍐欒姱瑜嬭閭儊娉绘噲, 瑜嬮偑灞戣姱鑳佽鑳佽姱锜归偑 鎳?娉昏姱钖閭郴瑜岃 閿岃姱鍐欏啓姊拌鍗告郴鎳?'
+      legalDocKey: 'deliveryPayment'
     }
   },
   {
@@ -199,9 +190,7 @@ const routes = [
     name: 'LegalReturns',
     component: () => import('@/views/LegalDocument.vue'),
     meta: {
-      legalDocKey: 'returns',
-      title: '琚欒姱锜硅儊瑜夐偑瑜岃 鎳?鑺灞戞钖 | gorkyliquid.ru',
-      description: '琚╄姱瑜夎鍐欒姱娉?鑳佽姱锜硅儊瑜夐偑瑜岃姱鑳? 鑺灞戞钖?鎳?閿岃姊拌姊拌柂锜规噲娉?閿岃姱 瑜岃姱鑳侀偑瑜夐偑灞?鎳?瑜嶈璋㈣璋愰偑灞?钖偑 gorkyliquid.ru.'
+      legalDocKey: 'returns'
     }
   },
   {
@@ -435,6 +424,7 @@ function ensureDescriptionMetaTag () {
 }
 
 const SITE_URL = String(process.env.VUE_APP_SITE_URL || 'https://gorkyliquid.ru').trim().replace(/\/+$/, '')
+const API_BASE = String(process.env.VUE_APP_API_BASE || '').trim().replace(/\/+$/, '')
 const DEFAULT_TITLE = 'Gorky Liquid | Аддитивные технологии и материалы'
 const DEFAULT_DESCRIPTION = 'Производство материалов и решений для аддитивных технологий: смолы, филаменты, оборудование, обучение и внедрение.'
 const NOINDEX_ROUTE_NAMES = new Set([
@@ -448,6 +438,8 @@ const NOINDEX_ROUTE_NAMES = new Set([
   'PanelUser',
   'PanelManager'
 ])
+const SEO_ENTITY_CACHE = new Map()
+let seoNavigationId = 0
 
 const ROUTE_SEO = {
   Home: {
@@ -593,9 +585,20 @@ function isNoindexRoute (to) {
 function resolveSeoMeta (to) {
   const routeName = String(to && to.name ? to.name : '')
   const mapped = ROUTE_SEO[routeName] || {}
-  const title = (to.meta && to.meta.title) || mapped.title || DEFAULT_TITLE
-  const description = (to.meta && to.meta.description) || mapped.description || DEFAULT_DESCRIPTION
+  const title = mapped.title || (to.meta && to.meta.title) || DEFAULT_TITLE
+  const description = mapped.description || (to.meta && to.meta.description) || DEFAULT_DESCRIPTION
   return { title, description }
+}
+
+function resolveOpenGraphType (to) {
+  const routeName = String(to && to.name ? to.name : '')
+  if (routeName === 'Article') {
+    return 'article'
+  }
+  if (routeName === 'Product') {
+    return 'product'
+  }
+  return 'website'
 }
 
 function buildCanonicalUrl (to) {
@@ -603,6 +606,217 @@ function buildCanonicalUrl (to) {
   const normalizedPath = routePath.startsWith('/') ? routePath : `/${routePath}`
   const suffix = normalizedPath === '/' ? '' : normalizedPath
   return `${SITE_URL}${suffix}`
+}
+
+function normalizeText (value) {
+  return String(value || '').replace(/\s+/g, ' ').trim()
+}
+
+function stripHtml (value) {
+  return normalizeText(String(value || '').replace(/<[^>]*>/g, ' '))
+}
+
+function toNumber (value) {
+  const parsed = Number(value)
+  return Number.isFinite(parsed) ? parsed : null
+}
+
+function toPositiveInteger (value) {
+  const parsed = Number(value)
+  if (!Number.isFinite(parsed) || parsed < 0) {
+    return null
+  }
+  return Math.trunc(parsed)
+}
+
+function normalizeIsoDate (value) {
+  const raw = String(value || '').trim()
+  if (!raw) {
+    return null
+  }
+  const parsed = new Date(raw)
+  if (Number.isNaN(parsed.getTime())) {
+    return null
+  }
+  return parsed.toISOString()
+}
+
+function resolveMediaUrl (value) {
+  const raw = String(value || '').trim()
+  if (!raw) {
+    return ''
+  }
+  if (raw.startsWith('http://') || raw.startsWith('https://') || raw.startsWith('data:')) {
+    return raw
+  }
+  if (!API_BASE) {
+    return raw
+  }
+  if (raw.startsWith('/')) {
+    return `${API_BASE}${raw}`
+  }
+  return `${API_BASE}/${raw}`
+}
+
+function buildProductSchema (product, canonicalUrl) {
+  const name = normalizeText(product && product.name)
+  if (!name) {
+    return null
+  }
+
+  const primaryImage = resolveMediaUrl(product && product.photo)
+  const galleryImages = Array.isArray(product && product.product_images)
+    ? product.product_images.map((item) => resolveMediaUrl(item && item.src)).filter(Boolean)
+    : []
+  const image = Array.from(new Set([primaryImage, ...galleryImages].filter(Boolean)))
+  const description = stripHtml(product && product.description)
+  const sku = normalizeText((product && product.article) || (product && product.id))
+  const category = normalizeText(product && product.category_title)
+  const price = toNumber(product && product.price)
+  const stock = toPositiveInteger(product && product.stock)
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name,
+    url: canonicalUrl,
+    brand: {
+      '@type': 'Brand',
+      name: 'Gorky Liquid'
+    }
+  }
+
+  if (description) {
+    schema.description = description
+  }
+  if (sku) {
+    schema.sku = sku
+  }
+  if (category) {
+    schema.category = category
+  }
+  if (image.length) {
+    schema.image = image
+  }
+  if (Number.isFinite(price)) {
+    schema.offers = {
+      '@type': 'Offer',
+      url: canonicalUrl,
+      priceCurrency: 'RUB',
+      price: price.toFixed(2),
+      availability: stock && stock > 0
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/OutOfStock',
+      itemCondition: 'https://schema.org/NewCondition'
+    }
+  }
+
+  return schema
+}
+
+function buildArticleSchema (article, canonicalUrl) {
+  const headline = normalizeText(article && article.title)
+  if (!headline) {
+    return null
+  }
+
+  const description = stripHtml(article && article.body).slice(0, 300)
+  const publishIso = normalizeIsoDate(article && (article.publish_iso || article.publish))
+  const updatedIso = normalizeIsoDate(article && (article.updated || article.publish_iso || article.publish))
+  const image = resolveMediaUrl(article && article.article_image)
+  const section = normalizeText(
+    (article && article.category_detail && article.category_detail.title) ||
+    (article && article.category_title)
+  )
+  const keywords = Array.isArray(article && article.tags)
+    ? article.tags
+      .map((tag) => normalizeText(tag && typeof tag === 'object' ? tag.title : tag))
+      .filter(Boolean)
+      .join(', ')
+    : ''
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline,
+    url: canonicalUrl,
+    inLanguage: 'ru-RU',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': canonicalUrl
+    },
+    author: {
+      '@type': 'Organization',
+      name: 'Gorky Liquid'
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Gorky Liquid',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/favicon.ico`
+      }
+    }
+  }
+
+  if (description) {
+    schema.description = description
+  }
+  if (image) {
+    schema.image = [image]
+  }
+  if (publishIso) {
+    schema.datePublished = publishIso
+  }
+  if (updatedIso) {
+    schema.dateModified = updatedIso
+  }
+  if (section) {
+    schema.articleSection = section
+  }
+  if (keywords) {
+    schema.keywords = keywords
+  }
+
+  return schema
+}
+
+async function fetchSeoEntity (cacheKey, requestPath) {
+  if (SEO_ENTITY_CACHE.has(cacheKey)) {
+    return SEO_ENTITY_CACHE.get(cacheKey)
+  }
+  try {
+    const response = await publicApi.get(requestPath)
+    const payload = response && response.data ? response.data : null
+    SEO_ENTITY_CACHE.set(cacheKey, payload)
+    return payload
+  } catch (error) {
+    SEO_ENTITY_CACHE.delete(cacheKey)
+    return null
+  }
+}
+
+async function resolveEntitySchema (to, canonicalUrl) {
+  const routeName = String(to && to.name ? to.name : '')
+  if (routeName === 'Product') {
+    const productId = toPositiveInteger(to && to.params && to.params.productid)
+    if (!productId) {
+      return null
+    }
+    const payload = await fetchSeoEntity(`product:${productId}`, `/api/shop/products/${productId}`)
+    return buildProductSchema(payload, canonicalUrl)
+  }
+
+  if (routeName === 'Article') {
+    const articleId = toPositiveInteger(to && to.params && to.params.id)
+    if (!articleId) {
+      return null
+    }
+    const payload = await fetchSeoEntity(`article:${articleId}`, `/api/articles/${articleId}/`)
+    return buildArticleSchema(payload, canonicalUrl)
+  }
+
+  return null
 }
 
 function buildBreadcrumbSchema (to, canonicalUrl) {
@@ -640,7 +854,7 @@ function buildBreadcrumbSchema (to, canonicalUrl) {
   }
 }
 
-function updateJsonLd (to, canonicalUrl, title, description) {
+async function updateJsonLd (to, canonicalUrl, title, description, navigationId) {
   const organizationScript = ensureJsonLdScriptTag('organization')
   if (organizationScript) {
     organizationScript.textContent = JSON.stringify({
@@ -672,24 +886,34 @@ function updateJsonLd (to, canonicalUrl, title, description) {
   if (breadcrumbsScript) {
     breadcrumbsScript.textContent = breadcrumbs ? JSON.stringify(breadcrumbs) : ''
   }
+
+  const entityScript = ensureJsonLdScriptTag('entity')
+  if (entityScript) {
+    const entitySchema = await resolveEntitySchema(to, canonicalUrl)
+    if (navigationId !== seoNavigationId) {
+      return
+    }
+    entityScript.textContent = entitySchema ? JSON.stringify(entitySchema) : ''
+  }
 }
 
 function triggerPrerenderReadyEvent () {
-  if (typeof window === 'undefined' || !window.__PRERENDER_INJECTED) {
+  if (typeof document === 'undefined') {
     return
   }
   const emit = () => document.dispatchEvent(new Event('app-rendered'))
-  if (typeof window.requestAnimationFrame === 'function') {
+  if (typeof window !== 'undefined' && typeof window.requestAnimationFrame === 'function') {
     window.requestAnimationFrame(emit)
     return
   }
   setTimeout(emit, 0)
 }
 
-router.afterEach((to) => {
+router.afterEach(async (to) => {
   if (typeof document === 'undefined') {
     return
   }
+  const navigationId = ++seoNavigationId
   const { title, description } = resolveSeoMeta(to)
   const canonicalUrl = buildCanonicalUrl(to)
   const robots = isNoindexRoute(to)
@@ -727,13 +951,16 @@ router.afterEach((to) => {
     ogUrl.setAttribute('content', canonicalUrl)
   }
   if (ogType) {
-    ogType.setAttribute('content', 'website')
+    ogType.setAttribute('content', resolveOpenGraphType(to))
   }
   if (twitterCard) {
     twitterCard.setAttribute('content', 'summary_large_image')
   }
 
-  updateJsonLd(to, canonicalUrl, title, description)
+  await updateJsonLd(to, canonicalUrl, title, description, navigationId)
+  if (navigationId !== seoNavigationId) {
+    return
+  }
   triggerPrerenderReadyEvent()
 })
 export default router

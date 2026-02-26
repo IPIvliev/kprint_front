@@ -23,6 +23,9 @@ describe('seo build pipeline', () => {
 
     expect(vueConfig).toContain('@prerenderer/webpack-plugin')
     expect(vueConfig).toContain('getPrerenderRoutes')
+    expect(vueConfig).toContain('process.env.CHROME_PATH')
+    expect(vueConfig).toContain('Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe')
+    expect(vueConfig).toContain('renderAfterTime')
     expect(seoScript).toContain('function generateSitemapXml')
     expect(seoScript).toContain('Disallow: /panel/')
     expect(seoScript).toContain('module.exports = {')

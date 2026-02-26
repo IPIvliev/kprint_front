@@ -3,9 +3,17 @@ const fs = require('node:fs')
 const { getPrerenderRoutes } = require('./scripts/seo-routes')
 
 function resolveChromiumExecutable() {
-  const explicitPath = String(process.env.PRERENDER_CHROME_PATH || '').trim()
-  if (explicitPath) {
-    return explicitPath
+  const explicitCandidates = [
+    process.env.PRERENDER_CHROME_PATH,
+    process.env.CHROME_PATH,
+    process.env.PUPPETEER_EXECUTABLE_PATH
+  ]
+    .map((value) => String(value || '').trim())
+    .filter(Boolean)
+  for (const executablePath of explicitCandidates) {
+    if (fs.existsSync(executablePath)) {
+      return executablePath
+    }
   }
   try {
     const { chromium } = require('playwright')
@@ -24,6 +32,19 @@ function resolveChromiumExecutable() {
     }
   } catch (error) {
     // ignore: puppeteer is optional here
+  }
+  const systemCandidates = [
+    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+    'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+    'C:\\Program Files\\Chromium\\Application\\chrome.exe',
+    'C:\\Program Files (x86)\\Chromium\\Application\\chrome.exe',
+    'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
+    'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'
+  ]
+  for (const executablePath of systemCandidates) {
+    if (fs.existsSync(executablePath)) {
+      return executablePath
+    }
   }
   return null
 }
@@ -46,7 +67,8 @@ function createPrerenderPlugin() {
       renderer: new PuppeteerRenderer({
         headless: true,
         executablePath: chromeExecutable,
-        renderAfterDocumentEvent: 'app-rendered'
+        renderAfterDocumentEvent: 'app-rendered',
+        renderAfterTime: Number(process.env.PRERENDER_WAIT_MS || 5000)
       })
     })
   } catch (error) {
