@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "build:ci": "vue-cli-service build && npm run check:bundle-budget",
+    "seo:prepare": "node scripts/generate-seo-assets.js",
+    "build": "npm run seo:prepare && vue-cli-service build",
+    "build:ci": "npm run build && npm run check:bundle-budget",
     "check:bundle-budget": "node scripts/check-bundle-budget.js",
     "lint": "vue-cli-service lint",
     "test:unit": "node scripts/run-vitest.js run",
@@ -48,6 +49,8 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.28.5",
     "@playwright/test": "1.51.1",
+    "@prerenderer/renderer-puppeteer": "^1.2.4",
+    "@prerenderer/webpack-plugin": "^5.3.10",
     "@vitejs/plugin-vue": "5.2.4",
     "@vitest/coverage-v8": "0.34.6",
     "@vue/cli-plugin-babel": "^5.0.8",

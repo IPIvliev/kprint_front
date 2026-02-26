@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /panel/
+Disallow: /login
+Disallow: /registration
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /shop/cart
+Disallow: /shop/order
+
+Sitemap: https://gorkyliquid.ru/sitemap.xml

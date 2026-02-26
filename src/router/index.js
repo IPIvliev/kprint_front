@@ -150,8 +150,8 @@ const routes = [
     component: () => import('@/views/LegalDocument.vue'),
     meta: {
       legalDocKey: 'personalDataPolicy',
-      title: 'Политика обработки персональных данных | gorkyliquid.ru',
-      description: 'Политика ООО «НПП "3Д Аддитивные Технологии"» в отношении обработки персональных данных на gorkyliquid.ru.'
+      title: '琚╄姱璋㈡噲瑜屾噲娉婚偑 鑺枩瑜夐偑鏂滆姱瑜屾郴鎳?閿屾瑜夎鑺柂閭阿瑜滆柂瑜樿 鍐欓偑钖柂瑜樿 | gorkyliquid.ru',
+      description: '琚╄姱璋㈡噲瑜屾噲娉婚偑 琚ㄨⅷ琚?鑺﹁ⅶ琚╄ⅸ "3琚?琚楀啓鍐欐噲瑜屾噲鑳佽柂瑜樻 瀛濇瑜忚柂鑺阿鑺皭鎳堟噲"绂?鑳?鑺钖姱瑜曟钖噲鎳?鑺枩瑜夐偑鏂滆姱瑜屾郴鎳?閿屾瑜夎鑺柂閭阿瑜滆柂瑜樿 鍐欓偑钖柂瑜樿 钖偑 gorkyliquid.ru.'
     }
   },
   {
@@ -160,8 +160,8 @@ const routes = [
     component: () => import('@/views/LegalDocument.vue'),
     meta: {
       legalDocKey: 'pdConsent',
-      title: 'Согласие на обработку ПДн | gorkyliquid.ru',
-      description: 'Согласие пользователя на обработку персональных данных для сервисов и заказов на gorkyliquid.ru.'
+      title: '灏忚姱璋愯阿閭鎳堟 钖偑 鑺枩瑜夐偑鏂滆姱瑜屾郴瑜?琚╄钖?| gorkyliquid.ru',
+      description: '灏忚姱璋愯阿閭鎳堟 閿岃姱璋㈣锜硅姱鑳侀偑瑜屾璋㈣ 钖偑 鑺枩瑜夐偑鏂滆姱瑜屾郴瑜?閿屾瑜夎鑺柂閭阿瑜滆柂瑜樿 鍐欓偑钖柂瑜樿 鍐欒阿瑜?瑜嬫瑜夎儊鎳堣鑺儊 鎳?锜归偑娉婚偑锜硅姱鑳?钖偑 gorkyliquid.ru.'
     }
   },
   {
@@ -170,8 +170,8 @@ const routes = [
     component: () => import('@/views/LegalDocument.vue'),
     meta: {
       legalDocKey: 'adsConsent',
-      title: 'Согласие на рекламно-информационные сообщения | gorkyliquid.ru',
-      description: 'Добровольное согласие на получение новостей и акций от ООО «НПП "3Д Аддитивные Технологии"».'
+      title: '灏忚姱璋愯阿閭鎳堟 钖偑 瑜夋娉昏阿閭睉钖姱-鎳堣柂瑜庤姱瑜夊睉閭鎳堣姱钖柂瑜樻 瑜嬭姱鑺枩瑜栨钖噲瑜?| gorkyliquid.ru',
+      description: '琚涜姱鏂滆鑺儊鑺阿瑜滆柂鑺 瑜嬭姱璋愯阿閭鎳堟 钖偑 閿岃姱璋㈣瑜旀钖噲姊?钖姱鑳佽姱瑜嬭姊版硠 鎳?閭郴瑜戞噲娉?鑺 琚ㄨⅷ琚?鑺﹁ⅶ琚╄ⅸ "3琚?琚楀啓鍐欐噲瑜屾噲鑳佽柂瑜樻 瀛濇瑜忚柂鑺阿鑺皭鎳堟噲"绂?'
     }
   },
   {
@@ -180,8 +180,8 @@ const routes = [
     component: () => import('@/views/LegalDocument.vue'),
     meta: {
       legalDocKey: 'termsOffer',
-      title: 'Пользовательское соглашение и оферта | gorkyliquid.ru',
-      description: 'Публичная оферта и пользовательское соглашение для товаров и услуг gorkyliquid.ru.'
+      title: '琚╄姱璋㈣锜硅姱鑳侀偑瑜屾璋㈣瑜嬫郴鑺 瑜嬭姱璋愯阿閭姊拌柂鎳堟 鎳?鑺姊拌瑜岄偑 | gorkyliquid.ru',
+      description: '琚╄鏂滆阿鎳堣钖偑瑜?鑺姊拌瑜岄偑 鎳?閿岃姱璋㈣锜硅姱鑳侀偑瑜屾璋㈣瑜嬫郴鑺 瑜嬭姱璋愯阿閭姊拌柂鎳堟 鍐欒阿瑜?瑜岃姱鑳侀偑瑜夎姱鑳?鎳?瑜嶈璋㈣璋?gorkyliquid.ru.'
     }
   },
   {
@@ -190,8 +190,8 @@ const routes = [
     component: () => import('@/views/LegalDocument.vue'),
     meta: {
       legalDocKey: 'deliveryPayment',
-      title: 'Доставка и оплата | gorkyliquid.ru',
-      description: 'Способы оплаты через YooMoney, условия доставки, самовывоза и контакты поддержки.'
+      title: '琚涜姱瑜嬭閭儊娉婚偑 鎳?鑺攲璋㈤偑瑜岄偑 | gorkyliquid.ru',
+      description: '灏忛攲鑺鑺枩瑜?鑺攲璋㈤偑瑜岃 瑜旀瑜夋锜?YooMoney, 瑜嶈璋㈣姱鑳佹噲瑜?鍐欒姱瑜嬭閭儊娉绘噲, 瑜嬮偑灞戣姱鑳佽鑳佽姱锜归偑 鎳?娉昏姱钖閭郴瑜岃 閿岃姱鍐欏啓姊拌鍗告郴鎳?'
     }
   },
   {
@@ -200,8 +200,8 @@ const routes = [
     component: () => import('@/views/LegalDocument.vue'),
     meta: {
       legalDocKey: 'returns',
-      title: 'Возвраты и отмены | gorkyliquid.ru',
-      description: 'Порядок возвратов, отмен и претензий по товарам и услугам на gorkyliquid.ru.'
+      title: '琚欒姱锜硅儊瑜夐偑瑜岃 鎳?鑺灞戞钖 | gorkyliquid.ru',
+      description: '琚╄姱瑜夎鍐欒姱娉?鑳佽姱锜硅儊瑜夐偑瑜岃姱鑳? 鑺灞戞钖?鎳?閿岃姊拌姊拌柂锜规噲娉?閿岃姱 瑜岃姱鑳侀偑瑜夐偑灞?鎳?瑜嶈璋㈣璋愰偑灞?钖偑 gorkyliquid.ru.'
     }
   },
   {
@@ -431,31 +431,309 @@ const router = createRouter({
 })
 
 function ensureDescriptionMetaTag () {
+  return ensureMetaTag('description', 'name')
+}
+
+const SITE_URL = String(process.env.VUE_APP_SITE_URL || 'https://gorkyliquid.ru').trim().replace(/\/+$/, '')
+const DEFAULT_TITLE = 'Gorky Liquid | Аддитивные технологии и материалы'
+const DEFAULT_DESCRIPTION = 'Производство материалов и решений для аддитивных технологий: смолы, филаменты, оборудование, обучение и внедрение.'
+const NOINDEX_ROUTE_NAMES = new Set([
+  'Login',
+  'Registration',
+  'ForgotPassword',
+  'ResetPassword',
+  'Cart',
+  'ShopOrder',
+  'Panel',
+  'PanelUser',
+  'PanelManager'
+])
+
+const ROUTE_SEO = {
+  Home: {
+    title: 'Gorky Liquid | Аддитивные технологии и материалы',
+    description: DEFAULT_DESCRIPTION
+  },
+  About: {
+    title: 'О компании | Gorky Liquid',
+    description: 'Экспертиза Gorky Liquid в области аддитивных технологий, материалов и внедрения решений для производства.'
+  },
+  Contact: {
+    title: 'Контакты | Gorky Liquid',
+    description: 'Свяжитесь с Gorky Liquid: консультации, сотрудничество, поставки материалов и оборудование.'
+  },
+  Dealers: {
+    title: 'Дилерам и партнёрам | Gorky Liquid',
+    description: 'Сотрудничество с Gorky Liquid: оптовые поставки, обучение, консалтинг и техническая поддержка.'
+  },
+  MainShop: {
+    title: 'Каталог продукции | Gorky Liquid',
+    description: 'Каталог продукции для 3D-печати: материалы, оборудование и решения для аддитивного производства.'
+  },
+  Showcase: {
+    title: 'Каталог продукции | Gorky Liquid',
+    description: 'Подбор товаров по характеристикам и цене в каталоге Gorky Liquid.'
+  },
+  Product: {
+    title: 'Карточка товара | Gorky Liquid',
+    description: 'Характеристики, описание и наличие продукции Gorky Liquid.'
+  },
+  News: {
+    title: 'Новости и публикации | Gorky Liquid',
+    description: 'Новости компании, кейсы и экспертные материалы об аддитивных технологиях.'
+  },
+  Article: {
+    title: 'Публикация | Gorky Liquid',
+    description: 'Статья Gorky Liquid об аддитивных технологиях, оборудовании и материалах.'
+  },
+  Gallery: {
+    title: 'Галерея проектов | Gorky Liquid',
+    description: 'Примеры изделий и реализованных задач в области аддитивных технологий.'
+  },
+  MainStudy: {
+    title: 'Обучение аддитивным технологиям | Gorky Liquid',
+    description: 'Курсы и программы обучения по аддитивным технологиям и внедрению на производстве.'
+  },
+  MainPrint: {
+    title: 'Услуги 3D-печати | Gorky Liquid',
+    description: 'Услуги 3D-печати и консультации по подбору технологий и материалов.'
+  },
+  Innovations: {
+    title: 'IT-услуги и инновации | Gorky Liquid',
+    description: 'Разработка ПО, компьютерное зрение и нейросетевые решения для задач аддитивного производства.'
+  },
+  LegalPersonalDataPolicy: {
+    title: 'Политика ПДн | Gorky Liquid',
+    description: 'Политика обработки персональных данных на сайте Gorky Liquid.'
+  },
+  LegalPdConsent: {
+    title: 'Согласие на ПДн | Gorky Liquid',
+    description: 'Согласие пользователя на обработку персональных данных.'
+  },
+  LegalAdsConsent: {
+    title: 'Согласие на рассылку | Gorky Liquid',
+    description: 'Согласие на получение информационных и рекламных сообщений.'
+  },
+  LegalTermsOffer: {
+    title: 'Соглашение и оферта | Gorky Liquid',
+    description: 'Пользовательское соглашение и публичная оферта.'
+  },
+  LegalDeliveryPayment: {
+    title: 'Доставка и оплата | Gorky Liquid',
+    description: 'Условия оплаты, доставки и самовывоза продукции.'
+  },
+  LegalReturns: {
+    title: 'Возвраты и отмены | Gorky Liquid',
+    description: 'Порядок возврата и отмены заказа.'
+  }
+}
+
+function ensureMetaTag (name, attrName = 'name') {
   if (typeof document === 'undefined') {
     return null
   }
-  let meta = document.querySelector('meta[name="description"]')
+  let meta = document.querySelector(`meta[${attrName}="${name}"]`)
   if (!meta) {
     meta = document.createElement('meta')
-    meta.setAttribute('name', 'description')
+    meta.setAttribute(attrName, name)
     document.head.appendChild(meta)
   }
   return meta
+}
+
+function ensureRobotsMetaTag () {
+  return ensureMetaTag('robots', 'name')
+}
+
+function ensureOpenGraphMetaTag (propertyName) {
+  return ensureMetaTag(propertyName, 'property')
+}
+
+function ensureCanonicalLinkTag () {
+  if (typeof document === 'undefined') {
+    return null
+  }
+  let link = document.querySelector('link[rel="canonical"]')
+  if (!link) {
+    link = document.createElement('link')
+    link.setAttribute('rel', 'canonical')
+    document.head.appendChild(link)
+  }
+  return link
+}
+
+function ensureJsonLdScriptTag (id) {
+  if (typeof document === 'undefined') {
+    return null
+  }
+  let script = document.querySelector(`script[data-seo-jsonld="${id}"]`)
+  if (!script) {
+    script = document.createElement('script')
+    script.setAttribute('type', 'application/ld+json')
+    script.setAttribute('data-seo-jsonld', id)
+    document.head.appendChild(script)
+  }
+  return script
+}
+
+function isNoindexRoute (to) {
+  if (!to) {
+    return false
+  }
+  if (to.path.startsWith('/panel')) {
+    return true
+  }
+  const routeName = String(to.name || '')
+  if (NOINDEX_ROUTE_NAMES.has(routeName)) {
+    return true
+  }
+  return Boolean(to.meta && to.meta.noindex)
+}
+
+function resolveSeoMeta (to) {
+  const routeName = String(to && to.name ? to.name : '')
+  const mapped = ROUTE_SEO[routeName] || {}
+  const title = (to.meta && to.meta.title) || mapped.title || DEFAULT_TITLE
+  const description = (to.meta && to.meta.description) || mapped.description || DEFAULT_DESCRIPTION
+  return { title, description }
+}
+
+function buildCanonicalUrl (to) {
+  const routePath = String(to && to.path ? to.path : '/')
+  const normalizedPath = routePath.startsWith('/') ? routePath : `/${routePath}`
+  const suffix = normalizedPath === '/' ? '' : normalizedPath
+  return `${SITE_URL}${suffix}`
+}
+
+function buildBreadcrumbSchema (to, canonicalUrl) {
+  if (!to || !Array.isArray(to.matched) || !to.matched.length) {
+    return null
+  }
+  const items = to.matched
+    .filter((record) => record && record.path && !record.path.startsWith('/panel'))
+    .map((record, index) => {
+      const recordPath = String(record.path || '/').replace(/:([^/]+)/g, (match, paramName) => {
+        const value = to.params && Object.prototype.hasOwnProperty.call(to.params, paramName)
+          ? to.params[paramName]
+          : ''
+        return value ? String(value) : ''
+      })
+      const normalizedPath = recordPath.startsWith('/') ? recordPath : `/${recordPath}`
+      const url = `${SITE_URL}${normalizedPath === '/' ? '' : normalizedPath}`
+      return {
+        '@type': 'ListItem',
+        position: index + 1,
+        name: String(record.name || 'Страница'),
+        item: url
+      }
+    })
+  if (!items.length) {
+    return null
+  }
+  if (items.length) {
+    items[items.length - 1].item = canonicalUrl
+  }
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items
+  }
+}
+
+function updateJsonLd (to, canonicalUrl, title, description) {
+  const organizationScript = ensureJsonLdScriptTag('organization')
+  if (organizationScript) {
+    organizationScript.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'Gorky Liquid',
+      url: SITE_URL,
+      logo: `${SITE_URL}/favicon.ico`,
+      sameAs: [
+        'https://vk.com/gorky_liquid',
+        'https://dzen.ru/gorky_liquid'
+      ]
+    })
+  }
+
+  const webpageScript = ensureJsonLdScriptTag('webpage')
+  if (webpageScript) {
+    webpageScript.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: title,
+      description,
+      url: canonicalUrl
+    })
+  }
+
+  const breadcrumbs = buildBreadcrumbSchema(to, canonicalUrl)
+  const breadcrumbsScript = ensureJsonLdScriptTag('breadcrumbs')
+  if (breadcrumbsScript) {
+    breadcrumbsScript.textContent = breadcrumbs ? JSON.stringify(breadcrumbs) : ''
+  }
+}
+
+function triggerPrerenderReadyEvent () {
+  if (typeof window === 'undefined' || !window.__PRERENDER_INJECTED) {
+    return
+  }
+  const emit = () => document.dispatchEvent(new Event('app-rendered'))
+  if (typeof window.requestAnimationFrame === 'function') {
+    window.requestAnimationFrame(emit)
+    return
+  }
+  setTimeout(emit, 0)
 }
 
 router.afterEach((to) => {
   if (typeof document === 'undefined') {
     return
   }
-  const defaultTitle = 'gorkyliquid.ru'
-  const defaultDescription = 'ООО «НПП "3Д Аддитивные Технологии"»: смолы, филамент, оборудование, 3D-печать и обучение.'
-  const title = (to.meta && to.meta.title) || defaultTitle
-  const description = (to.meta && to.meta.description) || defaultDescription
+  const { title, description } = resolveSeoMeta(to)
+  const canonicalUrl = buildCanonicalUrl(to)
+  const robots = isNoindexRoute(to)
+    ? 'noindex,nofollow,noarchive'
+    : 'index,follow,max-image-preview:large'
+
   document.title = title
   const descriptionMeta = ensureDescriptionMetaTag()
   if (descriptionMeta) {
     descriptionMeta.setAttribute('content', description)
   }
-})
 
+  const robotsMeta = ensureRobotsMetaTag()
+  if (robotsMeta) {
+    robotsMeta.setAttribute('content', robots)
+  }
+
+  const canonicalLink = ensureCanonicalLinkTag()
+  if (canonicalLink) {
+    canonicalLink.setAttribute('href', canonicalUrl)
+  }
+
+  const ogTitle = ensureOpenGraphMetaTag('og:title')
+  const ogDescription = ensureOpenGraphMetaTag('og:description')
+  const ogUrl = ensureOpenGraphMetaTag('og:url')
+  const ogType = ensureOpenGraphMetaTag('og:type')
+  const twitterCard = ensureMetaTag('twitter:card', 'name')
+  if (ogTitle) {
+    ogTitle.setAttribute('content', title)
+  }
+  if (ogDescription) {
+    ogDescription.setAttribute('content', description)
+  }
+  if (ogUrl) {
+    ogUrl.setAttribute('content', canonicalUrl)
+  }
+  if (ogType) {
+    ogType.setAttribute('content', 'website')
+  }
+  if (twitterCard) {
+    twitterCard.setAttribute('content', 'summary_large_image')
+  }
+
+  updateJsonLd(to, canonicalUrl, title, description)
+  triggerPrerenderReadyEvent()
+})
 export default router
