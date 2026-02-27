@@ -20,8 +20,8 @@ export function createPanelArticle (payload) {
   return api.post('/api/articles/', payload)
 }
 
-export function generatePanelAiArticle (payload) {
-  return api.post('/api/articles/generate-ai/', payload)
+export function generatePanelAiArticle (payload, requestConfig = {}) {
+  return api.post('/api/articles/generate-ai/', payload, requestConfig)
 }
 
 export function updatePanelArticle (articleId, payload) {

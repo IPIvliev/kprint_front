@@ -22,6 +22,7 @@ import {
   createStudyManagerLesson,
   fetchCallbackCaptcha,
   fetchPanelArticles,
+  generatePanelAiArticle,
   fetchShopOrders,
   fetchShopPublicProduct,
   fetchStudyManagerLessons,
@@ -49,6 +50,14 @@ describe('panel service', () => {
     expect(apiMock.get).toHaveBeenCalledWith('/api/articles/')
     expect(apiMock.post).toHaveBeenCalledWith('/api/articles/', { title: 'A' })
     expect(apiMock.patch).toHaveBeenCalledWith('/api/articles/10/', { title: 'B' })
+  })
+
+  it('passes upload progress callbacks for AI article generation', async () => {
+    const payload = { append: vi.fn() }
+    const onUploadProgress = vi.fn()
+    await generatePanelAiArticle(payload, { onUploadProgress })
+
+    expect(apiMock.post).toHaveBeenCalledWith('/api/articles/generate-ai/', payload, { onUploadProgress })
   })
 
   it('works with study manager lessons endpoints', async () => {

@@ -394,6 +394,12 @@
                   <button type="button" class="btn btn--grayborder" @click="removeAiImage(idx)">Удалить</button>
                 </div>
               </div>
+              <div v-if="aiGenerating" class="panel__ai-progress">
+                <div class="panel__ai-progress-track">
+                  <span class="panel__ai-progress-value" :style="{ width: `${aiUploadProgress}%` }"></span>
+                </div>
+                <div class="panel__ai-progress-text">{{ aiUploadStatusText }}</div>
+              </div>
             </div>
             <div v-if="aiError" class="panel__table-text">{{ aiError }}</div>
           </div>
@@ -525,6 +531,7 @@ export default {
       isEditing: false,
       saving: false,
       aiGenerating: false,
+      aiUploadProgress: 0,
       aiError: '',
       aiBrief: '',
       aiImages: [],
@@ -562,6 +569,12 @@ export default {
   computed: {
     trimmedNewTagTitle () {
       return String(this.newTagTitle || '').trim()
+    },
+    aiUploadStatusText () {
+      if (this.aiUploadProgress >= 100) {
+        return 'Изображения загружены. Ожидаем ответ сервера...'
+      }
+      return `Загрузка изображений: ${this.aiUploadProgress}%`
     },
     filteredArticles () {
       const term = this.searchTerm.trim().toLowerCase()
@@ -781,11 +794,25 @@ export default {
       this.aiImages = []
       this.aiError = ''
       this.aiGenerating = false
+      this.resetAiUploadState()
       this.showAiModal = true
     },
     closeAiGenerator () {
       this.showAiModal = false
       this.aiError = ''
+      this.resetAiUploadState()
+    },
+    resetAiUploadState () {
+      this.aiUploadProgress = 0
+    },
+    handleAiUploadProgress (event) {
+      const loaded = Number(event && event.loaded)
+      const total = Number(event && event.total)
+      if (!Number.isFinite(loaded) || !Number.isFinite(total) || total <= 0) {
+        return
+      }
+      const nextProgress = Math.round((loaded / total) * 100)
+      this.aiUploadProgress = Math.max(0, Math.min(100, nextProgress))
     },
     triggerAiImageSelect () {
       if (this.$refs.aiImageInput) {
@@ -833,11 +860,14 @@ export default {
       this.aiGenerating = true
       this.aiError = ''
       this.error = ''
+      this.resetAiUploadState()
       try {
         const payload = new FormData()
         payload.append('brief', brief)
         this.aiImages.forEach((file) => payload.append('images', file))
-        await generatePanelAiArticle(payload)
+        await generatePanelAiArticle(payload, {
+          onUploadProgress: (event) => this.handleAiUploadProgress(event)
+        })
         this.closeAiGenerator()
         await this.fetchArticles()
       } catch (err) {
@@ -1643,6 +1673,32 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.panel__ai-progress {
+  margin-top: 12px;
+}
+
+.panel__ai-progress-track {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: #e4e7ec;
+  overflow: hidden;
+}
+
+.panel__ai-progress-value {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #d83a56 0%, #f76f4f 100%);
+  transition: width 0.2s ease;
+}
+
+.panel__ai-progress-text {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #475467;
 }
 
 @media (max-width: 1199.98px) {
