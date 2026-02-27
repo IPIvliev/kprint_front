@@ -21,7 +21,9 @@ export const catalog = {
       state.products = productsData.map(product => {
         return {
           id: product.id,
+          slug: product.slug,
           category: product.category,
+          category_slug: product.category_slug,
           name: product.name,
           description: product.description,
           price: product.price,
@@ -49,9 +51,11 @@ export const catalog = {
       commit('setProductsData', response.data)
     },
     async fetchCategoryProducts ({ commit }, payload) {
-      const categoryId = typeof payload === 'object' && payload !== null ? payload.id : payload
+      const categoryLookup = typeof payload === 'object' && payload !== null
+        ? (payload.slug || payload.id)
+        : payload
       const params = typeof payload === 'object' && payload !== null ? (payload.params || {}) : {}
-      const response = await fetchShopCategoryProducts(categoryId, params)
+      const response = await fetchShopCategoryProducts(categoryLookup, params)
       commit('setProductsData', response.data.products || [])
       commit('setFacetsData', response.data.facets || null)
     },

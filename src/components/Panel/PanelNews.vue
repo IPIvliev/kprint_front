@@ -672,14 +672,12 @@ export default {
     },
     newsLink (article) {
       const id = article.id || article.pk
-      if (!id) {
+      const rawSlug = String((article && article.slug) || '').trim()
+      const lookup = rawSlug || (id ? String(id) : '')
+      if (!lookup) {
         return '/news'
       }
-      const rawSlug = String((article && article.slug) || '').trim()
-      if (!rawSlug) {
-        return `/news/${id}`
-      }
-      return `/news/${id}/${encodeURIComponent(rawSlug)}`
+      return `/news/${encodeURIComponent(lookup)}`
     },
     normalizeDate (value) {
       if (!value) {

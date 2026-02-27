@@ -206,9 +206,8 @@ export default {
   name: 'ArticlePage',
   components: { Swiper, SwiperSlide, ArticleCard },
   data () {
-    const parsedId = Number(this.$route.params.id)
     return {
-      id: Number.isFinite(parsedId) ? parsedId : null,
+      articleLookup: String(this.$route.params.articleSlug || '').trim(),
       article: {},
       relatedArticles: [],
       loadingRelated: false,
@@ -258,9 +257,8 @@ export default {
     }
   },
   watch: {
-    '$route.params.id' (nextId) {
-      const parsedId = Number(nextId)
-      this.id = Number.isFinite(parsedId) ? parsedId : null
+    '$route.params.articleSlug' (nextLookup) {
+      this.articleLookup = String(nextLookup || '').trim()
       this.loadArticle()
     }
   },
@@ -269,12 +267,12 @@ export default {
   },
   methods: {
     async loadArticle () {
-      if (!this.id) {
+      if (!this.articleLookup) {
         this.$router.replace('/news')
         return
       }
       try {
-        const article = await this.$store.dispatch('news/fetchArticle', { id: this.id })
+        const article = await this.$store.dispatch('news/fetchArticle', { slug: this.articleLookup })
         this.article = article || {}
         this.ensureCanonicalArticleUrl()
         await this.fetchRelatedArticles()
@@ -299,33 +297,18 @@ export default {
       }
     },
     ensureCanonicalArticleUrl () {
-      const articleId = Number(this.article && this.article.id)
-      if (!Number.isFinite(articleId) || articleId <= 0) {
+      const canonicalLookup = String((this.article && this.article.slug) || (this.article && this.article.id) || '').trim()
+      if (!canonicalLookup) {
         return
       }
-      const targetSlug = String((this.article && this.article.slug) || '').trim()
-      const currentId = Number(this.$route.params.id)
-      const currentSlug = String(this.$route.params.slug || '').trim()
-
-      if (!targetSlug) {
-        if (currentSlug) {
-          this.$router.replace({
-            name: 'Article',
-            params: { id: String(articleId) },
-            query: this.$route.query,
-            hash: this.$route.hash
-          })
-        }
-        return
-      }
-
-      if (currentId === articleId && currentSlug === targetSlug) {
+      const currentLookup = String(this.$route.params.articleSlug || '').trim()
+      if (currentLookup === canonicalLookup) {
         return
       }
 
       this.$router.replace({
         name: 'Article',
-        params: { id: String(articleId), slug: targetSlug },
+        params: { articleSlug: canonicalLookup },
         query: this.$route.query,
         hash: this.$route.hash
       })

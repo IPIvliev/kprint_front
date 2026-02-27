@@ -13,7 +13,7 @@
       <tbody>
         <tr class="gray_background align-middle" v-for="cartProduct in getCartProducts" :key="cartProduct.id">
           <td class="">
-            <router-link :to="{path: '/shop/categories/' + cartProduct.category + '/' + cartProduct.id }">
+            <router-link :to="{ path: cartProductPath(cartProduct) }">
               <img class="table_img" :src="cartProduct.photo" width="80" height="80" />
             </router-link>
             <p class="product_name">{{ cartProduct.title }}</p>
@@ -38,6 +38,7 @@
 import { mapGetters } from 'vuex'
 
 import ProductAmount from '@/components/elements/Shop/ProductAmount.vue'
+import { buildPublicSlug } from '@/utils/slug'
 
 export default {
   components: { ProductAmount },
@@ -59,6 +60,11 @@ export default {
     })
   },
   methods: {
+    cartProductPath (cartProduct) {
+      const categorySlug = cartProduct?.category_slug || cartProduct?.category
+      const productSlug = cartProduct?.slug || buildPublicSlug(cartProduct?.title, cartProduct?.id, 'product')
+      return `/shop/categories/${categorySlug}/${productSlug}`
+    },
     deleteItemFromCart (cartProduct) {
       this.$store.dispatch('shop/DeleteItemFromCart', cartProduct)
     }

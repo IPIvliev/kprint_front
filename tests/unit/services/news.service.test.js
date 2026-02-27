@@ -26,9 +26,9 @@ describe('news service', () => {
     })
   })
 
-  it('requests article by id', async () => {
-    await fetchNewsArticle(42)
-    expect(publicApiMock.get).toHaveBeenCalledWith('/api/articles/42/')
+  it('requests article by slug', async () => {
+    await fetchNewsArticle('release-2026')
+    expect(publicApiMock.get).toHaveBeenCalledWith('/api/articles/release-2026/')
   })
 
   it('requests news categories', async () => {

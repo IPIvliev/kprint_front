@@ -150,16 +150,17 @@
             </div>
             <div class="panel__formrow">
               <label>Описание</label>
-              <textarea v-model="form.description" class="form-control" rows="6" placeholder="Описание урока"></textarea>
+              <RichTextEditor
+                v-model="form.description"
+                :min-height="200"
+              />
             </div>
             <div class="panel__formrow">
               <label>Текст урока</label>
-              <textarea
+              <RichTextEditor
                 v-model="form.text_content"
-                class="form-control"
-                rows="8"
-                placeholder="Текст урока (будет доступен ученику)"
-              ></textarea>
+                :min-height="260"
+              />
             </div>
             <div class="panel__formrow">
               <label>Ссылка на видео</label>
@@ -211,6 +212,7 @@
 
 <script>
 import MenuBlock from '../elements/Panel/MenuBlock.vue'
+import RichTextEditor from '@/components/elements/Panel/RichTextEditor.vue'
 import {
   createStudyManagerLesson,
   deleteStudyManagerLesson,
@@ -222,7 +224,7 @@ import {
 
 export default {
   name: 'StudyLessons',
-  components: { MenuBlock },
+  components: { MenuBlock, RichTextEditor },
   data () {
     return {
       lessons: [],

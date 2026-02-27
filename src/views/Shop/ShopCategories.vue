@@ -36,9 +36,18 @@ export default {
     CategoryCard
   },
   computed: {
+    currentCategory () {
+      const lookup = String(this.$route.params.categorySlug || '').trim()
+      if (!lookup) {
+        return null
+      }
+      return this.$store.state.catalog.categories.find((category) => {
+        return String(category.slug || '').trim() === lookup || String(category.id) === lookup
+      }) || null
+    },
     FilterCategories () {
-      if (this.$route.params.id) {
-        return this.$store.state.catalog.categories.filter(category => category.parent === parseInt(this.$route.params.id))
+      if (this.currentCategory) {
+        return this.$store.state.catalog.categories.filter(category => category.parent === this.currentCategory.id)
       }
       return this.$store.state.catalog.categories.filter(category => category.level === 0)
     }

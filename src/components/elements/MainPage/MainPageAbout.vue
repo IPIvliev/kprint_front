@@ -12,9 +12,9 @@
                 </div>
               </div>
               <div class="about__block about__block--2 about-company__fact">
-                <div class="about__blcoktitle"><span>ПО + R&amp;D</span></div>
+                <div class="about__blcoktitle"><span>НИОКР</span></div>
                 <div class="about__blocktext">
-                  Исследуем аддитивные технологии и внедряем результаты в рабочие цифровые продукты.
+                  Исследуем аддитивные технологии и внедряем результаты.
                 </div>
               </div>
               <div class="about__block about__block--3 about-company__fact">

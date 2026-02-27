@@ -17,6 +17,7 @@ export const study = {
       state.courses = coursesData.map(course => {
         return {
           id: course.id,
+          slug: course.slug,
           name: course.name,
           description: course.description,
           price: course.price,

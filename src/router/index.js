@@ -73,17 +73,17 @@ const routes = [
         component: () => import('@/views/Shop/ShopCategories.vue')
       },
       {
-        path: 'categories/:id',
+        path: 'categories/:categorySlug',
         name: 'Categories',
         component: () => import('@/views/Shop/ShopCategories.vue')
       },
       {
-        path: 'categories/:id/:productid',
+        path: 'categories/:categorySlug/:productSlug',
         name: 'Product',
         component: () => import('@/views/Shop/ProductPage.vue')
       },
       {
-        path: 'categories/:id/showcase',
+        path: 'categories/:categorySlug/showcase',
         name: 'Showcase',
         component: () => import('@/views/Shop/MainShop.vue')
       },
@@ -108,7 +108,7 @@ const routes = [
         component: () => import('../views/Study/MainStudy.vue')
       },
       {
-        path: 'course/:id',
+        path: 'course/:courseSlug',
         name: 'CoursePage',
         component: () => import('@/views/Study/CoursePage.vue')
       }
@@ -121,9 +121,20 @@ const routes = [
     component: () => import('../views/Print/MainPrint.vue')
   },
   {
-    path: '/news/:id(\\d+)/:slug?',
+    path: '/news/:articleSlug',
     name: 'Article',
     component: Article
+  },
+  {
+    path: '/news/:legacyId(\\d+)/:legacySlug?',
+    redirect: (to) => ({
+      name: 'Article',
+      params: {
+        articleSlug: to.params.legacySlug || to.params.legacyId
+      },
+      query: to.query,
+      hash: to.hash
+    })
   },
   {
     path: '/gallery',
@@ -799,20 +810,26 @@ async function fetchSeoEntity (cacheKey, requestPath) {
 async function resolveEntitySchema (to, canonicalUrl) {
   const routeName = String(to && to.name ? to.name : '')
   if (routeName === 'Product') {
-    const productId = toPositiveInteger(to && to.params && to.params.productid)
-    if (!productId) {
+    const productSlug = String(to && to.params && to.params.productSlug ? to.params.productSlug : '').trim()
+    if (!productSlug) {
       return null
     }
-    const payload = await fetchSeoEntity(`product:${productId}`, `/api/shop/products/${productId}`)
+    const payload = await fetchSeoEntity(
+      `product:${productSlug}`,
+      `/api/shop/products/${encodeURIComponent(productSlug)}`
+    )
     return buildProductSchema(payload, canonicalUrl)
   }
 
   if (routeName === 'Article') {
-    const articleId = toPositiveInteger(to && to.params && to.params.id)
-    if (!articleId) {
+    const articleSlug = String(to && to.params && to.params.articleSlug ? to.params.articleSlug : '').trim()
+    if (!articleSlug) {
       return null
     }
-    const payload = await fetchSeoEntity(`article:${articleId}`, `/api/articles/${articleId}/`)
+    const payload = await fetchSeoEntity(
+      `article:${articleSlug}`,
+      `/api/articles/${encodeURIComponent(articleSlug)}/`
+    )
     return buildArticleSchema(payload, canonicalUrl)
   }
 

@@ -159,7 +159,10 @@
             </div>
             <div class="panel__formrow">
               <label>Описание</label>
-              <textarea v-model="form.description" class="form-control" rows="6" placeholder="Описание товара"></textarea>
+              <RichTextEditor
+                v-model="form.description"
+                :min-height="200"
+              />
             </div>
             <div class="panel__formrow">
               <label>Обложка товара</label>
@@ -279,6 +282,7 @@
 
 <script>
 import MenuBlock from '../elements/Panel/MenuBlock.vue'
+import RichTextEditor from '@/components/elements/Panel/RichTextEditor.vue'
 import {
   createShopManagerFilterAttrValue,
   createShopManagerProduct,
@@ -297,7 +301,7 @@ import {
 
 export default {
   name: 'ShopProducts',
-  components: { MenuBlock },
+  components: { MenuBlock, RichTextEditor },
   data () {
     return {
       products: [],

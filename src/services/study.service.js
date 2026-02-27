@@ -11,9 +11,9 @@ export function fetchStudyCourses () {
 }
 
 /**
- * @param {number|string} courseId
+ * @param {number|string} courseSlug
  * @returns {Promise<import('axios').AxiosResponse<StudyCourseResponse>>}
  */
-export function fetchStudyCourse (courseId) {
-  return publicApi.get(`/api/study/course/${Number(courseId)}`)
+export function fetchStudyCourse (courseSlug) {
+  return publicApi.get(`/api/study/course/${encodeURIComponent(String(courseSlug || ''))}`)
 }

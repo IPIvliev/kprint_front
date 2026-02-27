@@ -23,7 +23,9 @@ export const shop = {
         }
         items.push({
           id: product.id,
+          slug: product.slug,
           category: product.category,
+          category_slug: product.category_slug,
           title: product.name,
           price: product.price,
           photo: product.photo,

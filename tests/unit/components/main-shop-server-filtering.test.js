@@ -23,8 +23,8 @@ describe('shop catalog server-side filtering integration', () => {
   it('passes query params to category products endpoint in catalog service', () => {
     const source = fs.readFileSync(catalogServicePath, 'utf8')
 
-    expect(source).toContain('export function fetchShopCategoryProducts (categoryId, params = {})')
-    expect(source).toContain('publicApi.get(`/api/shop/categories/${Number(categoryId)}`, { params })')
+    expect(source).toContain('export function fetchShopCategoryProducts (categorySlug, params = {})')
+    expect(source).toContain("publicApi.get(`/api/shop/categories/${encodeURIComponent(String(categorySlug || ''))}`, { params })")
   })
 
   it('stores facets metadata in catalog store module', () => {

@@ -5,7 +5,7 @@
         <h1 class="title">Список курсов</h1>
 
           <div class="cource" v-for="course in CoursesList" :key="course.id">
-            <router-link :to="{path: '/study/course/' + course.id }">
+            <router-link :to="{path: '/study/course/' + (course.slug || course.id) }">
               <div class="row">
                 <div class="col-lg-3">
                   <img class="course_photo" :src="course.photo" width="340" height="200">

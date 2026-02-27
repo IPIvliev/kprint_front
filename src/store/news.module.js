@@ -123,13 +123,13 @@ export const news = {
       }
     },
     setArticleCache (state, payload) {
-      const id = Number(payload?.id)
-      if (!Number.isFinite(id) || id <= 0) {
+      const key = String(payload?.key || '').trim()
+      if (!key) {
         return
       }
       state.article_cache = {
         ...state.article_cache,
-        [id]: payload.article || null
+        [key]: payload.article || null
       }
     }
   },
@@ -165,23 +165,35 @@ export const news = {
       return normalized
     },
     async fetchArticle ({ commit, state }, payload) {
-      const articleId = Number(typeof payload === 'object' ? payload?.id : payload)
+      const articleLookup = typeof payload === 'object'
+        ? (payload?.slug || payload?.id)
+        : payload
+      const lookupKey = String(articleLookup || '').trim()
       const force = typeof payload === 'object' && payload?.force === true
-      if (!Number.isFinite(articleId) || articleId <= 0) {
+      if (!lookupKey) {
         return null
       }
 
-      if (!force && state.article_cache[articleId]) {
-        const cached = state.article_cache[articleId]
+      if (!force && state.article_cache[lookupKey]) {
+        const cached = state.article_cache[lookupKey]
         commit('setActiveArticle', cached)
         return cached
       }
 
-      const response = await fetchNewsArticle(articleId)
+      const response = await fetchNewsArticle(lookupKey)
       const article = response?.data || null
       commit('setActiveArticle', article)
-      if (article && article.id) {
-        commit('setArticleCache', { id: article.id, article })
+      if (article) {
+        const cacheKeys = new Set([lookupKey])
+        if (article.id) {
+          cacheKeys.add(String(article.id))
+        }
+        if (article.slug) {
+          cacheKeys.add(String(article.slug))
+        }
+        cacheKeys.forEach((key) => {
+          commit('setArticleCache', { key, article })
+        })
       }
       return article
     }

@@ -27,14 +27,12 @@ export default {
   computed: {
     linkOpen () {
       const id = this.article && this.article.id
-      if (!id) {
+      const rawSlug = String((this.article && this.article.slug) || '').trim()
+      const lookup = rawSlug || (id ? String(id) : '')
+      if (!lookup) {
         return '/news'
       }
-      const rawSlug = String((this.article && this.article.slug) || '').trim()
-      if (!rawSlug) {
-        return `/news/${id}`
-      }
-      return `/news/${id}/${encodeURIComponent(rawSlug)}`
+      return `/news/${encodeURIComponent(lookup)}`
     },
     image () {
       return this.article.article_image || ''

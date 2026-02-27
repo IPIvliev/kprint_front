@@ -10,7 +10,7 @@
             <span class="arrow">></span>
             <router-link to="/shop">Магазин</router-link>
             <span class="arrow">></span>
-            <router-link :to="{ path: '/shop/categories/' + Category.id + '/showcase' }">{{ Category.title }}</router-link>
+            <router-link :to="{ path: '/shop/categories/' + categorySlug + '/showcase' }">{{ Category.title }}</router-link>
           </div>
           <h1 class="title">Каталог продукции</h1>
           <p class="news__text">
@@ -112,8 +112,8 @@ export default {
     }
   },
   computed: {
-    categoryId () {
-      return Number(this.$route.params.id || 0)
+    categoryLookup () {
+      return String(this.$route.params.categorySlug || '').trim()
     },
     ProductsList () {
       return this.$store.state.catalog.products
@@ -145,9 +145,13 @@ export default {
       return pages
     },
     Category () {
-      return this.$store.state.catalog.categories.find(
-        category => category.id === this.categoryId
-      ) || { filter_attrs: [], id: this.categoryId, title: '' }
+      const lookup = this.categoryLookup
+      return this.$store.state.catalog.categories.find((category) => {
+        return String(category.slug || '').trim() === lookup || String(category.id) === lookup
+      }) || { filter_attrs: [], id: null, slug: lookup, title: '' }
+    },
+    categorySlug () {
+      return this.Category.slug || this.categoryLookup
     },
     catalogFacets () {
       return this.$store.state.catalog.facets || null
@@ -157,7 +161,7 @@ export default {
     ProductsList () {
       this.syncCurrentPage()
     },
-    '$route.params.id': {
+    '$route.params.categorySlug': {
       async handler () {
         this.filters = []
         this.priceFilter = { from: '', to: '' }
@@ -208,7 +212,7 @@ export default {
     },
     async loadCategoryProducts () {
       await this.$store.dispatch('catalog/fetchCategoryProducts', {
-        id: this.categoryId,
+        slug: this.categorySlug,
         filters: this.filters,
         price_from: this.priceFilter.from,
         price_to: this.priceFilter.to,

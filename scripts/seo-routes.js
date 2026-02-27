@@ -216,27 +216,29 @@ async function collectDynamicRoutes () {
 
   const categories = await requestListWithFallback(apiBases, '/api/shop/categories', null, requestContext)
   categories.forEach((category) => {
-    const categoryId = asId(category && category.id)
-    if (!categoryId) {
+    const categorySlug = String(
+      (category && (category.slug || category.id)) || ''
+    ).trim()
+    if (!categorySlug) {
       return
     }
-    dynamicRoutes.push(`/shop/categories/${categoryId}`)
-    dynamicRoutes.push(`/shop/categories/${categoryId}/showcase`)
+    const encodedCategorySlug = encodeURIComponent(categorySlug)
+    dynamicRoutes.push(`/shop/categories/${encodedCategorySlug}`)
+    dynamicRoutes.push(`/shop/categories/${encodedCategorySlug}/showcase`)
   })
 
   const products = await requestListWithFallback(apiBases, '/api/shop/products', null, requestContext)
   products.forEach((product) => {
-    const productId = asId(product && product.id)
-    const categorySource = product && product.category
-    const categoryId = asId(
-      categorySource && typeof categorySource === 'object'
-        ? categorySource.id || categorySource.pk
-        : categorySource
-    )
-    if (!productId || !categoryId) {
+    const productSlug = String((product && (product.slug || product.id)) || '').trim()
+    const categorySlug = String(
+      (product && (product.category_slug || product.category)) || ''
+    ).trim()
+    if (!productSlug || !categorySlug) {
       return
     }
-    dynamicRoutes.push(`/shop/categories/${categoryId}/${productId}`)
+    dynamicRoutes.push(
+      `/shop/categories/${encodeURIComponent(categorySlug)}/${encodeURIComponent(productSlug)}`
+    )
   })
 
   const articleCategories = await requestListWithFallback(apiBases, '/api/article-categories/', null, requestContext)
@@ -250,16 +252,11 @@ async function collectDynamicRoutes () {
 
   const articles = await requestListWithFallback(apiBases, '/api/articles/', null, requestContext)
   articles.forEach((article) => {
-    const articleId = asId(article && article.id)
-    if (!articleId) {
+    const articleLookup = String((article && (article.slug || article.id)) || '').trim()
+    if (!articleLookup) {
       return
     }
-    const slug = String(article && article.slug ? article.slug : '').trim()
-    if (slug) {
-      dynamicRoutes.push(`/news/${articleId}/${encodeURIComponent(slug)}`)
-    } else {
-      dynamicRoutes.push(`/news/${articleId}`)
-    }
+    dynamicRoutes.push(`/news/${encodeURIComponent(articleLookup)}`)
     const tags = Array.isArray(article && article.tags) ? article.tags : []
     tags.forEach((tag) => {
       const tagSlug = String(tag && typeof tag === 'object' ? tag.slug : '').trim()
@@ -271,11 +268,11 @@ async function collectDynamicRoutes () {
 
   const studyCourses = await requestListWithFallback(apiBases, '/api/study/courses', null, requestContext)
   studyCourses.forEach((course) => {
-    const courseId = asId(course && course.id)
-    if (!courseId) {
+    const courseSlug = String((course && (course.slug || course.id)) || '').trim()
+    if (!courseSlug) {
       return
     }
-    dynamicRoutes.push(`/study/course/${courseId}`)
+    dynamicRoutes.push(`/study/course/${encodeURIComponent(courseSlug)}`)
   })
 
   return uniqueRoutes(dynamicRoutes)

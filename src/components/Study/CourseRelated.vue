@@ -14,7 +14,7 @@
             class="mySwiper"
           >
             <swiper-slide v-for="course in related" :key="course.id">
-              <router-link :to="{path: '/study/course/' + course.id }">
+              <router-link :to="{path: '/study/course/' + (course.slug || course.id) }">
                 <div class="cource">
                   <div class="row">
                     <div class="col-lg-3">

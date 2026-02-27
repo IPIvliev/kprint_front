@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{path: '/shop/categories/' + product.category + '/' + product.id }" class="cmp-components-elements-shop-showcase-productcard">
+  <router-link :to="{ path: productPath(product) }" class="cmp-components-elements-shop-showcase-productcard">
       <div class="item-card-shop">
         <div class="div-shop-item">
           <div class="img-shop-item">
@@ -52,6 +52,7 @@
 
 <script>
 import ProductStock from '@/components/elements/Shop/ProductStock.vue'
+import { buildPublicSlug } from '@/utils/slug'
 
 export default {
   props: ['product'],
@@ -82,6 +83,11 @@ export default {
       price = String(price).split('.')
       price = price[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
       return price
+    },
+    productPath (product) {
+      const categorySlug = product?.category_slug || product?.category
+      const productSlug = product?.slug || buildPublicSlug(product?.name, product?.id, 'product')
+      return `/shop/categories/${categorySlug}/${productSlug}`
     }
   }
 }

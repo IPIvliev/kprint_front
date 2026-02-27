@@ -40,17 +40,17 @@ describe('public and delivery services', () => {
   it('uses public endpoints for catalog and study', async () => {
     await fetchShopCategories()
     await fetchShopProducts()
-    await fetchShopCategoryProducts('12')
-    await fetchShopProduct('17')
+    await fetchShopCategoryProducts('filamenty')
+    await fetchShopProduct('pla-17')
     await fetchStudyCourses()
-    await fetchStudyCourse('4')
+    await fetchStudyCourse('cad-course-4')
 
     expect(publicApiMock.get).toHaveBeenCalledWith('/api/shop/categories')
     expect(publicApiMock.get).toHaveBeenCalledWith('/api/shop/products')
-    expect(publicApiMock.get).toHaveBeenCalledWith('/api/shop/categories/12', { params: {} })
-    expect(publicApiMock.get).toHaveBeenCalledWith('/api/shop/products/17')
+    expect(publicApiMock.get).toHaveBeenCalledWith('/api/shop/categories/filamenty', { params: {} })
+    expect(publicApiMock.get).toHaveBeenCalledWith('/api/shop/products/pla-17')
     expect(publicApiMock.get).toHaveBeenCalledWith('/api/study/courses')
-    expect(publicApiMock.get).toHaveBeenCalledWith('/api/study/course/4')
+    expect(publicApiMock.get).toHaveBeenCalledWith('/api/study/course/cad-course-4')
   })
 
   it('passes query params for companies, gallery and delivery', async () => {

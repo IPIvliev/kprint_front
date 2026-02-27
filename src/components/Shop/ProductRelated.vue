@@ -32,18 +32,16 @@ import 'swiper/css/pagination'
 export default {
   props: ['background', 'related'],
   components: { Swiper, SwiperSlide, ProductCard },
-  data () {
-    return {
-      id: this.$route.params.id
-    }
-  },
   created () {
-    this.$store.dispatch('catalog/fetchCategoryProducts', this.id)
+    this.$store.dispatch('catalog/fetchCategoryProducts', this.$route.params.categorySlug)
   },
   computed: {
     GetCategoryProducts () {
-      const currentProductId = Number(this.$route.params.productid)
-      return this.$store.state.catalog.products.filter((product) => product.id !== currentProductId)
+      const routeLookup = String(this.$route.params.productSlug || '').trim()
+      return this.$store.state.catalog.products.filter((product) => {
+        const productLookup = String(product.slug || product.id || '').trim()
+        return productLookup !== routeLookup
+      })
     }
   }
 }

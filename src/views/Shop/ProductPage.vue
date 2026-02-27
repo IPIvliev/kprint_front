@@ -9,7 +9,7 @@
             <span class="arrow">></span>
             <router-link to="/shop">Магазин</router-link>
             <span class="arrow">></span>
-            <router-link :to="{ path: '/shop/categories/' + GetProduct.category + '/showcase' }">{{ GetProduct.category_title }}</router-link>
+            <router-link :to="{ path: categoryShowcasePath }">{{ GetProduct.category_title }}</router-link>
           </div>
           <h1 class="title">{{ GetProduct.name }}</h1>
         </div>
@@ -39,7 +39,7 @@ export default {
   components: { HeaderBlock, ProductDescription, ProductVideos, ProductFeedbacks, ProductRelated, WhiteWelcome, FooterBlock },
   data () {
     return {
-      id: this.$route.params.productid
+      id: this.$route.params.productSlug
     }
   },
   created () {
@@ -48,13 +48,17 @@ export default {
   computed: {
     GetProduct () {
       return this.$store.state.catalog.product
+    },
+    categoryShowcasePath () {
+      const categorySlug = this.GetProduct?.category_slug || this.GetProduct?.category || this.$route.params.categorySlug
+      return `/shop/categories/${categorySlug}/showcase`
     }
   },
   watch: {
-    '$route.params.productid': {
+    '$route.params.productSlug': {
       immediate: true,
-      handler (id) {
-        this.$store.dispatch('catalog/fetchProduct', id)
+      handler (productSlug) {
+        this.$store.dispatch('catalog/fetchProduct', productSlug)
       }
     }
   }

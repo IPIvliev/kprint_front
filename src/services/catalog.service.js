@@ -18,18 +18,18 @@ export function fetchShopProducts () {
 }
 
 /**
- * @param {number|string} categoryId
+ * @param {number|string} categorySlug
  * @param {Record<string, any>} params
  * @returns {Promise<import('axios').AxiosResponse<ShopCategoryProductsResponse>>}
  */
-export function fetchShopCategoryProducts (categoryId, params = {}) {
-  return publicApi.get(`/api/shop/categories/${Number(categoryId)}`, { params })
+export function fetchShopCategoryProducts (categorySlug, params = {}) {
+  return publicApi.get(`/api/shop/categories/${encodeURIComponent(String(categorySlug || ''))}`, { params })
 }
 
 /**
- * @param {number|string} productId
+ * @param {number|string} productSlug
  * @returns {Promise<import('axios').AxiosResponse<ShopProductResponse>>}
  */
-export function fetchShopProduct (productId) {
-  return publicApi.get(`/api/shop/products/${Number(productId)}`)
+export function fetchShopProduct (productSlug) {
+  return publicApi.get(`/api/shop/products/${encodeURIComponent(String(productSlug || ''))}`)
 }

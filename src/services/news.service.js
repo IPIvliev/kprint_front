@@ -4,8 +4,8 @@ export function fetchNewsArticles (params = {}) {
   return publicApi.get('/api/articles/', { params })
 }
 
-export function fetchNewsArticle (articleId) {
-  return publicApi.get(`/api/articles/${Number(articleId)}/`)
+export function fetchNewsArticle (articleSlug) {
+  return publicApi.get(`/api/articles/${encodeURIComponent(String(articleSlug || ''))}/`)
 }
 
 export function fetchNewsCategories (params = {}) {

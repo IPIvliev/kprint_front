@@ -300,6 +300,7 @@
 <script>
 import { fetchShopCategories, fetchShopProducts } from '@/services/catalog.service'
 import { DEFAULT_MAIN_OFFICE_PHONE, getContactOfficesData, phoneToTelHref } from '@/services/contact-office.service'
+import { buildPublicSlug } from '@/utils/slug'
 import printerFallbackOne from '@/assets/img/printer_1.png'
 import printerFallbackTwo from '@/assets/img/printer_2.png'
 import productFallbackImage from '@/assets/img/polymer.png'
@@ -423,19 +424,19 @@ export default {
       return raw.startsWith('/') ? `${base}${raw}` : `${base}/${raw}`
     },
     shopCategoryRoute (category) {
-      const categoryId = Number(category?.id || 0)
-      if (!categoryId) {
+      const categorySlug = String(category?.slug || category?.id || '').trim()
+      if (!categorySlug) {
         return '/shop'
       }
-      return `/shop/categories/${categoryId}/showcase`
+      return `/shop/categories/${categorySlug}/showcase`
     },
     shopProductRoute (product) {
-      const productId = Number(product?.id || 0)
-      const categoryId = Number(product?.category || 0)
-      if (!productId || !categoryId) {
+      const categorySlug = String(product?.category_slug || product?.category || '').trim()
+      const productSlug = String(product?.slug || buildPublicSlug(product?.name, product?.id, 'product')).trim()
+      if (!categorySlug || !productSlug) {
         return '/shop'
       }
-      return `/shop/categories/${categoryId}/${productId}`
+      return `/shop/categories/${categorySlug}/${productSlug}`
     },
     categoryCardImage (category, index) {
       const fallback = index % 2 === 0 ? printerFallbackOne : printerFallbackTwo
