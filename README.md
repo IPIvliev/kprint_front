@@ -57,3 +57,15 @@ Detailed policy and rollout plan: `docs/testing-strategy.md`.
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Deploy to Jino Shared Hosting
+1. Configure production env in `.env.production` (already prepared for `gorkyliquid.ru` / `bk.gorkyliquid.ru`).
+2. Build frontend:
+```bash
+npm install
+npm run build
+```
+3. Upload the **contents** of `dist/` to your domain web root on Jino (`public_html` or configured site folder).
+4. Keep `.htaccess` from `dist/` to enable SPA history fallback (`/news/...`, `/shop/...` direct links).
+5. After upload, verify:
+`/`, `/shop`, `/news`, `/dealers`, `/sitemap.xml`, `/robots.txt`.

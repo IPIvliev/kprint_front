@@ -8,27 +8,65 @@ const CACHE_DIR = path.resolve(__dirname, '..', '.cache')
 const CACHE_FILE = path.join(CACHE_DIR, 'seo-routes.json')
 const ENV_FILE = path.resolve(__dirname, '..', '.env')
 
-function loadDotEnvConfig () {
-  if (!fs.existsSync(ENV_FILE)) {
-    return
-  }
-  const source = fs.readFileSync(ENV_FILE, 'utf8')
-  source
+function parseDotEnvSource (source) {
+  return String(source || '')
     .split(/\r?\n/)
     .map((line) => line.trim())
     .filter((line) => line && !line.startsWith('#') && line.includes('='))
-    .forEach((line) => {
+    .reduce((acc, line) => {
       const separatorIndex = line.indexOf('=')
       const key = line.slice(0, separatorIndex).trim()
       const rawValue = line.slice(separatorIndex + 1).trim()
-      if (!key || Object.prototype.hasOwnProperty.call(process.env, key)) {
-        return
+      if (!key) {
+        return acc
       }
       const unquoted = rawValue
         .replace(/^"(.*)"$/, '$1')
         .replace(/^'(.*)'$/, '$1')
-      process.env[key] = unquoted
-    })
+      acc[key] = unquoted
+      return acc
+    }, {})
+}
+
+function readDotEnvFile (filePath) {
+  if (!fs.existsSync(filePath)) {
+    return {}
+  }
+  const source = fs.readFileSync(filePath, 'utf8')
+  return parseDotEnvSource(source)
+}
+
+function getDotEnvMode () {
+  const rawMode = String(
+    process.env.SEO_ENV_MODE
+      || process.env.VUE_CLI_MODE
+      || process.env.NODE_ENV
+      || 'production'
+  ).trim()
+  return rawMode || 'production'
+}
+
+function loadDotEnvConfig () {
+  const mode = getDotEnvMode()
+  const envRoot = path.resolve(__dirname, '..')
+  const candidates = [
+    ENV_FILE,
+    path.resolve(envRoot, '.env.local'),
+    path.resolve(envRoot, `.env.${mode}`),
+    path.resolve(envRoot, `.env.${mode}.local`)
+  ]
+
+  const mergedConfig = {}
+  candidates.forEach((candidatePath) => {
+    Object.assign(mergedConfig, readDotEnvFile(candidatePath))
+  })
+
+  Object.entries(mergedConfig).forEach(([key, value]) => {
+    if (!key || Object.prototype.hasOwnProperty.call(process.env, key)) {
+      return
+    }
+    process.env[key] = value
+  })
 }
 
 loadDotEnvConfig()
@@ -118,6 +156,8 @@ function getApiBaseCandidates () {
   const localDefaults = [
     'http://127.0.0.1:8000',
     'http://localhost:8000',
+    'http://127.0.0.1:8081',
+    'http://localhost:8081',
     'http://127.0.0.1:8080',
     'http://localhost:8080'
   ]
