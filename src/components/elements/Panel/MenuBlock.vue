@@ -37,7 +37,7 @@
                         <router-link :to="isManager ? '/panel/user' : '/panel'" class="panel__menu-link"><span class="panel__menu-icon">
                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M6.75 15.7501H11.25M6.75 15.7501H5.25C3.59314 15.7501 2.25 14.4069 2.25 12.7501V8.0308C2.25 6.98175 2.79796 6.00891 3.69509 5.46519L7.44509 3.19246C8.40083 2.61325 9.59918 2.61325 10.5549 3.19246L14.3049 5.46519C15.2021 6.00891 15.75 6.98175 15.75 8.0308V12.7501C15.75 14.4069 14.4068 15.7501 12.75 15.7501H11.25H6.75ZM6.75 15.7501V12.7501C6.75 11.5074 7.75732 10.5001 9 10.5001C10.2427 10.5001 11.25 11.5074 11.25 12.7501V15.7501H6.75Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg></span>Покупатель</router-link></li>
+                            </svg></span>Дашборд пользователя</router-link></li>
                       <li>
                         <router-link class="panel__menu-link" to="/panel/shop">
                           <span class="panel__menu-icon">
@@ -59,7 +59,7 @@
                             <span class="panel__menu-icon">
                 <img src="@/assets/img/panel-icons/study.svg" alt="">
                             </span>
-                            Обучение
+                            Обучение<span v-if="incompleteStudyCoursesCount > 0" class="panel__menu-num">{{ incompleteStudyCoursesCount }}</span>
                         </router-link>
                     </li>
           <!-- <li>
@@ -454,6 +454,7 @@
 import { defaultAvatarPlaceholder } from '@/constants/avatarPlaceholders'
 import { fetchUserShopOrders } from '@/services/panel.service'
 import { fetchPrintOrders } from '@/services/print.service'
+import { fetchMyStudyEnrollments } from '@/services/study-learning.service'
 import {
   getSafePanelMode,
   getStoredPanelMode,
@@ -475,7 +476,8 @@ export default {
       filterOpen: false,
       printOpen: false,
       unpaidShopOrdersCount: 0,
-      pendingPrintOrdersCount: 0
+      pendingPrintOrdersCount: 0,
+      incompleteStudyCoursesCount: 0
     }
   },
   computed: {
@@ -587,12 +589,32 @@ export default {
       } catch (error) {
         this.pendingPrintOrdersCount = 0
       }
+    },
+    countIncompleteStudyCourses (enrollments) {
+      return (Array.isArray(enrollments) ? enrollments : []).filter((enrollment) => {
+        const certificateIssued = String(enrollment?.certificate_status || '').toLowerCase() === 'issued'
+        return !certificateIssued
+      }).length
+    },
+    async loadIncompleteStudyCoursesCount () {
+      if (!this.currentUser) {
+        this.incompleteStudyCoursesCount = 0
+        return
+      }
+      try {
+        const response = await fetchMyStudyEnrollments()
+        const enrollments = Array.isArray(response.data) ? response.data : []
+        this.incompleteStudyCoursesCount = this.countIncompleteStudyCourses(enrollments)
+      } catch (error) {
+        this.incompleteStudyCoursesCount = 0
+      }
     }
   },
   mounted () {
     this.syncPanelMode()
     this.loadUnpaidShopOrdersCount()
     this.loadPendingPrintOrdersCount()
+    this.loadIncompleteStudyCoursesCount()
     if (typeof window !== 'undefined') {
       window.addEventListener(PANEL_MODE_EVENT, this.syncPanelMode)
       window.addEventListener('storage', this.syncPanelMode)
@@ -636,6 +658,7 @@ export default {
       this.syncPanelMode()
       this.loadUnpaidShopOrdersCount()
       this.loadPendingPrintOrdersCount()
+      this.loadIncompleteStudyCoursesCount()
     }
   }
 }

@@ -3,6 +3,10 @@
     border-spacing:0 20px;
 }
 
+.cmp-components-elements-shop-cartproducts .cartproducts__table-wrap, .cmp-components-elements-shop-cartproducts.cartproducts__table-wrap{
+    width: 100%;
+}
+
 .cmp-components-elements-shop-cartproducts .text_gray, .cmp-components-elements-shop-cartproducts.text_gray{
     color: var(--bs-gray);
 }
@@ -51,4 +55,101 @@
   border-radius: var(--tokens-m);
   background-color: #fff;
   cursor: pointer;
+}
+
+@media (max-width: 1199.98px){
+    .cmp-components-elements-shop-cartproducts .cartproducts__table-wrap, .cmp-components-elements-shop-cartproducts.cartproducts__table-wrap{
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .cmp-components-elements-shop-cartproducts .table, .cmp-components-elements-shop-cartproducts.table{
+        min-width: 760px;
+    }
+}
+
+@media (max-width: 767.98px){
+    .cmp-components-elements-shop-cartproducts .cartproducts__table-wrap, .cmp-components-elements-shop-cartproducts.cartproducts__table-wrap{
+        overflow: visible;
+    }
+
+    .cmp-components-elements-shop-cartproducts .table, .cmp-components-elements-shop-cartproducts.table{
+        min-width: 0;
+        border-spacing: 0 12px;
+        margin-bottom: 0;
+    }
+
+    .cmp-components-elements-shop-cartproducts .table thead, .cmp-components-elements-shop-cartproducts.table thead{
+        display: none;
+    }
+
+    .cmp-components-elements-shop-cartproducts .table tbody tr, .cmp-components-elements-shop-cartproducts.table tbody tr{
+        display: block;
+        border-radius: 16px;
+        padding: 12px;
+        background-color: var(--fillssecondary);
+    }
+
+    .cmp-components-elements-shop-cartproducts .table tbody tr td, .cmp-components-elements-shop-cartproducts.table tbody tr td{
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100%;
+        padding: 8px 0;
+        border: 0;
+        border-radius: 0 !important;
+        background: transparent !important;
+        white-space: normal;
+        gap: 10px;
+    }
+
+    .cmp-components-elements-shop-cartproducts .table tbody tr td::before, .cmp-components-elements-shop-cartproducts.table tbody tr td::before{
+        content: attr(data-label);
+        color: var(--bs-gray);
+        font-size: 12px;
+        line-height: 1.3;
+        flex: 0 0 42%;
+        max-width: 42%;
+    }
+
+    .cmp-components-elements-shop-cartproducts .table tbody tr td.cartproducts__product-cell, .cmp-components-elements-shop-cartproducts.table tbody tr td.cartproducts__product-cell{
+        display: block;
+        padding-top: 0;
+    }
+
+    .cmp-components-elements-shop-cartproducts .table tbody tr td.cartproducts__product-cell::before, .cmp-components-elements-shop-cartproducts.table tbody tr td.cartproducts__product-cell::before{
+        display: none;
+    }
+
+    .cmp-components-elements-shop-cartproducts .table_img, .cmp-components-elements-shop-cartproducts.table_img{
+        margin: 0 0 10px;
+        float: none;
+        display: block;
+    }
+
+    .cmp-components-elements-shop-cartproducts .product_name, .cmp-components-elements-shop-cartproducts.product_name{
+        display: block;
+        margin: 0;
+        line-height: 1.35;
+    }
+
+    .cmp-components-elements-shop-cartproducts .table_price, .cmp-components-elements-shop-cartproducts.table_price{
+        text-align: right;
+    }
+
+    .cmp-components-elements-shop-cartproducts .table_trash, .cmp-components-elements-shop-cartproducts.table_trash{
+        margin-left: auto;
+    }
+
+    .cmp-components-elements-shop-cartproducts .cmp-components-elements-shop-productamount .qty, .cmp-components-elements-shop-cartproducts .cmp-components-elements-shop-productamount.qty{
+        text-align: right;
+    }
+
+    .cmp-components-elements-shop-cartproducts .cmp-components-elements-shop-productamount .qty .count, .cmp-components-elements-shop-cartproducts .cmp-components-elements-shop-productamount.qty .count{
+        min-width: 46px;
+        width: 46px;
+        font-size: 18px;
+        line-height: 30px;
+        padding: 0;
+    }
 }

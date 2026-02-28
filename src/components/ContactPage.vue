@@ -253,6 +253,14 @@ export default {
   width: 100%;
   justify-content: space-between;
   text-align: left;
+  border: 1px solid #d7dce0;
+  background: #eef1f3;
+}
+
+.contact__city-picker .header__langbtn:hover,
+.contact__city-picker .header__langbtn.active {
+  border-color: #cfd5da;
+  background: #e7ebee;
 }
 
 .contact__city-btninner {
@@ -277,6 +285,8 @@ export default {
 .contact__city-picker .header__langlist {
   max-height: 260px;
   overflow-y: auto;
+  border: 1px solid #e2e6ea;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08);
 }
 
 .contact__city-picker .header__langlist a {

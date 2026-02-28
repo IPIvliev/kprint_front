@@ -8,31 +8,31 @@
               <div class="col-xxl-9 col-xl-8">
                 <div class="panel__block">
                   <div class="panel__head">
-                    <div class="panel__title">Покупатель</div>
+                    <div class="panel__title">Дашборд пользователя</div>
                   </div>
                   <div class="panel__body">
 
                     <div class="row gy-1">
                       <div class="col-lg-6">
-                        <a class="panel__item" href="#">
+                        <router-link class="panel__item" to="/panel/models">
                           <div class="panel__item-img"> <img src="@/assets/img/panel_1.webp" alt=""></div>
-                          <div class="panel__item-num"><span>46</span>заказов<br>на печать</div>
+                          <div class="panel__item-num"><span>{{ pendingPrintOrdersCount }}</span>заказов<br>на печать</div>
                           <div class="panel__item-plus"> </div>
-                        </a>
+                        </router-link>
                       </div>
                       <div class="col-lg-6">
-                        <a class="panel__item" href="#">
+                        <router-link class="panel__item" to="/panel/shop">
                           <div class="panel__item-img"><img src="@/assets/img/panel_2.webp" alt=""></div>
-                          <div class="panel__item-num"><span>2</span>заказов<br> в магазине</div>
+                          <div class="panel__item-num"><span>{{ unpaidShopOrdersCount }}</span>заказов<br>в магазине</div>
                           <div class="panel__item-plus"> </div>
-                        </a>
+                        </router-link>
                       </div>
                       <div class="col-lg-6">
-                        <a class="panel__item" href="#">
+                        <router-link class="panel__item" to="/panel/study">
                           <div class="panel__item-img"><img src="@/assets/img/study_courses.png" alt=""></div>
-                          <div class="panel__item-num"><span>2</span>курсов<br>обучения</div>
+                          <div class="panel__item-num"><span>{{ incompleteStudyCoursesCount }}</span>курсов<br>обучения</div>
                           <div class="panel__item-plus"> </div>
-                        </a>
+                        </router-link>
                       </div>
                       <!-- <div class="col-lg-6">
                         <a class="panel__item" href="#">
@@ -130,9 +130,84 @@
 
 <script>
 import MenuBlock from '../elements/Panel/MenuBlock.vue'
+import { fetchUserShopOrders } from '@/services/panel.service'
+import { fetchPrintOrders } from '@/services/print.service'
+import { fetchMyStudyEnrollments } from '@/services/study-learning.service'
 
 export default {
   name: 'MainPanel',
-  components: { MenuBlock }
+  components: { MenuBlock },
+  data () {
+    return {
+      unpaidShopOrdersCount: 0,
+      pendingPrintOrdersCount: 0,
+      incompleteStudyCoursesCount: 0
+    }
+  },
+  computed: {
+    currentUser () {
+      return this.$store.state.auth.user
+    }
+  },
+  methods: {
+    async loadUnpaidShopOrdersCount () {
+      if (!this.currentUser) {
+        this.unpaidShopOrdersCount = 0
+        return
+      }
+      try {
+        const response = await fetchUserShopOrders()
+        const orders = Array.isArray(response.data) ? response.data : []
+        this.unpaidShopOrdersCount = orders.filter(order => !order.is_paid).length
+      } catch (error) {
+        this.unpaidShopOrdersCount = 0
+      }
+    },
+    async loadPendingPrintOrdersCount () {
+      if (!this.currentUser) {
+        this.pendingPrintOrdersCount = 0
+        return
+      }
+      try {
+        const response = await fetchPrintOrders({ my: 1 })
+        const orders = Array.isArray(response.data) ? response.data : []
+        this.pendingPrintOrdersCount = orders.filter(order => order.status !== 'RECEIVED').length
+      } catch (error) {
+        this.pendingPrintOrdersCount = 0
+      }
+    },
+    async loadStudyCoursesCount () {
+      if (!this.currentUser) {
+        this.incompleteStudyCoursesCount = 0
+        return
+      }
+      try {
+        const response = await fetchMyStudyEnrollments()
+        const enrollments = Array.isArray(response.data) ? response.data : []
+        this.incompleteStudyCoursesCount = this.countIncompleteStudyCourses(enrollments)
+      } catch (error) {
+        this.incompleteStudyCoursesCount = 0
+      }
+    },
+    countIncompleteStudyCourses (enrollments) {
+      return (Array.isArray(enrollments) ? enrollments : []).filter((enrollment) => {
+        const certificateIssued = String(enrollment?.certificate_status || '').toLowerCase() === 'issued'
+        return !certificateIssued
+      }).length
+    },
+    loadDashboardCounts () {
+      this.loadUnpaidShopOrdersCount()
+      this.loadPendingPrintOrdersCount()
+      this.loadStudyCoursesCount()
+    }
+  },
+  mounted () {
+    this.loadDashboardCounts()
+  },
+  watch: {
+    currentUser () {
+      this.loadDashboardCounts()
+    }
+  }
 }
 </script>

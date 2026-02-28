@@ -133,3 +133,36 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+@media (max-width: 767.98px) {
+  .footer__bottom {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .footer__bottom p {
+    margin: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    max-width: 100%;
+  }
+
+  .footer__bottom :deep(.legal-links-row) {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .footer__bottom :deep(.legal-links-row__trigger) {
+    white-space: normal;
+    text-align: left;
+    line-height: 1.35;
+  }
+}
+</style>

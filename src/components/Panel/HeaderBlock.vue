@@ -42,31 +42,11 @@
                 </div>
               </div>
             </div>
-            <div class="header__col"><a class="header__logo d-xl-none d-block" href="#">
-                <svg width="156" height="50" viewBox="0 0 156 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path class="logo-red" d="M35.6261 45.4328L28.9917 38.8264H24.4082L35.6261 50.0001L46.8394 38.8264H42.256L35.6261 45.4328Z"></path>
-                  <path class="logo-red" d="M35.6261 4.56726L42.256 11.1736H46.8394L35.6261 0L24.4082 11.1736H28.9917L35.6261 4.56726Z"></path>
-                  <path class="logo-black" d="M15.1208 24.9999L23.4544 16.6958H18.8709L12.1578 23.3852H3.24084V16.6958H0V24.9999V26.6146V33.304H3.24084V26.6146H12.1578L18.8709 33.304H23.4544L15.1208 24.9999Z"></path>
-                  <path class="logo-black" d="M56.1312 24.9999L47.793 33.304H52.3811L60.7146 24.9999L52.3811 16.6958H47.7976L56.1312 24.9999Z"></path>
-                  <path class="logo-red" d="M27.9965 33.304V27.9894H44.6637C47.9971 27.9894 47.9971 24.9999 47.9971 24.9999V19.6853C47.9971 19.6853 47.9971 16.6958 44.6637 16.6958H24.6631V33.304H27.9965ZM27.9965 19.6853H44.6637V24.9999H27.9965V19.6853Z"></path>
-                  <path class="logo-black" d="M82.0166 22.3472H79.5165L75.9747 17.9875H70.1273V22.3472H68.0439V11.967H70.1273V16.1191H75.8683L79.5165 11.967H82.0166L77.6414 16.9495L82.0166 22.3472Z"></path>
-                  <path class="logo-black" d="M98.1739 20.4788C98.1865 20.7275 98.1467 20.976 98.0569 21.2084C97.9671 21.4408 97.8294 21.6518 97.6527 21.8279C97.4761 22.004 97.2643 22.1411 97.031 22.2306C96.7978 22.32 96.5484 22.3598 96.2989 22.3472H85.4652C83.6133 22.3472 83.6133 20.4788 83.6133 20.4788V11.967H85.6967V20.4788H96.1137V11.967H98.1971L98.1739 20.4788Z"></path>
-                  <path class="logo-black" d="M113.29 22.3472H101.415V11.967H103.498V20.4788H113.29V22.3472Z"></path>
-                  <path class="logo-black" d="M116.995 22.3472H114.911V11.967H116.995V22.3472Z"></path>
-                  <path class="logo-black" d="M132.477 11.967C132.477 11.967 134.352 11.967 134.352 13.8355V16.5343C134.186 16.5343 134.027 16.5999 133.91 16.7167C133.792 16.8335 133.727 16.9919 133.727 17.1571C133.727 17.3223 133.792 17.4807 133.91 17.5975C134.027 17.7143 134.186 17.7799 134.352 17.7799V20.4788C134.352 20.4788 134.352 22.3472 132.477 22.3472H119.772V11.967H132.477ZM132.273 13.8355H121.856V16.1191H132.273V13.8355ZM132.273 17.9875H121.856V20.4788H132.273V17.9875Z"></path>
-                  <path class="logo-black" d="M139.217 22.3472H137.134V11.967H139.217V22.3472Z"></path>
-                  <path class="logo-black" d="M144.541 11.967L153.926 19.856V11.967H156.009V22.3472H153.926L144.555 14.4583V22.3472H142.472V11.967H144.541Z"></path>
-                  <path class="logo-red" d="M82.6277 29.5211V32.8427C82.6244 33.1051 82.5665 33.3639 82.4579 33.6029C82.3493 33.8418 82.1921 34.0558 81.9964 34.2313C81.8007 34.4069 81.5707 34.5401 81.3207 34.6227C81.0708 34.7052 80.8065 34.7354 80.5443 34.7111H70.1273V38.0328H68.0439V27.6526H80.5443C80.8065 27.6284 81.0708 27.6586 81.3207 27.7411C81.5707 27.8237 81.8007 27.9569 81.9964 28.1325C82.1921 28.308 82.3493 28.522 82.4579 28.7609C82.5665 28.9999 82.6244 29.2587 82.6277 29.5211ZM70.1273 29.5211V32.8427H80.5443V29.5211H70.1273Z"></path>
-                  <path class="logo-red" d="M98.1745 38.0328L95.6745 34.7111H87.5492V38.0328H85.4658V27.6526H97.9662C98.2284 27.6284 98.4927 27.6586 98.7426 27.7411C98.9925 27.8237 99.2226 27.9569 99.4183 28.1325C99.614 28.308 99.7711 28.522 99.8798 28.7609C99.9884 28.9999 100.046 29.2587 100.05 29.5211V32.8427C100.046 33.1051 99.9884 33.3639 99.8798 33.6029C99.7711 33.8418 99.614 34.0558 99.4183 34.2313C99.2226 34.4069 98.9925 34.5401 98.7426 34.6227C98.4927 34.7052 98.2284 34.7354 97.9662 34.7111L100.466 38.0328H98.1745ZM97.9662 29.5211H87.5492V32.8427H97.9662V29.5211Z"></path>
-                  <path class="logo-red" d="M105.373 38.033H103.29V27.6528H105.373V38.033Z"></path>
-                  <path class="logo-red" d="M110.698 27.6528L120.073 35.5417V27.6528H122.156V38.033H120.073L110.698 30.1441V38.033H108.614V27.6528H110.698Z"></path>
-                  <path class="logo-red" d="M138.518 29.5213H132.272V38.033H130.189V29.5213H123.938V27.6528H138.518V29.5213Z"></path>
-                  <defs>
-                    <clipPath>
-                      <rect width="156" height="50" fill="white"></rect>
-                    </clipPath>
-                  </defs>
-                </svg></a></div>
+                        <div class="header__col">
+              <router-link class="header__logo d-xl-none d-block" to="/">
+                <img src="../../assets/img/logo.svg" alt="Gorky Liquid">
+              </router-link>
+            </div>
             <div class="header__col">
               <div class="header__lang nout-hide">
                 <div class="header__langbtn js-drop-btn"  :class="{active: languageMenuIsOpen}" @click="openLanguageMenu">
@@ -131,9 +111,9 @@
                 </a>
                 <div class="header__regicon" @click.prevent="logOut">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    <path d="M10 17L15 12L10 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    <path d="M15 12H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M9 3H5C4.46957 3 3.96086 3.21071 3.58579 3.58579C3.21071 3.96086 3 4.46957 3 5V19C3 19.5304 3.21071 20.0391 3.58579 20.4142C3.96086 20.7893 4.46957 21 5 21H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M14 17L9 12L14 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M9 12H21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                   </svg>
                 </div>
               </div>
@@ -171,7 +151,7 @@
                     :class="{ active: panelModeSafe === 'user' }"
                     @click="setPanelMode('user')"
                   >
-                    &#1055;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1077;&#1083;&#1100;
+                    Пользователь
                   </button>
                   <button
                     type="button"
@@ -186,7 +166,7 @@
                   <li><router-link class="panel__menu-link" :to="isManager ? '/panel/user' : '/panel'" @click="closeMainMenu"><span class="panel__menu-icon">
                       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6.75 15.7501H11.25M6.75 15.7501H5.25C3.59314 15.7501 2.25 14.4069 2.25 12.7501V8.0308C2.25 6.98175 2.79796 6.00891 3.69509 5.46519L7.44509 3.19246C8.40083 2.61325 9.59918 2.61325 10.5549 3.19246L14.3049 5.46519C15.2021 6.00891 15.75 6.98175 15.75 8.0308V12.7501C15.75 14.4069 14.4068 15.7501 12.75 15.7501H11.25H6.75ZM6.75 15.7501V12.7501C6.75 11.5074 7.75732 10.5001 9 10.5001C10.2427 10.5001 11.25 11.5074 11.25 12.7501V15.7501H6.75Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                      </svg></span>&#1055;&#1072;&#1085;&#1077;&#1083;&#1100; &#1091;&#1087;&#1088;&#1072;&#1074;&#1083;&#1077;&#1085;&#1080;&#1103;</router-link></li>
+                      </svg></span>Дашборд пользователя</router-link></li>
                   <li><router-link class="panel__menu-link" to="/panel/shop" @click="closeMainMenu"><span class="panel__menu-icon">
                       <img src="@/assets/img/panel-icons/cart.svg" alt="">
                   </span>&#1047;&#1072;&#1082;&#1072;&#1079;&#1099; &#1074; &#1084;&#1072;&#1075;&#1072;&#1079;&#1080;&#1085;&#1077;</router-link></li>
@@ -453,4 +433,24 @@ export default {
     flex: 1 1 0;
   }
 }
+
+@media (max-width: 450px) {
+  .header__col:nth-child(2) {
+    margin: 0 8px;
+    min-width: 0;
+    justify-content: center;
+  }
+
+  .header__logo.d-xl-none {
+    width: clamp(110px, 48vw, 216px);
+    max-width: 100%;
+  }
+
+  .header__logo.d-xl-none img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
 </style>
+

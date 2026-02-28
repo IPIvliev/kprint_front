@@ -6,6 +6,8 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const aboutViewPath = path.resolve(__dirname, '../../../src/views/About.vue')
 const aboutMainBlockPath = path.resolve(__dirname, '../../../src/components/elements/MainPage/MainPageAbout.vue')
+const aboutViewVersionPath = path.resolve(__dirname, '../../../src/views/versions/About.v1.vue')
+const aboutMainBlockVersionPath = path.resolve(__dirname, '../../../src/components/elements/MainPage/versions/MainPageAbout.v1.vue')
 
 describe('about page content', () => {
   it('shows company identity and timeframe in hero section', () => {
@@ -33,6 +35,66 @@ describe('about page content', () => {
     expect(source).toContain('Ферма 3D-принтеров для изделий под заказ')
     expect(source).toContain('Обучение 3D-печати и 3D-сканированию')
     expect(source).toContain('Сертификаты на программное обеспечение и патенты')
+  })
+
+  it('uses context-aware local icon assets for about direction cards', () => {
+    const source = fs.readFileSync(aboutMainBlockPath, 'utf8')
+
+    expect(source).toContain("import iconSoftware from '@/assets/img/PuzzlePiece.svg'")
+    expect(source).toContain("import iconMaterials from '@/assets/img/panel-icons/products.svg'")
+    expect(source).toContain("import iconPrinting from '@/assets/img/panel-icons/orders.svg'")
+    expect(source).toContain("import iconEducation from '@/assets/img/panel-icons/courses.svg'")
+    expect(source).toContain(':src="aboutIcons.software"')
+    expect(source).toContain(':src="aboutIcons.materials"')
+    expect(source).toContain(':src="aboutIcons.printing"')
+    expect(source).toContain(':src="aboutIcons.education"')
+    expect(source).toContain('class="about-company__icon-image"')
+
+    expect(source).not.toContain('src="img/tooth.svg"')
+    expect(source).not.toContain('src="img/car.svg"')
+    expect(source).not.toContain('src="img/box.svg"')
+    expect(source).not.toContain('src="img/design.svg"')
+  })
+
+  it('uses module asset imports for about hero and direction images', () => {
+    const source = fs.readFileSync(aboutViewPath, 'utf8')
+
+    expect(source).toContain("import aboutMobileImage from '@/assets/img/about_sm.svg'")
+    expect(source).toContain("import aboutDesktopImage from '@/assets/img/about.webp'")
+    expect(source).toContain("import halfItemSoftwareImage from '@/assets/img/halfitems_1.webp'")
+    expect(source).toContain("import halfItemMaterialsImage from '@/assets/img/halfitems_2.webp'")
+    expect(source).toContain("import halfItemPrintingImage from '@/assets/img/halfitems_3.webp'")
+    expect(source).toContain("import halfItemEducationImage from '@/assets/img/halfitems_4.webp'")
+    expect(source).toContain(':srcset="aboutAssets.mobile"')
+    expect(source).toContain(':src="aboutAssets.desktop"')
+    expect(source).toContain(':src="aboutAssets.halfitems.software"')
+    expect(source).toContain(':src="aboutAssets.halfitems.materials"')
+    expect(source).toContain(':src="aboutAssets.halfitems.printing"')
+    expect(source).toContain(':src="aboutAssets.halfitems.education"')
+
+    expect(source).not.toContain('srcset="img/about_sm.svg"')
+    expect(source).not.toContain('src="img/about.webp"')
+    expect(source).not.toContain('src="img/halfitems_1.webp"')
+    expect(source).not.toContain('src="img/halfitems_2.webp"')
+    expect(source).not.toContain('src="img/halfitems_3.webp"')
+    expect(source).not.toContain('src="img/halfitems_4.webp"')
+  })
+
+  it('keeps legacy about versions free from direct public img paths', () => {
+    const aboutVersionSource = fs.readFileSync(aboutViewVersionPath, 'utf8')
+    const mainVersionSource = fs.readFileSync(aboutMainBlockVersionPath, 'utf8')
+
+    expect(aboutVersionSource).not.toContain('srcset="img/about_sm.svg"')
+    expect(aboutVersionSource).not.toContain('src="img/about.webp"')
+    expect(aboutVersionSource).not.toContain('src="img/halfitems_1.webp"')
+    expect(aboutVersionSource).not.toContain('src="img/halfitems_2.webp"')
+    expect(aboutVersionSource).not.toContain('src="img/halfitems_3.webp"')
+    expect(aboutVersionSource).not.toContain('src="img/halfitems_4.webp"')
+
+    expect(mainVersionSource).not.toContain('src="img/tooth.svg"')
+    expect(mainVersionSource).not.toContain('src="img/car.svg"')
+    expect(mainVersionSource).not.toContain('src="img/box.svg"')
+    expect(mainVersionSource).not.toContain('src="img/design.svg"')
   })
 
   it('renders about gallery block and removes hero action buttons', () => {

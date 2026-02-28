@@ -24,14 +24,19 @@
               </div>
             </div>
 
-            <div class="input input--label">
-              <Field name="email" type="email" autocomplete="email" />
-              <div class="input__label">Ваш e-mail адрес</div>
+            <div class="input">
+              <Field
+                name="email"
+                type="email"
+                class="registration__field"
+                autocomplete="email"
+                placeholder="Ваш e-mail адрес"
+              />
               <ErrorMessage name="email" class="error-feedback" />
             </div>
 
             <div class="input">
-              <Field name="username" type="text" placeholder="Имя или никнейм" autocomplete="username" />
+              <Field name="username" type="text" class="registration__field" placeholder="Имя или никнейм" autocomplete="username" />
               <ErrorMessage name="username" class="error-feedback" />
             </div>
 
@@ -39,6 +44,7 @@
               <Field
                 name="password"
                 :type="showPassword ? 'text' : 'password'"
+                class="registration__field"
                 placeholder="Пароль"
                 autocomplete="new-password"
               />
@@ -136,9 +142,9 @@ export default {
   },
   data () {
     const schema = yup.object().shape({
-      email: yup.string().required('Email is required').email('Email is invalid'),
-      username: yup.string().required('Username is required').min(3, 'Username must be at least 3 characters'),
-      password: yup.string().required('Password is required').min(8, 'Password must be at least 8 characters')
+      email: yup.string().required('Укажите e-mail.').email('Введите корректный e-mail.'),
+      username: yup.string().required('Укажите имя или никнейм.').min(3, 'Имя или никнейм должно содержать минимум 3 символа.'),
+      password: yup.string().required('Укажите пароль.').min(8, 'Пароль должен содержать минимум 8 символов.')
     })
 
     return {
@@ -162,6 +168,99 @@ export default {
     togglePasswordVisibility () {
       this.showPassword = !this.showPassword
     },
+    extractFirstApiMessage (payload) {
+      if (!payload) {
+        return ''
+      }
+      if (typeof payload === 'string') {
+        return payload
+      }
+      if (Array.isArray(payload)) {
+        return this.extractFirstApiMessage(payload[0])
+      }
+      if (typeof payload !== 'object') {
+        return ''
+      }
+
+      const orderedKeys = [
+        'non_field_errors',
+        'detail',
+        'message',
+        'email',
+        'username',
+        'password',
+        'terms_offer_accepted',
+        'pd_accepted'
+      ]
+
+      for (const key of orderedKeys) {
+        if (payload[key] !== undefined && payload[key] !== null) {
+          const message = this.extractFirstApiMessage(payload[key])
+          if (message) {
+            return message
+          }
+        }
+      }
+
+      for (const value of Object.values(payload)) {
+        const message = this.extractFirstApiMessage(value)
+        if (message) {
+          return message
+        }
+      }
+
+      return ''
+    },
+    localizeRegisterErrorText (rawMessage) {
+      const source = String(rawMessage || '')
+      const normalized = source.toLowerCase()
+
+      if (normalized.includes('email is required')) {
+        return 'Укажите e-mail.'
+      }
+      if (normalized.includes('email is invalid') || (normalized.includes('email') && normalized.includes('valid'))) {
+        return 'Введите корректный e-mail.'
+      }
+      if (normalized.includes('username is required')) {
+        return 'Укажите имя или никнейм.'
+      }
+      if (normalized.includes('username must be at least 3')) {
+        return 'Имя или никнейм должно содержать минимум 3 символа.'
+      }
+      if (normalized.includes('password is required')) {
+        return 'Укажите пароль.'
+      }
+      if (normalized.includes('password must be at least 8')) {
+        return 'Пароль должен содержать минимум 8 символов.'
+      }
+      if (normalized.includes('email') && normalized.includes('already')) {
+        return 'Этот e-mail уже зарегистрирован.'
+      }
+      if (normalized.includes('username') && normalized.includes('already')) {
+        return 'Это имя уже занято.'
+      }
+      if (normalized.includes('terms_offer_accepted') && normalized.includes('true')) {
+        return 'Подтвердите соглашение и оферту.'
+      }
+      if (normalized.includes('pd_accepted') && normalized.includes('true')) {
+        return 'Подтвердите согласие на обработку ПДн.'
+      }
+      if (normalized.includes('network error') || normalized.includes('failed to fetch')) {
+        return 'Ошибка сети. Проверьте подключение и попробуйте снова.'
+      }
+
+      return source || 'Не удалось завершить регистрацию.'
+    },
+    localizeRegisterError (error) {
+      const rawMessage =
+        error?.userMessage ||
+        this.extractFirstApiMessage(error?.response?.data) ||
+        error?.message ||
+        error?.toString() ||
+        'Не удалось завершить регистрацию.'
+
+      return this.localizeRegisterErrorText(rawMessage)
+    },
     async handleRegister (user) {
       if (!this.isRequiredConsentsAccepted) {
         this.message = 'Для регистрации нужно принять соглашение/оферту и согласие на обработку ПДн.'
@@ -183,13 +282,7 @@ export default {
           this.$router.push('/login')
         }
       } catch (error) {
-        this.message =
-          error?.userMessage ||
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString()
+        this.message = this.localizeRegisterError(error)
       } finally {
         this.loading = false
       }
@@ -199,6 +292,10 @@ export default {
 </script>
 
 <style scoped>
+.login {
+  padding-bottom: 48px;
+}
+
 .registration-consents {
   margin-bottom: 14px;
   padding: 10px 12px;
@@ -256,5 +353,21 @@ export default {
 
 .registration-consents__status--ready {
   color: #2f8f4e;
+}
+</style>
+
+<style>
+.login__form .registration__field {
+  background: #fff;
+  border: 1px solid #d5dce2;
+}
+
+.login__form .registration__field:focus {
+  border-color: #c5cdd4;
+  box-shadow: 0 0 0 2px rgba(216, 58, 86, 0.08);
+}
+
+.login__form .registration__field::placeholder {
+  color: #7f858d;
 }
 </style>

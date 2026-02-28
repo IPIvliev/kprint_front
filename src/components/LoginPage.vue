@@ -19,9 +19,14 @@
               {{ message }}
             </div>
           </div>
-          <div class="input input--label">
-            <Field name="username" type="text" autocomplete="username" />
-            <div class="input__label">Ваш e-mail адрес</div>
+          <div class="input">
+            <Field
+              name="username"
+              type="text"
+              class="login__field"
+              autocomplete="username"
+              placeholder="Ваш e-mail адрес"
+            />
             <ErrorMessage name="username" class="error-feedback" />
           </div>
           <div class="input input--password">
@@ -29,7 +34,7 @@
             <Field
               name="password"
               :type="showPassword ? 'text' : 'password'"
-              class="form-control"
+              class="form-control login__field"
               autocomplete="current-password"
             />
             <ErrorMessage name="password" class="error-feedback" />
@@ -81,7 +86,7 @@
   <div class="container">
     <div class="footer__line"></div>
     <div class="footer__bottom">
-      <p>&#169; 2021, Kulibin Print. Все права защищены.</p>
+      <p>&#169; 2026, Kulibin Print. Все права защищены.</p>
       <LegalLinksRow />
     </div>
   </div>
@@ -110,8 +115,8 @@ export default {
   },
   data () {
     const schema = yup.object().shape({
-      username: yup.string().required('Username or email is required!'),
-      password: yup.string().required('Password is required!')
+      username: yup.string().required('Укажите e-mail.'),
+      password: yup.string().required('Укажите пароль.')
     })
     return {
       schema,
@@ -131,6 +136,37 @@ export default {
     }
   },
   methods: {
+    localizeLoginError (error) {
+      const rawMessage =
+        error?.userMessage ||
+        error?.response?.data?.message ||
+        error?.message ||
+        error?.toString() ||
+        'Ошибка входа.'
+
+      const normalized = String(rawMessage).toLowerCase()
+
+      if (normalized.includes('username or email is required')) {
+        return 'Укажите e-mail.'
+      }
+      if (normalized.includes('password is required')) {
+        return 'Укажите пароль.'
+      }
+      if (
+        normalized.includes('invalid credentials') ||
+        normalized.includes('no active account') ||
+        normalized.includes('unable to log in') ||
+        normalized.includes('incorrect username') ||
+        normalized.includes('incorrect password')
+      ) {
+        return 'Неверный e-mail или пароль.'
+      }
+      if (normalized.includes('network error') || normalized.includes('failed to fetch')) {
+        return 'Ошибка сети. Проверьте подключение и попробуйте снова.'
+      }
+
+      return rawMessage
+    },
     togglePasswordVisibility () {
       this.showPassword = !this.showPassword
     },
@@ -182,13 +218,7 @@ export default {
         await this.$store.dispatch('auth/login', user)
         await this.redirectAuthorizedUser()
       } catch (error) {
-        this.message =
-          error?.userMessage ||
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString()
+        this.message = this.localizeLoginError(error)
       } finally {
         this.loading = false
       }
@@ -196,3 +226,19 @@ export default {
   }
 }
 </script>
+
+<style>
+.login__form .login__field {
+  background: #fff;
+  border: 1px solid #d5dce2;
+}
+
+.login__form .login__field:focus {
+  border-color: #c5cdd4;
+  box-shadow: 0 0 0 2px rgba(216, 58, 86, 0.08);
+}
+
+.login__form .login__field::placeholder {
+  color: #7f858d;
+}
+</style>

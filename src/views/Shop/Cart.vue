@@ -7,41 +7,48 @@
                     <h1 class="title">Корзина</h1>
                     <p class="news__text">Ваши покупки.</p>
 
-                    <div class="row gy-1 cart_block">
-                        <div class="col-12">
-                            <CartProducts />
+                    <div class="cart_block">
+                        <div class="row gy-2">
+                            <div class="col-12">
+                                <CartProducts />
+                            </div>
                         </div>
 
-                        <div class="row gy-1">
-                            <h3>Доставка</h3>
+                        <div class="row gy-2">
+                            <div class="col-12">
+                                <h3 class="cart-section-title">Доставка</h3>
+                            </div>
                         </div>
 
-                        <div class="row gy-1" v-if="showDelivery">
-                            <div class="col-3">
+                        <div class="row gy-2" v-if="showDelivery">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="btn btn--white col-12 active">СДЭК</div>
                             </div>
                         </div>
-                        <div class="row gy-1" v-if="showDelivery && GetSdekOffices.length > 0">
-                            <div class="col-6">
+
+                        <div class="row gy-2 cart-delivery-grid" v-if="showDelivery && GetSdekOffices.length > 0">
+                            <div class="col-12 col-lg-6">
                                 <YandexMap :offices="GetSdekOffices" :location="location" @selectMarker="selectMarker" />
                             </div>
-                            <div class="col-6 ">
-                                <DeliveryDescription :office = "office" />
+                            <div class="col-12 col-lg-6">
+                                <DeliveryDescription :office="office" />
                             </div>
                         </div>
-                        <div class="row gy-1" v-else-if="showDelivery">
-                            <p v-if="gettingLocation">Загружаем пункты выдачи СДЭК...</p>
-                            <p v-else>Пункты выдачи СДЭК временно недоступны. Обратитесь по телефону компании.</p>
+
+                        <div class="row gy-2" v-else-if="showDelivery">
+                            <div class="col-12">
+                                <p v-if="gettingLocation">Загружаем пункты выдачи СДЭК...</p>
+                                <p v-else>Пункты выдачи СДЭК временно недоступны. Обратитесь по телефону компании.</p>
+                            </div>
                         </div>
-                        <div class="row gy-1">
-                            <div class="col-6">
-                                <div class="row mb-1">
-                                    <h3>Итого</h3>
-                                </div>
+
+                        <div class="row gy-2 cart-checkout-grid">
+                            <div class="col-12 col-lg-6">
+                                <h3 class="mb-1">Итого</h3>
                                 <div class="delivery_description">
                                     <div class="total_row">
                                         <span class="text_gray">Товары</span>
-                                        <div class="right">{{getTotalPrice}}</div>
+                                        <div class="right">{{ getTotalPrice }}</div>
                                     </div>
                                     <hr>
                                     <div class="total_row">
@@ -54,17 +61,13 @@
                                     <div class="total_row">
                                         <span class="text_gray">Промокод</span>
                                         <div class="right">
-
-                                                <input type="text" class="form-control input_field_sale" placeholder="Введите промокод" @input="fetchDiscount">
-
+                                            <input type="text" class="form-control input_field_sale" placeholder="Введите промокод" @input="fetchDiscount">
                                         </div>
-
                                     </div>
                                     <hr>
                                     <div class="total_row">
                                         <span class="text_gray">Скидка</span>
                                         <div class="right">{{ getDiscountAmount }}%</div>
-
                                     </div>
                                     <hr>
                                     <div class="total_row strong">
@@ -73,27 +76,20 @@
                                     </div>
                                 </div>
                                 <div class="delivery_description mt-1" v-if="showDelivery">
-
-                                   <div class="total_row">
+                                    <div class="total_row">
                                         <span class="text_gray">Общий вес</span>
                                         <div class="right">{{ getTotalWeight }} кг</div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="row">
-                                    <h3 class="mb-1">Доставка</h3>
-                                </div>
-                                <div class="row">
-                                    <OrderForm
-                                        :showDelivery="showDelivery"
-                                        :office="office"
-                                        deliveryCompany="sdek"
-                                    />
-                                </div>
-
+                            <div class="col-12 col-lg-6">
+                                <h3 class="mb-1">Доставка</h3>
+                                <OrderForm
+                                    :showDelivery="showDelivery"
+                                    :office="office"
+                                    deliveryCompany="sdek"
+                                />
                             </div>
-
                         </div>
                     </div>
                 </div>

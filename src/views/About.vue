@@ -22,7 +22,7 @@
         </div>
         <div class="welcomeabout__img">
           <picture>
-            <source media="(max-width: 758px)" srcset="img/about_sm.svg"><img src="img/about.webp" alt="О компании 3Д Аддитивные Технологии">
+            <source media="(max-width: 758px)" :srcset="aboutAssets.mobile"><img :src="aboutAssets.desktop" alt="О компании 3Д Аддитивные Технологии">
           </picture>
         </div>
         <div class="welcomeabout__line"></div>
@@ -43,7 +43,7 @@
                   Создаём специализированное ПО для аддитивных технологий: от высокоскоростных фотополимерных принтеров до отраслевых цифровых платформ.
                 </div>
               </div>
-              <div class="halfitems__img"><img src="img/halfitems_1.webp" alt="Разработка ПО для аддитивных технологий"></div>
+              <div class="halfitems__img"><img :src="aboutAssets.halfitems.software" alt="Разработка ПО для аддитивных технологий"></div>
             </div>
           </div>
           <div class="col-lg-6">
@@ -54,7 +54,7 @@
                   Разрабатываем, производим и поставляем фотополимерные материалы и филаменты для 3D-печати.
                 </div>
               </div>
-              <div class="halfitems__img"><img src="img/halfitems_2.webp" alt="Фотополимеры и филаменты собственного производства"></div>
+              <div class="halfitems__img"><img :src="aboutAssets.halfitems.materials" alt="Фотополимеры и филаменты собственного производства"></div>
             </div>
           </div>
           <div class="col-lg-6">
@@ -65,7 +65,7 @@
                   Производим изделия по техническому заданию клиента: от прототипов до серийных партий.
                 </div>
               </div>
-              <div class="halfitems__img"><img src="img/halfitems_3.webp" alt="Ферма 3D-принтеров"></div>
+              <div class="halfitems__img"><img :src="aboutAssets.halfitems.printing" alt="Ферма 3D-принтеров"></div>
             </div>
           </div>
           <div class="col-lg-6">
@@ -76,7 +76,7 @@
                   Проводим практико-ориентированные программы для специалистов, команд и производственных подразделений.
                 </div>
               </div>
-              <div class="halfitems__img"><img src="img/halfitems_4.webp" alt="Обучение 3D-печати и 3D-сканированию"></div>
+              <div class="halfitems__img"><img :src="aboutAssets.halfitems.education" alt="Обучение 3D-печати и 3D-сканированию"></div>
             </div>
           </div>
         </div>
@@ -100,6 +100,12 @@ import PartnersBlock from '@/components/elements/PartnersBlock.vue'
 import GalleryBlock from '@/components/elements/GalleryBlock.vue'
 import DarkWelcome from '@/components/elements/DarkWelcome.vue'
 import FooterBlock from '@/components/FooterBlock.vue'
+import aboutMobileImage from '@/assets/img/about_sm.svg'
+import aboutDesktopImage from '@/assets/img/about.webp'
+import halfItemSoftwareImage from '@/assets/img/halfitems_1.webp'
+import halfItemMaterialsImage from '@/assets/img/halfitems_2.webp'
+import halfItemPrintingImage from '@/assets/img/halfitems_3.webp'
+import halfItemEducationImage from '@/assets/img/halfitems_4.webp'
 
 export default {
   name: 'AboutPageView',
@@ -110,6 +116,20 @@ export default {
     GalleryBlock,
     DarkWelcome,
     HeaderBlock
+  },
+  data () {
+    return {
+      aboutAssets: {
+        mobile: aboutMobileImage,
+        desktop: aboutDesktopImage,
+        halfitems: {
+          software: halfItemSoftwareImage,
+          materials: halfItemMaterialsImage,
+          printing: halfItemPrintingImage,
+          education: halfItemEducationImage
+        }
+      }
+    }
   }
 }
 </script>

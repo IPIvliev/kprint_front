@@ -42,22 +42,22 @@
           <div class="about__items">
             <div class="about__itemsrow">
               <div class="about__item">
-                <div class="about__icon"> <img src="img/tooth.svg" alt=""></div>
+                <div class="about__icon"> <img :src="aboutIcons.software" alt="Иконка разработки ПО" class="about-company__icon-image"></div>
                 <div class="about__itemtitle">Разработка ПО для аддитивных технологий</div>
                 <div class="about__itemtext">ИТ-услуги и прикладные программные решения для оборудования, материалов и производственных процессов.</div>
               </div>
               <div class="about__item">
-                <div class="about__icon"> <img src="img/car.svg" alt=""></div>
+                <div class="about__icon"> <img :src="aboutIcons.materials" alt="Иконка материалов" class="about-company__icon-image"></div>
                 <div class="about__itemtitle">Собственное производство фотополимеров</div>
                 <div class="about__itemtext">Собственное производство фотополимерных материалов и филамента для 3D-печати.</div>
               </div>
               <div class="about__item">
-                <div class="about__icon"> <img src="img/box.svg" alt=""></div>
+                <div class="about__icon"> <img :src="aboutIcons.printing" alt="Иконка 3D-печати" class="about-company__icon-image"></div>
                 <div class="about__itemtitle">Ферма 3D-принтеров для изделий под заказ</div>
                 <div class="about__itemtext">Изготавливаем прототипы и функциональные изделия по требованиям заказчика.</div>
               </div>
               <div class="about__item">
-                <div class="about__icon"> <img src="img/design.svg" alt=""></div>
+                <div class="about__icon"> <img :src="aboutIcons.education" alt="Иконка обучения" class="about-company__icon-image"></div>
                 <div class="about__itemtitle">Обучение 3D-печати и 3D-сканированию</div>
                 <div class="about__itemtext">Проводим обучение для специалистов, производственных команд и образовательных программ.</div>
               </div>
@@ -87,19 +87,36 @@
   </div>
 </template>
 <script>
+import iconSoftware from '@/assets/img/PuzzlePiece.svg'
+import iconMaterials from '@/assets/img/panel-icons/products.svg'
+import iconPrinting from '@/assets/img/panel-icons/orders.svg'
+import iconEducation from '@/assets/img/panel-icons/courses.svg'
 
 export default {
   props: ['background'],
-  created () {
-
-  },
-  computed: {
-
+  data () {
+    return {
+      aboutIcons: {
+        software: iconSoftware,
+        materials: iconMaterials,
+        printing: iconPrinting,
+        education: iconEducation
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
+.about-company__icon-image {
+  display: block;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.95;
+}
+
 .about-company__fact {
   min-height: 160px;
 }

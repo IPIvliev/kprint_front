@@ -219,32 +219,10 @@
 
             <div class="panel-study-manager-modal__section">
               <div class="panel-study-manager-modal__section-title">Решение по сертификату</div>
-              <div class="panel__formrow">
-                <label>Комментарий</label>
-                <textarea
-                  v-model="certificateComment"
-                  rows="4"
-                  class="form-control"
-                  placeholder="Комментарий к решению по сертификату"
-                ></textarea>
-              </div>
-              <div class="panel-study-manager-modal__section-row">
-                <button
-                  type="button"
-                  class="btn btn--black btn-sm"
-                  :disabled="certificateSubmitting === 'issued'"
-                  @click="setCertificateDecision('issued')"
-                >
-                  {{ certificateSubmitting === 'issued' ? 'Сохраняем...' : 'Выдать сертификат' }}
-                </button>
-                <button
-                  type="button"
-                  class="btn btn--grayborder btn-sm"
-                  :disabled="certificateSubmitting === 'rejected'"
-                  @click="setCertificateDecision('rejected')"
-                >
-                  {{ certificateSubmitting === 'rejected' ? 'Сохраняем...' : 'Отклонить сертификат' }}
-                </button>
+              <div v-if="isCertificateIssued" class="panel-study-manager-modal__section-row">
+                <div data-testid="certificate-issued-label" class="panel-study-manager-modal__hint panel-study-manager-modal__hint--ok">
+                  Сертификат выдан
+                </div>
                 <button
                   type="button"
                   class="btn btn--grayborder btn-sm"
@@ -254,6 +232,45 @@
                   {{ certificateTemplateLoading ? 'Подготовка PDF...' : 'Посмотреть шаблон сертификата (PDF)' }}
                 </button>
               </div>
+              <template v-else>
+                <div class="panel__formrow">
+                  <label>Комментарий</label>
+                  <textarea
+                    v-model="certificateComment"
+                    rows="4"
+                    class="form-control"
+                    placeholder="Комментарий к решению по сертификату"
+                  ></textarea>
+                </div>
+                <div class="panel-study-manager-modal__section-row">
+                  <button
+                    data-testid="certificate-issue-btn"
+                    type="button"
+                    class="btn btn--black btn-sm"
+                    :disabled="certificateSubmitting === 'issued'"
+                    @click="setCertificateDecision('issued')"
+                  >
+                    {{ certificateSubmitting === 'issued' ? 'Сохраняем...' : 'Выдать сертификат' }}
+                  </button>
+                  <button
+                    data-testid="certificate-reject-btn"
+                    type="button"
+                    class="btn btn--grayborder btn-sm"
+                    :disabled="certificateSubmitting === 'rejected'"
+                    @click="setCertificateDecision('rejected')"
+                  >
+                    {{ certificateSubmitting === 'rejected' ? 'Сохраняем...' : 'Отклонить сертификат' }}
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn--grayborder btn-sm"
+                    :disabled="certificateTemplateLoading"
+                    @click="openCertificateTemplate"
+                  >
+                    {{ certificateTemplateLoading ? 'Подготовка PDF...' : 'Посмотреть шаблон сертификата (PDF)' }}
+                  </button>
+                </div>
+              </template>
             </div>
           </div>
         </div>
@@ -335,6 +352,9 @@ export default {
     finalExam () {
       const exams = Array.isArray(this.currentEnrollment?.exams) ? this.currentEnrollment.exams : []
       return exams.find((item) => item?.exam_type === 'final') || null
+    },
+    isCertificateIssued () {
+      return String(this.currentEnrollment?.certificate_status || '').toLowerCase() === 'issued'
     }
   },
   async mounted () {
@@ -712,6 +732,11 @@ export default {
 .panel-study-manager-modal__hint {
   color: #5b6780;
   font-size: 14px;
+}
+
+.panel-study-manager-modal__hint--ok {
+  color: #1f7a41;
+  font-weight: 600;
 }
 
 .panel-study-manager-lessons {

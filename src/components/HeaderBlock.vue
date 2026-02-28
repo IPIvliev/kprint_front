@@ -544,4 +544,95 @@ export default {
   border-color: #111;
   color: #fff;
 }
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .header__col:nth-child(1),
+  .header__col:nth-child(3) {
+    width: auto;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .header__col:nth-child(2) {
+    flex: 0 0 auto;
+    margin: 0 12px;
+    justify-content: center;
+  }
+
+  .header__logo {
+    display: block;
+    width: clamp(190px, 21vw, 240px);
+    max-width: 100%;
+  }
+
+  .header__logo img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .header__col:nth-child(3) {
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .header__lang {
+    margin-right: 0;
+  }
+
+  .header__tel {
+    max-width: 150px;
+    font-size: 13px;
+    line-height: 1.2;
+  }
+
+  .header__tel a {
+    font-size: 14px;
+  }
+
+  .header__tel p {
+    white-space: normal;
+  }
+
+  .header__regbuttons {
+    margin-left: 0;
+  }
+
+  .header__btn {
+    margin-right: 24px;
+  }
+
+  .header__list a {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .header__auth-mobile {
+    display: none;
+  }
+
+  .header__col:nth-child(1),
+  .header__col:nth-child(3) {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .header__col:nth-child(2) {
+    flex: 0 0 auto;
+    margin: 0;
+    justify-content: center;
+  }
+
+  .header__logo img {
+    width: clamp(150px, 42vw, 180px);
+    max-width: none;
+    height: auto;
+  }
+
+  .header__cartbtn {
+    margin-right: 8px;
+  }
+}
 </style>
