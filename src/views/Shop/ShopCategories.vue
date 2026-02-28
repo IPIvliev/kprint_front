@@ -3,6 +3,7 @@
     <header-block />
 
     <div class="content">
+      <WhiteWelcome />
       <div class="news">
         <div class="container">
           <h1 class="title">Каталог продукции</h1>
@@ -12,7 +13,6 @@
         </div>
       </div>
       <callback-window />
-      <WhiteWelcome />
     </div>
 
     <footer-block />
@@ -22,6 +22,7 @@
 <script>
 import HeaderBlock from '../../components/HeaderBlock.vue'
 import FooterBlock from '../../components/FooterBlock.vue'
+import WhiteWelcome from '@/components/elements/WhiteWelcome.vue'
 import CategoryCard from '@/components/elements/Shop/ShopCategory/CategoryCard.vue'
 
 export default {
@@ -33,6 +34,7 @@ export default {
   components: {
     FooterBlock,
     HeaderBlock,
+    WhiteWelcome,
     CategoryCard
   },
   computed: {

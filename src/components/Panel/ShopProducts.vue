@@ -300,7 +300,6 @@
               <label>Отзывы товара</label>
               <div style="display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap; margin-bottom:12px;">
                 <input v-model="newProductReview.author_name" type="text" class="form-control" style="min-width:220px;" placeholder="Автор">
-                <input v-model="newProductReview.source_url" type="url" class="form-control" style="min-width:260px;" placeholder="Источник (URL)">
                 <input v-model.number="newProductReview.sort" type="number" class="form-control" style="width:100px;" placeholder="Сорт">
                 <label style="display:flex; gap:6px; align-items:center; margin:0 8px;">
                   <input v-model="newProductReview.is_active" type="checkbox">
@@ -317,7 +316,6 @@
               <button type="button" class="btn btn--grayborder" @click="addProductReview" :disabled="reviewSaving">Добавить отзыв</button>
               <div v-for="item in productReviews" :key="item.id" style="display:flex; gap:10px; align-items:flex-start; flex-wrap:wrap; margin-top:12px; border-top:1px solid #e5e7eb; padding-top:10px;">
                 <input v-model="item.author_name" type="text" class="form-control" style="min-width:220px;" placeholder="Автор">
-                <input v-model="item.source_url" type="url" class="form-control" style="min-width:260px;" placeholder="Источник">
                 <input v-model.number="item.sort" type="number" class="form-control" style="width:100px;" placeholder="Сорт">
                 <label style="display:flex; gap:6px; align-items:center; margin:6px 8px 0 0;">
                   <input v-model="item.is_active" type="checkbox">
@@ -410,7 +408,6 @@ export default {
       newProductReview: {
         author_name: '',
         text: '',
-        source_url: '',
         sort: 0,
         is_active: true
       },
@@ -549,11 +546,13 @@ export default {
       this.newProductReview = {
         author_name: '',
         text: '',
-        source_url: '',
         sort: 0,
         is_active: true
       }
       this.newProductReviewPhoto = null
+      if (this.newProductReviewPhotoPreview) {
+        URL.revokeObjectURL(this.newProductReviewPhotoPreview)
+      }
       this.newProductReviewPhotoPreview = ''
     },
     async fetchProductVideos () {
@@ -572,13 +571,79 @@ export default {
       const response = await fetchShopManagerProductReviews({ product: this.currentId })
       this.productReviews = Array.isArray(response?.data) ? response.data : []
     },
-    onNewReviewPhotoChange (event) {
+    async onNewReviewPhotoChange (event) {
       const file = event.target?.files && event.target.files[0]
       if (!file) {
         return
       }
-      this.newProductReviewPhoto = file
-      this.newProductReviewPhotoPreview = URL.createObjectURL(file)
+      this.error = ''
+      await this.prepareNewReviewPhoto(file)
+    },
+    async prepareNewReviewPhoto (file) {
+      try {
+        const preparedFile = await this.normalizeReviewPhotoFile(file)
+        if (this.newProductReviewPhotoPreview) {
+          URL.revokeObjectURL(this.newProductReviewPhotoPreview)
+        }
+        this.newProductReviewPhoto = preparedFile
+        this.newProductReviewPhotoPreview = URL.createObjectURL(preparedFile)
+      } catch (error) {
+        this.newProductReviewPhoto = null
+        if (this.newProductReviewPhotoPreview) {
+          URL.revokeObjectURL(this.newProductReviewPhotoPreview)
+        }
+        this.newProductReviewPhotoPreview = ''
+        this.error = error?.message || 'Не удалось обработать изображение отзыва'
+      }
+    },
+    async normalizeReviewPhotoFile (file) {
+      const type = String(file?.type || '').toLowerCase()
+      if (type === 'image/png' || type === 'image/jpeg') {
+        return file
+      }
+
+      // Convert non-PNG/JPEG images to PNG to avoid backend format validation issues.
+      const dataUrl = await this.fileToDataUrl(file)
+      const image = await this.loadImageFromDataUrl(dataUrl)
+      const canvas = document.createElement('canvas')
+      canvas.width = image.naturalWidth || image.width || 0
+      canvas.height = image.naturalHeight || image.height || 0
+
+      if (!canvas.width || !canvas.height) {
+        throw new Error('Не удалось прочитать изображение. Выберите PNG или JPG.')
+      }
+
+      const context = canvas.getContext('2d')
+      if (!context) {
+        throw new Error('Не удалось обработать изображение. Попробуйте PNG или JPG.')
+      }
+
+      context.drawImage(image, 0, 0)
+      const blob = await new Promise((resolve) => {
+        canvas.toBlob(resolve, 'image/png')
+      })
+      if (!blob) {
+        throw new Error('Не удалось конвертировать изображение. Попробуйте PNG или JPG.')
+      }
+
+      const baseName = String(file.name || 'review-photo').replace(/\.[^/.]+$/, '')
+      return new File([blob], `${baseName || 'review-photo'}.png`, { type: 'image/png' })
+    },
+    fileToDataUrl (file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => resolve(String(reader.result || ''))
+        reader.onerror = () => reject(new Error('Не удалось прочитать файл изображения'))
+        reader.readAsDataURL(file)
+      })
+    },
+    loadImageFromDataUrl (dataUrl) {
+      return new Promise((resolve, reject) => {
+        const image = new Image()
+        image.onload = () => resolve(image)
+        image.onerror = () => reject(new Error('Файл не распознан как изображение'))
+        image.src = dataUrl
+      })
     },
     async addProductVideo () {
       if (!this.currentId || !this.newProductVideo.url) {
@@ -644,12 +709,12 @@ export default {
         return
       }
       this.reviewSaving = true
+      this.error = ''
       try {
         const payload = new FormData()
         payload.append('product', Number(this.currentId))
         payload.append('author_name', this.newProductReview.author_name || '')
         payload.append('text', this.newProductReview.text || '')
-        payload.append('source_url', this.newProductReview.source_url || '')
         payload.append('sort', Number(this.newProductReview.sort || 0))
         payload.append('is_active', this.newProductReview.is_active ? 'true' : 'false')
         if (this.newProductReviewPhoto) {
@@ -659,11 +724,13 @@ export default {
         this.newProductReview = {
           author_name: '',
           text: '',
-          source_url: '',
           sort: 0,
           is_active: true
         }
         this.newProductReviewPhoto = null
+        if (this.newProductReviewPhotoPreview) {
+          URL.revokeObjectURL(this.newProductReviewPhotoPreview)
+        }
         this.newProductReviewPhotoPreview = ''
         await this.fetchProductReviews()
       } catch (err) {
@@ -677,12 +744,12 @@ export default {
         return
       }
       this.reviewSaving = true
+      this.error = ''
       try {
         await updateShopManagerProductReview(item.id, {
           product: Number(this.currentId),
           author_name: item.author_name || '',
           text: item.text || '',
-          source_url: item.source_url || '',
           sort: Number(item.sort || 0),
           is_active: Boolean(item.is_active)
         })
