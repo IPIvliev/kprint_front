@@ -4,6 +4,8 @@
     background-image: url("../../../img/pattern.svg");
     border-radius: 0px 0px 80px 80px;
     padding: 40px 0;
+    position: relative;
+    overflow: hidden;
     
   }
 
@@ -52,4 +54,87 @@
     width: 24px;
     height: 24px;
     margin-left: 5px;
+  }
+
+  .cmp-components-elements-whitewelcome .whitewelcome-bear, .cmp-components-elements-whitewelcome.whitewelcome-bear{
+    position: absolute;
+    top: 22%;
+    left: 6%;
+    width: 128px;
+    height: 96px;
+    z-index: 3;
+    pointer-events: auto;
+    cursor: pointer;
+    user-select: none;
+    filter: drop-shadow(0 6px 8px rgba(24, 13, 7, 0.3));
+    animation: whitewelcome-bear-route 21s linear infinite;
+    transform: translate(-50%, -50%);
+  }
+
+  .cmp-components-elements-whitewelcome .whitewelcome-bear:focus-visible, .cmp-components-elements-whitewelcome.whitewelcome-bear:focus-visible{
+    outline: 2px solid rgba(32, 42, 66, 0.8);
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+
+  .cmp-components-elements-whitewelcome .whitewelcome-bear svg, .cmp-components-elements-whitewelcome.whitewelcome-bear svg{
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .cmp-components-elements-whitewelcome .whitewelcome-bear__figure, .cmp-components-elements-whitewelcome.whitewelcome-bear__figure{
+    transform-origin: 50% 65%;
+    animation: whitewelcome-bear-bob 1.2s ease-in-out infinite;
+  }
+
+  .cmp-components-elements-whitewelcome .whitewelcome-bear--playing .whitewelcome-bear__figure, .cmp-components-elements-whitewelcome.whitewelcome-bear--playing .whitewelcome-bear__figure{
+    animation-duration: 0.5s;
+  }
+
+  @keyframes whitewelcome-bear-route {
+    0% { top: 22%; left: 6%; transform: translate(-50%, -50%) scaleX(1); }
+    14% { top: 10%; left: 34%; transform: translate(-50%, -50%) scaleX(1); }
+    29% { top: 20%; left: 64%; transform: translate(-50%, -50%) scaleX(1); }
+    42% { top: 12%; left: 88%; transform: translate(-50%, -50%) scaleX(1); }
+    55% { top: 54%; left: 84%; transform: translate(-50%, -50%) scaleX(-1); }
+    72% { top: 74%; left: 50%; transform: translate(-50%, -50%) scaleX(-1); }
+    88% { top: 58%; left: 18%; transform: translate(-50%, -50%) scaleX(-1); }
+    100% { top: 22%; left: 6%; transform: translate(-50%, -50%) scaleX(1); }
+  }
+
+  @keyframes whitewelcome-bear-bob {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-2px) rotate(-1.5deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+  }
+
+  @media (max-width: 991px) {
+    .cmp-components-elements-whitewelcome .whitewelcome-bear, .cmp-components-elements-whitewelcome.whitewelcome-bear{
+      width: 104px;
+      height: 78px;
+      animation-duration: 18s;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .cmp-components-elements-whitewelcome .whitewelcome-bear, .cmp-components-elements-whitewelcome.whitewelcome-bear{
+      width: 88px;
+      height: 66px;
+      animation-duration: 16s;
+      opacity: 0.82;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cmp-components-elements-whitewelcome .whitewelcome-bear, .cmp-components-elements-whitewelcome.whitewelcome-bear{
+      animation: none;
+      top: 14%;
+      left: 84%;
+      transform: translate(-50%, -50%);
+    }
+
+    .cmp-components-elements-whitewelcome .whitewelcome-bear__figure, .cmp-components-elements-whitewelcome.whitewelcome-bear__figure{
+      animation: none;
+    }
   }

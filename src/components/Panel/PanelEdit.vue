@@ -140,6 +140,10 @@
                                 <router-link to="/legal/ads-consent" target="_blank" rel="noopener noreferrer">по отдельному согласию</router-link>
                               </span>
                             </label>
+                            <label class="panel-consent-toggle" style="margin-top:8px;">
+                              <input v-model="profile.show_bear" type="checkbox">
+                              <span>Показывать медведя в приветственном блоке</span>
+                            </label>
                           </div>
                         </div>
                       </div>
@@ -240,6 +244,7 @@ export default {
         phone: '',
         email: '',
         telegram: '',
+        show_bear: false,
         ads_consent: false
       },
       avatarFile: null,
@@ -273,6 +278,7 @@ export default {
         phone: data.phone || '',
         email: data.email || '',
         telegram: data.telegram || '',
+        show_bear: Boolean(data.show_bear),
         ads_consent: Boolean(data.ads_consent)
       }
     },
@@ -308,7 +314,8 @@ export default {
         ...storeUser,
         email: this.profile.email ?? storeUser.email,
         full_name: this.profile.full_name ?? storeUser.full_name ?? '',
-        avatar: this.profile.avatar ?? storeUser.avatar ?? ''
+        avatar: this.profile.avatar ?? storeUser.avatar ?? '',
+        show_bear: Boolean(this.profile.show_bear)
       }
       if (!nextUser.username && nextUser.full_name) {
         nextUser.username = nextUser.full_name
@@ -364,6 +371,7 @@ export default {
       formData.append('phone', this.profile.phone || '')
       formData.append('email', this.profile.email || '')
       formData.append('telegram', this.profile.telegram || '')
+      formData.append('show_bear', String(Boolean(this.profile.show_bear)))
       formData.append('ads_consent', String(Boolean(this.profile.ads_consent)))
       if (this.avatarFile) {
         formData.append('avatar', this.avatarFile)
