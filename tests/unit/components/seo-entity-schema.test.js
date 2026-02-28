@@ -18,6 +18,10 @@ describe('seo entity schema', () => {
     expect(source).toContain('publicApi.get(requestPath)')
     expect(source).toContain("`/api/shop/products/${encodeURIComponent(productSlug)}`")
     expect(source).toContain("`/api/articles/${encodeURIComponent(articleSlug)}/`")
+    expect(source).toContain("`/api/study/course/${encodeURIComponent(courseSlug)}`")
+    expect(source).toContain('function buildDynamicSeoMetaFromEntity')
+    expect(source).toContain('function resolveSeoMetaWithEntity')
+    expect(source).toContain("routeName === 'CoursePage'")
     expect(source).toContain("'@type': 'Product'")
     expect(source).toContain("'@type': 'Article'")
 

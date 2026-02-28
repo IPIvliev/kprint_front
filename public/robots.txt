@@ -7,5 +7,6 @@ Disallow: /forgot-password
 Disallow: /reset-password
 Disallow: /shop/cart
 Disallow: /shop/order
+Clean-param: PAGEN_1 /
 
 Sitemap: https://gorkyliquid.ru/sitemap.xml

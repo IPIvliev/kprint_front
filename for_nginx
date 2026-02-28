@@ -29,7 +29,26 @@ server {
         log_not_found off;
     }
 
+    location ~* \.(?:js|css|png|jpg|jpeg|gif|svg|webp|ico|map|woff2?|ttf|eot)$ {
+        try_files $uri =404;
+        error_page 404 =404;
+    }
+
     location / {
-        try_files $uri $uri/ /index.html;
+        try_files $uri $uri/ @spa_known_routes;
+    }
+
+    location @spa_known_routes {
+        if ($uri ~* "^/(|about|contact|gallery|dealers|print|it-innovations|innovations|news(?:/.*)?|shop(?:/.*)?|study(?:/.*)?|legal/(personal-data-policy|pd-consent|ads-consent|terms-offer|delivery-payment|returns)|reset-password/[^/]+/[^/]+)$") {
+            rewrite ^ /index.html last;
+        }
+        return 404;
+    }
+
+    error_page 404 = @spa_not_found;
+
+    location @spa_not_found {
+        add_header Cache-Control "no-store";
+        try_files /index.html =404;
     }
 }

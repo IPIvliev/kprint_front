@@ -1,17 +1,30 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="ru">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta name="description" content="ООО «НПП &quot;3Д Аддитивные Технологии&quot;: смолы, филамент, оборудование, 3D-печать и обучение.">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="<%= BASE_URL %>favicon.svg">
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+      (function (m, e, t, r, i, k, a) {
+        m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) }
+        m[i].l = 1 * new Date()
+        for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return } }
+        k = e.createElement(t); a = e.getElementsByTagName(t)[0]; k.async = 1; k.src = r; a.parentNode.insertBefore(k, a)
+      })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym')
+
+      ym(53599684, 'init', {webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true})
+    </script>
+    <!-- /Yandex.Metrika counter -->
     <script src="<%= BASE_URL %>js/libs/bootstrap.bundle.min.js"></script>
 
     
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
+    <noscript><div><img src="https://mc.yandex.ru/watch/53599684" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>

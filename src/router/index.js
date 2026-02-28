@@ -601,6 +601,66 @@ function resolveSeoMeta (to) {
   return { title, description }
 }
 
+function truncateText (value, maxLength = 220) {
+  const normalized = normalizeText(value)
+  if (!normalized) {
+    return ''
+  }
+  if (normalized.length <= maxLength) {
+    return normalized
+  }
+  return `${normalized.slice(0, Math.max(0, maxLength - 1)).trimEnd()}…`
+}
+
+function buildDynamicSeoMetaFromEntity (to, payload) {
+  const baseMeta = resolveSeoMeta(to)
+  if (!payload || typeof payload !== 'object') {
+    return baseMeta
+  }
+
+  const routeName = String(to && to.name ? to.name : '')
+
+  if (routeName === 'Product') {
+    const name = normalizeText(payload.name)
+    const category = normalizeText(payload.category_title)
+    const price = toNumber(payload.price)
+    const productDescription = stripHtml(payload.description)
+    const categoryPart = category ? `Категория: ${category}.` : ''
+    const pricePart = Number.isFinite(price) ? `Цена: ${price.toFixed(2)} RUB.` : ''
+    const fallbackDescription = [categoryPart, pricePart].filter(Boolean).join(' ')
+    const description = truncateText(productDescription || fallbackDescription || baseMeta.description)
+
+    return {
+      title: name ? `${name} | Gorky Liquid` : baseMeta.title,
+      description: description || baseMeta.description
+    }
+  }
+
+  if (routeName === 'Article') {
+    const title = normalizeText(payload.title)
+    const articleDescription = truncateText(stripHtml(payload.body) || baseMeta.description)
+    return {
+      title: title ? `${title} | Gorky Liquid` : baseMeta.title,
+      description: articleDescription || baseMeta.description
+    }
+  }
+
+  if (routeName === 'CoursePage') {
+    const name = normalizeText(payload.name)
+    const duration = normalizeText(payload.duration)
+    const courseDescription = stripHtml(payload.description)
+    const durationPart = duration ? `Продолжительность: ${duration}.` : ''
+    const mergedDescription = [courseDescription, durationPart].filter(Boolean).join(' ')
+    const description = truncateText(mergedDescription || baseMeta.description)
+    return {
+      title: name ? `${name} | Обучение Gorky Liquid` : baseMeta.title,
+      description: description || baseMeta.description
+    }
+  }
+
+  return baseMeta
+}
+
 function resolveOpenGraphType (to) {
   const routeName = String(to && to.name ? to.name : '')
   if (routeName === 'Article') {
@@ -765,7 +825,7 @@ function buildArticleSchema (article, canonicalUrl) {
       name: 'Gorky Liquid',
       logo: {
         '@type': 'ImageObject',
-        url: `${SITE_URL}/favicon.ico`
+        url: `${SITE_URL}/favicon.svg`
       }
     }
   }
@@ -805,6 +865,49 @@ async function fetchSeoEntity (cacheKey, requestPath) {
     SEO_ENTITY_CACHE.delete(cacheKey)
     return null
   }
+}
+
+async function resolveSeoMetaWithEntity (to) {
+  const baseMeta = resolveSeoMeta(to)
+  const routeName = String(to && to.name ? to.name : '')
+
+  if (routeName === 'Product') {
+    const productSlug = String(to && to.params && to.params.productSlug ? to.params.productSlug : '').trim()
+    if (!productSlug) {
+      return baseMeta
+    }
+    const payload = await fetchSeoEntity(
+      `product:${productSlug}`,
+      `/api/shop/products/${encodeURIComponent(productSlug)}`
+    )
+    return buildDynamicSeoMetaFromEntity(to, payload)
+  }
+
+  if (routeName === 'Article') {
+    const articleSlug = String(to && to.params && to.params.articleSlug ? to.params.articleSlug : '').trim()
+    if (!articleSlug) {
+      return baseMeta
+    }
+    const payload = await fetchSeoEntity(
+      `article:${articleSlug}`,
+      `/api/articles/${encodeURIComponent(articleSlug)}/`
+    )
+    return buildDynamicSeoMetaFromEntity(to, payload)
+  }
+
+  if (routeName === 'CoursePage') {
+    const courseSlug = String(to && to.params && to.params.courseSlug ? to.params.courseSlug : '').trim()
+    if (!courseSlug) {
+      return baseMeta
+    }
+    const payload = await fetchSeoEntity(
+      `course:${courseSlug}`,
+      `/api/study/course/${encodeURIComponent(courseSlug)}`
+    )
+    return buildDynamicSeoMetaFromEntity(to, payload)
+  }
+
+  return baseMeta
 }
 
 async function resolveEntitySchema (to, canonicalUrl) {
@@ -879,7 +982,7 @@ async function updateJsonLd (to, canonicalUrl, title, description, navigationId)
       '@type': 'Organization',
       name: 'Gorky Liquid',
       url: SITE_URL,
-      logo: `${SITE_URL}/favicon.ico`,
+      logo: `${SITE_URL}/favicon.svg`,
       sameAs: [
         'https://vk.com/gorky_liquid',
         'https://dzen.ru/gorky_liquid'
@@ -931,11 +1034,15 @@ router.afterEach(async (to) => {
     return
   }
   const navigationId = ++seoNavigationId
-  const { title, description } = resolveSeoMeta(to)
   const canonicalUrl = buildCanonicalUrl(to)
   const robots = isNoindexRoute(to)
     ? 'noindex,nofollow,noarchive'
     : 'index,follow,max-image-preview:large'
+  const resolvedSeoMeta = await resolveSeoMetaWithEntity(to)
+  if (navigationId !== seoNavigationId) {
+    return
+  }
+  const { title, description } = resolvedSeoMeta
 
   document.title = title
   const descriptionMeta = ensureDescriptionMetaTag()

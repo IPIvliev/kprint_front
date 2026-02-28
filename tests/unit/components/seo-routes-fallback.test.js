@@ -21,5 +21,7 @@ describe('seo routes fallback discovery', () => {
     expect(source).toContain('requestListWithFallback')
     expect(source).toContain('function isListPayload (payload)')
     expect(source).toContain('unexpected payload shape')
+    expect(source).toContain('article && (article.publish_iso || article.publish)')
+    expect(source).not.toContain('article && (article.updated')
   })
 })

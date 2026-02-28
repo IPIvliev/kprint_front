@@ -117,6 +117,25 @@ function isListPayload (payload) {
   return Array.isArray(payload.results) || Array.isArray(payload.items)
 }
 
+function normalizeLastMod (value) {
+  const raw = String(value || '').trim()
+  if (!raw) {
+    return ''
+  }
+  const parsed = new Date(raw)
+  if (Number.isNaN(parsed.getTime())) {
+    return ''
+  }
+  return parsed.toISOString()
+}
+
+function asRouteEntry (routePath, lastmod = '') {
+  return {
+    path: normalizePath(routePath),
+    lastmod: normalizeLastMod(lastmod)
+  }
+}
+
 function uniqueRoutes (routes) {
   const unique = new Set()
   routes
@@ -124,6 +143,30 @@ function uniqueRoutes (routes) {
     .filter(Boolean)
     .forEach((item) => unique.add(item))
   return Array.from(unique)
+}
+
+function uniqueRouteEntries (entries) {
+  const byPath = new Map()
+  entries.forEach((entry) => {
+    if (!entry) {
+      return
+    }
+    const path = normalizePath(entry.path || entry)
+    if (!path) {
+      return
+    }
+    const lastmod = normalizeLastMod(entry.lastmod)
+    if (!byPath.has(path)) {
+      byPath.set(path, { path, lastmod })
+      return
+    }
+    const previous = byPath.get(path)
+    const previousLastmod = normalizeLastMod(previous.lastmod)
+    if (lastmod && (!previousLastmod || lastmod > previousLastmod)) {
+      byPath.set(path, { path, lastmod })
+    }
+  })
+  return Array.from(byPath.values())
 }
 
 function uniqueBaseUrls (candidates) {
@@ -197,6 +240,12 @@ function getStaticPublicRoutes () {
   ])
 }
 
+function getStaticPublicRouteEntries () {
+  return uniqueRouteEntries(
+    getStaticPublicRoutes().map((routePath) => asRouteEntry(routePath))
+  )
+}
+
 function createApiClient (baseURL) {
   const allowInsecureTls = String(process.env.SEO_ALLOW_INSECURE_TLS || '1') !== '0'
   const timeout = Number(process.env.SEO_FETCH_TIMEOUT_MS || 6000)
@@ -246,13 +295,13 @@ async function requestListWithFallback (apiBases, url, params, context) {
   return []
 }
 
-async function collectDynamicRoutes () {
+async function collectDynamicRouteEntries () {
   const apiBases = getApiBaseCandidates()
   const requestContext = {
     preferredBase: null,
     clientCache: new Map()
   }
-  const dynamicRoutes = []
+  const dynamicEntries = []
 
   const categories = await requestListWithFallback(apiBases, '/api/shop/categories', null, requestContext)
   categories.forEach((category) => {
@@ -263,8 +312,11 @@ async function collectDynamicRoutes () {
       return
     }
     const encodedCategorySlug = encodeURIComponent(categorySlug)
-    dynamicRoutes.push(`/shop/categories/${encodedCategorySlug}`)
-    dynamicRoutes.push(`/shop/categories/${encodedCategorySlug}/showcase`)
+    const categoryLastmod = normalizeLastMod(
+      category && (category.updated_at || category.updated || category.created_at || category.created)
+    )
+    dynamicEntries.push(asRouteEntry(`/shop/categories/${encodedCategorySlug}`, categoryLastmod))
+    dynamicEntries.push(asRouteEntry(`/shop/categories/${encodedCategorySlug}/showcase`, categoryLastmod))
   })
 
   const products = await requestListWithFallback(apiBases, '/api/shop/products', null, requestContext)
@@ -276,8 +328,14 @@ async function collectDynamicRoutes () {
     if (!productSlug || !categorySlug) {
       return
     }
-    dynamicRoutes.push(
-      `/shop/categories/${encodeURIComponent(categorySlug)}/${encodeURIComponent(productSlug)}`
+    const productLastmod = normalizeLastMod(
+      product && (product.updated_at || product.updated || product.created_at || product.created)
+    )
+    dynamicEntries.push(
+      asRouteEntry(
+        `/shop/categories/${encodeURIComponent(categorySlug)}/${encodeURIComponent(productSlug)}`,
+        productLastmod
+      )
     )
   })
 
@@ -287,7 +345,10 @@ async function collectDynamicRoutes () {
     if (!slug) {
       return
     }
-    dynamicRoutes.push(`/news/category/${slug}`)
+    const categoryLastmod = normalizeLastMod(
+      category && (category.updated_at || category.updated || category.created_at || category.created)
+    )
+    dynamicEntries.push(asRouteEntry(`/news/category/${slug}`, categoryLastmod))
   })
 
   const articles = await requestListWithFallback(apiBases, '/api/articles/', null, requestContext)
@@ -296,12 +357,15 @@ async function collectDynamicRoutes () {
     if (!articleLookup) {
       return
     }
-    dynamicRoutes.push(`/news/${encodeURIComponent(articleLookup)}`)
+    const articleLastmod = normalizeLastMod(
+      article && (article.publish_iso || article.publish)
+    )
+    dynamicEntries.push(asRouteEntry(`/news/${encodeURIComponent(articleLookup)}`, articleLastmod))
     const tags = Array.isArray(article && article.tags) ? article.tags : []
     tags.forEach((tag) => {
       const tagSlug = String(tag && typeof tag === 'object' ? tag.slug : '').trim()
       if (tagSlug) {
-        dynamicRoutes.push(`/news/tag/${tagSlug}`)
+        dynamicEntries.push(asRouteEntry(`/news/tag/${tagSlug}`, articleLastmod))
       }
     })
   })
@@ -312,10 +376,18 @@ async function collectDynamicRoutes () {
     if (!courseSlug) {
       return
     }
-    dynamicRoutes.push(`/study/course/${encodeURIComponent(courseSlug)}`)
+    const courseLastmod = normalizeLastMod(
+      course && (course.updated_at || course.updated || course.created_at || course.created)
+    )
+    dynamicEntries.push(asRouteEntry(`/study/course/${encodeURIComponent(courseSlug)}`, courseLastmod))
   })
 
-  return uniqueRoutes(dynamicRoutes)
+  return uniqueRouteEntries(dynamicEntries)
+}
+
+async function collectDynamicRoutes () {
+  const dynamicEntries = await collectDynamicRouteEntries()
+  return uniqueRoutes(dynamicEntries.map((entry) => entry.path))
 }
 
 function readCachedPayload () {
@@ -340,38 +412,77 @@ function getCachedDynamicRoutes (staticRoutes) {
   return uniqueRoutes(cachedRoutes.filter((routePath) => !staticSet.has(normalizePath(routePath))))
 }
 
-async function collectSeoRoutes () {
-  const staticRoutes = getStaticPublicRoutes()
-  const dynamicRoutes = await collectDynamicRoutes()
-  if (dynamicRoutes.length) {
-    return uniqueRoutes([...staticRoutes, ...dynamicRoutes])
+function getCachedDynamicRouteEntries (staticEntries) {
+  const payload = readCachedPayload()
+  const cachedRouteEntries = Array.isArray(payload && payload.routeEntries) ? payload.routeEntries : []
+  if (!cachedRouteEntries.length) {
+    return []
   }
-  const cachedDynamicRoutes = getCachedDynamicRoutes(staticRoutes)
+  const staticSet = new Set(staticEntries.map((entry) => normalizePath(entry.path)))
+  return uniqueRouteEntries(
+    cachedRouteEntries
+      .map((entry) => asRouteEntry(entry && entry.path, entry && entry.lastmod))
+      .filter((entry) => !staticSet.has(entry.path))
+  )
+}
+
+async function collectSeoRouteEntries () {
+  const staticEntries = getStaticPublicRouteEntries()
+  const dynamicEntries = await collectDynamicRouteEntries()
+  if (dynamicEntries.length) {
+    return uniqueRouteEntries([...staticEntries, ...dynamicEntries])
+  }
+  const cachedDynamicEntries = getCachedDynamicRouteEntries(staticEntries)
+  if (cachedDynamicEntries.length) {
+    process.stdout.write(`[seo] using ${cachedDynamicEntries.length} cached dynamic route entries\n`)
+    return uniqueRouteEntries([...staticEntries, ...cachedDynamicEntries])
+  }
+  const cachedDynamicRoutes = getCachedDynamicRoutes(staticEntries.map((entry) => entry.path))
   if (cachedDynamicRoutes.length) {
     process.stdout.write(`[seo] using ${cachedDynamicRoutes.length} cached dynamic routes\n`)
-    return uniqueRoutes([...staticRoutes, ...cachedDynamicRoutes])
+    return uniqueRouteEntries([
+      ...staticEntries,
+      ...cachedDynamicRoutes.map((routePath) => asRouteEntry(routePath))
+    ])
   }
-  return staticRoutes
+  return staticEntries
+}
+
+async function collectSeoRoutes () {
+  const entries = await collectSeoRouteEntries()
+  return uniqueRoutes(entries.map((entry) => entry.path))
 }
 
 function getPrerenderRoutes () {
   const staticRoutes = getStaticPublicRoutes()
   const payload = readCachedPayload()
-  const routes = Array.isArray(payload && payload.prerenderRoutes)
+  const prerenderRoutes = Array.isArray(payload && payload.prerenderRoutes)
     ? payload.prerenderRoutes
     : []
-  return uniqueRoutes([...staticRoutes, ...routes])
+  if (prerenderRoutes.length) {
+    return uniqueRoutes([...staticRoutes, ...prerenderRoutes])
+  }
+  const routeEntries = Array.isArray(payload && payload.routeEntries)
+    ? payload.routeEntries
+    : []
+  const entryPaths = routeEntries.map((entry) => normalizePath(entry && entry.path))
+  return uniqueRoutes([...staticRoutes, ...entryPaths])
 }
 
 module.exports = {
   CACHE_DIR,
   CACHE_FILE,
+  collectDynamicRouteEntries,
+  collectSeoRouteEntries,
   collectSeoRoutes,
   getApiBaseCandidates,
   getApiBaseUrl,
   getPrerenderRoutes,
   getSiteUrl,
+  getStaticPublicRouteEntries,
   getStaticPublicRoutes,
+  normalizeLastMod,
   normalizePath,
+  uniqueRouteEntries,
   uniqueRoutes
 }
