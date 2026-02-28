@@ -188,6 +188,38 @@ export function deleteShopManagerProductImage (imageId) {
   return api.delete(`/api/shop/manager/product-images/${imageId}`)
 }
 
+export function fetchShopManagerProductVideos (params = {}) {
+  return api.get('/api/shop/manager/product-videos', { params })
+}
+
+export function createShopManagerProductVideo (payload) {
+  return api.post('/api/shop/manager/product-videos', payload)
+}
+
+export function updateShopManagerProductVideo (videoId, payload) {
+  return api.patch(`/api/shop/manager/product-videos/${videoId}`, payload)
+}
+
+export function deleteShopManagerProductVideo (videoId) {
+  return api.delete(`/api/shop/manager/product-videos/${videoId}`)
+}
+
+export function fetchShopManagerProductReviews (params = {}) {
+  return api.get('/api/shop/manager/product-reviews', { params })
+}
+
+export function createShopManagerProductReview (payload) {
+  return api.post('/api/shop/manager/product-reviews', payload)
+}
+
+export function updateShopManagerProductReview (reviewId, payload) {
+  return api.patch(`/api/shop/manager/product-reviews/${reviewId}`, payload)
+}
+
+export function deleteShopManagerProductReview (reviewId) {
+  return api.delete(`/api/shop/manager/product-reviews/${reviewId}`)
+}
+
 export function fetchShopManagerDiscounts () {
   return api.get('/api/shop/manager/discounts')
 }

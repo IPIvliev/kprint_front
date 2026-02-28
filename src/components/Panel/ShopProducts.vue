@@ -266,6 +266,69 @@
                 </button>
               </div>
             </div>
+            <div class="panel__formrow" v-if="isEditing && currentId">
+              <label>Видео товара</label>
+              <div style="display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap; margin-bottom:12px;">
+                <div style="min-width:220px;">
+                  <input v-model="newProductVideo.title" type="text" class="form-control" placeholder="Название видео">
+                </div>
+                <div style="min-width:260px;">
+                  <input v-model="newProductVideo.url" type="url" class="form-control" placeholder="https://youtube.com/...">
+                </div>
+                <div style="width:120px;">
+                  <input v-model.number="newProductVideo.sort" type="number" class="form-control" placeholder="Сорт">
+                </div>
+                <label style="display:flex; gap:6px; align-items:center; margin:0 8px;">
+                  <input v-model="newProductVideo.is_active" type="checkbox">
+                  <span>Активно</span>
+                </label>
+                <button type="button" class="btn btn--grayborder" @click="addProductVideo" :disabled="videoSaving">Добавить</button>
+              </div>
+              <div v-for="item in productVideos" :key="item.id" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+                <input v-model="item.title" type="text" class="form-control" style="min-width:220px;" placeholder="Название">
+                <input v-model="item.url" type="url" class="form-control" style="min-width:260px;" placeholder="URL">
+                <input v-model.number="item.sort" type="number" class="form-control" style="width:100px;" placeholder="Сорт">
+                <label style="display:flex; gap:6px; align-items:center; margin:0 8px;">
+                  <input v-model="item.is_active" type="checkbox">
+                  <span>Активно</span>
+                </label>
+                <button type="button" class="btn btn--grayborder" @click="updateProductVideo(item)" :disabled="videoSaving">Сохранить</button>
+                <button type="button" class="btn btn--grayborder" @click="removeProductVideo(item)" :disabled="videoSaving">Удалить</button>
+              </div>
+            </div>
+            <div class="panel__formrow" v-if="isEditing && currentId">
+              <label>Отзывы товара</label>
+              <div style="display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap; margin-bottom:12px;">
+                <input v-model="newProductReview.author_name" type="text" class="form-control" style="min-width:220px;" placeholder="Автор">
+                <input v-model="newProductReview.source_url" type="url" class="form-control" style="min-width:260px;" placeholder="Источник (URL)">
+                <input v-model.number="newProductReview.sort" type="number" class="form-control" style="width:100px;" placeholder="Сорт">
+                <label style="display:flex; gap:6px; align-items:center; margin:0 8px;">
+                  <input v-model="newProductReview.is_active" type="checkbox">
+                  <span>Активно</span>
+                </label>
+              </div>
+              <div class="panel__formrow" style="margin-top:0;">
+                <textarea v-model="newProductReview.text" rows="3" class="form-control" placeholder="Текст отзыва"></textarea>
+              </div>
+              <div class="panel__formrow" style="margin-top:0;">
+                <input type="file" class="form-control" accept="image/*" @change="onNewReviewPhotoChange">
+                <img v-if="newProductReviewPhotoPreview" :src="newProductReviewPhotoPreview" alt="preview" style="margin-top:8px; width:120px; height:80px; object-fit:cover; border-radius:8px;">
+              </div>
+              <button type="button" class="btn btn--grayborder" @click="addProductReview" :disabled="reviewSaving">Добавить отзыв</button>
+              <div v-for="item in productReviews" :key="item.id" style="display:flex; gap:10px; align-items:flex-start; flex-wrap:wrap; margin-top:12px; border-top:1px solid #e5e7eb; padding-top:10px;">
+                <input v-model="item.author_name" type="text" class="form-control" style="min-width:220px;" placeholder="Автор">
+                <input v-model="item.source_url" type="url" class="form-control" style="min-width:260px;" placeholder="Источник">
+                <input v-model.number="item.sort" type="number" class="form-control" style="width:100px;" placeholder="Сорт">
+                <label style="display:flex; gap:6px; align-items:center; margin:6px 8px 0 0;">
+                  <input v-model="item.is_active" type="checkbox">
+                  <span>Активно</span>
+                </label>
+                <textarea v-model="item.text" rows="3" class="form-control" style="min-width:420px;" placeholder="Текст"></textarea>
+                <img v-if="item.photo" :src="resolveMediaUrl(item.photo)" alt="review" style="width:120px; height:80px; object-fit:cover; border-radius:8px;">
+                <button type="button" class="btn btn--grayborder" @click="updateProductReview(item)" :disabled="reviewSaving">Сохранить</button>
+                <button type="button" class="btn btn--grayborder" @click="removeProductReview(item)" :disabled="reviewSaving">Удалить</button>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn--grayborder" @click="closeModal">Отмена</button>
@@ -287,16 +350,24 @@ import {
   createShopManagerFilterAttrValue,
   createShopManagerProduct,
   createShopManagerProductImage,
+  createShopManagerProductReview,
+  createShopManagerProductVideo,
   deleteShopManagerFilterAttrValue,
   deleteShopManagerProduct,
   deleteShopManagerProductImage,
+  deleteShopManagerProductReview,
+  deleteShopManagerProductVideo,
   fetchShopManagerCategories,
   fetchShopManagerFilterAttrs,
   fetchShopManagerProduct,
+  fetchShopManagerProductReviews,
+  fetchShopManagerProductVideos,
   fetchShopManagerProducts,
   fetchShopPublicProduct,
   updateShopManagerFilterAttrValue,
-  updateShopManagerProduct
+  updateShopManagerProduct,
+  updateShopManagerProductReview,
+  updateShopManagerProductVideo
 } from '@/services/panel.service'
 
 export default {
@@ -319,6 +390,10 @@ export default {
       galleryFiles: [],
       galleryPreviews: [],
       uploadingGallery: false,
+      productVideos: [],
+      productReviews: [],
+      videoSaving: false,
+      reviewSaving: false,
       filterAttrs: [],
       productAttrValues: [],
       attrSaving: false,
@@ -326,6 +401,21 @@ export default {
         filter_attr: '',
         value: ''
       },
+      newProductVideo: {
+        title: '',
+        url: '',
+        sort: 0,
+        is_active: true
+      },
+      newProductReview: {
+        author_name: '',
+        text: '',
+        source_url: '',
+        sort: 0,
+        is_active: true
+      },
+      newProductReviewPhoto: null,
+      newProductReviewPhotoPreview: '',
       form: {
         name: '',
         description: '',
@@ -447,6 +537,175 @@ export default {
         value: ''
       }
     },
+    resetProductContentEditor () {
+      this.productVideos = []
+      this.productReviews = []
+      this.newProductVideo = {
+        title: '',
+        url: '',
+        sort: 0,
+        is_active: true
+      }
+      this.newProductReview = {
+        author_name: '',
+        text: '',
+        source_url: '',
+        sort: 0,
+        is_active: true
+      }
+      this.newProductReviewPhoto = null
+      this.newProductReviewPhotoPreview = ''
+    },
+    async fetchProductVideos () {
+      if (!this.currentId) {
+        this.productVideos = []
+        return
+      }
+      const response = await fetchShopManagerProductVideos({ product: this.currentId })
+      this.productVideos = Array.isArray(response?.data) ? response.data : []
+    },
+    async fetchProductReviews () {
+      if (!this.currentId) {
+        this.productReviews = []
+        return
+      }
+      const response = await fetchShopManagerProductReviews({ product: this.currentId })
+      this.productReviews = Array.isArray(response?.data) ? response.data : []
+    },
+    onNewReviewPhotoChange (event) {
+      const file = event.target?.files && event.target.files[0]
+      if (!file) {
+        return
+      }
+      this.newProductReviewPhoto = file
+      this.newProductReviewPhotoPreview = URL.createObjectURL(file)
+    },
+    async addProductVideo () {
+      if (!this.currentId || !this.newProductVideo.url) {
+        return
+      }
+      this.videoSaving = true
+      try {
+        await createShopManagerProductVideo({
+          product: Number(this.currentId),
+          title: this.newProductVideo.title || '',
+          url: this.newProductVideo.url,
+          sort: Number(this.newProductVideo.sort || 0),
+          is_active: Boolean(this.newProductVideo.is_active)
+        })
+        this.newProductVideo = {
+          title: '',
+          url: '',
+          sort: 0,
+          is_active: true
+        }
+        await this.fetchProductVideos()
+      } catch (err) {
+        this.error = err.userMessage || 'Не удалось добавить видео'
+      } finally {
+        this.videoSaving = false
+      }
+    },
+    async updateProductVideo (item) {
+      if (!item?.id) {
+        return
+      }
+      this.videoSaving = true
+      try {
+        await updateShopManagerProductVideo(item.id, {
+          product: Number(this.currentId),
+          title: item.title || '',
+          url: item.url || '',
+          sort: Number(item.sort || 0),
+          is_active: Boolean(item.is_active)
+        })
+      } catch (err) {
+        this.error = err.userMessage || 'Не удалось обновить видео'
+      } finally {
+        this.videoSaving = false
+      }
+    },
+    async removeProductVideo (item) {
+      if (!item?.id) {
+        return
+      }
+      this.videoSaving = true
+      try {
+        await deleteShopManagerProductVideo(item.id)
+        await this.fetchProductVideos()
+      } catch (err) {
+        this.error = err.userMessage || 'Не удалось удалить видео'
+      } finally {
+        this.videoSaving = false
+      }
+    },
+    async addProductReview () {
+      if (!this.currentId) {
+        return
+      }
+      this.reviewSaving = true
+      try {
+        const payload = new FormData()
+        payload.append('product', Number(this.currentId))
+        payload.append('author_name', this.newProductReview.author_name || '')
+        payload.append('text', this.newProductReview.text || '')
+        payload.append('source_url', this.newProductReview.source_url || '')
+        payload.append('sort', Number(this.newProductReview.sort || 0))
+        payload.append('is_active', this.newProductReview.is_active ? 'true' : 'false')
+        if (this.newProductReviewPhoto) {
+          payload.append('photo', this.newProductReviewPhoto)
+        }
+        await createShopManagerProductReview(payload)
+        this.newProductReview = {
+          author_name: '',
+          text: '',
+          source_url: '',
+          sort: 0,
+          is_active: true
+        }
+        this.newProductReviewPhoto = null
+        this.newProductReviewPhotoPreview = ''
+        await this.fetchProductReviews()
+      } catch (err) {
+        this.error = err.userMessage || 'Не удалось добавить отзыв'
+      } finally {
+        this.reviewSaving = false
+      }
+    },
+    async updateProductReview (item) {
+      if (!item?.id) {
+        return
+      }
+      this.reviewSaving = true
+      try {
+        await updateShopManagerProductReview(item.id, {
+          product: Number(this.currentId),
+          author_name: item.author_name || '',
+          text: item.text || '',
+          source_url: item.source_url || '',
+          sort: Number(item.sort || 0),
+          is_active: Boolean(item.is_active)
+        })
+      } catch (err) {
+        this.error = err.userMessage || 'Не удалось обновить отзыв'
+      } finally {
+        this.reviewSaving = false
+      }
+    },
+    async removeProductReview (item) {
+      if (!item?.id) {
+        return
+      }
+      this.reviewSaving = true
+      try {
+        await deleteShopManagerProductReview(item.id)
+        await this.fetchProductReviews()
+      } catch (err) {
+        this.error = err.userMessage || 'Не удалось удалить отзыв'
+      } finally {
+        this.reviewSaving = false
+      }
+    },
     async addProductAttrValue () {
       const filterAttrId = Number(this.newProductAttr.filter_attr || 0)
       const valueId = Number(this.newProductAttr.value || 0)
@@ -523,6 +782,7 @@ export default {
       this.productImages = []
       this.galleryPreviews = []
       this.resetProductAttrEditor()
+      this.resetProductContentEditor()
       this.showModal = true
     },
     async openEdit (product) {
@@ -553,10 +813,13 @@ export default {
       this.productImages = []
       this.galleryPreviews = []
       this.resetProductAttrEditor()
+      this.resetProductContentEditor()
       this.fetchProductImages()
       try {
         await this.loadProductAttrMeta()
         await this.fetchProductAttrValues()
+        await this.fetchProductVideos()
+        await this.fetchProductReviews()
       } catch (err) {
         this.error = err.userMessage || 'Не удалось загрузить характеристики товара'
       }
@@ -565,6 +828,7 @@ export default {
     closeModal () {
       this.showModal = false
       this.resetProductAttrEditor()
+      this.resetProductContentEditor()
     },
     triggerFileSelect () {
       if (this.$refs.imageInput) {
@@ -721,4 +985,3 @@ export default {
   }
 }
 </script>
-

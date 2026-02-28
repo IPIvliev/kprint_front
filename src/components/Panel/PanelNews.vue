@@ -683,6 +683,42 @@ export default {
       }
       return `${base}/${path}`
     },
+    escapeRegExp (value) {
+      return String(value || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    },
+    prepareBodyForEditor (html) {
+      const raw = String(html || '')
+      if (!raw) {
+        return ''
+      }
+      const base = (process.env.VUE_APP_API_BASE || '').replace(/\/+$/, '')
+      if (!base) {
+        return raw
+      }
+      return raw.replace(
+        /(\b(?:src|href)\s*=\s*["'])(\/media\/[^"']*|media\/[^"']*)(["'])/gi,
+        (match, prefix, rawUrl, quote) => {
+          const resolved = rawUrl.startsWith('/') ? `${base}${rawUrl}` : `${base}/${rawUrl}`
+          return `${prefix}${resolved}${quote}`
+        }
+      )
+    },
+    prepareBodyForSave (html) {
+      const raw = String(html || '')
+      if (!raw) {
+        return ''
+      }
+      const base = (process.env.VUE_APP_API_BASE || '').replace(/\/+$/, '')
+      if (!base) {
+        return raw
+      }
+      const escapedBase = this.escapeRegExp(base)
+      const baseMediaPattern = new RegExp(
+        `(\\b(?:src|href)\\s*=\\s*["'])${escapedBase}(/media/[^"']*)(["'])`,
+        'gi'
+      )
+      return raw.replace(baseMediaPattern, (match, prefix, mediaPath, quote) => `${prefix}${mediaPath}${quote}`)
+    },
     newsLink (article) {
       const id = article.id || article.pk
       const rawSlug = String((article && article.slug) || '').trim()
@@ -945,7 +981,7 @@ export default {
         this.form = {
           title: fullArticle.title || '',
           slug: fullArticle.slug || '',
-          body: fullArticle.body || '',
+          body: this.prepareBodyForEditor(fullArticle.body || ''),
           category: rawCategory || null,
           source: this.normalizeArticleSource(fullArticle.source),
           status: this.normalizePublicationStatus(fullArticle.status),
@@ -1181,7 +1217,7 @@ export default {
     },
     async saveArticle () {
       const title = String(this.form.title || '').trim()
-      const body = String(this.form.body || '').trim()
+      const body = String(this.prepareBodyForSave(this.form.body) || '').trim()
       const category = this.form.category
       if (!title || !body) {
         this.error = 'Заполните заголовок и текст'

@@ -25,6 +25,14 @@ import {
   generatePanelAiArticle,
   fetchShopOrders,
   fetchShopPublicProduct,
+  fetchShopManagerProductVideos,
+  createShopManagerProductVideo,
+  updateShopManagerProductVideo,
+  deleteShopManagerProductVideo,
+  fetchShopManagerProductReviews,
+  createShopManagerProductReview,
+  updateShopManagerProductReview,
+  deleteShopManagerProductReview,
   fetchStudyManagerLessons,
   fetchStudyManagerTeachers,
   reorderStudyManagerLessons,
@@ -79,8 +87,24 @@ describe('panel service', () => {
     await fetchShopPublicProduct(12)
     await fetchCallbackCaptcha()
     await createCallbackRequest({ phone: '+70000000000' })
+    await fetchShopManagerProductVideos({ product: 12 })
+    await createShopManagerProductVideo({ product: 12, url: 'https://youtu.be/demo' })
+    await updateShopManagerProductVideo(7, { title: 'Video' })
+    await deleteShopManagerProductVideo(7)
+    await fetchShopManagerProductReviews({ product: 12 })
+    await createShopManagerProductReview({ product: 12, author_name: 'John' })
+    await updateShopManagerProductReview(8, { text: 'Updated' })
+    await deleteShopManagerProductReview(8)
 
     expect(apiMock.get).toHaveBeenCalledWith('/api/shop/orders')
+    expect(apiMock.get).toHaveBeenCalledWith('/api/shop/manager/product-videos', { params: { product: 12 } })
+    expect(apiMock.post).toHaveBeenCalledWith('/api/shop/manager/product-videos', { product: 12, url: 'https://youtu.be/demo' })
+    expect(apiMock.patch).toHaveBeenCalledWith('/api/shop/manager/product-videos/7', { title: 'Video' })
+    expect(apiMock.delete).toHaveBeenCalledWith('/api/shop/manager/product-videos/7')
+    expect(apiMock.get).toHaveBeenCalledWith('/api/shop/manager/product-reviews', { params: { product: 12 } })
+    expect(apiMock.post).toHaveBeenCalledWith('/api/shop/manager/product-reviews', { product: 12, author_name: 'John' })
+    expect(apiMock.patch).toHaveBeenCalledWith('/api/shop/manager/product-reviews/8', { text: 'Updated' })
+    expect(apiMock.delete).toHaveBeenCalledWith('/api/shop/manager/product-reviews/8')
     expect(publicApiMock.get).toHaveBeenCalledWith('/api/shop/products/12')
     expect(publicApiMock.get).toHaveBeenCalledWith('/api/callback/captcha')
     expect(publicApiMock.post).toHaveBeenCalledWith('/api/callback/requests', { phone: '+70000000000' })

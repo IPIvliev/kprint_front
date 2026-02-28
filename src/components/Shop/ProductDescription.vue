@@ -30,9 +30,8 @@
                         </div>
                     </div>
 
-                    <p>Фотополимер "Реактив" предназначен для печати на 3d-принтерах, работающих по технологии LCD.
-                        В жидком виде материал имеет низкую вязкость. и высокую скорость печати.
-                    </p>
+                    <div v-if="shortDescription" class="product_description_intro">{{ shortDescription }}</div>
+                    <div v-else class="product_description_intro">Описание товара пока не заполнено.</div>
                     <div class="row product_characteristics">
                         <div class="col-xl-6 col-sm-12" v-for="filter in product.product_attrs_values" :key="`main-${filter.id || filter.filter_attr}`">
                             <span class="product_characteristic_name">{{ filter.filter_attr }}: </span>
@@ -84,21 +83,18 @@
             <div class="row gy-1">
                 <div class="col-12">
                     <div class="product_about">
-                        <div class="row">
-                            <div class="col-xl-6 col-sm-12">
-                                <h4 class="product_about_title">Характеристики</h4>
-                                <p>На принтерах Anycubic Photon на слой в 50 мкм рекомендуется выставлять время полимеризации от 10 секунд. На принтерах Anycubic Photon S время экспозиции можно уменьшить до 6.
-                                </p><p>"Reactive" является, на сегодняшний день, самой быстрой смолой из линейки полимеров Gorky Liquid. Фотополимер отличается великолепной детализацией как по оси Z, так и по X/Y. Это позволяет печатать сложные, мелкие детали. Полимер будет незаменим, как при изготовлении функциональных деталей, так и при печати детализированных фигурок для настольных игр - везде, где требуется чёткость и максимальное качество.
-                                </p><p>Смола упакована в металлическую тару. Банка со смолой помещается в специальный ложемент и картонную коробку для минимализации рисков повреждения при транспортировке. Первоначально будет доступна тара в 1 кг.</p>
-
-                            </div>
-                            <div class="col-xl-6 col-sm-12">
-                                <div class="row product_characteristics">
-                                    <div class="col-12" v-for="filter in product.product_attrs_values" :key="`details-${filter.id || filter.filter_attr}`">
-                                        <span class="product_characteristic_name">{{ filter.filter_attr }}: </span>
-                                        <span class="product_characteristic_value">{{ filter.value }}</span>
-                                        <hr>
-                                    </div>
+                        <div class="product_about_section">
+                            <h4 class="product_about_title">Описание товара</h4>
+                            <div v-if="safeDescription" class="product_description_html" v-html="safeDescription"></div>
+                            <p v-else>Описание товара пока не заполнено.</p>
+                        </div>
+                        <div class="product_about_section">
+                            <h4 class="product_about_title">Характеристики товара</h4>
+                            <div class="row product_characteristics product_characteristics--details">
+                                <div class="col-12" v-for="filter in product.product_attrs_values" :key="`details-${filter.id || filter.filter_attr}`">
+                                    <span class="product_characteristic_name">{{ filter.filter_attr }}: </span>
+                                    <span class="product_characteristic_value">{{ filter.value }}</span>
+                                    <hr>
                                 </div>
                             </div>
                         </div>
@@ -110,11 +106,11 @@
         </div>
         <div v-if="show_gallery" class="product_gallery_modal" @click.self="closeGallery">
             <div class="product_gallery_modal__content" @click.stop>
-                <button class="product_gallery_modal__close" type="button" @click.stop="closeGallery">×</button>
+                <button class="product_gallery_modal__close" type="button" @click.stop="closeGallery">&times;</button>
                 <div class="product_gallery_modal__main">
-                    <button type="button" class="product_gallery_modal__nav product_gallery_modal__nav--prev" @click="prevImage">‹</button>
+                    <button type="button" class="product_gallery_modal__nav product_gallery_modal__nav--prev" @click="prevImage">&#8249;</button>
                     <img :src="currentModalImage" class="product_gallery_modal__image" alt="">
-                    <button type="button" class="product_gallery_modal__nav product_gallery_modal__nav--next" @click="nextImage">›</button>
+                    <button type="button" class="product_gallery_modal__nav product_gallery_modal__nav--next" @click="nextImage">&#8250;</button>
                 </div>
                 <div class="product_gallery_modal__thumbs">
                     <div
@@ -186,6 +182,19 @@ export default {
     hasMarketplaceLinks () {
       return this.hasOzonUrl || this.hasWbUrl
     },
+    safeDescription () {
+      return String(this.product?.description || '').trim()
+    },
+    shortDescription () {
+      const plain = this.stripHtml(this.safeDescription)
+      if (!plain) {
+        return ''
+      }
+      if (plain.length <= 280) {
+        return plain
+      }
+      return `${plain.slice(0, 279).trimEnd()}...`
+    },
     getCart () {
       console.log('localStorage ', localStorage.getItem('cart'))
       // return localStorage.getItem('cart')
@@ -235,6 +244,9 @@ export default {
         return value
       }
       return `https://${value}`
+    },
+    stripHtml (value) {
+      return String(value || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
     },
     getPrice (price) {
       price = String(price).split('.')
@@ -307,5 +319,37 @@ export default {
 
 .product_marketplace_btn--wb:hover {
   background: linear-gradient(90deg, #b80f9c 0%, #3d0f61 100%) !important;
+}
+
+.product_about_section + .product_about_section {
+  margin-top: 28px;
+}
+
+.product_characteristics--details {
+  margin-top: 12px;
+}
+
+.product_description_html {
+  overflow-x: auto;
+}
+
+.product_description_html :deep(table) {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #cfd8dc;
+  margin: 12px 0;
+  background: #fff;
+}
+
+.product_description_html :deep(th),
+.product_description_html :deep(td) {
+  border: 1px solid #cfd8dc;
+  padding: 10px 12px;
+  vertical-align: top;
+}
+
+.product_description_html :deep(th) {
+  background: #f6f7f9;
+  font-weight: 600;
 }
 </style>
