@@ -69,3 +69,19 @@ npm run build
 4. Keep `.htaccess` from `dist/` to enable SPA history fallback (`/news/...`, `/shop/...` direct links).
 5. After upload, verify:
 `/`, `/shop`, `/news`, `/dealers`, `/sitemap.xml`, `/robots.txt`.
+
+## Gallery Page Keys (memo)
+- `GalleryBlock` sends `page` filter from prop `page-key` to `/api/gallery-categories/`.
+- Configure key here: `src/components/elements/GalleryBlock.vue` (`params.page = this.pageKey`).
+
+Current usage in frontend:
+- `src/views/Study/MainStudy.vue`: `page-key="study"` 
+- `src/views/Print/MainPrint.vue`: `page-key="print"` 
+- `src/views/About.vue`: `page-key="about-us"` 
+- `src/components/GalleryPage.vue`: no `page-key`
+
+## Companies
+
+- `print`: `MainPrint.vue`
+- `dealers`: `Dealers.vue`
+- `study`: `AlreadyStudy.vue`
