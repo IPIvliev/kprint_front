@@ -16,6 +16,12 @@ export function payMyStudyEnrollment (enrollmentId, payload = {}) {
   return api.post(`/api/study/my/enrollments/${Number(enrollmentId)}/pay`, payload)
 }
 
+export function fetchMyLessonVideoUrl (enrollmentId, lessonId) {
+  return api.get(
+    `/api/study/my/enrollments/${Number(enrollmentId)}/lessons/${Number(lessonId)}/video-url`
+  )
+}
+
 export function updateMyLessonProgress (enrollmentId, lessonId, payload = {}) {
   return api.patch(
     `/api/study/my/enrollments/${Number(enrollmentId)}/lessons/${Number(lessonId)}/progress`,

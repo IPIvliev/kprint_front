@@ -164,22 +164,25 @@
                           <h4>{{ currentLesson.lesson_order }}. {{ currentLesson.lesson_title }}</h4>
                           <p v-if="currentLesson.lesson_description">{{ currentLesson.lesson_description }}</p>
 
-                          <div v-if="safeUrl(currentLesson.lesson_video_url)" class="lesson-video">
-                            <iframe v-if="embedUrl(currentLesson.lesson_video_url)" :src="embedUrl(currentLesson.lesson_video_url)" allowfullscreen></iframe>
+                          <p v-if="lessonVideoLoading" class="lesson-help">Подготавливаем защищенную ссылку на видео...</p>
+                          <p v-if="lessonVideoError" class="lesson-help">{{ lessonVideoError }}</p>
+
+                          <div v-if="safeUrl(currentLessonVideoUrl)" class="lesson-video">
+                            <iframe v-if="embedUrl(currentLessonVideoUrl)" :src="embedUrl(currentLessonVideoUrl)" allowfullscreen></iframe>
                             <video
-                              v-else-if="isDirectVideo(currentLesson.lesson_video_url)"
+                              v-else-if="isDirectVideo(currentLessonVideoUrl)"
                               controls
-                              :src="safeUrl(currentLesson.lesson_video_url)"
+                              :src="safeUrl(currentLessonVideoUrl)"
                               @ended="markWatched(currentLesson)"
                             />
-                            <a :href="safeUrl(currentLesson.lesson_video_url)" target="_blank" rel="noopener noreferrer">Открыть видео в новой вкладке</a>
+                            <a :href="safeUrl(currentLessonVideoUrl)" target="_blank" rel="noopener noreferrer">Открыть видео в новой вкладке</a>
                           </div>
 
                           <pre v-if="currentLesson.lesson_text_content" class="lesson-text">{{ currentLesson.lesson_text_content }}</pre>
                           <div class="study-actions">
                             <button class="btn btn--grayborder" @click="goToCourse(currentOrder.id)">К курсу</button>
                             <button
-                              v-if="!currentLesson.is_video_completed && !isDirectVideo(currentLesson.lesson_video_url)"
+                              v-if="!currentLesson.is_video_completed && !isDirectVideo(currentLessonVideoUrl)"
                               class="btn btn--grayborder"
                               :disabled="isLessonSubmitting(lessonId(currentLesson))"
                               @click="markWatched(currentLesson)"
@@ -229,6 +232,7 @@ import {
   createMyStudyEnrollment,
   fetchMyEnrollmentCertificatePdf,
   fetchMyEnrollmentExamDetail,
+  fetchMyLessonVideoUrl,
   fetchMyStudyEnrollment,
   fetchMyStudyEnrollments,
   payMyStudyEnrollment,
@@ -255,6 +259,10 @@ export default {
       examSubmitting: false,
       examError: '',
       examSubmitResult: '',
+      lessonVideoUrl: '',
+      lessonVideoExpiresAt: null,
+      lessonVideoLoading: false,
+      lessonVideoError: '',
       certificateDownloading: false,
       notice: '',
       error: '',
@@ -282,6 +290,9 @@ export default {
     currentLesson () {
       if (!this.routeLessonId) return null
       return this.lessonRows.find((x) => Number(this.lessonId(x)) === Number(this.routeLessonId)) || null
+    },
+    currentLessonVideoUrl () {
+      return String(this.lessonVideoUrl || this.currentLesson?.lesson_video_url || '').trim()
     },
     firstOpenLessonId () {
       const row = this.lessonRows.find((x) => this.canView(x))
@@ -339,6 +350,7 @@ export default {
         this.selectedOrderId = null
         this.currentOrderDetail = null
         this.resetExam()
+        this.resetLessonVideoState()
         return
       }
       if (Number(this.selectedOrderId) !== Number(this.routeOrderId) || Number(this.currentOrderDetail?.id || 0) !== Number(this.routeOrderId)) {
@@ -346,6 +358,8 @@ export default {
         this.currentOrderDetail = null
         await this.loadOrderDetail(this.routeOrderId)
       }
+      if (this.isLessonPage) await this.loadLessonVideoUrl()
+      else this.resetLessonVideoState()
       if (this.isExamPage) await this.loadExam()
       else this.resetExam()
     },
@@ -400,6 +414,33 @@ export default {
     lessonId (row) { return Number(row?.lesson?.id || row?.lesson || row?.id || 0) || null },
     canView (row) { return Boolean(this.isPaid(this.currentOrder) && row?.is_lesson_unlocked) },
     isLessonSubmitting (lessonId) { return this.lessonSubmittingById[String(lessonId)] === true },
+    resetLessonVideoState () {
+      this.lessonVideoUrl = ''
+      this.lessonVideoExpiresAt = null
+      this.lessonVideoLoading = false
+      this.lessonVideoError = ''
+    },
+    async loadLessonVideoUrl () {
+      this.lessonVideoError = ''
+      this.lessonVideoLoading = false
+      this.lessonVideoExpiresAt = null
+      this.lessonVideoUrl = String(this.currentLesson?.lesson_video_url || '').trim()
+
+      if (!this.currentOrder || !this.currentLesson || !this.canView(this.currentLesson)) return
+      const lessonId = this.lessonId(this.currentLesson)
+      if (!lessonId) return
+
+      this.lessonVideoLoading = true
+      try {
+        const response = await fetchMyLessonVideoUrl(this.currentOrder.id, lessonId)
+        this.lessonVideoUrl = String(response?.data?.url || this.lessonVideoUrl || '').trim()
+        this.lessonVideoExpiresAt = Number(response?.data?.expires_at || 0) || null
+      } catch (err) {
+        this.lessonVideoError = err?.userMessage || 'Не удалось получить защищенную ссылку на видео.'
+      } finally {
+        this.lessonVideoLoading = false
+      }
+    },
     unlockHint (row) {
       if (!this.isPaid(this.currentOrder)) return 'Урок откроется после оплаты курса'
       return Number(row?.lesson_unlock_after_days || 0) > 0
@@ -538,7 +579,7 @@ export default {
       if (!s) return ''
       try { const url = new URL(s); if (!['http:', 'https:'].includes(url.protocol)) return ''; return url.toString() } catch (e) { return '' }
     },
-    isDirectVideo (value) { return /\.(mp4|webm|ogg)(\?.*)?$/i.test(this.safeUrl(value)) },
+    isDirectVideo (value) { return /\.(mp4|webm|ogg|m3u8)(\?.*)?$/i.test(this.safeUrl(value)) },
     embedUrl (value) {
       const url = this.safeUrl(value)
       if (!url) return ''
