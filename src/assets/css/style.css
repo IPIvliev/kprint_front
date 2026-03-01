@@ -9004,7 +9004,7 @@ body.lock {
 
 .welcome {
   position: relative;
-  background-image: url(../img/red_black_1.png);
+  background-image: url(../img/red_black_1.webp);
   /* background-position: bottom -300px right; */
   background-size: 100% 700px;
   background-repeat: no-repeat;

@@ -1,7 +1,10 @@
   .cmp-components-elements-whitewelcome .main-welcome, .cmp-components-elements-whitewelcome.main-welcome{
     text-align: center;
     background-color: var(--fillsprimary);
-    background-image: url("../../../img/pattern.svg");
+    background-image: url("../../../img/grid.webp");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
     border-radius: 0px 0px 80px 80px;
     padding: 40px 0;
     position: relative;

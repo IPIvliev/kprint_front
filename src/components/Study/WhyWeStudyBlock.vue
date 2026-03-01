@@ -11,7 +11,7 @@
             </p>
           </div>
           <div class="col-lg-8" style="text-align: center;" >
-            <img src="@/assets/img/whywe.png">
+            <img src="@/assets/img/whywe.webp" loading="lazy" decoding="async">
           </div>
         </div>
         <div class="row gy-1" style="margin-top: 30px;">

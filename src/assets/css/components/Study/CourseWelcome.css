@@ -1,7 +1,7 @@
   .cmp-components-study-coursewelcome .main-welcome, .cmp-components-study-coursewelcome.main-welcome{
     /* text-align: center; */
     background-color: var(--fillsprimary);
-    background-image: url("../../../img/pattern.svg");
+    background-image: url("../../../img/grid.webp");
     border-radius: 0px 0px 80px 80px;
     padding: 40px 0;
     
