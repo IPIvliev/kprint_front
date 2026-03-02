@@ -3,16 +3,7 @@
     <div class="login">
       <div class="container">
         <div class="login__block">
-          <div class="login__buttons">
-            <div class="login__buttons-row">
-              <div class="login__btn">
-                <router-link class="btn btn--gray" to="/login">Вход</router-link>
-              </div>
-              <div class="login__btn">
-                <router-link class="btn btn--black" to="/registration">Регистрация</router-link>
-              </div>
-            </div>
-          </div>
+          <AuthSwitch />
           <div class="login__title">Регистрация</div>
           <div class="login__text">
             Пройдите простую процедуру регистрации для доступа к личному кабинету пользователя.
@@ -130,11 +121,13 @@
 <script>
 import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
 import * as yup from 'yup'
+import AuthSwitch from '@/components/AuthSwitch.vue'
 import LegalLinksRow from '@/components/elements/LegalLinksRow.vue'
 
 export default {
   name: 'RegistrationPage',
   components: {
+    AuthSwitch,
     VeeForm,
     Field,
     ErrorMessage,

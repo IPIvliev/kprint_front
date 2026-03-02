@@ -4,12 +4,7 @@
   <div class="login">
     <div class="container">
       <div class="login__block">
-        <div class="login__buttons">
-          <div class="login__buttons-row">
-            <div class="login__btn"><a class="btn btn--gray" href="#">Вход</a></div>
-            <div class="login__btn"><a class="btn btn--black" href="#">Регистрация</a></div>
-          </div>
-        </div>
+        <AuthSwitch />
         <div class="login__title">Войти в профиль</div>
         <div class="login__text">Пожалуйста, введите свой e-mail и пароль для входа в личный кабинет пользователя.</div>
         <VeeForm class="login__form" @submit="handleLogin" :validation-schema="schema">
@@ -97,6 +92,7 @@
 <script>
 import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
 import * as yup from 'yup'
+import AuthSwitch from '@/components/AuthSwitch.vue'
 import LegalLinksRow from '@/components/elements/LegalLinksRow.vue'
 import { createPrintOrder } from '@/services/print.service'
 import {
@@ -108,6 +104,7 @@ import {
 export default {
   name: 'LoginFormPage',
   components: {
+    AuthSwitch,
     VeeForm,
     Field,
     ErrorMessage,

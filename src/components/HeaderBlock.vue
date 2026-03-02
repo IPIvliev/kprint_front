@@ -128,14 +128,17 @@
         >
           <img src="/images/icons/cart.svg" width="22" height="22" alt="" />
         </router-link>
-        <div class="header__auth-mobile d-xl-none">
+        <div
+          class="header__auth-mobile d-xl-none"
+          :class="{ 'header__auth-controls--mobile-hidden': isAuthRoute }"
+        >
           <template v-if="!isLoggedIn">
             <router-link class="header__auth-mobile-link" to="/login">Вход</router-link>
             <router-link class="header__auth-mobile-link header__auth-mobile-link--dark" to="/registration">Регистрация</router-link>
           </template>
           <router-link v-else class="header__auth-mobile-link" to="/panel">Панель</router-link>
         </div>
-        <div class="header__regbuttons">
+        <div class="header__regbuttons" :class="{ 'header__auth-controls--mobile-hidden': isAuthRoute }">
           <router-link v-if="!isLoggedIn" class="btn btn--white" to="/login">Вход</router-link>
           <router-link v-else class="btn btn--white" to="/panel">Личный кабинет</router-link>
           <router-link v-if="!isLoggedIn" class="btn btn--black" to="/registration">Регистрация</router-link>
@@ -344,6 +347,10 @@ export default {
     isLoggedIn () {
       return this.$store?.state?.auth?.status?.loggedIn === true
     },
+    isAuthRoute () {
+      const authRouteNames = ['Login', 'Registration', 'ForgotPassword', 'ResetPassword']
+      return authRouteNames.includes(this.$route?.name)
+    },
     showMobileCartButton () {
       const hiddenRoutes = ['Cart', 'ShopOrder']
       return !hiddenRoutes.includes(this.$route?.name)
@@ -545,6 +552,16 @@ export default {
   color: #fff;
 }
 
+@media (min-width: 1200px) and (max-width: 1599.98px) {
+  .header__regbuttons .btn {
+    display: inline-flex !important;
+  }
+
+  .header__regicon {
+    display: none !important;
+  }
+}
+
 @media (min-width: 992px) and (max-width: 1199.98px) {
   .header__col:nth-child(1),
   .header__col:nth-child(3) {
@@ -608,11 +625,39 @@ export default {
   }
 }
 
-@media (max-width: 991.98px) {
+@media (max-width: 1199.98px) {
   .header__auth-mobile {
-    display: none;
+    display: none !important;
   }
 
+  .header__regbuttons {
+    display: inline-flex !important;
+    margin-left: 0;
+    gap: 8px;
+  }
+
+  .header__regbuttons .btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 18px;
+    font-size: 13px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .header__regicon {
+    display: none !important;
+  }
+
+  .header__auth-controls--mobile-hidden {
+    display: none !important;
+  }
+}
+
+@media (max-width: 991.98px) {
   .header__col:nth-child(1),
   .header__col:nth-child(3) {
     flex: 1 1 0;
