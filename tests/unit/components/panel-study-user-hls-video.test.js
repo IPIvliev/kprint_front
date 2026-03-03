@@ -16,6 +16,8 @@ describe('PanelStudyUser HLS playback', () => {
     expect(source).toContain('isHlsStream (value)')
     expect(source).toContain("VUE_APP_STUDY_VIDEO_CDN_HOST")
     expect(source).toContain("storage.yandexcloud.net")
+    expect(source).toContain('storageBucketHost')
+    expect(source).toContain('cdnPathParts[0] === storageBucket')
     expect(source).toContain('this.setupLessonVideoPlayback()')
   })
 })

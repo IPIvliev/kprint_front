@@ -664,11 +664,23 @@ export default {
         const cdnHost = String(process.env.VUE_APP_STUDY_VIDEO_CDN_HOST || 'video.gorkyliquid.ru').trim().toLowerCase()
         const storageHost = String(process.env.VUE_APP_STUDY_VIDEO_STORAGE_HOST || 'storage.yandexcloud.net').trim().toLowerCase()
         const storageBucket = String(process.env.VUE_APP_STUDY_VIDEO_STORAGE_BUCKET || 'gl-study-video').trim()
-        if (cdnHost && storageBucket && url.hostname.toLowerCase() === storageHost) {
-          const pathParts = url.pathname.split('/').filter(Boolean)
-          if (pathParts.length > 1 && pathParts[0] === storageBucket) {
-            url.hostname = cdnHost
-            url.pathname = `/${pathParts.slice(1).join('/')}`
+        const normalizedHost = url.hostname.toLowerCase()
+        const pathParts = url.pathname.split('/').filter(Boolean)
+        const storageBucketHost = storageBucket && storageHost ? `${storageBucket.toLowerCase()}.${storageHost}` : ''
+
+        if (cdnHost && storageBucket && normalizedHost === storageHost && pathParts.length > 1 && pathParts[0] === storageBucket) {
+          url.hostname = cdnHost
+          url.pathname = `/${pathParts.slice(1).join('/')}`
+        }
+
+        if (cdnHost && storageBucket && normalizedHost === storageBucketHost) {
+          url.hostname = cdnHost
+        }
+
+        if (cdnHost && storageBucket && url.hostname.toLowerCase() === cdnHost) {
+          const cdnPathParts = url.pathname.split('/').filter(Boolean)
+          if (cdnPathParts.length > 1 && cdnPathParts[0] === storageBucket) {
+            url.pathname = `/${cdnPathParts.slice(1).join('/')}`
           }
         }
 
