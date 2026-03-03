@@ -24,7 +24,7 @@ export default {
   props: ['background'],
   components: { ProductCard },
   created () {
-    this.$store.dispatch('catalog/fetchProducts')
+    this.$store.dispatch('catalog/fetchProducts', { home: true })
   },
   computed: {
     ProductsList () {

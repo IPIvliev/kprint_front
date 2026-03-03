@@ -28,7 +28,7 @@
                 :to="shopCategoryRoute(category)"
               >
                 <div class="header__dropmenu-img"> <img :src="categoryCardImage(category, index)" :alt="category.title || 'Категория магазина'"></div>
-                <div class="header__dropmenu-subtitle">{{ category.title || 'Категория' }}<span>Shop</span></div>
+                <div class="header__dropmenu-subtitle">{{ category.title || 'Категория' }}<span>Магазин</span></div>
                 <div class="header__dropmenu-text">{{ categoryCardDescription(category, index) }}</div>
               </router-link>
             </div>

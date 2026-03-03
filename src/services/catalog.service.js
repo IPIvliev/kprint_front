@@ -12,8 +12,14 @@ export function fetchShopCategories () {
   return publicApi.get('/api/shop/categories')
 }
 
-/** @returns {Promise<import('axios').AxiosResponse<ShopProductsResponse>>} */
-export function fetchShopProducts () {
+/**
+ * @param {Record<string, any>} params
+ * @returns {Promise<import('axios').AxiosResponse<ShopProductsResponse>>}
+ */
+export function fetchShopProducts (params = {}) {
+  if (params && Object.keys(params).length > 0) {
+    return publicApi.get('/api/shop/products', { params })
+  }
   return publicApi.get('/api/shop/products')
 }
 

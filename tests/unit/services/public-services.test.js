@@ -53,6 +53,12 @@ describe('public and delivery services', () => {
     expect(publicApiMock.get).toHaveBeenCalledWith('/api/study/course/cad-course-4')
   })
 
+  it('passes query params to shop products endpoint when provided', async () => {
+    await fetchShopProducts({ home: true })
+
+    expect(publicApiMock.get).toHaveBeenCalledWith('/api/shop/products', { params: { home: true } })
+  })
+
   it('passes query params for companies, gallery and delivery', async () => {
     await fetchCompanyCategories({ page: 2 })
     await fetchCompanies({ category: 9 })

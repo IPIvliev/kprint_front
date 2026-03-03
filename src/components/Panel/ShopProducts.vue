@@ -134,6 +134,12 @@
               </select>
             </div>
             <div class="panel__formrow">
+              <label style="display:flex; gap:8px; align-items:center;">
+                <input v-model="form.show_on_homepage" type="checkbox">
+                <span>Показывать товар на главной странице</span>
+              </label>
+            </div>
+            <div class="panel__formrow">
               <label>Артикул</label>
               <input type="text" v-model="form.article" class="form-control" placeholder="Артикул">
             </div>
@@ -422,7 +428,8 @@ export default {
         stock: 0,
         mass: 0,
         price: '',
-        category: ''
+        category: '',
+        show_on_homepage: false
       }
     }
   },
@@ -842,7 +849,8 @@ export default {
         stock: 0,
         mass: 0,
         price: '',
-        category: ''
+        category: '',
+        show_on_homepage: false
       }
       this.imageFile = null
       this.imagePreview = ''
@@ -873,7 +881,8 @@ export default {
         stock: product.stock ?? 0,
         mass: product.mass ?? 0,
         price: product.price || '',
-        category: categoryId
+        category: categoryId,
+        show_on_homepage: Boolean(product.show_on_homepage)
       }
       this.imageFile = null
       this.imagePreview = product.photo ? this.resolveMediaUrl(product.photo) : ''
@@ -1017,6 +1026,7 @@ export default {
         payload.append('mass', this.form.mass ?? 0)
         payload.append('price', this.form.price || '0')
         payload.append('category', this.form.category)
+        payload.append('show_on_homepage', this.form.show_on_homepage ? 'true' : 'false')
         if (this.imageFile) {
           payload.append('photo', this.imageFile)
         }

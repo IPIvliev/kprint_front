@@ -81,4 +81,14 @@ describe('store/catalog.module', () => {
     expect(fetchShopCategoryProductsMock).toHaveBeenCalledWith(5, {})
     expect(commit).toHaveBeenCalledWith('setProductsData', [{ id: 1, name: 'P' }])
   })
+
+  it('passes query params when loading products list', async () => {
+    fetchShopProductsMock.mockResolvedValueOnce({ data: [] })
+    const commit = vi.fn()
+
+    await catalog.actions.fetchProducts({ commit }, { home: true })
+
+    expect(fetchShopProductsMock).toHaveBeenCalledWith({ home: true })
+    expect(commit).toHaveBeenCalledWith('setProductsData', [])
+  })
 })

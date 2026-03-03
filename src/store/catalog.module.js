@@ -30,6 +30,7 @@ export const catalog = {
           mass: product.mass,
           stock: product.stock,
           photo: product.photo,
+          show_on_homepage: product.show_on_homepage,
           product_attrs_values: product.product_attrs_values
         }
       })
@@ -46,8 +47,8 @@ export const catalog = {
       const response = await fetchShopCategories()
       commit('setCategoriesData', response.data)
     },
-    async fetchProducts ({ commit }) {
-      const response = await fetchShopProducts()
+    async fetchProducts ({ commit }, params = {}) {
+      const response = await fetchShopProducts(params)
       commit('setProductsData', response.data)
     },
     async fetchCategoryProducts ({ commit }, payload) {

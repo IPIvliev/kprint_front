@@ -37,7 +37,6 @@ export default {
     msg: String
   },
   created () {
-    this.$store.dispatch('catalog/fetchProducts')
     this.$store.dispatch('study/fetchCourses')
   },
   computed: {

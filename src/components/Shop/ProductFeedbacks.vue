@@ -113,6 +113,10 @@ export default {
   gap: 12px;
 }
 
+.product_review_body > * {
+  min-width: 0;
+}
+
 .product_review_body--with-photo {
   grid-template-columns: 220px minmax(0, 1fr);
   align-items: start;
@@ -131,7 +135,31 @@ export default {
   color: #3f4c69;
   font-size: 15px;
   line-height: 1.6;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-x: hidden;
+  overflow-wrap: anywhere;
   word-break: break-word;
+}
+
+.product_review_text :deep(*) {
+  max-width: 100%;
+  white-space: normal;
+  overflow-x: visible !important;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.product_review_text :deep(pre) {
+  white-space: pre-wrap !important;
+  overflow-x: hidden !important;
+}
+
+.product_review_text :deep(.text-nowrap),
+.product_review_text :deep([style*="white-space:nowrap"]),
+.product_review_text :deep([style*="white-space: nowrap"]) {
+  white-space: normal !important;
 }
 
 .product_review_text :deep(p) {
