@@ -33,6 +33,7 @@
     "@yandex/ymaps3-types": "^0.0.27",
     "axios": "^0.27.2",
     "core-js": "^3.34.0",
+    "hls.js": "^1.6.15",
     "pug": "^3.0.2",
     "pug-plain-loader": "^1.1.0",
     "swiper": "^8.4.7",

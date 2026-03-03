@@ -119,7 +119,7 @@
 
                         <div class="study-section">
                           <h4 class="study-section__title">Детали тарифа</h4>
-                          <p v-if="priceDescription(currentOrder)">{{ priceDescription(currentOrder) }}</p>
+                          <div v-if="priceDescription(currentOrder)" v-html="renderRichText(priceDescription(currentOrder))"></div>
                           <p v-else class="lesson-help">Описание тарифа пока не заполнено.</p>
                         </div>
 
@@ -171,8 +171,9 @@
                             <iframe v-if="embedUrl(currentLessonVideoUrl)" :src="embedUrl(currentLessonVideoUrl)" allowfullscreen></iframe>
                             <video
                               v-else-if="isDirectVideo(currentLessonVideoUrl)"
+                              ref="lessonVideoPlayer"
                               controls
-                              :src="safeUrl(currentLessonVideoUrl)"
+                              playsinline
                               @ended="markWatched(currentLesson)"
                             />
                             <a :href="safeUrl(currentLessonVideoUrl)" target="_blank" rel="noopener noreferrer">Открыть видео в новой вкладке</a>
@@ -264,6 +265,7 @@ export default {
       lessonVideoExpiresAt: null,
       lessonVideoLoading: false,
       lessonVideoError: '',
+      hlsPlayer: null,
       certificateDownloading: false,
       notice: '',
       error: '',
@@ -305,12 +307,18 @@ export default {
     await this.processPurchaseFromRoute()
     await this.syncRouteState()
   },
+  beforeUnmount () {
+    this.destroyLessonVideoPlayer()
+  },
   watch: {
     '$route.fullPath': {
       async handler () {
         await this.processPurchaseFromRoute()
         await this.syncRouteState()
       }
+    },
+    currentLessonVideoUrl () {
+      this.setupLessonVideoPlayback()
     }
   },
   methods: {
@@ -416,10 +424,79 @@ export default {
     canView (row) { return Boolean(this.isPaid(this.currentOrder) && row?.is_lesson_unlocked) },
     isLessonSubmitting (lessonId) { return this.lessonSubmittingById[String(lessonId)] === true },
     resetLessonVideoState () {
+      this.destroyLessonVideoPlayer()
       this.lessonVideoUrl = ''
       this.lessonVideoExpiresAt = null
       this.lessonVideoLoading = false
       this.lessonVideoError = ''
+    },
+    destroyLessonVideoPlayer () {
+      const video = this.$refs.lessonVideoPlayer
+      if (this.hlsPlayer) {
+        this.hlsPlayer.destroy()
+        this.hlsPlayer = null
+      }
+      if (video && typeof video.pause === 'function') {
+        video.pause()
+        video.removeAttribute('src')
+        if (typeof video.load === 'function') video.load()
+      }
+    },
+    async setupLessonVideoPlayback () {
+      if (!this.isLessonPage) return
+      const url = this.safeUrl(this.currentLessonVideoUrl)
+      if (!url || !this.isDirectVideo(url)) {
+        this.destroyLessonVideoPlayer()
+        return
+      }
+
+      this.lessonVideoError = ''
+      await this.$nextTick()
+      const video = this.$refs.lessonVideoPlayer
+      if (!video) return
+
+      this.destroyLessonVideoPlayer()
+
+      if (!this.isHlsStream(url)) {
+        video.src = url
+        return
+      }
+
+      if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = url
+        return
+      }
+
+      try {
+        const { default: Hls } = await import('hls.js')
+        if (!Hls || !Hls.isSupported()) {
+          this.lessonVideoError = 'Браузер не поддерживает воспроизведение HLS-видео.'
+          return
+        }
+
+        const hls = new Hls({
+          enableWorker: true,
+          lowLatencyMode: false
+        })
+        this.hlsPlayer = hls
+        hls.loadSource(url)
+        hls.attachMedia(video)
+        hls.on(Hls.Events.ERROR, (event, data) => {
+          if (!data || !data.fatal) return
+          if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+            hls.startLoad()
+            return
+          }
+          if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
+            hls.recoverMediaError()
+            return
+          }
+          this.lessonVideoError = 'Не удалось воспроизвести HLS-видео. Проверьте ссылку и CORS на хранилище.'
+          this.destroyLessonVideoPlayer()
+        })
+      } catch (error) {
+        this.lessonVideoError = 'Не удалось инициализировать HLS-плеер.'
+      }
     },
     async loadLessonVideoUrl () {
       this.lessonVideoError = ''
@@ -440,6 +517,7 @@ export default {
         this.lessonVideoError = err?.userMessage || 'Не удалось получить защищенную ссылку на видео.'
       } finally {
         this.lessonVideoLoading = false
+        this.setupLessonVideoPlayback()
       }
     },
     unlockHint (row) {
@@ -579,8 +657,27 @@ export default {
     safeUrl (value) {
       const s = String(value || '').trim()
       if (!s) return ''
-      try { const url = new URL(s); if (!['http:', 'https:'].includes(url.protocol)) return ''; return url.toString() } catch (e) { return '' }
+      try {
+        const url = new URL(s)
+        if (!['http:', 'https:'].includes(url.protocol)) return ''
+
+        const cdnHost = String(process.env.VUE_APP_STUDY_VIDEO_CDN_HOST || 'video.gorkyliquid.ru').trim().toLowerCase()
+        const storageHost = String(process.env.VUE_APP_STUDY_VIDEO_STORAGE_HOST || 'storage.yandexcloud.net').trim().toLowerCase()
+        const storageBucket = String(process.env.VUE_APP_STUDY_VIDEO_STORAGE_BUCKET || 'gl-study-video').trim()
+        if (cdnHost && storageBucket && url.hostname.toLowerCase() === storageHost) {
+          const pathParts = url.pathname.split('/').filter(Boolean)
+          if (pathParts.length > 1 && pathParts[0] === storageBucket) {
+            url.hostname = cdnHost
+            url.pathname = `/${pathParts.slice(1).join('/')}`
+          }
+        }
+
+        return url.toString()
+      } catch (e) {
+        return ''
+      }
     },
+    isHlsStream (value) { return /\.m3u8(\?.*)?$/i.test(this.safeUrl(value)) },
     isDirectVideo (value) { return /\.(mp4|webm|ogg|m3u8)(\?.*)?$/i.test(this.safeUrl(value)) },
     embedUrl (value) {
       const url = this.safeUrl(value)

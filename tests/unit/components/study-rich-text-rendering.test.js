@@ -29,6 +29,7 @@ describe('study rich text rendering', () => {
     expect(courseRelated).toContain('v-html="renderRichText(course.description)"')
     expect(courseProgramm).toContain('v-html="renderRichText(lesson.description)"')
     expect(panelStudyUser).toContain('v-html="renderRichText(courseDescription(currentOrder))"')
+    expect(panelStudyUser).toContain('v-html="renderRichText(priceDescription(currentOrder))"')
     expect(panelStudyUser).toContain('v-html="renderRichText(currentLesson.lesson_description)"')
     expect(panelStudyUser).toContain('v-html="renderRichText(currentLesson.lesson_text_content)"')
   })
