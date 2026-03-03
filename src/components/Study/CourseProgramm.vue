@@ -11,7 +11,7 @@
                 <div class="row">
                   <div class="col-12">
                     <h3>{{ lesson.title }}</h3>
-                    <p class="course_lesson_description">{{ lesson.description }}</p>
+                    <div class="course_lesson_description" v-html="renderRichText(lesson.description)"></div>
                   </div>
                 </div>
                 <hr>
@@ -25,12 +25,19 @@
 
 </template>
 <script>
+import { sanitizeRichText } from '@/utils/sanitizeRichText'
+
 export default {
   data () {
     return {
       show_details: null
     }
   },
-  props: ['background', 'lessons']
+  props: ['background', 'lessons'],
+  methods: {
+    renderRichText (html) {
+      return sanitizeRichText(html)
+    }
+  }
 }
 </script>

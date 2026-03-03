@@ -25,7 +25,7 @@
                         <h3 style="margin-bottom: 10px;"> {{ course.name }} </h3>
                       </div>
                       <div class="row">
-                        <p> {{ course.description }} </p>
+                        <div v-html="renderRichText(course.description)"></div>
                       </div>
                       <div class="row cource_footer">
                         <div class="col-lg-3">
@@ -53,12 +53,18 @@
 </template>
 <script>
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import { sanitizeRichText } from '@/utils/sanitizeRichText'
 
 import 'swiper/css'
 import 'swiper/css/pagination'
 
 export default {
   props: ['background', 'related'],
-  components: { Swiper, SwiperSlide }
+  components: { Swiper, SwiperSlide },
+  methods: {
+    renderRichText (html) {
+      return sanitizeRichText(html)
+    }
+  }
 }
 </script>

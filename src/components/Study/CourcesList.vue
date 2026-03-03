@@ -15,7 +15,7 @@
                     <h3 style="margin-bottom: 10px;">{{ course.name }}</h3>
                   </div>
                   <div class="row">
-                    <p>{{ course.description }}</p>
+                    <div v-html="renderRichText(course.description)"></div>
                   </div>
                   <div class="row cource_footer">
                     <div class="col-lg-3">
@@ -41,7 +41,14 @@
     <!--  /video-->
 </template>
 <script>
+import { sanitizeRichText } from '@/utils/sanitizeRichText'
+
 export default {
+  methods: {
+    renderRichText (html) {
+      return sanitizeRichText(html)
+    }
+  },
   computed: {
     CoursesList () {
       return this.$store.state.study.courses

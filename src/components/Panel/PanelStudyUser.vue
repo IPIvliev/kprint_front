@@ -114,7 +114,7 @@
 
                         <div v-if="courseDescription(currentOrder)" class="study-section">
                           <h4 class="study-section__title">Описание курса</h4>
-                          <p>{{ courseDescription(currentOrder) }}</p>
+                          <div v-html="renderRichText(courseDescription(currentOrder))"></div>
                         </div>
 
                         <div class="study-section">
@@ -162,7 +162,7 @@
                         <p v-else-if="!canView(currentLesson)" class="panel__table-text">Этот урок пока закрыт.</p>
                         <template v-else>
                           <h4>{{ currentLesson.lesson_order }}. {{ currentLesson.lesson_title }}</h4>
-                          <p v-if="currentLesson.lesson_description">{{ currentLesson.lesson_description }}</p>
+                          <div v-if="currentLesson.lesson_description" v-html="renderRichText(currentLesson.lesson_description)"></div>
 
                           <p v-if="lessonVideoLoading" class="lesson-help">Подготавливаем защищенную ссылку на видео...</p>
                           <p v-if="lessonVideoError" class="lesson-help">{{ lessonVideoError }}</p>
@@ -178,7 +178,7 @@
                             <a :href="safeUrl(currentLessonVideoUrl)" target="_blank" rel="noopener noreferrer">Открыть видео в новой вкладке</a>
                           </div>
 
-                          <pre v-if="currentLesson.lesson_text_content" class="lesson-text">{{ currentLesson.lesson_text_content }}</pre>
+                          <div v-if="currentLesson.lesson_text_content" class="lesson-text" v-html="renderRichText(currentLesson.lesson_text_content)"></div>
                           <div class="study-actions">
                             <button class="btn btn--grayborder" @click="goToCourse(currentOrder.id)">К курсу</button>
                             <button
@@ -228,6 +228,7 @@
 
 <script>
 import MenuBlock from '../elements/Panel/MenuBlock.vue'
+import { sanitizeRichText } from '@/utils/sanitizeRichText'
 import {
   createMyStudyEnrollment,
   fetchMyEnrollmentCertificatePdf,
@@ -569,6 +570,7 @@ export default {
     priceName (order) { return order?.price?.name || order?.price_name || 'Тариф' },
     priceShortDescription (order) { return order?.price?.short_description || order?.price_short_description || '' },
     priceDescription (order) { return order?.price?.description || order?.price_description || '' },
+    renderRichText (value) { return sanitizeRichText(value) },
     priceValue (order) { return Number(order?.price?.price || order?.price_value || 0) },
     teachersCount (order) { return Number(order?.course?.teachers_number || order?.teachers_number || 0) || 0 },
     lessonsTotal (order) { return Number(order?.lessons_total || order?.course?.lessons_number || order?.lessons_number || 0) || 0 },
