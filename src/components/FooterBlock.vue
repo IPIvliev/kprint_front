@@ -1,4 +1,4 @@
-<template>
+﻿<template>
 <!-- footer-->
 <footer class="footer">
   <div class="container">
@@ -12,6 +12,7 @@
                 <div class="footer__title">Подпишитесь на нас:</div>
                 <ul class="footer__icons">
                   <li>
+                    <!-- ВК49865 -->
                     <a href="https://vk.com/gorky_liquid" target="_blank" rel="noopener noreferrer" aria-label="VK">
                       <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16" cy="16" r="16" fill="#EFEFF0"></circle>
