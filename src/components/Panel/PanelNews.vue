@@ -366,7 +366,7 @@
               ></textarea>
             </div>
             <div class="panel__formrow">
-              <label>Фотографии (1-10)</label>
+              <label>Фотографии (1-4)</label>
               <div
                 class="panel__dropzone"
                 @dragover.prevent
@@ -534,6 +534,7 @@ export default {
       aiUploadProgress: 0,
       aiError: '',
       aiBrief: '',
+      aiMaxImages: 4,
       aiImages: [],
       processingPrompt: '',
       processingArticleTitle: '',
@@ -874,9 +875,9 @@ export default {
         return
       }
       const merged = [...this.aiImages, ...imageFiles]
-      this.aiImages = merged.slice(0, 10)
-      if (merged.length > 10) {
-        this.aiError = 'Можно загрузить не более 10 изображений'
+      this.aiImages = merged.slice(0, this.aiMaxImages)
+      if (merged.length > this.aiMaxImages) {
+        this.aiError = `Можно загрузить не более ${this.aiMaxImages} изображений`
       }
     },
     removeAiImage (index) {
@@ -890,6 +891,11 @@ export default {
       }
       if (!this.aiImages.length) {
         this.aiError = 'Добавьте хотя бы одно изображение'
+        return
+      }
+      if (this.aiImages.length > this.aiMaxImages) {
+        this.aiError = `Можно загрузить не более ${this.aiMaxImages} изображений`
+        this.aiImages = this.aiImages.slice(0, this.aiMaxImages)
         return
       }
 
